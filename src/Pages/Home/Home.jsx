@@ -1,8 +1,9 @@
 import React from 'react'
+import MomsHub from '../../Components/MomsHub/MomsHub'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <MomsHub />
   )
 }
 
