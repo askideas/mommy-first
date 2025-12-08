@@ -1,0 +1,31 @@
+.contact-banner-container {
+    width: 100%;
+    height: fit-content;
+    box-shadow: 0px 15px 50px 0px #FF509940;
+    background: #D87AA1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 18px;
+    border-radius: 16px;
+    padding: 32px;
+
+    p {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        flex: 1;
+
+        span {
+            &:nth-child(1) {
+                font: 600 20px var(--font);
+                color: var(--white);
+            }
+
+            &:nth-child(2) {
+                font: 400 16px var(--font);
+                color: var(--white);
+            }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+.footer {
+    width: 100%;
+    height: fit-content;
+    margin-top: 60px;
+    position: relative;
+
+    .menu-items-section {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px;
+
+        .menu-item-section {
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            row-gap: 14px;
+            align-items: flex-start;
+
+            .menu-heading {
+                font: 500 16px var(--font);
+                color: var(--primary-dark);
+            }
+
+            a {
+                font: 400 12px var(--font);
+                color: var(--primary-dark);
+                text-decoration: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                column-gap: 4px;
+
+                span {
+                    font: 400 8px var(--font);
+                    width: fit-content;
+                    height: fit-content;
+                    border-radius: 4px;
+                    padding: 2px 4px;
+                }
+            }
+        }
+    }
+
+    .footer-social-section {
+        display: flex;
+        margin-top: 60px;
+
+        .social-con {
+            width: fit-content;
+            height: fit-content;
+            margin-right: 66px;
+
+            .social-heading {
+                font: 500 16px var(--font);
+                color: var(--primary-dark);
+            }
+
+            .icons-section {
+                display: flex;
+                column-gap: 16px;
+            }
+        }
+
+        .download-section {
+            .download-heading {
+                font: 500 16px var(--font);
+                color: var(--primary-dark);
+            }
+        }
+    }
+
+    .copy-right-section {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        height: fit-content;
+        align-items: flex-start;
+        margin-top: 60px;
+
+        span {
+            font: 400 9px var(--font);
+            color: var(--primary-light);
+        }
+    }
+}
+
+.footer-watermark {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.footer-main-container {
+    position: relative;
+    padding-bottom: 78px;
+}
