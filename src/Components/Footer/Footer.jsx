@@ -43,10 +43,10 @@ const Footer = () => {
 
                     <div className="menu-item-section">
                         <p className='menu-heading'>Products</p>
-                        <NavLink>New & Noteworthy <span style={{background: '#5ED34B', color: '#ffffff'}}>New</span></NavLink>
+                        <NavLink>New & Noteworthy <span className='flash-animation' style={{background: '#5ED34B', color: '#ffffff'}}>New</span></NavLink>
                         <NavLink>Pregnancy care</NavLink>
                         <NavLink>Postpartum care</NavLink>
-                        <NavLink>Exclusive Bundles <span style={{background: '#FF1F1F', color: '#ffffff'}}>Sale</span></NavLink>
+                        <NavLink>Exclusive Bundles <span className='flash-animation' style={{background: '#FF1F1F', color: '#ffffff'}}>Sale</span></NavLink>
                         <NavLink>Recovery Essentials</NavLink>
                         <NavLink>Mega Recovery Kits</NavLink>
                         <NavLink>Breast Care</NavLink>

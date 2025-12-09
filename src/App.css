@@ -41,3 +41,52 @@
         color: var(--primary-dark);
     }
 }
+
+/* Flash Animation */
+.flash-animation {
+    position: relative;
+    overflow: hidden;
+}
+
+.flash-animation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 40%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0.3) 60%,
+        transparent 100%
+    );
+    animation: flash 2s infinite;
+    pointer-events: none;
+    transform: skewX(-20deg);
+}
+
+@keyframes flash {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Variants for different speeds */
+.flash-animation-fast::after {
+    animation: flash 1s infinite;
+}
+
+.flash-animation-slow::after {
+    animation: flash 3s infinite;
+}
+
+/* Single flash (no repeat) */
+.flash-animation-once::after {
+    animation: flash 2s;
+}

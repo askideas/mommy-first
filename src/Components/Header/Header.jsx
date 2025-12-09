@@ -12,7 +12,7 @@ const Header = () => {
     <div className='header container-fluid'>
         <div className='row w-100'>
             <div className="logo-container">
-                <img src={Logo} alt="Mommy FIrst" />
+                <img src={Logo} alt="Mommy FIrst" className='flash-animation' />
             </div>
             <div className="menu-container">
                 <NavLink to="/">Home</NavLink>
