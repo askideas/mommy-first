@@ -5,4 +5,5 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 36px;
     margin-bottom: 90px;
+    margin-top: 20px;
 }
