@@ -1,0 +1,6 @@
+.image-card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    margin: 60px 0;
+}
