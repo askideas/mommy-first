@@ -1,0 +1,8 @@
+.moms-hub-items-con {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+    margin-bottom: 90px;
+}

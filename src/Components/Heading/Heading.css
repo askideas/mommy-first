@@ -1,0 +1,21 @@
+.heading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+
+    h1 {
+        font: 600 40px var(--font);
+        color: var(--primary-dark);
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        font: 400 16px var(--font);
+        color: var(--primary-pink);
+        letter-spacing: 12px;
+        margin-bottom: 20px;
+    }
+}

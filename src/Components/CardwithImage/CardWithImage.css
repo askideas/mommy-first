@@ -1,0 +1,35 @@
+.card-with-image-con {
+    width: 100%;
+    height: auto;
+    background: var(--white);
+    box-shadow: 0px 15px 50px 0px #FF509940;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+
+    img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 16px;
+    }
+    
+    .content-con {
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        flex: 1;
+
+        h1 {
+            font: 600 20px var(--font);
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font: 300 14px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+    }
+}

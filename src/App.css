@@ -42,6 +42,18 @@
     }
 }
 
+.button-label {
+    width: fit-content;
+    height: fit-content;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-pink);
+    background: var(--white);
+    outline: none;
+    font: 500 15px var(--font);
+    color: var(--primary-pink);
+}
+
 /* Flash Animation */
 .flash-animation {
     position: relative;
