@@ -8,8 +8,8 @@ import S3 from '../../assets/s-3.svg'
 
 const MomsHub = () => {
   const headingData = {
-    'title': "WHAT'S ON",
-    'subtitle': "Our Activities & Engagements",
+    'title': "Moms Hub",
+    'subtitle': "Together with Moms",
     'description': false
   }
 

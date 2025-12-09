@@ -17,5 +17,6 @@
         color: var(--primary-pink);
         letter-spacing: 12px;
         margin-bottom: 20px;
+        text-transform: uppercase;
     }
 }
