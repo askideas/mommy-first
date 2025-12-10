@@ -1,0 +1,121 @@
+.mommy-first-trust-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    min-height: 530px;
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 90px;
+
+    .first-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .tile-one {
+            border: 2px solid #C6588526;
+            background: #FFF9FA;
+            width: 100%;
+            height: 253px;
+            border-radius: 24px;
+        }
+
+        .tile-two {
+            border: 2px solid #3A4E7526;
+            background: #FAFDFF;
+            width: 100%;
+            height: 253px;
+            border-radius: 24px;
+        }
+    }
+
+    .second-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .tile-one {
+            border: 2px solid #C7F3DD;
+            background: #9DEAC41A;
+            width: 100%;
+            height: 328px;
+            border-radius: 24px;
+        }
+
+        .tile-two {
+            background: radial-gradient(56.68% 250.25% at 74.33% 46.11%, rgba(255, 239, 242, 0.1) 0%, rgba(255, 138, 160, 0.1) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+            border: 2px solid #3720351A;
+            width: 100%;
+            height: 178px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 40px;
+
+            p {
+                span {
+                    font: 300 24px var(--font);
+
+                    &.gradient {
+                        font: 500 64px var(--font);
+                        background: linear-gradient(97.41deg, #FF8AA0 17.85%, #E42A3C 97.46%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        color: transparent;
+                        margin: 0;
+                    }
+                }
+            }
+
+            img {
+                width: 110px;
+                height: 110px;
+            }
+        }
+    }
+
+    .third-grid {
+        width: 100%;
+        height: 100%;
+        background: url('../../assets/trust//trust31.svg');
+        background-repeat: no-repeat;
+        object-fit: cover;
+        border-radius: 24px;
+        position: relative;
+
+        .trust-content {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            display: flex;
+            flex-direction: column;
+
+            img {
+                width: 48px;
+                height: 48px;
+            }
+
+            h1 {
+                font: 400 28px var(--font);
+                color: var(--brown-dark);
+                margin: 0;
+            }
+
+            p {
+                width: fit-content;
+                height: fit-content;
+                background: var(--brown-shade);
+                padding: 6px 8px;
+                border-radius: 8px;
+                font: 300 16px var(--font);
+                color: var(--brown-dark);
+                margin: 0;
+            }
+        }
+    }
+}

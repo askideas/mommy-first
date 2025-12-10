@@ -6,10 +6,12 @@ import StoriesHome from '../../Components/StoriesHome/StoriesHome'
 import HomeVideoSection from '../../Components/HomeVideoSection/HomeVideoSection'
 import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardContainer'
 import NewArrivals from '../../Components/NewArrivals/NewArrivals'
+import MommyFirstTrust from '../../Components/MommyFirstTrust/MommyFirstTrust'
 
 const Home = () => {
   return (
     <>
+      <MommyFirstTrust />
       <NewArrivals />
       <ImageCardContainer />
       <HomeVideoSection />
