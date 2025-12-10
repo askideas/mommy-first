@@ -9,7 +9,7 @@ const ImageCard = (props) => {
         <div className="image-content-container">
             <p className="label-con">{data.label}</p>
             <h1 className="title">{data.title}</h1>
-            <h2 className="subtitle">{data.subtitle}</h2>
+            <h2 className={`subtitle ${data.class}`}>{data.subtitle}</h2>
             <button className="button-pink-bg">{data.buttonlabel} <ArrowRight className='icon' /> </button>
         </div>
     </div>

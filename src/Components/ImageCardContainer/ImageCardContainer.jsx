@@ -12,21 +12,24 @@ const ImageCardContainer = () => {
             'label': 'Shop by Category',
             'title': 'Pregnancy',
             'subtitle': 'Stay prepared + bump chic',
-            'buttonlabel': 'Shop'
+            'buttonlabel': 'Shop',
+            'class': 'one'
         },
         {
             'image': Cat2,
             'label': 'Shop by Category',
             'title': 'Postpartum',
             'subtitle': 'Bounce back with ease',
-            'buttonlabel': 'Shop'
+            'buttonlabel': 'Shop',
+            'class': 'two'
         },
         {
             'image': Cat3,
             'label': 'Shop by Category',
             'title': 'New & Noteworthy',
             'subtitle': 'Fresh finds, just for moms',
-            'buttonlabel': 'Shop'
+            'buttonlabel': 'Shop',
+            'class': 'three'
         }
     ]
   return (

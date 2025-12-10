@@ -32,7 +32,11 @@
             font: 400 24px var(--font);
             color: var(--primary-dark);
             margin: 0;
-            width: 170px;
+            width: 140px;
+
+            &.three {
+                width: 170px;
+            }
         }
     }
 }
