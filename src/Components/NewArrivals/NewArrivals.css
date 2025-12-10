@@ -1,0 +1,68 @@
+.new-arrivals-filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    column-gap: 24px;
+
+    .dropdown-filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        min-width: fit-content;
+        height: fit-content;
+        column-gap: 14px;
+
+        p {
+            font: 400 14px var(--font);
+            color: var(--primary-dark);
+            width: fit-content;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .filter-dropdown-btn {
+            background: none;
+            border: 1px solid var(--pink-dark);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font: 400 14px var(--font);
+            color: var(--pink-dark);
+
+            &::after {
+                display: none !important;
+            }
+
+            .icon {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        .filter-drodown-menu {
+            padding: 0;
+            width: max-content;
+            border: 1px solid var(--pink-dark);
+
+            li {
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+                padding: 10px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+
+                &:hover {
+                    background: var(--pink-shade);
+                    color: var(--pink-dark);
+                }
+            }
+        }
+    }
+}
+
+.newarrivals-products-container {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 40px;
+}

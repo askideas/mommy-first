@@ -5,10 +5,12 @@ import FreeGuide from '../../Components/FreeGuide/FreeGuide'
 import StoriesHome from '../../Components/StoriesHome/StoriesHome'
 import HomeVideoSection from '../../Components/HomeVideoSection/HomeVideoSection'
 import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardContainer'
+import NewArrivals from '../../Components/NewArrivals/NewArrivals'
 
 const Home = () => {
   return (
     <>
+      <NewArrivals />
       <ImageCardContainer />
       <HomeVideoSection />
       <StoriesHome />
