@@ -5,6 +5,10 @@ import Loom from '../../assets/trust/loom.svg'
 import Trust22 from '../../assets/trust/trust22.svg'
 import Trust11 from '../../assets/trust/trust11.svg'
 import Trust111 from '../../assets/trust/trust11-1.svg'
+import BlueShade from '../../assets/trust/blue-shade.svg'
+import Trust121 from '../../assets/trust/trust121.svg'
+import TrustArrow from '../../assets/trust/trust-arrow.svg'
+import Star from '../../assets/Reviews/star.svg'
 
 const MommyFirstTrust = () => {
     const headingData = {
@@ -25,11 +29,33 @@ const MommyFirstTrust = () => {
                     <p className="description">new moms say it’s an essential postpartum item</p>
                     <img src={Trust111} alt="" />
                 </div>
-                <div className="tile-two"></div>
+                <div className="tile-two">
+                    <img src={BlueShade} alt="" className="blue-shade" />
+                    <img src={Trust121} alt="" className="image" />
+                    <div className="content-div">
+                        <h1 className="heading">Cool & Calm</h1>
+                        <h1 className="count">99 <span>%</span></h1>
+                        <p className="description">of moms report soothing relief within the first 3 days of use</p>
+                    </div>
+                </div>
             </div>
 
             <div className="second-grid">
-                <div className="tile-one"></div>
+                <div className="tile-one">
+                    <h1 className="heading">Inspired by moms. <br /> Strengthened by their trust.</h1>
+                    <img src={TrustArrow} alt="" className="arrow-image" />
+                    <div className="count"><span className="rating">4.9</span><span className='out-of'>/5</span></div>
+                    <div className="reviews-container">
+                        <div className="description">Trusted by Moms <br /> Worldwide</div>
+                        <div className="stars">
+                            <img src={Star} alt="" />
+                            <img src={Star} alt="" />
+                            <img src={Star} alt="" />
+                            <img src={Star} alt="" />
+                            <img src={Star} alt="" />
+                        </div>
+                    </div>
+                </div>
                 <div className="tile-two">
                     <p className='m-0'><span className='gradient'>20K+</span> <br /><span>Loving MOMS</span></p>
                     <img src={Trust22} alt="" />
