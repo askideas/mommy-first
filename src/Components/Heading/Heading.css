@@ -19,4 +19,11 @@
         margin-bottom: 20px;
         text-transform: uppercase;
     }
+
+    .description {
+        font: 400 16px var(--font);
+        color: var(--primary-dark);
+        margin: 0;
+        text-align: center;
+    }
 }

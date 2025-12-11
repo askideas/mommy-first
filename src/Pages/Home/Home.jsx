@@ -7,10 +7,12 @@ import HomeVideoSection from '../../Components/HomeVideoSection/HomeVideoSection
 import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardContainer'
 import NewArrivals from '../../Components/NewArrivals/NewArrivals'
 import MommyFirstTrust from '../../Components/MommyFirstTrust/MommyFirstTrust'
+import BundlesHome from '../../Components/BundlesHome/BundlesHome'
 
 const Home = () => {
   return (
     <>
+      <BundlesHome />
       <MommyFirstTrust />
       <NewArrivals />
       <ImageCardContainer />

@@ -1,0 +1,8 @@
+.bundles-home-container {
+    margin-top: 30px;
+    margin-bottom: 154px;
+    width: 100%;
+    height: 392px;
+    border-radius: 22px;
+    background: var(--primary-pink);
+}
