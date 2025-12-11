@@ -13,9 +13,9 @@ const Home = () => {
   return (
     <>
       <BundlesHome />
-      <MommyFirstTrust />
       <NewArrivals />
       <ImageCardContainer />
+      <MommyFirstTrust />
       <HomeVideoSection />
       <StoriesHome />
       <ActivitiesHome />
