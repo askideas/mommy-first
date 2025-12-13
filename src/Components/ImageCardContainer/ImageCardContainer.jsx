@@ -8,6 +8,7 @@ import Cat3 from '../../assets/shopbycategory/cat3.svg'
 const ImageCardContainer = () => {
     const Items = [
         {
+            'id': 1,
             'image': Cat1,
             'label': 'Shop by Category',
             'title': 'Pregnancy',
@@ -16,6 +17,7 @@ const ImageCardContainer = () => {
             'class': 'one'
         },
         {
+            'id': 2,
             'image': Cat2,
             'label': 'Shop by Category',
             'title': 'Postpartum',
@@ -24,6 +26,7 @@ const ImageCardContainer = () => {
             'class': 'two'
         },
         {
+            'id': 3,
             'image': Cat3,
             'label': 'Shop by Category',
             'title': 'New & Noteworthy',

@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react';
 const ProductTile = (props) => {
     const product = props.data;
   return (
-    <div className="product-tile-container">
+    <div className={`product-tile-container fade-up-animation-delay-${product.id}`}>
         <img src={product.image} alt="" className='prd-image'/>
         <div className="product-details-con">
             <p className="prd-name">{product.name}</p>

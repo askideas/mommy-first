@@ -17,24 +17,28 @@ const NewArrivals = () => {
 
     const productsData = [
         {
+            'id': 1,
             'image': P1,
             'name': 'EasyCleanse Peri Bottle',
             'price': '13.99',
             'label': '10K+ bought in past month'
         },
         {
+            'id': 2,
             'image': P2,
             'name': 'High-Waisted Maternity Underwear',
             'price': '13.99',
             'label': '10K+ bought in past month'
         },
         {
+            'id': 3,
             'image': P3,
             'name': 'Witch Hazel Foam +Liner Combo',
             'price': '13.99',
             'label': '10K+ bought in past month'
         },
         {
+            'id': 4,
             'image': P4,
             'name': 'EasyCleanse Peri Bottle',
             'price': '13.99',
