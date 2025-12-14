@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import './HeroSection.css'
 import Heading from '../Heading/Heading'
 import Hero1 from '../../assets/Hero/hero1.png'
@@ -16,6 +16,9 @@ import 'swiper/css/pagination'
 import { ArrowRight } from 'lucide-react'
 
 const HeroSection = () => {
+    const [activeIndex, setActiveIndex] = useState(0)
+    const swiperRef = useRef(null)
+    
     const headingData = {
         'title': "WHAT'S NEW",
         'subtitle': false,
@@ -23,6 +26,16 @@ const HeroSection = () => {
     }
 
     const HeroSlider = [SliderSample,SliderSample,SliderSample,SliderSample]
+
+    const handleSlideChange = (swiper) => {
+        setActiveIndex(swiper.realIndex)
+    }
+
+    const handlePaginationClick = (index) => {
+        if (swiperRef.current && swiperRef.current.swiper) {
+            swiperRef.current.swiper.slideToLoop(index)
+        }
+    }
   return (
     <>
       <Heading data={headingData} />
@@ -42,6 +55,7 @@ const HeroSection = () => {
           <div className="hero-image-slider-container">
             <img src={HeroShade} alt="" className='hero-shade' />
             <Swiper
+              ref={swiperRef}
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={30}
               slidesPerView={1}
@@ -49,18 +63,30 @@ const HeroSection = () => {
               pagination={{ clickable: true }}
               autoplay={{ delay: 3000, disableOnInteraction: false }}
               loop={true}
+              onSlideChange={handleSlideChange}
             >
-              <SwiperSlide>
-                <img src={Hero1} alt="Hero Slide 1" style={{ width: '100%', height: 'auto' }} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src={Hero2} alt="Hero Slide 2" style={{ width: '100%', height: 'auto' }} />
-              </SwiperSlide>
+              {
+                HeroSlider.map((item, index)=> {
+                  return (
+                    <SwiperSlide>
+                      <img src={item} alt="Hero Slide 1" style={{ width: '100%', height: 'auto' }} />
+                    </SwiperSlide>
+                  )
+                })
+              }
             </Swiper>
             <div className="hero-slider-pagination">
               {
-                HeroSlider.map(()=> {
-                  
+                HeroSlider.map((item, index)=> {
+                  return (
+                    <button 
+                      key={index}
+                      className={activeIndex === index ? 'active' : ''}
+                      onClick={() => handlePaginationClick(index)}
+                    >
+                      Shop <ArrowRight />
+                    </button>
+                  )
                 })
               }
             </div>

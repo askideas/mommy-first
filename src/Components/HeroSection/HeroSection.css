@@ -107,6 +107,44 @@
         .swiper-pagination {
             display: none;
         }
+
+        .hero-slider-pagination {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+
+            button {
+                width: 24px;
+                height: 4px;
+                background: var(--pink-shade-dark);
+                border: none;
+                border-radius: 100px;
+                padding: 0;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 0;
+                overflow: hidden;
+
+                svg {
+                    display: none;
+                }
+
+                &.active {
+                    background: var(--pink-shade-active);
+                    width: 36px;
+                    border-radius: 6px;
+                }
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
     }
 
     .right-side-container {
