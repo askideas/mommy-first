@@ -37,7 +37,7 @@ const HeroSection = () => {
         }
     }
   return (
-    <>
+    <div className='mt-5'>
       <Heading data={headingData} />
       <div className="container">
         <div className="hero-section-container d-flex justify-content-center align-items-center">
@@ -106,7 +106,7 @@ const HeroSection = () => {
 
         </div>
       </div>
-    </>
+    </div>
     
   )
 }
