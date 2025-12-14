@@ -8,10 +8,12 @@ import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardCon
 import NewArrivals from '../../Components/NewArrivals/NewArrivals'
 import MommyFirstTrust from '../../Components/MommyFirstTrust/MommyFirstTrust'
 import BundlesHome from '../../Components/BundlesHome/BundlesHome'
+import HeroSection from '../../Components/HeroSection/HeroSection'
 
 const Home = () => {
   return (
     <>
+      <HeroSection />
       <BundlesHome />
       <NewArrivals />
       <ImageCardContainer />
