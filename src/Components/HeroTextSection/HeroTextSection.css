@@ -13,7 +13,7 @@
         justify-content: center;
         align-items: center;
         will-change: transform;
-        transition: transform 0.3s ease-out;
+        transition: transform 0.9s ease-out;
 
         &:nth-child(2) {
             /* transform: translateX(-40px); - now handled by inline style */
