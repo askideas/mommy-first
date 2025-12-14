@@ -126,7 +126,7 @@ body {
         rgba(255, 255, 255, 0.3) 60%,
         transparent 100%
     );
-    animation: flash 2s infinite;
+    animation: flash 3s infinite;
     pointer-events: none;
     transform: skewX(-20deg);
 }

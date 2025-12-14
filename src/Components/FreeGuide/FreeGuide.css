@@ -57,6 +57,8 @@
             position: absolute;
             right: 50px;
             top: 0;
+            overflow: hidden;
+            display: inline-block;
 
             .text {
                 background: var(--green);

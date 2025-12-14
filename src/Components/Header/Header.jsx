@@ -11,8 +11,8 @@ const Header = () => {
   return (
     <div className='header container-fluid'>
         <div className='row w-100 m-0'>
-            <div className="logo-container">
-                <img src={Logo} alt="Mommy FIrst" className='flash-animation' />
+            <div className="logo-container flash-animation">
+                <img src={Logo} alt="Mommy FIrst" />
             </div>
             <div className="menu-container">
                 <NavLink to="/">Home</NavLink>

@@ -39,6 +39,9 @@
                 color: var(--white);
                 border-radius: 8px;
                 padding: 4px 8px;
+                position: relative;
+                overflow: hidden;
+                display: inline-block;
             }
 
             .headinf-sec {
