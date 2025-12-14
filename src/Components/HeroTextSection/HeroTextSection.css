@@ -12,17 +12,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        will-change: transform;
+        transition: transform 0.3s ease-out;
 
         &:nth-child(2) {
-            transform: translateX(-40px);
+            /* transform: translateX(-40px); - now handled by inline style */
         }
 
         &:nth-child(3) {
-            transform: translateX(84px);
+            /* transform: translateX(84px); - now handled by inline style */
         }
 
         &:nth-child(4) {
-            transform: translateX(114px);
+            /* transform: translateX(114px); - now handled by inline style */
         }
 
         .check {
