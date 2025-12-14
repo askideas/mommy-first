@@ -3,11 +3,17 @@ import './HeroSection.css'
 import Heading from '../Heading/Heading'
 import Hero1 from '../../assets/Hero/hero1.png'
 import Hero2 from '../../assets/Hero/hero2.png'
+import HeroShade from '../../assets/Hero/hero-shade.png'
+import HeroShade1 from '../../assets/Hero/hero-shade1.png'
+import HeroShade3 from '../../assets/Hero/hero-shade-3.png'
+import HeroImage2 from '../../assets/Hero/hero-img-2.png'
+import SliderSample from '../../assets/Hero/slider-sample.png'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import { ArrowRight } from 'lucide-react'
 
 const HeroSection = () => {
     const headingData = {
@@ -15,6 +21,8 @@ const HeroSection = () => {
         'subtitle': false,
         'description': false
     }
+
+    const HeroSlider = [SliderSample,SliderSample,SliderSample,SliderSample]
   return (
     <>
       <Heading data={headingData} />
@@ -23,14 +31,21 @@ const HeroSection = () => {
 
           <div className="left-side-container">
             <img src={Hero1} alt="" className='bg-image' />
+            <img src={HeroShade1} alt="" className='hero-shade' />
+            <div className="hero-section-content-container">
+              <p className="label flash-animation">FLASH SALE - Ships in 24 Hours</p>
+              <p className="headinf-sec">Witch Hazel Foam + <br /> Liners Combo</p>
+              <button>Shop <ArrowRight /></button>
+            </div>
           </div>
 
           <div className="hero-image-slider-container">
+            <img src={HeroShade} alt="" className='hero-shade' />
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={30}
               slidesPerView={1}
-              navigation
+              navigation={false}
               pagination={{ clickable: true }}
               autoplay={{ delay: 3000, disableOnInteraction: false }}
               loop={true}
@@ -42,10 +57,25 @@ const HeroSection = () => {
                 <img src={Hero2} alt="Hero Slide 2" style={{ width: '100%', height: 'auto' }} />
               </SwiperSlide>
             </Swiper>
+            <div className="hero-slider-pagination">
+              {
+                HeroSlider.map(()=> {
+                  
+                })
+              }
+            </div>
           </div>
 
           <div className="right-side-container">
             <img src={Hero2} alt="" className='bg-image' />
+            <img src={HeroShade3} alt="" className='hero-shade' />
+            <div className="hero-section-content-container">
+              <p className="heading">
+                Exclusive <br /> <span>Bundle Deals</span>
+              </p>
+              <img src={HeroImage2} alt="" className='img-bg' />
+              <button>Shop All Brands <ArrowRight /></button>
+            </div>
           </div>
 
         </div>
