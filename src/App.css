@@ -294,3 +294,16 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+.rotate-animation {
+    animation: rotate 6s ease infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

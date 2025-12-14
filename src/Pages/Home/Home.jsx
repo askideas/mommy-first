@@ -9,11 +9,13 @@ import NewArrivals from '../../Components/NewArrivals/NewArrivals'
 import MommyFirstTrust from '../../Components/MommyFirstTrust/MommyFirstTrust'
 import BundlesHome from '../../Components/BundlesHome/BundlesHome'
 import HeroSection from '../../Components/HeroSection/HeroSection'
+import HeroTextSection from '../../Components/HeroTextSection/HeroTextSection'
 
 const Home = () => {
   return (
     <>
       <HeroSection />
+      <HeroTextSection />
       <BundlesHome />
       <NewArrivals />
       <ImageCardContainer />
