@@ -44,7 +44,7 @@ const ActivitiesHome = () => {
     ]
 
   return (
-    <div className='container'>
+    <div className='container' style={{marginBottom: '154px'}}>
       <Heading data={headingData}/>
       <div className="filters-section">
         <button className='filter-button active'>Latest</button>
@@ -59,6 +59,13 @@ const ActivitiesHome = () => {
             )
           })
         }
+      </div>
+      <div className="d-flex flex-column justify-content-center align-items-center">
+          <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+          <div className="progress-bar-con">
+              <span></span>
+          </div>
+          <button className='button-label'>View all</button>
       </div>
     </div>
     

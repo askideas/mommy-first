@@ -45,7 +45,7 @@ const MomsHub = () => {
   ]
 
   return (
-    <div className="container">
+    <div className="container" style={{marginBottom: '154px'}}>
       <div className="mommy-hub-container">
         <Heading data={headingData}/>
         <div className="moms-hub-items-con">
@@ -56,6 +56,14 @@ const MomsHub = () => {
               )
             })
           }
+        </div>
+
+        <div className="d-flex flex-column justify-content-center align-items-center">
+            <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+            <div className="progress-bar-con">
+                <span></span>
+            </div>
+            <button className='button-label'>Community</button>
         </div>
       </div>
     </div>

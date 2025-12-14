@@ -47,7 +47,7 @@ const NewArrivals = () => {
     ]
 
   return (
-    <>
+    <div style={{marginBottom: '154px'}}>
         <Heading data={headingData} />
         <div className="container">
             <div className="new-arrivals-filter-section">
@@ -82,9 +82,18 @@ const NewArrivals = () => {
                     })
                 }
             </div>
+            
+            <div className="d-flex flex-column justify-content-center align-items-center">
+                <p className='progress-bar-text'>You’ve seen 4 out of 98 items</p>
+                <div className="progress-bar-con">
+                    <span></span>
+                </div>
+                <button className='button-label'>Load more</button>
+            </div>
+            
         </div>
         
-    </>
+    </div>
   )
 }
 
