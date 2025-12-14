@@ -15,6 +15,7 @@ const MomsHub = () => {
 
   const Items = [
     {
+      'id': 1,
       'image': S1,
       'title': 'MF Cooling Pad ❄️❄️❄️ is so special?',
       'description': [
@@ -24,6 +25,7 @@ const MomsHub = () => {
       'labelonimage': 'Posted: Today, 4th November, 2025'
     },
     {
+      'id': 2,
       'image': S2,
       'title': 'Cooling sensation!',
       'description': [
@@ -34,6 +36,7 @@ const MomsHub = () => {
       'labelonimage': 'Posted: Today, 4th November, 2025'
     },
     {
+      'id': 3,
       'image': S3,
       'title': 'They absolutely love it ❤️',
       'description': [

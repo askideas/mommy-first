@@ -15,6 +15,7 @@ const ActivitiesHome = () => {
 
   const Items = [
       {
+        'id': 1,
         'image': S1,
         'title': 'Trusted by Moms Around the World',
         'description': [
@@ -24,6 +25,7 @@ const ActivitiesHome = () => {
         'labelonimage': false
       },
       {
+        'id': 2,
         'image': S2,
         'title': 'Baby EXPO - DUBAI 2026',
         'description': [
@@ -33,6 +35,7 @@ const ActivitiesHome = () => {
         'labelonimage': false
       },
       {
+        'id': 3,
         'image': S3,
         'title': 'Mother’s Day Greetings!',
         'description': [

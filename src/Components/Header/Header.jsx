@@ -10,7 +10,7 @@ import Hamburger from '../../assets/hamburger.svg'
 const Header = () => {
   return (
     <div className='header container-fluid'>
-        <div className='row w-100'>
+        <div className='row w-100 m-0'>
             <div className="logo-container">
                 <img src={Logo} alt="Mommy FIrst" className='flash-animation' />
             </div>

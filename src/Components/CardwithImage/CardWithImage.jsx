@@ -4,7 +4,7 @@ import './CardWithImage.css'
 const CardWithImage = (props) => {
     const item = props.item;
   return (
-    <div className="card-with-image-con">
+    <div className={`card-with-image-con fade-up-animation-delay-${item.id}`}>
         <span className={`label ${item && item.labelonimage ? '' : 'd-none'}`}>{item.labelonimage}</span>
         <img src={item.image} alt="" />
         <div className="content-con">

@@ -1,3 +1,7 @@
+body {
+    padding-top: 84px;
+}
+
 .button-white {
     width: fit-content;
     height: fit-content;
