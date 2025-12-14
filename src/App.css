@@ -72,6 +72,8 @@ body {
     align-items: center;
     color: var(--white);
     column-gap: 8px;
+    font: 700 16px var(--font);
+    color: var(--white);
 
     .icon {
         width: 20px;
