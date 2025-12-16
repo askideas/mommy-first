@@ -10,10 +10,12 @@ import MommyFirstTrust from '../../Components/MommyFirstTrust/MommyFirstTrust'
 import BundlesHome from '../../Components/BundlesHome/BundlesHome'
 import HeroSection from '../../Components/HeroSection/HeroSection'
 import HeroTextSection from '../../Components/HeroTextSection/HeroTextSection'
+import Snowfall from '../../Components/Snowfall/Snowfall'
 
 const Home = () => {
   return (
     <>
+      <Snowfall />
       <HeroSection />
       <HeroTextSection />
       <BundlesHome />
