@@ -340,3 +340,20 @@ body {
     color: var(--primary-dark);
     margin: 0;
 }
+
+.button-pink-full {
+    width: fit-content;
+    height: fit-content;
+    box-shadow: 0px 12px 32px 0px #FF006A66;
+    border: 1.5px solid #3720351A;
+    background: linear-gradient(218.44deg, #FC79AF 4.36%, #DE4783 86.2%);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font: 700 16px var(--font);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 16px;
+    outline: none;
+}

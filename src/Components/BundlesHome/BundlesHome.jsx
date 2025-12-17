@@ -7,6 +7,11 @@ import Clock from '../../assets/BundlesHome/clock.png'
 import Bleed from '../../assets/BundlesHome/bleed.png'
 import FeelStore from '../../assets/BundlesHome/feel-store.png'
 import WebExc from '../../assets/BundlesHome/wb-ex.png'
+import Calendar from '../../assets/BundlesHome/calendar.svg'
+import Shield from '../../assets/BundlesHome/shield-tick.svg'
+import Certificate from '../../assets/BundlesHome/certificate.svg'
+import Heart from '../../assets/BundlesHome/heart-rounded.svg'
+import { ArrowRight } from 'lucide-react'
 
 const BundlesHome = () => {
     const headingData = {
@@ -16,7 +21,7 @@ const BundlesHome = () => {
     }
 
   return (
-    <div className="container">
+    <div className="container" style={{marginBottom: '154px'}}>
         <Heading data={headingData} />
         <div className="bundles-home-container">
           <img src={BG} alt="" className='bg-image' />
@@ -35,6 +40,47 @@ const BundlesHome = () => {
             </div>
           </div>
         </div>
+        <div className="w-100">
+          <div className="bundles-details-container">
+            <div className="bundle-details-item">
+              <img src={Calendar} alt="" />
+              <div className="text-container">
+                <h1 className="heading">2–21</h1>
+                <h1 className="sub-heading">days of care</h1>
+              </div>
+            </div>
+
+            <div className="bundle-details-item">
+              <img src={Shield} alt="" />
+              <div className="text-container">
+                <h1 className="sub-heading">One less thing</h1>
+                <h1 className="sub-heading">to worry about</h1>
+              </div>
+            </div>
+
+            <div className="bundle-details-item">
+              <img src={Certificate} alt="" />
+              <div className="text-container">
+                <h1 className="heading">OB/GYN</h1>
+                <h1 className="sub-heading">Approved Essentials</h1>
+              </div>
+            </div>
+
+            <div className="bundle-details-item">
+              <img src={Heart} alt="" />
+              <div className="text-container">
+                <h1 className="heading">10,000+</h1>
+                <h1 className="sub-heading">Trusted MOMS</h1>
+              </div>
+            </div>
+          </div>
+          <p className="description-item">Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks. <br /> Our systems remove the guesswork with 2–21 days of care in one box.</p>
+          <div className="w-100 d-flex justify-content-center align-items-center">
+            <button className="button-pink-full">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
+          </div>
+          
+        </div>
+        
     </div>
   )
 }
