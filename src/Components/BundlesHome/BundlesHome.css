@@ -1,8 +1,106 @@
 .bundles-home-container {
-    margin-top: 30px;
-    margin-bottom: 154px;
-    width: 100%;
-    height: 392px;
+    margin: 30px auto 154px auto;
+    width: 862px;
+    height: 338px;
     border-radius: 22px;
     background: var(--primary-pink);
+    position: relative;
+
+    .bg-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 22px;
+    }
+
+    .website-exclusive {
+        position: absolute;
+        width: 86px;
+        height: 55px;
+        left: 26px;
+        top: 26px;
+    }
+
+    .badge-con {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -12px;
+        width: 132px;
+        height: 43px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .badge-text {
+            font: 600 17px var(--font);
+            color: var(--white);
+            position: absolute;
+            left: 51%;
+            top: 31%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 87px;
+        }
+    }
+
+    .badge-content-section {
+        width: 85%;
+        height: fit-content;
+        position: absolute;
+        left: 50%;
+        top: 54%;
+        transform: translateX(-50%) translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        p {
+            &:nth-child(1) {
+                font: 400 26px var(--font);
+                color: var(--white);
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            }
+
+            &:nth-child(2) {
+                font: 600 42px var(--font);
+                color: var(--white);
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+                margin-top: -18px;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+        }
+
+        .images-flash-container {
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            margin-top: -15px;
+
+            img {
+                &:nth-child(1) {
+                    width: 172px;
+                    height: 87px;
+                }
+
+                &:nth-child(3) {
+                    width: 224px;
+                    height: 72px;
+                    margin-left: -8px;
+                }
+            }
+
+            span {
+                font: 300 26px var(--font);
+                color: var(--white);
+                transform: rotate(-6deg);
+            }
+        }
+    }
 }
