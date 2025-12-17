@@ -359,6 +359,12 @@ body {
 }
 
 .mf-dropdown {
+    .mf-dropdown-label {
+        font: 400 16px var(--font);
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+    }
+
     button {
         width: 100%;
         display: flex;
@@ -371,16 +377,32 @@ body {
         padding: 10px 14px;
         border-radius: 8px;
 
+        &.show {
+            background: none;
+            background-color: var(--white);
+            color: var(--gray);
+            border: 1.5px solid var(--pink-dark);
+        }
+
         &:hover {
             background: none;
+            background-color: var(--white);
             color: var(--gray);
-            border: 1.5px solid #D87AA1;
+            border: 1.5px solid var(--pink-dark);
         }
 
         &:active {
-            background: none;
-            color: var(--gray);
-            border: 1.5px solid #D87AA1;
+            background: none !important;
+            background-color: var(--white);
+            color: var(--gray) !important;
+            border: 1.5px solid var(--pink-dark) !important;
+        }
+
+        &:focus-visible {
+            background: none !important;
+            background-color: var(--white);
+            color: var(--gray) !important;
+            border: 1.5px solid var(--pink-dark) !important;
         }
 
         &::after {

@@ -11,7 +11,7 @@ import Calendar from '../../assets/BundlesHome/calendar.svg'
 import Shield from '../../assets/BundlesHome/shield-tick.svg'
 import Certificate from '../../assets/BundlesHome/certificate.svg'
 import Heart from '../../assets/BundlesHome/heart-rounded.svg'
-import { ArrowRight, ChevronDown, Clock } from 'lucide-react'
+import { ArrowRight, ChevronDown, Clock, Info } from 'lucide-react'
 
 const BundlesHome = () => {
     const headingData = {
@@ -19,6 +19,8 @@ const BundlesHome = () => {
         'subtitle': "Your Recovery, Simplified.",
         'description': [' Curated bundles designed to take the guesswork out of', ' postpartum care — premium, practical, and priced to save.']
     }
+
+    const filterLabel = ['2-3 days', '5-7 days', '10-14 days', '16-21 days', 'I just need a refill']
 
   return (
     <div className="container" style={{marginBottom: '154px'}}>
@@ -76,30 +78,50 @@ const BundlesHome = () => {
           </div>
           <p className="description-item">Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks. <br /> Our systems remove the guesswork with 2–21 days of care in one box.</p>
           <div className="w-100 d-flex justify-content-center align-items-center">
-            <button className="button-pink-full" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestions">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
+            <button className="button-pink-full" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
           </div>
         </div>
 
-        <div className="offcanvas offcanvas-end" tabindex="-1" id="bundlesuggestionsModal" aria-labelledby="offcanvasRightLabel">
-          <div className="heading-section-container">
-            <div className="d-flex justify-content-between align-items-center label-skip-con">
-              <p className="label-sec"><Clock /> 30-second bundle finder</p>
-              <p className="skip">Skip</p>
+        <div className="offcanvas offcanvas-end" tabIndex="-1" id="bundlesuggestionsmodal" aria-labelledby="offcanvasRightLabel">
+          <div className="heading-and-filter-section">
+            <div className="heading-section-container">
+              <div className="d-flex justify-content-between align-items-center label-skip-con">
+                <p className="label-sec"><Clock /> 30-second bundle finder</p>
+                <p className="skip">Skip</p>
+              </div>
+              <h1 className="heading-txt">Not sure which <br /> bundle you need?</h1>
+              <h1 className="sub-heading-txt">Answer two quick questions and we’ll match you with the bundle that fits your stage of recovery and how many days of care you want covered.</h1>
             </div>
-            <h1 className="heading-txt">Not sure which <br /> bundle you need?</h1>
-            <h1 className="sub-heading-txt">Answer two quick questions and we’ll match you with the bundle that fits your stage of recovery and how many days of care you want covered.</h1>
+            <div className="filter-section-container">
+
+              <div className="dropdown mf-dropdown">
+                <p className="mf-dropdown-label">When will you start using this bundle?</p>
+                <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Select <ChevronDown style={{width: '16px', height: '16px'}} />
+                </button>
+                <ul className="dropdown-menu w-100">
+                  <li><a className="dropdown-item" href="#">Action</a></li>
+                  <li><a className="dropdown-item" href="#">Another action</a></li>
+                  <li><a className="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
+
+              <div className="filter-label-section">
+                <p className="filter-label">How many days of care would you like covered?</p>
+                <div className="label-con">
+                  {
+                    filterLabel.map((item, index)=> {
+                      return (
+                        <button key={index} className="filter-label-item">{item}</button>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="filter-section-container">
-            <div className="dropdown mf-dropdown">
-              <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Select <ChevronDown style={{width: '16px', height: '16px'}} />
-              </button>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </div>
+          <div className="footer-section">
+            <p className="info-txt"><Info style={{width: '16px' , height: '16px'}} /> You can always add a Refill Essentials bundle later.</p>
           </div>
         </div>
         
