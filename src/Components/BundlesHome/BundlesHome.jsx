@@ -126,7 +126,7 @@ const BundlesHome = () => {
             <p className="info-txt"><Info style={{width: '16px' , height: '16px'}} /> You can always add a Refill Essentials bundle later.</p>
             <div className="buttons-con">
               <div style={{flex: '1'}}>
-                <button className='button-pink-center' style={{height: '40px'}} onClick={() => navigate("/bundles/recommended")} >Show my Recommended Bundle <ArrowRight style={{width: '20px', height: '20px'}} /></button>
+                <button className='button-pink-center' style={{height: '40px'}} data-bs-dismiss="offcanvas" onClick={() => navigate("/bundles/recommended")} >Show my Recommended Bundle <ArrowRight style={{width: '20px', height: '20px'}} /></button>
               </div>
               <button className="button-pink-border" style={{height: '40px'}} data-bs-dismiss="offcanvas">Cancel</button>
             </div>
