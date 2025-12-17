@@ -302,7 +302,7 @@ body {
 }
 
 .rotate-animation {
-    animation: rotate 6s ease infinite;
+    animation: rotate 6s linear infinite;
 }
 
 @keyframes rotate {

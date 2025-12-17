@@ -15,7 +15,7 @@ import Snowfall from '../../Components/Snowfall/Snowfall'
 const Home = () => {
   return (
     <>
-      <Snowfall />
+      {/* <Snowfall /> */}
       <HeroSection />
       <HeroTextSection />
       <BundlesHome />

@@ -6,6 +6,7 @@ import Ht2 from '../../assets/HeroText/ht2.svg'
 import Ht3 from '../../assets/HeroText/ht3.svg'
 import Ht4 from '../../assets/HeroText/ht4.svg'
 import Round from '../../assets/HeroText/pink-round.png'
+import Flower from '../../assets/HeroText/flower.png'
 
 const HeroTextSection = () => {
   const sectionRef = useRef(null)
@@ -64,13 +65,22 @@ const HeroTextSection = () => {
   return (
     <div className="container">
         <div className="hero-text-section-container" ref={sectionRef}>
-            <p data-direction="left" style={{ transform: `translateX(${getTransform('left', 0)}px)` }}><span className='strike-one'>OBGYN-</span> <img src={Check} alt="" className='check' /> approved, <img src={Ht1} alt="" /></p>
+            <p data-direction="left" style={{ transform: `translateX(${getTransform('left', 0)}px)` }}><span className='strike-one'>OBGYN-</span> <img src={Check} alt="" className='check mx-3' /> approved, <img src={Ht1} alt="" /></p>
             <p data-direction="right" style={{ transform: `translateX(${getTransform('right', -40)}px)` }}> mom-tested <img src={Ht2} alt="" className='mx-3' /> essentials</p>
             <p data-direction="left" style={{ transform: `translateX(${getTransform('left', 84)}px)` }}>that make healing feel <img src={Ht3} alt="" className='mx-3' /> natural,</p>
             <p data-direction="right" style={{ transform: `translateX(${getTransform('right', 114)}px)` }}>soothing, <img src={Ht4} alt="" className='mx-3' /> and <span className='strike-two'>stress-free.</span> </p>
-            {/* <div className="pink-round-container ">
-                <img src={Round} alt="" className='bg-image ' />
-            </div> */}
+            <div className='pink-round-section'>
+              <div className="pink-round-container rotate-animation">
+                  <img src={Round} alt="" className='bg-image ' />
+              </div>
+              <img src={Flower} alt="" className='flower ' />
+              <p className="pink-round-text">
+                  <span className="loved-by">Loved by</span>
+                  <span className="count">10000+</span>
+                  <span className="moms-text">MOMS</span>
+                </p>
+            </div>
+            
         </div>
     </div>
   )
