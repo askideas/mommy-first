@@ -258,7 +258,16 @@
             font: 400 12px var(--font);
             color: var(--primary-dark);
             opacity: 70%;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        .buttons-con {
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 18px;
         }
     }
 }

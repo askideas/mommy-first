@@ -12,8 +12,10 @@ import Shield from '../../assets/BundlesHome/shield-tick.svg'
 import Certificate from '../../assets/BundlesHome/certificate.svg'
 import Heart from '../../assets/BundlesHome/heart-rounded.svg'
 import { ArrowRight, ChevronDown, Clock, Info } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const BundlesHome = () => {
+  const navigate = useNavigate();
     const headingData = {
         'title': "PREMIUM BUNDLES",
         'subtitle': "Your Recovery, Simplified.",
@@ -87,7 +89,7 @@ const BundlesHome = () => {
             <div className="heading-section-container">
               <div className="d-flex justify-content-between align-items-center label-skip-con">
                 <p className="label-sec"><Clock /> 30-second bundle finder</p>
-                <p className="skip">Skip</p>
+                <p className="skip" data-bs-dismiss="offcanvas">Skip</p>
               </div>
               <h1 className="heading-txt">Not sure which <br /> bundle you need?</h1>
               <h1 className="sub-heading-txt">Answer two quick questions and we’ll match you with the bundle that fits your stage of recovery and how many days of care you want covered.</h1>
@@ -122,6 +124,12 @@ const BundlesHome = () => {
           </div>
           <div className="footer-section">
             <p className="info-txt"><Info style={{width: '16px' , height: '16px'}} /> You can always add a Refill Essentials bundle later.</p>
+            <div className="buttons-con">
+              <div style={{flex: '1'}}>
+                <button className='button-pink-center' style={{height: '40px'}} onClick={() => navigate("/bundles/recommended")} >Show my Recommended Bundle <ArrowRight style={{width: '20px', height: '20px'}} /></button>
+              </div>
+              <button className="button-pink-border" style={{height: '40px'}} data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
           </div>
         </div>
         

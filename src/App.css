@@ -358,6 +358,43 @@ body {
     outline: none;
 }
 
+.button-pink-center {
+    width: 100%;
+    height: fit-content;
+    box-shadow: 0px 12px 32px 0px #FF006A66;
+    border: 1.5px solid #3720351A;
+    background: linear-gradient(218.44deg, #FC79AF 4.36%, #DE4783 86.2%);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font: 700 16px var(--font);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 16px;
+    outline: none;
+}
+
+.button-pink-border {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 14px;
+    box-shadow: 0px 8.1px 14.76px 0px #FF96C14F;
+    border: 1.35px solid var(--primary-pink);
+    background: var(--white);
+    border-radius: 8px;
+    font: 500 14px var(--font);
+    color: var(--primary-pink);
+    outline: none;
+
+    &:hover {
+        background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
+        border: 1px solid var(--primary-pink);
+        color: var(--white);
+        font: 500 14px var(--font);
+    }
+}
+
 .mf-dropdown {
     .mf-dropdown-label {
         font: 400 16px var(--font);
