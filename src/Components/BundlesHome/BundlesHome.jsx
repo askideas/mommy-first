@@ -3,7 +3,7 @@ import './BundlesHome.css'
 import Heading from '../Heading/Heading'
 import BG from '../../assets/BundlesHome/bg-image.png'
 import Badge from '../../assets/BundlesHome/badge.png'
-import Clock from '../../assets/BundlesHome/clock.png'
+import ClockImg from '../../assets/BundlesHome/clock.png'
 import Bleed from '../../assets/BundlesHome/bleed.png'
 import FeelStore from '../../assets/BundlesHome/feel-store.png'
 import WebExc from '../../assets/BundlesHome/wb-ex.png'
@@ -11,7 +11,7 @@ import Calendar from '../../assets/BundlesHome/calendar.svg'
 import Shield from '../../assets/BundlesHome/shield-tick.svg'
 import Certificate from '../../assets/BundlesHome/certificate.svg'
 import Heart from '../../assets/BundlesHome/heart-rounded.svg'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ChevronDown, Clock } from 'lucide-react'
 
 const BundlesHome = () => {
     const headingData = {
@@ -32,7 +32,7 @@ const BundlesHome = () => {
           </div>
           <div className="badge-content-section">
             <p>Curated postpartum bundles that match</p>
-            <p>how l<img src={Clock} alt="" className='clock' />ng you actually</p>
+            <p>how l<img src={ClockImg} alt="" className='clock' />ng you actually</p>
             <div className='images-flash-container'>
               <img src={Bleed} alt="" className='flash-animation' />
               <span>and</span>
@@ -76,9 +76,31 @@ const BundlesHome = () => {
           </div>
           <p className="description-item">Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks. <br /> Our systems remove the guesswork with 2–21 days of care in one box.</p>
           <div className="w-100 d-flex justify-content-center align-items-center">
-            <button className="button-pink-full">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
+            <button className="button-pink-full" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestions">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
           </div>
-          
+        </div>
+
+        <div className="offcanvas offcanvas-end" tabindex="-1" id="bundlesuggestionsModal" aria-labelledby="offcanvasRightLabel">
+          <div className="heading-section-container">
+            <div className="d-flex justify-content-between align-items-center label-skip-con">
+              <p className="label-sec"><Clock /> 30-second bundle finder</p>
+              <p className="skip">Skip</p>
+            </div>
+            <h1 className="heading-txt">Not sure which <br /> bundle you need?</h1>
+            <h1 className="sub-heading-txt">Answer two quick questions and we’ll match you with the bundle that fits your stage of recovery and how many days of care you want covered.</h1>
+          </div>
+          <div className="filter-section-container">
+            <div className="dropdown mf-dropdown">
+              <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Select <ChevronDown style={{width: '16px', height: '16px'}} />
+              </button>
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item" href="#">Action</a></li>
+                <li><a className="dropdown-item" href="#">Another action</a></li>
+                <li><a className="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
         
     </div>

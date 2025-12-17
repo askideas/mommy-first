@@ -357,3 +357,34 @@ body {
     column-gap: 16px;
     outline: none;
 }
+
+.mf-dropdown {
+    button {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1.5px solid #D5D7DA;
+        background: none;
+        color: var(--gray);
+        font: 400 14px var(--font);
+        padding: 10px 14px;
+        border-radius: 8px;
+
+        &:hover {
+            background: none;
+            color: var(--gray);
+            border: 1.5px solid #D87AA1;
+        }
+
+        &:active {
+            background: none;
+            color: var(--gray);
+            border: 1.5px solid #D87AA1;
+        }
+
+        &::after {
+            display: none !important;
+        }
+    }
+}
