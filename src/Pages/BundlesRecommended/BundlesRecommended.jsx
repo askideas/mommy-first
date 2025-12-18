@@ -1,7 +1,11 @@
-import { CircleCheck, SquareX, X } from 'lucide-react'
+import { CircleCheck, Clock, SquareX, X } from 'lucide-react'
 import React from 'react'
 import './BundlesRecommended.css'
 import BoxImg from '../../assets/BundleRecom/box-img.png'
+import Flakes1 from '../../assets/BundleRecom/flakes1.svg'
+import Flakes2 from '../../assets/BundleRecom/flakes2.svg'
+import Flakes3 from '../../assets/BundleRecom/flakes3.svg'
+import LabelImg from '../../assets/BundleRecom/label.png'
 
 const BundlesRecommended = () => {
   return (
@@ -30,7 +34,28 @@ const BundlesRecommended = () => {
         <div className="container">
             <div className="bundle-recommented-item-details-container">
                 <div className="bundle-recommented-item-details">
-
+                    <img src={Flakes1} alt="" className="flakes1" />
+                    <img src={Flakes2} alt="" className="flakes2" />
+                    <img src={Flakes3} alt="" className="flakes3" />
+                    <div className="label-sec-con">
+                        <img src={LabelImg} alt="" />
+                        <p>Recommended</p>
+                    </div>
+                    <div className="headinf-sec-container">
+                        <p className="label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                            </svg>
+                            5-7  Days of Care</p>
+                        <p className="head-txt">The First Week <br /> Healing System</p>
+                        <div className="recom-labels">
+                            <p className="label-item">24 Pad Liners</p>
+                            <p className="label-item">8 Underwear</p>
+                            <p className="label-item">1 Peri bottle</p>
+                            <p className="label-item">8 Cooling Pads</p>
+                            <p className="label-item">Witch Hazel Perineal Care Foam</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="bundle-recommented-item-details-optional">
