@@ -5,6 +5,7 @@ import BoxImg from '../../assets/BundleRecom/box-img.png'
 import Flakes1 from '../../assets/BundleRecom/flakes1.svg'
 import Flakes2 from '../../assets/BundleRecom/flakes2.svg'
 import Flakes3 from '../../assets/BundleRecom/flakes3.svg'
+import Flakes4 from '../../assets/BundleRecom/flakes4.svg'
 import LabelImg from '../../assets/BundleRecom/label.png'
 import BundleTileImg from '../../assets/BundleRecom/bundle-tile-img.png'
 
@@ -38,6 +39,7 @@ const BundlesRecommended = () => {
                     <img src={Flakes1} alt="" className="flakes1" />
                     <img src={Flakes2} alt="" className="flakes2" />
                     <img src={Flakes3} alt="" className="flakes3" />
+                    <img src={Flakes4} alt="" className="flakes4" />
                     <div className="label-sec-con">
                         <img src={LabelImg} alt="" />
                         <p>Recommended</p>
@@ -66,8 +68,12 @@ const BundlesRecommended = () => {
                         <div className="bundles-recom-tile-footer">
                             <img src={BundleTileImg} alt="" />
                             <div className="check-container">
-                                <input type="checkbox"  id="checkbox-bundle-tile" />
+                                <input type="checkbox"  id="checkbox-bundle-tile" checked />
                                 <span>C-Section compatible</span>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center w-100" style={{marginTop: '14px'}}>
+                                <button className='button-pink-center' style={{width: '143px', height: '36px'}}>Buy Now</button>
+                                <button className='button-pink-border' style={{width: '143px', height: '36px'}}>Add to Bag +</button>
                             </div>
                         </div>
                     </div>
