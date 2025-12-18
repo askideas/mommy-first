@@ -46,22 +46,19 @@
     width: 366px;
     height: 560px;
 
-    .bundle-recommented-item-details {
+    .flakes-con {
         width: 366px;
         height: 560px;
-        background: linear-gradient(347.33deg, #FFF6F8 17.08%, #EBA4B9 98.7%);
-        box-shadow: 0px 15px 50px 0px #FF509940;
-        border-radius: 24px;
-        position: relative;
-        padding: 34px;
-        transition: all 0.8s ease;
         position: absolute;
-        z-index: 2;
+        z-index: 0;
+        bottom: -16px;
         left: 50%;
         transform: translateX(-50%);
+        transition: all 0.8s ease;
+        transition-delay: 0.2s;
 
         &.moved {
-            transform: translateX(-92%);
+            transform: translateX(-93%);
         }
 
         .flakes1 {
@@ -90,6 +87,25 @@
             position: absolute;
             right: -103px;
             top: -64px;
+        }
+    }
+
+    .bundle-recommented-item-details {
+        width: 366px;
+        height: 560px;
+        background: linear-gradient(347.33deg, #FFF6F8 17.08%, #EBA4B9 98.7%);
+        box-shadow: 0px 15px 50px 0px #FF509940;
+        border-radius: 24px;
+        position: relative;
+        padding: 34px;
+        transition: all 0.8s ease;
+        position: absolute;
+        z-index: 2;
+        left: 50%;
+        transform: translateX(-50%);
+
+        &.moved {
+            transform: translateX(-92%);
         }
 
         .label-sec-con {
