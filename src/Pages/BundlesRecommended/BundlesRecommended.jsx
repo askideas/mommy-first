@@ -1,5 +1,5 @@
 import { CircleCheck, Clock, SquareX, X } from 'lucide-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './BundlesRecommended.css'
 import BoxImg from '../../assets/BundleRecom/box-img.png'
 import Flakes1 from '../../assets/BundleRecom/flakes1.svg'
@@ -10,6 +10,13 @@ import LabelImg from '../../assets/BundleRecom/label.png'
 import BundleTileImg from '../../assets/BundleRecom/bundle-tile-img.png'
 
 const BundlesRecommended = () => {
+    const [movement, setMovement] = useState('')
+    useEffect(() => {
+      setTimeout(() => {
+        setMovement('moved')
+      }, 2500);
+    }, [])
+    
   return (
     <>
         <div className="container">
@@ -34,8 +41,8 @@ const BundlesRecommended = () => {
         </div>
 
         <div className="container">
-            <div className="bundle-recommented-item-details-container">
-                <div className="bundle-recommented-item-details">
+            <div className={`bundle-recommented-item-details-container `}>
+                <div className={`bundle-recommented-item-details ${movement}`}>
                     <img src={Flakes1} alt="" className="flakes1" />
                     <img src={Flakes2} alt="" className="flakes2" />
                     <img src={Flakes3} alt="" className="flakes3" />
@@ -80,10 +87,10 @@ const BundlesRecommended = () => {
                     
                 </div>
 
-                <div className="bundle-recommented-item-details-optional">
+                <div className={`bundle-recommented-item-details-optional ${movement} `}>
                     <div className="close-container">
                         <div className="label-div">Optional</div>
-                        <SquareX className='close-btn' />
+                        <SquareX className='close-btn' onClick={()=> setMovement('')} />
                     </div>
                     <p className="head-ing">Hospital-bag <br /> add-on </p>
                     <img src={BoxImg} alt="" className='box-img' />
