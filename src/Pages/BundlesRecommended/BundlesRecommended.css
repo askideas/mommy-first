@@ -130,6 +130,7 @@
                 height: fit-content;
                 flex-wrap: wrap;
                 gap: 6px;
+                margin-bottom: 12px;
 
                 .label-item {
                     width: fit-content;
@@ -140,6 +141,71 @@
                     font: 400 10px var(--font);
                     color: var(--pink-darker);
                     margin: 0;
+                }
+            }
+
+            .price-section-con {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+                height: fit-content;
+
+                .price-sec {
+                    border: 1.5px solid var(--white);
+                    background: linear-gradient(90deg, var(--orange-shade) 0%, var(--orange-shde-2) 100%);
+                    width: 72px;
+                    height: 32px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 8px 0 0 8px;
+                    font: 600 16px var(--font);
+                    color: var(--primary-dark);
+                    padding: 4px 8px;
+                }
+
+                .price-desc {
+                    border: 1.5px solid var(--white);
+                    background: linear-gradient(90deg, #FFA800 0%, #FFC554 100%);
+                    flex: 1;
+                    height: 32px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 0 8px 8px 0;
+                    font: 500 9px var(--font);
+                    color: var(--black);
+                    padding: 4px 8px;
+                }
+            }
+        }
+
+        .bundles-recom-tile-footer {
+            width: 100%;
+
+            img {
+                width: 244px;
+                height: 214px;
+            }
+
+            .check-container {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                column-gap: 16px;
+                width: 100%;
+
+                #checkbox-bundle-tile {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 3px;
+                    background: var(--primary-pink);
+                }
+
+                span {
+                    font: 400 12px var(--font);
+                    color: var(--primary-dark);
                 }
             }
         }

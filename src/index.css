@@ -3,6 +3,7 @@
 
 :root {
   --white: #ffffff;
+  --black: #000000;
   --primary-dark: #372035;
   --primary-light: #433D40;
   --gray: #736372;
@@ -22,6 +23,8 @@
   --green-medium: #43826B;
   --red: #FF1F1F;
   --orange: #FFD076;
+  --orange-shade: #FFA800;
+  --orange-shde-2: #FFC554;
 
   --font: "Sora", sans-serif;
   --font-quick: "Quicksand", sans-serif;

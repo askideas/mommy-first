@@ -6,6 +6,7 @@ import Flakes1 from '../../assets/BundleRecom/flakes1.svg'
 import Flakes2 from '../../assets/BundleRecom/flakes2.svg'
 import Flakes3 from '../../assets/BundleRecom/flakes3.svg'
 import LabelImg from '../../assets/BundleRecom/label.png'
+import BundleTileImg from '../../assets/BundleRecom/bundle-tile-img.png'
 
 const BundlesRecommended = () => {
   return (
@@ -41,21 +42,36 @@ const BundlesRecommended = () => {
                         <img src={LabelImg} alt="" />
                         <p>Recommended</p>
                     </div>
-                    <div className="headinf-sec-container">
-                        <p className="label">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                            </svg>
-                            5-7  Days of Care</p>
-                        <p className="head-txt">The First Week <br /> Healing System</p>
-                        <div className="recom-labels">
-                            <p className="label-item">24 Pad Liners</p>
-                            <p className="label-item">8 Underwear</p>
-                            <p className="label-item">1 Peri bottle</p>
-                            <p className="label-item">8 Cooling Pads</p>
-                            <p className="label-item">Witch Hazel Perineal Care Foam</p>
+                    <div className="d-flex flex-column h-100 justify-content-between align-items-center">
+                        <div className="headinf-sec-container">
+                            <p className="label">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                </svg>
+                                5-7  Days of Care</p>
+                            <p className="head-txt">The First Week <br /> Healing System</p>
+                            <div className="recom-labels">
+                                <p className="label-item">24 Pad Liners</p>
+                                <p className="label-item">8 Underwear</p>
+                                <p className="label-item">1 Peri bottle</p>
+                                <p className="label-item">8 Cooling Pads</p>
+                                <p className="label-item">Witch Hazel Perineal Care Foam</p>
+                            </div>
+                            <div className="price-section-con">
+                                <div className="price-sec">$49.99</div>
+                                <div className="price-desc">Only $7.78/day — less than your daily coffee</div>
+                            </div>
+                        </div>
+
+                        <div className="bundles-recom-tile-footer">
+                            <img src={BundleTileImg} alt="" />
+                            <div className="check-container">
+                                <input type="checkbox"  id="checkbox-bundle-tile" />
+                                <span>C-Section compatible</span>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
 
                 <div className="bundle-recommented-item-details-optional">
