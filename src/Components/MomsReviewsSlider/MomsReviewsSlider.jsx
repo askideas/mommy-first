@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -14,6 +14,10 @@ import m5 from '../../assets/Reviews/m5.svg'
 
 const MomsReviewsSlider = () => {
     const swiperRef = useRef(null)
+    const headingRef = useRef(null)
+    const sliderContainerRef = useRef(null)
+    const [containerMargin, setContainerMargin] = useState(0)
+    const [slideHeight, setSlideHeight] = useState('auto')
     
     const reviews = [
     {
@@ -68,10 +72,45 @@ const MomsReviewsSlider = () => {
     }
   ]
 
+  const calculateLayout = () => {
+    if (headingRef.current && sliderContainerRef.current) {
+      // Calculate margin from screen left
+      const headingRect = headingRef.current.getBoundingClientRect()
+      const marginLeft = headingRect.left
+      setContainerMargin(marginLeft)
+
+      // Get swiper wrapper height and set to slides
+      setTimeout(() => {
+        const swiperWrapper = sliderContainerRef.current.querySelector('.swiper-wrapper')
+        if (swiperWrapper) {
+          const wrapperHeight = swiperWrapper.offsetHeight
+          setSlideHeight(wrapperHeight)
+        }
+      }, 100)
+    }
+  }
+
+  useEffect(() => {
+    // Calculate on mount
+    calculateLayout()
+
+    // Calculate on resize
+    const handleResize = () => {
+      calculateLayout()
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   return (
     <>
         <div className="container">
-            <div className="momsreview-section-heading">
+            <div className="momsreview-section-heading" ref={headingRef}>
                 <div className="head-ing">
                     <h1>What real moms are saying.</h1>
                     <h2>Postpartum is hard enough. The right support makes a bigger difference than anyone tells you.</h2>
@@ -83,7 +122,11 @@ const MomsReviewsSlider = () => {
             </div>
         </div>
 
-        <div className="reviews-slider-container">
+        <div 
+            className="reviews-slider-container" 
+            ref={sliderContainerRef}
+            style={{ marginLeft: `${containerMargin}px` }}
+        >
             <div className="moms-review-slider">
                 <Swiper
                     modules={[Navigation]}
@@ -92,6 +135,7 @@ const MomsReviewsSlider = () => {
                     slidesPerGroup={1}
                     onSwiper={(swiper) => {
                         swiperRef.current = swiper
+                        calculateLayout()
                     }}
                     breakpoints={{
                         320: {
@@ -114,7 +158,7 @@ const MomsReviewsSlider = () => {
                     className="reviews-swiper"
                 >
                     {reviews.map((review) => (
-                        <SwiperSlide key={review.id}>
+                        <SwiperSlide key={review.id} style={{ height: slideHeight !== 'auto' ? `${slideHeight}px` : 'auto' }}>
                             <div className="review-card">
                                 <div className="review-stars">
                                     {[...Array(review.rating)].map((_, index) => (

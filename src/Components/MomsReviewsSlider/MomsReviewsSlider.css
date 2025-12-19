@@ -67,9 +67,10 @@
 
 .review-card {
     background-color: white;
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 34px;
     height: 100%;
+    min-height: 324px;
     display: flex;
     flex-direction: column;
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); */
@@ -79,7 +80,8 @@
 
 .review-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    /* box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); */
+    box-shadow: 0px 12px 24px 0px #FF509933;
 }
 
 .review-stars {
@@ -89,14 +91,14 @@
 }
 
 .star-icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 .review-text {
-    font: 400 14px var(--font);
+    font: 300 14px var(--font);
     color: var(--primary-dark);
-    line-height: 1.6;
+    line-height: 182%;
     margin-bottom: auto;
     flex-grow: 1;
 }
@@ -107,12 +109,12 @@
     gap: 12px;
     margin-top: 20px;
     padding-top: 16px;
-    border-top: 1px solid #f0f0f0;
+    /* border-top: 1px solid #f0f0f0; */
 }
 
 .author-avatar {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -122,14 +124,15 @@
 }
 
 .author-name {
-    font: 500 14px var(--font);
+    font: 500 12px var(--font);
     color: var(--primary-dark);
     margin: 0;
 }
 
 .author-tag {
-    font-weight: 400;
-    color: #6b6b6b;
+    font: 500 12px var(--font);
+    color: var(--primary-dark);
+    margin: 0;
 }
 
 /* Responsive Design */
