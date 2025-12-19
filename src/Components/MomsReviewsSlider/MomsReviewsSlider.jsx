@@ -1,8 +1,20 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import React from 'react'
+import React, { useRef } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 import './MomsReviewsSlider.css'
+import star from '../../assets/Reviews/star.svg'
+import m1 from '../../assets/Reviews/m1.svg'
+import m2 from '../../assets/Reviews/m2.svg'
+import m3 from '../../assets/Reviews/m3.svg'
+import m4 from '../../assets/Reviews/m4.svg'
+import m5 from '../../assets/Reviews/m5.svg'
 
 const MomsReviewsSlider = () => {
+    const swiperRef = useRef(null)
+    
     const reviews = [
     {
       "id": 1,
@@ -11,7 +23,7 @@ const MomsReviewsSlider = () => {
       "author": {
         "name": "Jessica",
         "tag": "first-time mom",
-        "avatar": "/images/users/jessica.png"
+        "avatar": m1
       }
     },
     {
@@ -21,7 +33,7 @@ const MomsReviewsSlider = () => {
       "author": {
         "name": "Maria",
         "tag": "vaginal birth",
-        "avatar": "/images/users/maria.png"
+        "avatar": m2
       }
     },
     {
@@ -31,7 +43,7 @@ const MomsReviewsSlider = () => {
       "author": {
         "name": "Jessica",
         "tag": "first-time mom",
-        "avatar": "/images/users/jessica.png"
+        "avatar": m3
       }
     },
     {
@@ -41,7 +53,7 @@ const MomsReviewsSlider = () => {
       "author": {
         "name": "Jessica",
         "tag": "first-time mom",
-        "avatar": "/images/users/jessica.png"
+        "avatar": m4
       }
     },
     {
@@ -51,7 +63,7 @@ const MomsReviewsSlider = () => {
       "author": {
         "name": "Maria",
         "tag": "vaginal birth",
-        "avatar": "/images/users/maria.png"
+        "avatar": m5
       }
     }
   ]
@@ -65,15 +77,63 @@ const MomsReviewsSlider = () => {
                     <h2>Postpartum is hard enough. The right support makes a bigger difference than anyone tells you.</h2>
                 </div>
                 <div className="slider-navigation">
-                    <button><ArrowLeft /></button>
-                    <button><ArrowRight /></button>
+                    <button onClick={() => swiperRef.current?.slidePrev()}><ArrowLeft /></button>
+                    <button onClick={() => swiperRef.current?.slideNext()}><ArrowRight /></button>
                 </div>
             </div>
         </div>
 
-        <div className="container">
+        <div className="reviews-slider-container">
             <div className="moms-review-slider">
-                
+                <Swiper
+                    modules={[Navigation]}
+                    spaceBetween={20}
+                    slidesPerView={4.5}
+                    slidesPerGroup={1}
+                    onSwiper={(swiper) => {
+                        swiperRef.current = swiper
+                    }}
+                    breakpoints={{
+                        320: {
+                            slidesPerView: 1,
+                            spaceBetween: 16,
+                        },
+                        640: {
+                            slidesPerView: 2,
+                            spaceBetween: 16,
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                            spaceBetween: 20,
+                        },
+                        1280: {
+                            slidesPerView: 4.5,
+                            spaceBetween: 20,
+                        },
+                    }}
+                    className="reviews-swiper"
+                >
+                    {reviews.map((review) => (
+                        <SwiperSlide key={review.id}>
+                            <div className="review-card">
+                                <div className="review-stars">
+                                    {[...Array(review.rating)].map((_, index) => (
+                                        <img key={index} src={star} alt="star" className="star-icon" />
+                                    ))}
+                                </div>
+                                <p className="review-text">"{review.review}"</p>
+                                <div className="review-author">
+                                    <img src={review.author.avatar} alt={review.author.name} className="author-avatar" />
+                                    <div className="author-info">
+                                        <p className="author-name">
+                                            {review.author.name}, <span className="author-tag">{review.author.tag}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </div>
         </div>
     </>
