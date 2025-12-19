@@ -8,6 +8,7 @@ import Flakes3 from '../../assets/BundleRecom/flakes3.svg'
 import Flakes4 from '../../assets/BundleRecom/flakes4.svg'
 import LabelImg from '../../assets/BundleRecom/label.png'
 import BundleTileImg from '../../assets/BundleRecom/bundle-tile-img.png'
+import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 
 const BundlesRecommended = () => {
     const [movement, setMovement] = useState('')
@@ -110,6 +111,8 @@ const BundlesRecommended = () => {
                 </div>
             </div>
         </div>
+
+        <MomsReviewsSlider />
     </>
   )
 }
