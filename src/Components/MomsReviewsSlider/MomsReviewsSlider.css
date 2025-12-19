@@ -14,7 +14,7 @@
         h1 {
             font: 500 32px var(--font);
             color: var(--primary-dark);
-            margin: 0;
+            margin-bottom: 8px;
         }
 
         h2 {

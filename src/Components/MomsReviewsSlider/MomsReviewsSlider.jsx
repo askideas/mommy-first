@@ -114,7 +114,7 @@ const MomsReviewsSlider = () => {
   }, []);
 
   return (
-    <div style={{ marginBottom: "154px" }}>
+    <div style={{ marginBottom: "104px" }}>
       <div className="container">
         <div className="momsreview-section-heading" ref={headingRef}>
           <div className="head-ing">

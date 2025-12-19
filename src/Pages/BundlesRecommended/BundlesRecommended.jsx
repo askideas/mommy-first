@@ -11,6 +11,7 @@ import BundleTileImg from '../../assets/BundleRecom/bundle-tile-img.png'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
+import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 
 const BundlesRecommended = () => {
     const [movement, setMovement] = useState('')
@@ -116,6 +117,7 @@ const BundlesRecommended = () => {
 
         <BoughtTogether />
         <MomsReviewsSlider />
+        <MomsMomentsSlider />
         <FaqSlider />
 
     </>
