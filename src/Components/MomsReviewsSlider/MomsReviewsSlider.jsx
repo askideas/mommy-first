@@ -77,7 +77,7 @@ const MomsReviewsSlider = () => {
       // Calculate margin from screen left
       const headingRect = headingRef.current.getBoundingClientRect()
       const marginLeft = headingRect.left
-      setContainerMargin(marginLeft)
+      setContainerMargin(marginLeft-50)
 
       // Get swiper wrapper height and set to slides
       setTimeout(() => {
@@ -108,7 +108,7 @@ const MomsReviewsSlider = () => {
   }, [])
 
   return (
-    <>
+    <div style={{marginBottom: '154px'}}>
         <div className="container">
             <div className="momsreview-section-heading" ref={headingRef}>
                 <div className="head-ing">
@@ -180,7 +180,7 @@ const MomsReviewsSlider = () => {
                 </Swiper>
             </div>
         </div>
-    </>
+    </div>
     
   )
 }
