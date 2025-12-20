@@ -1,4 +1,4 @@
-import { CircleCheck, Clock, SquareX, X } from 'lucide-react'
+import { Check, CircleCheck, Clock, SquareX, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import './BundlesRecommended.css'
 import BoxImg from '../../assets/BundleRecom/box-img.png'
@@ -82,7 +82,7 @@ const BundlesRecommended = () => {
                         <div className="bundles-recom-tile-footer">
                             <img src={BundleTileImg} alt="" />
                             <div className="check-container">
-                                <input type="checkbox"  id="checkbox-bundle-tile" checked />
+                                <Check className='checkbox-icon' />
                                 <span>C-Section compatible</span>
                             </div>
                             <div className="d-flex justify-content-between align-items-center w-100" style={{marginTop: '14px'}}>

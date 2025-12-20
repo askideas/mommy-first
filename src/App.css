@@ -448,3 +448,15 @@ body {
         }
     }
 }
+
+.checkbox-icon {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    stroke: var(--white);
+    stroke-width: 2.5;
+    background: var(--pink-darker);
+    border-radius: 6px;
+    padding: 2px;
+}

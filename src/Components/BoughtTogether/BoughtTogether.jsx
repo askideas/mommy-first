@@ -2,7 +2,7 @@ import React from 'react'
 import './BoughtTogether.css'
 import ItemImg from '../../assets/BundleRecom/item-img.png'
 import BoxImg from '../../assets/BundleRecom/box-img.png'
-import { Plus } from 'lucide-react'
+import { Check, Plus } from 'lucide-react'
 
 const BoughtTogether = () => {
   return (
@@ -12,14 +12,14 @@ const BoughtTogether = () => {
             <div className="items-details-container">
                 <div className="item-one-con">
                     <p className="item-desc">
-                        <input type="checkbox" checked /> <span>21 Days Total Postpartum Care System</span>
+                        <Check className='checkbox-icon' /> <span>21 Days Total Postpartum Care System</span>
                     </p>
                     <img src={ItemImg} alt="" className='item-img' />
                 </div>
                 <Plus className='plus-icon' />
                 <div className="item-two-container">
                     <p className="item-desc">
-                        <input type="checkbox" checked /> <span>Hospital-bag add-on </span>
+                        <Check className='checkbox-icon' /> <span>Hospital-bag add-on </span>
                     </p>
                     <div className="item-details-lables">
                         <img src={BoxImg} alt="" className='item-img' />
