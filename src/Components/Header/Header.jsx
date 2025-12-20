@@ -19,6 +19,7 @@ const Header = () => {
                 <NavLink to="/shop">Shop</NavLink>
                 <NavLink to="/pregnancy-care">Pregnancy Care </NavLink>
                 <NavLink to="/postpartum-care">Postpartum Care</NavLink>
+                <NavLink to="/bundles">Bundles</NavLink>
                 <NavLink to="/gift-sets">Gift Sets 🎁</NavLink>
             </div>
             <div className="menu-action-icons-container">
