@@ -15,8 +15,8 @@
         align-items: center;
 
         .tile-one {
-            border: 2px solid #C6588526;
-            background: #FFF9FA;
+            /* border: 2px solid #C6588526; */
+            background: var(--pink-bg-shade);
             width: 100%;
             height: 253px;
             border-radius: 24px;
@@ -61,8 +61,8 @@
         }
 
         .tile-two {
-            border: 2px solid #3A4E7526;
-            background: #FAFDFF;
+            /* border: 2px solid #3A4E7526; */
+            background: var(--blue-bg-shade);
             width: 100%;
             height: 253px;
             border-radius: 24px;
@@ -125,8 +125,8 @@
         align-items: center;
 
         .tile-one {
-            border: 2px solid #C7F3DD;
-            background: #9DEAC41A;
+            /* border: 2px solid #C7F3DD; */
+            background: var(--green-bg-shade);
             width: 100%;
             height: 328px;
             border-radius: 24px;
@@ -149,7 +149,7 @@
             .count {
                 position: absolute;
                 bottom: 16px;
-                left: 24px;
+                left: 40px;
                 margin: 0;
 
                 .rating {
@@ -182,8 +182,8 @@
         }
 
         .tile-two {
-            background: radial-gradient(56.68% 250.25% at 74.33% 46.11%, rgba(255, 239, 242, 0.1) 0%, rgba(255, 138, 160, 0.1) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
-            border: 2px solid #3720351A;
+            background: var(--pink-bg-shade2);
+            /* border: 2px solid #3720351A; */
             width: 100%;
             height: 178px;
             border-radius: 24px;

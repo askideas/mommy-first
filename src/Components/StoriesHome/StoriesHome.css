@@ -34,7 +34,8 @@
                 .shade {
                     width: 100%;
                     height: 148px;
-                    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDED 100%);
+                    background: linear-gradient(180deg, #FBF2F6 0%, #F2E1E8 100%);
+
                     border-radius: 12px;
                 }
 
@@ -50,7 +51,7 @@
                 .shade {
                     width: 100%;
                     height: 90px;
-                    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDED 100%);
+                    background: linear-gradient(180deg, #FBF2F6 0%, #F2E1E8 100%);
                     border-radius: 12px;
                 }
 
@@ -66,7 +67,7 @@
                 .shade {
                     width: 100%;
                     height: 148px;
-                    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDED 100%);
+                    background: linear-gradient(180deg, #FBF2F6 0%, #F2E1E8 100%);
                     border-radius: 12px;
                 }
 
@@ -82,7 +83,7 @@
                 .shade {
                     width: 100%;
                     height: 90px;
-                    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDED 100%);
+                    background: linear-gradient(180deg, #FBF2F6 0%, #F2E1E8 100%);
                     border-radius: 12px;
                 }
 
@@ -98,7 +99,7 @@
                 .shade {
                     width: 100%;
                     height: 40px;
-                    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDED 100%);
+                    background: linear-gradient(180deg, #FBF2F6 0%, #F2E1E8 100%);
                     border-radius: 12px;
                 }
 
