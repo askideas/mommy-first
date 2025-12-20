@@ -1,0 +1,94 @@
+.shop-filters-section {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 34px;
+    margin-bottom: 34px;
+
+    .quick-filters-section {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 24px;
+
+        .filter-button {
+            width: fit-content;
+            height: fit-content;
+            padding: 4px 12px;
+            border-radius: 8px;
+            background: none;
+            border: none;
+            outline: none;
+            font: 400 14px var(--font);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
+                border-radius: 8px;
+                transition: left 0.4s ease;
+                z-index: -1;
+            }
+
+            &:hover::before {
+                left: 0;
+            }
+
+            &:hover {
+                color: var(--white);
+            }
+
+            &.active {
+                background: linear-gradient(218deg, #FD8CBB 4.36%, #DC5F92 86.2%), #700066;
+                color: var(--white);
+            }
+        }
+    }
+
+    .filter-btn-modal {
+        width: fit-content;
+        height: fit-content;
+        background: var(--white);
+        border: 1px solid var(--pink-darker);
+        border-radius: 8px;
+        padding: 4px 8px;
+        font: 400 14px var(--font);
+        color: var(--pink-darker);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 10px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
+            stroke: var(--pink-darker);
+        }
+    }
+}
+
+.products-list-container {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 32px;
+    row-gap: 54px;
+    margin-bottom: 64px;
+}

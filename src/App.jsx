@@ -8,6 +8,7 @@ import { useGlobalFadeUpAnimations } from './hooks/useFadeUpAnimation'
 import './App.css'
 import BundlesRecommended from './Pages/BundlesRecommended/BundlesRecommended'
 import Bundles from './Pages/Bundles/Bundles'
+import Shop from './Pages/Shop/Shop'
 
 const App = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -19,6 +20,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route element={<Home/>} path='/' />
+          <Route element={<Shop/>} path='/shop' />
           <Route element={<Bundles/>} path='/bundles' />
           <Route element={<BundlesRecommended/>} path='/bundles/recommended' />
         </Routes>
