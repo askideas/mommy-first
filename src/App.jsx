@@ -10,6 +10,7 @@ import BundlesRecommended from './Pages/BundlesRecommended/BundlesRecommended'
 import Bundles from './Pages/Bundles/Bundles'
 import Shop from './Pages/Shop/Shop'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
+import ComingSoon from './Components/ComingSoon/ComingSoon'
 
 const App = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -25,6 +26,9 @@ const App = () => {
           <Route element={<Shop/>} path='/shop' />
           <Route element={<Bundles/>} path='/bundles' />
           <Route element={<BundlesRecommended/>} path='/bundles/recommended' />
+          <Route element={<ComingSoon/>} path='/pregnancy-care' />
+          <Route element={<ComingSoon/>} path='/postpartum-care' />
+          <Route element={<ComingSoon/>} path='/gift-sets' />
         </Routes>
         <ContactBanner />
         <Footer />
