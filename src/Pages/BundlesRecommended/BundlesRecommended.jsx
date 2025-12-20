@@ -12,6 +12,7 @@ import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSli
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
+import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
 
 const BundlesRecommended = () => {
     const [movement, setMovement] = useState('')
@@ -116,6 +117,7 @@ const BundlesRecommended = () => {
         </div>
 
         <BoughtTogether />
+        <AllBundlesSlider />
         <MomsReviewsSlider />
         <MomsMomentsSlider />
         <FaqSlider />
