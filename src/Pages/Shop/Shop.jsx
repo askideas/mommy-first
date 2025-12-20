@@ -16,6 +16,45 @@ const Shop = () => {
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [currentCount, setCurrentCount] = useState(PRODUCTS_PER_PAGE);
 
+    const filters = [
+        {
+            id: 'stage',
+            label: 'Stage',
+            filters: [
+            { id: 'new_moms', label: 'New Moms' },
+            { id: 'experienced_moms', label: 'Experienced Moms' },
+            { id: 'working_moms', label: 'Working Moms' },
+            { id: 'travel_friendly', label: 'Travel friendly' },
+            { id: 'pregnancy', label: 'Pregnancy' }
+            ]
+        },
+        {
+            id: 'price_range',
+            label: 'Price range',
+            filters: [
+            { id: 'low_to_high', label: 'Low to High' },
+            { id: 'high_to_low', label: 'High to Low' }
+            ]
+        },
+        {
+            id: 'sort_by',
+            label: 'Sort by',
+            filters: [
+            { id: 'best_sellers', label: 'Best Sellers' },
+            { id: 'new_arrivals', label: 'New Arrivals' },
+            { id: 'customer_rating', label: 'Customer Rating' }
+            ]
+        },
+        {
+            id: 'availability',
+            label: 'Availability',
+            filters: [
+            { id: 'in_stock', label: 'In Stock' },
+            { id: 'out_of_stock', label: 'Out of Stock' }
+            ]
+        }
+    ];
+
     const HeroLabel = {
         image: HeroImage,
         text: 'Designed to Maximize Comfort for Expecting Moms',
@@ -49,7 +88,7 @@ const Shop = () => {
                     <button className='filter-button'>Postpartum 🤱</button>
                     <button className='filter-button'>Wellness & Comfort 🌿</button>
                 </div>
-                <button className="filter-btn-modal">FILTER <Settings2 /></button>
+                <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
             </div>
 
             <div className="products-list-container">
@@ -77,6 +116,36 @@ const Shop = () => {
                         Load more
                     </button>
                 )}
+            </div>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="shopFilterModal" aria-labelledby="offcanvasRightLabel">
+                <div style={{flex: '1'}}>
+                    <div className="heading"><Settings2 /> Filter by</div>
+                    <div className="filters-items-container">
+                        {
+                            filters.map((item, index)=> {
+                                return (
+                                    <div className="filters-item-sec" key={index}>
+                                        <h1 className="fil-heading">{item.label}</h1>
+                                        <div className="filter-selection-con">
+                                            {
+                                                item.filters.map((filter, i)=> {
+                                                    return (
+                                                        <button className="filter-item" key={i}>{filter.label}</button>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+                <div className="d-flex justify-content-between align-items-center">
+                    <button className='button-pink-center' style={{width: '48%', height: '40px'}}>Apply Filter</button>
+                    <button className='button-pink-border' style={{width: '48%', height: '40px'}}>Cancel</button>
+                </div>
             </div>
 
         </div>
