@@ -3,7 +3,7 @@ import './HomeVideoSection.css'
 import { Play, Pause } from 'lucide-react'
 
 const HomeVideoSection = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef(null);
   const iframeRef = useRef(null);
 
@@ -20,7 +20,6 @@ const HomeVideoSection = () => {
       playerRef.current = new window.YT.Player('youtube-player', {
         events: {
           onReady: (event) => {
-            event.target.playVideo();
             event.target.mute();
           },
           onStateChange: (event) => {
@@ -58,7 +57,7 @@ const HomeVideoSection = () => {
               <iframe
                 id="youtube-player"
                 ref={iframeRef}
-                src="https://www.youtube.com/embed/rvShmUW1SBs?autoplay=1&mute=1&controls=0&loop=1&playlist=rvShmUW1SBs&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
+                src="https://www.youtube.com/embed/rvShmUW1SBs?autoplay=0&mute=1&controls=0&loop=1&playlist=rvShmUW1SBs&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
