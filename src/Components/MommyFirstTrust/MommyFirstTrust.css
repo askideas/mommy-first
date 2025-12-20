@@ -1,8 +1,7 @@
 .mommy-first-trust-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 24px;
-    width: 100%;
+    width: fit-content;
     min-height: 530px;
     height: 100%;
     margin-top: 20px;
@@ -13,6 +12,7 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        width: 374px;
 
         .tile-one {
             /* border: 2px solid #C6588526; */
@@ -123,6 +123,7 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        width: 374px;
 
         .tile-one {
             /* border: 2px solid #C7F3DD; */
@@ -216,8 +217,8 @@
     }
 
     .third-grid {
-        width: 100%;
-        height: 100%;
+        width: 380px;
+        height: 530px;
         background: url('../../assets/trust//trust31.svg');
         background-repeat: no-repeat;
         object-fit: cover;
