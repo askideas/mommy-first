@@ -143,8 +143,8 @@ const Shop = () => {
                     </div>
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
-                    <button className='button-pink-center' style={{width: '48%', height: '40px'}}>Apply Filter</button>
-                    <button className='button-pink-border' style={{width: '48%', height: '40px'}}>Cancel</button>
+                    <button className='button-pink-center' style={{width: '48%', height: '40px', boxShadow: 'none'}}>Apply Filter</button>
+                    <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
                 </div>
             </div>
 

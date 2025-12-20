@@ -196,7 +196,7 @@
             width: 100%;
             height: fit-content;
             border-bottom: 1px solid #FBF2F6;
-            padding: 30px 0;
+            padding: 20px 0;
 
             .fil-heading {
                 font: 500 14px var(--font);

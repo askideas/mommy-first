@@ -9,6 +9,7 @@ import './App.css'
 import BundlesRecommended from './Pages/BundlesRecommended/BundlesRecommended'
 import Bundles from './Pages/Bundles/Bundles'
 import Shop from './Pages/Shop/Shop'
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 
 const App = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -17,6 +18,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route element={<Home/>} path='/' />
