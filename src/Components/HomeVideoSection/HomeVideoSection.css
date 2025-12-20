@@ -18,15 +18,89 @@
         border-radius: 23px;
         width: 100%;
         height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        position: relative;
+        overflow: hidden;
 
-        .icon {
-            width: 64px;
-            height: 64px;
-            color: var(--white);
-            fill: var(--white);
+        iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 23px;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
+
+        .play-pause-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0);
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s ease;
+
+            .icon {
+                width: 80px;
+                height: 80px;
+                color: var(--white);
+                fill: var(--white);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            }
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.3);
+
+                .icon {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .video-container {
+        width: 90%;
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-section-heading {
+        font-size: 28px;
+    }
+
+    .video-container {
+        width: 95%;
+        height: 350px;
+    }
+
+    .video-container .video .play-pause-overlay .icon {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-section-heading {
+        font-size: 24px;
+    }
+
+    .video-container {
+        width: 100%;
+        height: 250px;
+        padding: 6px;
+    }
+
+    .video-container .video .play-pause-overlay .icon {
+        width: 48px;
+        height: 48px;
     }
 }
