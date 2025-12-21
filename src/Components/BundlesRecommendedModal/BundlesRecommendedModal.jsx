@@ -1,9 +1,11 @@
 import React from 'react'
 import './BundlesRecommendedModal.css'
 import { ArrowRight, ChevronDown, Clock, Info } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const BundlesRecommendedModal = () => {
     const filterLabel = ['2-3 days', '5-7 days', '10-14 days', '16-21 days', 'I just need a refill']
+    const navigate = useNavigate();
   return (
     <div className="offcanvas offcanvas-end" tabIndex="-1" id="bundlesuggestionsmodal" aria-labelledby="offcanvasRightLabel">
         <div className="heading-and-filter-section">

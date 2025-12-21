@@ -1,8 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
 import './MomsMomentsSlider.css';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import M1 from '../../assets/Reviews/m1.svg';
@@ -15,11 +11,12 @@ import M7 from '../../assets/Reviews/m7.svg';
 import M8 from '../../assets/Reviews/m8.svg';
 
 const MomsMomentsSlider = () => {
-  const swiperRef = useRef(null);
   const headingRef = useRef(null);
   const sliderContainerRef = useRef(null);
+  const scrollContainerRef = useRef(null);
   const [containerMargin, setContainerMargin] = useState(0);
-  const [slideHeight, setSlideHeight] = useState('auto');
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
   const moments = [
     {
@@ -65,38 +62,60 @@ const MomsMomentsSlider = () => {
   ];
 
   const calculateLayout = () => {
-    if (headingRef.current && sliderContainerRef.current) {
-      // Calculate margin from screen left
+    if (headingRef.current) {
       const headingRect = headingRef.current.getBoundingClientRect();
       const marginLeft = headingRect.left;
-      setContainerMargin(marginLeft-50);
+      setContainerMargin(marginLeft - 50);
+    }
+  };
 
-      // Get swiper wrapper height and set to slides
-      setTimeout(() => {
-        const swiperWrapper =
-          sliderContainerRef.current.querySelector('.swiper-wrapper');
-        if (swiperWrapper) {
-          const wrapperHeight = swiperWrapper.offsetHeight;
-          setSlideHeight(wrapperHeight);
-        }
-      }, 100);
+  const updateScrollButtons = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollPrev(scrollLeft > 0);
+      setCanScrollNext(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  const scrollNext = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 184; // moment card width
+      const gap = 16;
+      const scrollAmount = cardWidth + gap;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  const scrollPrev = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 184;
+      const gap = 16;
+      const scrollAmount = cardWidth + gap;
+      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
-    // Calculate on mount
     calculateLayout();
+    updateScrollButtons();
 
-    // Calculate on resize
     const handleResize = () => {
       calculateLayout();
+      updateScrollButtons();
     };
 
     window.addEventListener('resize', handleResize);
 
-    // Cleanup
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', updateScrollButtons);
+    }
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', updateScrollButtons);
+      }
     };
   }, []);
 
@@ -111,10 +130,10 @@ const MomsMomentsSlider = () => {
             </h2>
           </div>
           <div className="slider-navigation">
-            <button onClick={() => swiperRef.current?.slidePrev()}>
+            <button onClick={scrollPrev} disabled={!canScrollPrev}>
               <ArrowLeft />
             </button>
-            <button onClick={() => swiperRef.current?.slideNext()}>
+            <button onClick={scrollNext} disabled={!canScrollNext}>
               <ArrowRight />
             </button>
           </div>
@@ -126,53 +145,12 @@ const MomsMomentsSlider = () => {
         ref={sliderContainerRef}
         style={{ marginLeft: `${containerMargin}px` }}
       >
-        <div className="moments-slider">
-          <Swiper
-            modules={[Navigation]}
-            spaceBetween={16}
-            slidesPerView={5.5}
-            slidesPerGroup={1}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-              calculateLayout();
-            }}
-            breakpoints={{
-              320: {
-                slidesPerView: 2,
-                spaceBetween: 12,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 14,
-              },
-              768: {
-                slidesPerView: 3.5,
-                spaceBetween: 14,
-              },
-              1024: {
-                slidesPerView: 4.5,
-                spaceBetween: 16,
-              },
-              1280: {
-                slidesPerView: 6.5,
-                spaceBetween: 16,
-              },
-            }}
-            className="moments-swiper"
-          >
-            {moments.map((moment) => (
-              <SwiperSlide
-                key={moment.id}
-                style={{
-                  height: slideHeight !== 'auto' ? `${slideHeight}px` : 'auto',
-                }}
-              >
-                <div className="moment-card">
-                  <img src={moment.image} alt={moment.alt} className="moment-image" />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <div className="moments-slider" ref={scrollContainerRef}>
+          {moments.map((moment) => (
+            <div key={moment.id} className="moment-card">
+              <img src={moment.image} alt={moment.alt} className="moment-image" />
+            </div>
+          ))}
         </div>
       </div>
     </div>
