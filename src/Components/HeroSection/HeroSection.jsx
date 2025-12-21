@@ -9,10 +9,11 @@ import HeroShade3 from '../../assets/Hero/hero-shade-3.png'
 import HeroImage2 from '../../assets/Hero/hero-img-2.png'
 import SliderSample from '../../assets/Hero/slider-img.png'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import 'swiper/css/effect-fade'
 import { ArrowRight } from 'lucide-react'
 
 const HeroSection = () => {
@@ -25,7 +26,7 @@ const HeroSection = () => {
         'description': false
     }
 
-    const HeroSlider = [SliderSample,SliderSample,SliderSample,SliderSample]
+    const HeroSlider = [SliderSample,Hero1,Hero2,SliderSample]
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex)
@@ -56,12 +57,15 @@ const HeroSection = () => {
             <img src={HeroShade} alt="" className='hero-shade' />
             <Swiper
               ref={swiperRef}
-              modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={30}
+              modules={[Navigation, Pagination, Autoplay, EffectFade]}
+              spaceBetween={0}
+              effect={'fade'}
+              fadeEffect={{ crossFade: true }}
               slidesPerView={1}
+              speed={1200}
               navigation={false}
               pagination={{ clickable: true }}
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              autoplay={{ delay: 4000, disableOnInteraction: false }}
               loop={true}
               onSlideChange={handleSlideChange}
             >
