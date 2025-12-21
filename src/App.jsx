@@ -12,6 +12,7 @@ import Shop from './Pages/Shop/Shop'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import ComingSoon from './Components/ComingSoon/ComingSoon'
 import ProductDetails from './Pages/ProductDetails/ProductDetails'
+import ChatBot from './Components/ChatBot/ChatBot'
 
 const App = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -34,6 +35,7 @@ const App = () => {
         </Routes>
         <ContactBanner />
         <Footer />
+        <ChatBot />
       </BrowserRouter>
     </>
   )
