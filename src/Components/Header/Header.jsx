@@ -24,9 +24,9 @@ const Header = () => {
             </div>
             <div className="menu-action-icons-container">
                 <NavLink to="/"><img src={Search} alt="" /></NavLink>
-                <NavLink to="/"><img src={Profile} alt="" /></NavLink>
-                <NavLink to="/"><img src={Cart} alt="" /></NavLink>
-                <NavLink to="/"><img src={Hamburger} alt="" /></NavLink>
+                <img src={Profile} alt="" data-bs-toggle="offcanvas" data-bs-target="#AuthenticationModal" style={{cursor: 'pointer'}} />
+                <img src={Cart} alt="" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}} />
+                <img src={Hamburger} alt="" data-bs-toggle="offcanvas" data-bs-target="#MegaMenuModal" style={{cursor: 'pointer'}} />
             </div>
         </div>
     </div>

@@ -1,0 +1,94 @@
+#MegaMenuModal {
+    width: 600px;
+    background: var(--white);
+    box-shadow: -16px 0px 16px 0px #3720354D;
+    border-radius: 24px 0 0 24px;
+
+    .mf-off-canvas-header {
+        width: 100%;
+        padding: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--pink-border);
+
+        .head-ing {
+            font: 500 24px var(--font);
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--primary-pink);
+            outline: none;
+            background: var(--white);
+
+            svg {
+                width: 24px;
+                height: 24px;
+                min-width: 24px;
+                min-height: 24px;
+                stroke: var(--black);
+            }
+        }
+    }
+
+    .megamenu-body-con {
+        display: flex;
+        flex-direction: column;
+        row-gap: 14px;
+        height: -webkit-fill-available;
+        padding: 32px;
+
+        .mega-menu-content {
+            flex: 1;
+        }
+
+        .footer-section {
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            row-gap: 26px;
+
+            .follow {
+                font: 500 16px var(--font);
+                color: var(--primary-dark);
+                margin: 0;
+            }
+
+            .social-media-icons {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                column-gap: 8px;
+                width: 100%;
+                height: 20px;
+
+                a {
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .copy-right {
+                font: 400 9px var(--font);
+                color: var(--primary-light);
+                margin: 0;
+            }
+        }
+    }
+}
