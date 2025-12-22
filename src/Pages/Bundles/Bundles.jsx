@@ -92,7 +92,7 @@ const Bundles = () => {
 
                 {/* CTA Button */}
                 <div className="bundles-cta-container">
-                <button className="button-pink-center" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal" style={{width: '230px'}}>
+                <button className="button-pink-center" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal" style={{width: 'fit-content'}}>
                     Not sure which bundle?
                 </button>
                 </div>

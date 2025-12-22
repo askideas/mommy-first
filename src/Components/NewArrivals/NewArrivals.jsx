@@ -88,7 +88,7 @@ const NewArrivals = () => {
                 <div className="progress-bar-con">
                     <span></span>
                 </div>
-                <button className='button-label'>Load more</button>
+                <button className='button-label'>View more</button>
             </div>
             
         </div>

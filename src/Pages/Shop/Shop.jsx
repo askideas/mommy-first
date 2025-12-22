@@ -16,6 +16,8 @@ const Shop = () => {
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [currentCount, setCurrentCount] = useState(PRODUCTS_PER_PAGE);
 
+    const espotsIndex = [11, 20, 23]
+
     const filters = [
         {
             id: 'stage',
