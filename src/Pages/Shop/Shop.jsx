@@ -8,6 +8,9 @@ import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSli
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import { shopProducts } from '../../data/productsData'
+import EsImage1 from '../../assets/Hero/slider-img.png'
+import EsImage2 from '../../assets/Hero/hero1.png'
+import EsImage3 from '../../assets/Hero/hero2.png'
 
 const Shop = () => {
     const PRODUCTS_PER_PAGE = 16;
@@ -16,7 +19,10 @@ const Shop = () => {
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [currentCount, setCurrentCount] = useState(PRODUCTS_PER_PAGE);
 
-    const espotsIndex = [11, 20, 23]
+    const espotsIndex = [3, 8, 14];
+    
+    // Espot images data - you can replace these URLs with your actual espot images
+    const espotImages = [ EsImage1, EsImage2, EsImage3 ]
 
     const filters = [
         {
@@ -79,6 +85,34 @@ const Shop = () => {
     // Calculate progress percentage
     const progressPercentage = (currentCount / TOTAL_PRODUCTS) * 100;
 
+    // Function to render products with espots
+    const renderProductsWithEspots = () => {
+        const items = [];
+        displayedProducts.forEach((product, index) => {
+            // Add product
+            items.push(
+                <ProductTile data={product} key={product.id + '-' + index} />
+            );
+            
+            // Check if we need to insert an espot after this product
+            const productPosition = index + 1; // 1-indexed position
+            const espotIndexPosition = espotsIndex.indexOf(productPosition);
+            
+            if (espotIndexPosition !== -1 && productPosition <= currentCount) {
+                items.push(
+                    <div className="espot-container" key={`espot-${productPosition}`}>
+                        <img 
+                            src={espotImages[espotIndexPosition % espotImages.length]} 
+                            alt={`Espot ${espotIndexPosition + 1}`}
+                            className="espot-image"
+                        />
+                    </div>
+                );
+            }
+        });
+        return items;
+    };
+
   return (
     <>
         <HeroImageLabel data={HeroLabel} />
@@ -94,13 +128,7 @@ const Shop = () => {
             </div>
 
             <div className="products-list-container">
-                {
-                    displayedProducts.map((item, index)=> {
-                        return(
-                            <ProductTile data={item} key={item.id + '-' + index} />
-                        )
-                    })
-                }
+                {renderProductsWithEspots()}
             </div>
 
             <div className="d-flex flex-column justify-content-center align-items-center">
