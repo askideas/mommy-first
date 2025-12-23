@@ -48,6 +48,47 @@
 
         .mega-menu-content {
             flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+
+            .menu-item-con {
+                width: 48%;
+                min-width: 48%;
+                height: fit-content;
+                display: flex;
+                flex-direction: column;
+                row-gap: 16px;
+
+                .heading {
+                    font: 500 16px var(--font);
+                    color: var(--primary-dark);
+                    margin: 0;
+                }
+
+                a {
+                    font: 400 12px var(--font);
+                    color: var(--primary-dark);
+                    margin: 0;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    column-gap: 8px;
+                    width: 100%;
+                    height: fit-content;
+                    text-decoration: none;
+
+                    span {
+                        width: fit-content;
+                        height: fit-content;
+                        border-radius: 4px;
+                        padding: 2px 4px;
+                        font: 400 8px var(--font);
+                        text-transform: uppercase;
+                    }
+                }
+            }
         }
 
         .footer-section {

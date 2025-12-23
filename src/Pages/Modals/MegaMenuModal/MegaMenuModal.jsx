@@ -8,6 +8,7 @@ import LinkedIn from '../../../assets/Footer/linkedin.svg'
 import Youtube from '../../../assets/Footer/youtube.svg'
 import Tiktok from '../../../assets/Footer/tiktok.svg'
 import { NavLink } from 'react-router-dom'
+import { MegaMenu } from '../../../data/menuData'
 
 const MegaMenuModal = () => {
   return (
@@ -18,7 +19,29 @@ const MegaMenuModal = () => {
         </div>
         <div className="megamenu-body-con">
             <div className="mega-menu-content">
-
+                {
+                    MegaMenu.map((item, index)=> {
+                        return(
+                            <div className="menu-item-con" key={index}>
+                                <p className="heading">{item.title}</p>
+                                {
+                                    item.items.map((menu, i)=> {
+                                        return (
+                                            <NavLink key={index} to={menu.link}>{menu.label} 
+                                                {
+                                                    menu.tag ? (
+                                                        <span style={{background: menu.tag.bgColor, color: menu.tag.color}} className='flash-animation' >{menu.tag.label}</span>
+                                                    ) : (<></>)
+                                                }
+                                            </NavLink>
+                                        )
+                                    })
+                                }
+                            </div>
+                        )
+                    })
+                }
+                
             </div>
             <div className="footer-section">
                 <p className="follow">Follow us on</p>
