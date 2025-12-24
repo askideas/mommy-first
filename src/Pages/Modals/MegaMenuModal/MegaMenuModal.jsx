@@ -1,6 +1,6 @@
 import React from 'react'
 import './MegaMenuModal.css'
-import { X } from 'lucide-react'
+import { Mail, X } from 'lucide-react'
 import Facebook from '../../../assets/Footer/facebook.svg'
 import XIcon from '../../../assets/Footer/x.svg'
 import Instagram from '../../../assets/Footer/instagram.svg'
@@ -42,6 +42,11 @@ const MegaMenuModal = () => {
                     })
                 }
                 
+            </div>
+            <div className="contact-section">
+                <p className="heading">GCC Distribution</p>
+                <p className="contact-number">Call: +974 50330029</p>
+                <button className="button-pink">Send an Email <Mail style={{width: '16px', height: '16px', stroke: '#372035'}} /></button>
             </div>
             <div className="footer-section">
                 <p className="follow">Follow us on</p>
