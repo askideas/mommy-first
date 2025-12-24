@@ -99,6 +99,74 @@
         .mobile-login-main-container {
             margin-top: 44px;
         }
+
+        .login-otp-section-container {
+
+            .otp-heading {
+                font: 500 20px var(--font);
+                color: var(--primary-dark);
+                /* margin: 0 0 8px 0; */
+            }
+
+            .otp-contact {
+                font: 400 20px var(--font);
+                color: var(--primary-pink);
+                margin: 0 0 32px 0;
+            }
+
+            .otp-inputs-container {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 24px;
+
+                .otp-input {
+                    width: 40px;
+                    height: 40px;
+                    border: 1.5px solid var(--gray-dark);
+                    border-radius: 8px;
+                    padding: 8px 12px;
+                    text-align: center;
+                    font: 600 20px var(--font);
+                    color: var(--primary-dark);
+                    outline: none;
+                    transition: all 0.3s ease;
+
+                    &::placeholder {
+                        color: var(--gray);
+                    }
+
+                    /* &:focus {
+                        border-color: var(--primary-pink);
+                        box-shadow: 0 0 0 3px rgba(220, 95, 146, 0.1);
+                    } */
+
+                    /* &:not(:placeholder-shown) {
+                        border-color: var(--primary-pink);
+                    } */
+                }
+            }
+
+            .otp-resend-text {
+                font: 400 14px var(--font);
+                color: var(--black);
+                margin: 0 0 32px 0;
+
+                .resend-link {
+                    color: var(--primary-pink);
+                    cursor: pointer;
+                    font-weight: 500;
+                    
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .otp-submit-btn {
+                box-shadow: none;
+                width: 100%;
+            }
+        }
     }
 
     .login-modal-footer {
