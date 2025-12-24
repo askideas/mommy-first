@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, var(--pink-shade) 0%, var(--white) 50%, var(--pink-bg-shade2) 100%);
+  background: var(--pink-shade);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@
 .loader {
   width: 80px;
   aspect-ratio: 1;
-  background: linear-gradient(var(--primary-pink) 0 0) bottom/100% 0% no-repeat var(--pink-shade-dark);
+  background: linear-gradient(218.44deg, #FC79AF 4.36%, #DE4783 86.2%) bottom/100% 0% no-repeat #ffffff;
   -webkit-mask: 
     radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left, 
     radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right, 
@@ -40,7 +40,7 @@
   mask-size: 50% 50%;
   mask-repeat: no-repeat;
   animation: l19 2s infinite ease-in-out;
-  filter: drop-shadow(0 4px 12px rgba(220, 95, 146, 0.3));
+  filter: drop-shadow(0 4px 12px rgba(222, 71, 131, 0.3));
 }
 
 @keyframes l19 {
