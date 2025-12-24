@@ -29,7 +29,7 @@ const AppContent = () => {
 
   return (
     <>
-      {<PageLoader />}
+      {isLoading && <PageLoader />}
       <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}>
         <ScrollToTop />
         <Header />
