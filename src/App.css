@@ -487,4 +487,41 @@ body {
             color: var(--gray);
         }
     }
+
+    .dropdown-section {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .country-sec {
+            width: 116px;
+            height: 40px;
+            border-radius: 8px 0 0 8px;
+            border: 1.5px solid var(--gray-dark);
+            border-right: 0;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .flag {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+            }
+
+            .country-code {
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+            }
+
+            svg {
+                min-width: 12px;
+                min-height: 12px;
+                stroke: var(--primary-dark);
+            }
+        }
+    }
 }
