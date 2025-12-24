@@ -1,0 +1,133 @@
+.page-loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--pink-shade) 0%, var(--white) 50%, var(--pink-bg-shade2) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: scaleIn 0.5s ease-out;
+}
+
+/* Enhanced loader with brand colors */
+.loader {
+  width: 80px;
+  aspect-ratio: 1;
+  background: linear-gradient(var(--primary-pink) 0 0) bottom/100% 0% no-repeat var(--pink-shade-dark);
+  -webkit-mask: 
+    radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left, 
+    radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right, 
+    linear-gradient(to bottom left, #000 42%, #0000 43%) bottom left, 
+    linear-gradient(to bottom right, #000 42%, #0000 43%) bottom right;
+  -webkit-mask-size: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask: 
+    radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left, 
+    radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right, 
+    linear-gradient(to bottom left, #000 42%, #0000 43%) bottom left, 
+    linear-gradient(to bottom right, #000 42%, #0000 43%) bottom right;
+  mask-size: 50% 50%;
+  mask-repeat: no-repeat;
+  animation: l19 2s infinite ease-in-out;
+  filter: drop-shadow(0 4px 12px rgba(220, 95, 146, 0.3));
+}
+
+@keyframes l19 {
+  0% {
+    background-size: 100% 0%;
+  }
+  90%, 100% {
+    background-size: 100% 100%;
+  }
+}
+
+.loader-text {
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-pink);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  animation: pulse 2s infinite ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 8px;
+
+  span {
+    font: 600 24px var(--font);
+    color: var(--primary-dark);
+  }
+
+  span.title {
+    font: 600 32px var(--font);
+    color: var(--pink-darker);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Fade out animation when loader is removed */
+.page-loader-wrapper.fade-out {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .loader {
+    width: 60px;
+  }
+  
+  .loader-text {
+    font-size: 14px;
+  }
+}

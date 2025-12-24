@@ -14,14 +14,23 @@ import ComingSoon from './Components/ComingSoon/ComingSoon'
 import ProductDetails from './Pages/ProductDetails/ProductDetails'
 import ChatBot from './Components/ChatBot/ChatBot'
 import Modals from './Pages/Modals/Modals'
+import PageLoader from './Components/PageLoader/PageLoader'
+import { useLoading } from './contexts/LoadingContext'
+import { usePageLoading } from './hooks/usePageLoading'
 
-const App = () => {
+const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
   useGlobalFadeUpAnimations()
+  
+  // Handle page loading on route changes
+  usePageLoading()
+  
+  const { isLoading } = useLoading()
 
   return (
     <>
-      <BrowserRouter>
+      {isLoading && <PageLoader />}
+      <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}>
         <ScrollToTop />
         <Header />
         <Routes>
@@ -38,8 +47,16 @@ const App = () => {
         <Footer />
         <ChatBot />
         <Modals />
-      </BrowserRouter>
+      </div>
     </>
+  )
+}
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   )
 }
 
