@@ -20,7 +20,7 @@ export const usePageLoading = () => {
     // Stop loading after content is ready
     const timer = setTimeout(() => {
       stopLoading()
-    }, 4000)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [location.pathname, location.search])
