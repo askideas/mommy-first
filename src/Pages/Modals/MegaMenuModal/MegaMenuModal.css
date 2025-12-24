@@ -85,6 +85,7 @@
                     font: 500 16px var(--font);
                     color: var(--primary-dark);
                     margin: 0;
+                    margin-bottom: 16px;
                 }
 
                 a {
