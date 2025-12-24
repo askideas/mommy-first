@@ -6,10 +6,10 @@ const PageLoader = () => {
     <div className="page-loader-wrapper">
       <div className="loader-content">
         <div className="loader"></div>
-        <p className="loader-text">
+        {/* <p className="loader-text">
             <span>MommyFirst</span> 
             <span className='title' >Because Moms Deserve the Best</span>
-        </p>
+        </p> */}
       </div>
     </div>
   )
