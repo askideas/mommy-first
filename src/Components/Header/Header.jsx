@@ -23,7 +23,7 @@ const Header = () => {
                 <NavLink to="/gift-sets">Gift Sets 🎁</NavLink>
             </div>
             <div className="menu-action-icons-container">
-                <NavLink to="/"><img src={Search} alt="" /></NavLink>
+                <img src={Search} alt="" data-bs-toggle="offcanvas" data-bs-target="#SearchModal" style={{cursor: 'pointer'}} />
                 <img src={Profile} alt="" data-bs-toggle="offcanvas" data-bs-target="#AuthenticationModal" style={{cursor: 'pointer'}} />
                 <img src={Cart} alt="" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}} />
                 <img src={Hamburger} alt="" data-bs-toggle="offcanvas" data-bs-target="#MegaMenuModal" style={{cursor: 'pointer'}} />

@@ -2,13 +2,15 @@ import React from 'react'
 import MiniCartModal from './MiniCartModal/MiniCartModal'
 import MegaMenuModal from './MegaMenuModal/MegaMenuModal'
 import AuthenticationModal from './AuthenticationModal/AuthenticationModal'
+import SearchModal from './SearchModal/SearchModal'
 
 const Modals = () => {
   return (
     <>
-        <MiniCartModal />
-        <MegaMenuModal />
-        <AuthenticationModal/>
+      <SearchModal />
+      <MiniCartModal />
+      <MegaMenuModal />
+      <AuthenticationModal/>
     </>
     
   )

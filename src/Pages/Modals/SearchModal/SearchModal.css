@@ -1,0 +1,169 @@
+#SearchModal {
+    width: 600px;
+    background: var(--white);
+    box-shadow: -16px 0px 16px 0px #3720354D;
+    border-radius: 24px 0 0 24px;
+    display: flex;
+    flex-direction: column;
+
+    .mf-off-canvas-header {
+        width: 100%;
+        height: fit-content;
+        padding: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--pink-border);
+
+        .head-ing {
+            font: 500 24px var(--font);
+            color: var(--primary-dark);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 10px;
+
+            .cart-items-count {
+                width: fit-content;
+                height: fit-content;
+                background: linear-gradient(90deg, #FFA800 0%, #FFC554 100%);
+                border-radius: 8px;
+                padding: 2px 4px;
+                font: 600 16px var(--font);
+                color: var(--primary-dark);
+            }
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--primary-pink);
+            outline: none;
+            background: var(--white);
+
+            svg {
+                width: 24px;
+                height: 24px;
+                min-width: 24px;
+                min-height: 24px;
+                stroke: var(--black);
+            }
+        }
+    }
+
+    .search-modal-body-container {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 32px;
+
+        .search-bar-container {
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1.5px solid var(--pink-dark);
+            margin-bottom: 32px;
+
+            input {
+                flex: 1;
+                height: 100%;
+                outline: none;
+                border: none;
+                background: none;
+                font: 400 14px var(--font);
+                color: var(--gray);
+            }
+
+            .clear-btn {
+                width: fit-content;
+                height: fit-content;
+                background: none;
+                border: 1px solid var(--pink-light);
+                padding: 2px 9px;
+                font: 400 12px var(--font);
+                color: var(--pink-light);
+                outline: none;
+                border-radius: 6px;
+            }
+        }
+
+        .search-results-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .results-count {
+                font: 400 12px var(--font);
+                color: var(--primary-dark);
+                margin: 0;
+                width: 100%;
+                height: fit-content;
+            }
+
+            .results-list {
+                display: flex;
+                flex-direction: column;
+
+                .reults-item {
+                    width: 100%;
+                    height: fit-content;
+                    display: flex;
+                    column-gap: 10px;
+                    margin-top: 14px;
+
+                    .prd-img {
+                        width: 72px;
+                        height: 72px;
+                        border-radius: 12px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 12px;
+                        }
+                    }
+
+                    .content-details {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        row-gap: 14px;
+
+                        .prd-name {
+                            font: 400 16px var(--font);
+                            color: var(--primary-dark);
+                            margin: 0;
+                        }
+
+                        .prd-price {
+                            font: 600 16px var(--font);
+                            color: var(--primary-light);
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .search-modal-footer {
+            height: fit-content;
+            
+            button {
+                box-shadow: none;
+                height: 40px;
+            }
+        }
+    }
+}
