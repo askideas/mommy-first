@@ -48,18 +48,18 @@ const MegaMenuModal = () => {
                 <p className="contact-number">Call: +974 50330029</p>
                 <button className="button-pink">Send an Email <Mail style={{width: '16px', height: '16px', stroke: '#372035'}} /></button>
             </div>
-            <div className="footer-section">
-                <p className="follow">Follow us on</p>
-                <div className="social-media-icons">
-                    <NavLink><img src={Facebook} alt="" /></NavLink>
-                    <NavLink><img src={XIcon} alt="" /></NavLink>
-                    <NavLink><img src={Instagram} alt="" /></NavLink>
-                    <NavLink><img src={LinkedIn} alt="" /></NavLink>
-                    <NavLink><img src={Youtube} alt="" /></NavLink>
-                    <NavLink><img src={Tiktok} alt="" /></NavLink>
-                </div>
-                <p className="copy-right">© 2023-2025 MommyFirst.  All rights Reserved. <br/> NeoMedUSA LLC, Where Innovation Meets Healthcare, and the Fun Never Ends!</p>
+        </div>
+        <div className="footer-section">
+            <p className="follow">Follow us on</p>
+            <div className="social-media-icons">
+                <NavLink><img src={Facebook} alt="" /></NavLink>
+                <NavLink><img src={XIcon} alt="" /></NavLink>
+                <NavLink><img src={Instagram} alt="" /></NavLink>
+                <NavLink><img src={LinkedIn} alt="" /></NavLink>
+                <NavLink><img src={Youtube} alt="" /></NavLink>
+                <NavLink><img src={Tiktok} alt="" /></NavLink>
             </div>
+            <p className="copy-right">© 2023-2025 MommyFirst.  All rights Reserved. <br/> NeoMedUSA LLC, Where Innovation Meets Healthcare, and the Fun Never Ends!</p>
         </div>
     </div>
   )
