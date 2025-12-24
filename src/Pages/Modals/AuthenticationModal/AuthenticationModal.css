@@ -44,6 +44,57 @@
 
     .login-modal-body-con {
         flex: 1;
+        padding: 32px;
+
+        .tab-switching-container {
+            width: 100%;
+            height: 40px;
+            background: var(--pink-border);
+            border-radius: 8px;
+            padding: 6px 4px;
+            display: flex;
+            position: relative;
+
+            .toggle-slider {
+                width: 49%;
+                height: calc(100% - 8px);
+                background: var(--white);
+                border-radius: 6px;
+                position: absolute;
+                left: 4px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1;
+                transition: all 0.6s ease;
+
+                &.right {
+                    transform: translateX(101%) translateY(-50%);
+                }
+
+                &.left {
+                    transform: translateX(0) translateY(-50%);
+                }
+            }
+
+            button {
+                width: 50%;
+                height: 100%;
+                background: none;
+                outline: none;
+                border: none;
+                font: 500 14px var(--font);
+                color: var(--primary-dark);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                z-index: 2;
+            }
+        }
+
+        .email-login-main-container {
+            margin-top: 44px;
+        }
     }
 
     .login-modal-footer {
