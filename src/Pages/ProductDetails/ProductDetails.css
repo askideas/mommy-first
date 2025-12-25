@@ -34,22 +34,6 @@
         }
     }
 
-    .reviews-slider-container {
-        margin-left: 0 !important;
-    }
-
-    .reviews-swiper {
-        padding-left: 0;
-    }
-
-    .moments-slider-container {
-        margin-left: 0 !important;
-    }
-
-    .moments-slider {
-        padding-left: 0;
-    }
-
     .product-details-content-section {
         width: 100%;
         height: fit-content;
