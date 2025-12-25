@@ -5,6 +5,9 @@ import { NavLink, useParams } from 'react-router-dom'
 import Star from '../../assets/star.svg'
 import WayToPay from '../../assets/ways-to-pay.png'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
+import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
+import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
+import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardContainer'
 
 const ProductDetails = () => {
     const { productid } = useParams();
@@ -117,6 +120,9 @@ const ProductDetails = () => {
             </div>
 
             <BoughtTogether />
+            <ImageCardContainer />
+            <MomsReviewsSlider />
+            <MomsMomentsSlider />
         </div>
     </div>
   )
