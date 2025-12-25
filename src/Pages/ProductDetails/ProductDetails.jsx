@@ -3,6 +3,8 @@ import './ProductDetails.css'
 import { ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react'
 import { NavLink, useParams } from 'react-router-dom'
 import Star from '../../assets/star.svg'
+import WayToPay from '../../assets/ways-to-pay.png'
+import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
 
 const ProductDetails = () => {
     const { productid } = useParams();
@@ -99,13 +101,22 @@ const ProductDetails = () => {
                                 <span>Secure Payments</span>
                             </div>
                         </div>
+
+                        <div className="add-to-cart-func-container">
+                            <button className="button-pink-center add-to-cart">Add to cart</button>
+                            <button className='button-pink-border buy-now-btn'>Buy Now | $19.99 USD <span className='offer' >SAVE 55%</span></button>
+                        </div>
+
+                        <div className="ways-to-pay">
+                            <p className="way-heading">Ways to pay</p>
+                            <img src={WayToPay} alt="" />
+                        </div>
                     </div>
 
-                    <div className="add-to-cart-func-container">
-                        <button className="button-pink-center add-to-cart">Add to cart</button>
-                    </div>
                 </div>
             </div>
+
+            <BoughtTogether />
         </div>
     </div>
   )

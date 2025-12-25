@@ -333,9 +333,45 @@
                     padding: 14px 0;
 
                     .add-to-cart {
-                        box-shadow: none !important;
-                        width: 148px !important;
-                        height: 40px !important;
+                        box-shadow: none;
+                        width: 148px;
+                        height: 40px;
+                    }
+
+                    .buy-now-btn {
+                        width: fit-content;
+                        height: 40px;
+                        padding: 10px 14px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        box-shadow: none;
+
+                        .offer {
+                            background: linear-gradient(90deg, var(--orange-shade) 0%, var(--orange-shde-2) 100%);
+                            width: fit-content;
+                            height: fit-content;
+                            border-radius: 4px;
+                            padding: 2px 4px;
+                            font: 400 10px var(--font);
+                            color: var(--white);
+                            margin-left: 4px;
+                        }
+                    }
+                }
+
+                .ways-to-pay {
+                    padding-top: 14px;
+
+                    .way-heading {
+                        font: 400 12px var(--font);
+                        color: var(--primary-dark);
+                        margin-bottom: 6px;
+                    }
+
+                    img {
+                        width: auto;
+                        height: 24px;
                     }
                 }
             }
