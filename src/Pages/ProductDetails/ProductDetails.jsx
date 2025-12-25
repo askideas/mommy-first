@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './ProductDetails.css'
 import { ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react'
 import { NavLink, useParams } from 'react-router-dom'
@@ -8,9 +8,52 @@ import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardContainer'
+import pdp1 from '../../assets/products/pdp1.png'
+import pdp2 from '../../assets/products/pdp2.png'
+import pdp3 from '../../assets/products/pdp3.png'
+import pdp4 from '../../assets/products/pdp4.png'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 const ProductDetails = () => {
     const { productid } = useParams();
+    const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+    const [isZooming, setIsZooming] = useState(false);
+    const [containerHeight, setContainerHeight] = useState(0);
+    const contentSectionRef = useRef(null);
+    
+    useEffect(() => {
+        const updateHeight = () => {
+            if (contentSectionRef.current) {
+                const height = contentSectionRef.current.offsetHeight;
+                setContainerHeight(height);
+            }
+        };
+        
+        updateHeight();
+        window.addEventListener('resize', updateHeight);
+        
+        return () => window.removeEventListener('resize', updateHeight);
+    }, []);
+    
+    const productImages = [pdp1, pdp2, pdp3, pdp4];
+    
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        setZoomPosition({ x, y });
+    };
+    
+    const handleMouseEnter = () => {
+        setIsZooming(true);
+    };
+    
+    const handleMouseLeave = () => {
+        setIsZooming(false);
+    };
   return (
     <>
         <div className="container">
@@ -23,9 +66,37 @@ const ProductDetails = () => {
                     <span>EasyCleanse Peri Bottle</span>
                 </div>
 
-                <div className="product-details-content-section">
-                    <div className="imgae-slider-container">
-
+                <div className="product-details-content-section" ref={contentSectionRef}>
+                    <div className="imgae-slider-container" style={{ height: containerHeight > 0 ? `${containerHeight}px` : 'auto' }}>
+                        <Swiper
+                            spaceBetween={10}
+                            navigation={true}
+                            loop={true}
+                            modules={[Navigation]}
+                            className="main-swiper"
+                        >
+                            {productImages.map((image, index) => (
+                                <SwiperSlide key={index}>
+                                    <div 
+                                        className="image-zoom-container"
+                                        onMouseMove={handleMouseMove}
+                                        onMouseEnter={handleMouseEnter}
+                                        onMouseLeave={handleMouseLeave}
+                                    >
+                                        <img 
+                                            src={image} 
+                                            alt={`Product ${index + 1}`}
+                                            className="main-product-image"
+                                            style={{
+                                                transform: isZooming ? 'scale(2)' : 'scale(1)',
+                                                transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                                                transition: 'transform 0.1s ease-out'
+                                            }}
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     </div>
 
                     <div className="details-content-container">
