@@ -47,12 +47,12 @@ const BundlesRecommended = () => {
 
         <div className="container">
             <div className={`bundle-recommented-item-details-container `}>
-                <div className={`flakes-con ${movement}`}>
+                {/* <div className={`flakes-con ${movement}`}>
                     <img src={Flakes1} alt="" className="flakes1" />
                     <img src={Flakes2} alt="" className="flakes2" />
                     <img src={Flakes3} alt="" className="flakes3" />
                     <img src={Flakes4} alt="" className="flakes4" />
-                </div>
+                </div> */}
                 <div className={`bundle-recommented-item-details ${movement}`}>
                     <div className="label-sec-con">
                         <img src={LabelImg} alt="" />
