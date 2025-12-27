@@ -58,7 +58,7 @@ const NewArrivals = () => {
                     <button className='filter-button'>Wellness & Comfort 🌿</button>
                 </div>
 
-                <div className="dropdown-filter">
+                {/* <div className="dropdown-filter">
                     <p>Filter BY</p>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle filter-dropdown-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,7 +70,7 @@ const NewArrivals = () => {
                             <li>Wellness & Comfort 🌿</li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
             </div> 
 
             <div className="newarrivals-products-container">
