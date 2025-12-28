@@ -37,20 +37,24 @@
     .product-details-content-section {
         width: 100%;
         height: fit-content;
-        background: var(--white);
-        box-shadow: 0px 16px 16px 0px #FF408E1A;
+        /* background: var(--white); */
+        /* box-shadow: 0px 16px 16px 0px #FF408E1A; */
         border-radius: 24px;
         display: flex;
+        justify-content: space-between;
         padding: 0;
         margin-bottom: 120px;
 
         .imgae-slider-container {
-            width: 50%;
+            width: 49%;
+            height: 740px;
+            box-shadow: 0px 16px 16px 0px #FF408E1A;
+            border-radius: 16px;
 
             .main-swiper {
                 width: 100%;
                 height: 100%;
-                border-radius: 16px 0 0 16px;
+                border-radius: 16px;
                 overflow: hidden;
 
                 .swiper-slide {
@@ -67,7 +71,7 @@
                     overflow: hidden;
                     cursor: zoom-in;
                     position: relative;
-                    border-radius: 16px 0 0 16px;
+                    border-radius: 16px;
 
                     .main-product-image {
                         width: 100%;
@@ -97,9 +101,12 @@
         }
 
         .details-content-container {
-            width: 50%;
+            width: 49%;
             height: fit-content;
             padding: 24px;
+            box-shadow: 0px 16px 16px 0px #FF408E1A;
+            border-radius: 16px;
+            background: var(--white);
 
             .stock-details-container {
                 display: flex;
@@ -186,6 +193,19 @@
                         min-height: 24px;
                         stroke: var(--pink-dark);
                     }
+                }
+            }
+
+            .product-short-description {
+                border-bottom: 1px solid var(--pink-border);
+                padding: 20px 0;
+
+                p {
+                    font: 300 12px var(--font);
+                    color: var(--primary-dark);
+                    margin: 0;
+                    width: 85%;
+                    line-height: 1.5;
                 }
             }
 
@@ -294,8 +314,9 @@
             }
 
             .product-quantity-section {
-                border-bottom: 1px solid var(--pink-border);
+                /* border-bottom: 1px solid var(--pink-border); */
                 padding: 20px 0;
+                margin-bottom: 20px;
 
                 .var-heading {
                     font: 400 12px var(--font);
@@ -350,7 +371,7 @@
             }
 
             .details-footer-section {
-                margin-top: 145px;
+                /* margin-top: 145px; */
 
                 .mf-features-section {
                     display: flex;
@@ -376,8 +397,9 @@
                 .add-to-cart-func-container {
                     display: flex;
                     column-gap: 16px;
-                    border-bottom: 1px solid var(--light-gray-shade);
-                    padding: 14px 0;
+                    border-top: 1px solid var(--light-gray-shade);
+                    padding: 20px 0;
+                    margin-top: 20px;
 
                     .add-to-cart {
                         box-shadow: none;
@@ -424,5 +446,41 @@
             }
         }
 
+    }
+}
+
+#productDetailsAccordian {
+    .accordion-item {
+        border: 0;
+        border-top: 1px solid var(--light-gray-shade);
+
+        .accordion-header {
+            font: 400 14px var(--font);
+            color: var(--primary-dark);
+
+            .accordion-button {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background-color: var(--white);
+
+                &:focus {
+                    box-shadow: none;
+                }
+
+                &::after {
+                    display: none;
+                }
+            }
+
+            svg {
+                width: 18px;
+                min-width: 18px;
+                height: 18px;
+                min-height: 18px;
+                stroke: var(--primary-dark);
+                cursor: pointer;
+            }
+        }
     }
 }

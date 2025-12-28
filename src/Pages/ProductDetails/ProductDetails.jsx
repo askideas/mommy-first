@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './ProductDetails.css'
-import { ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react'
+import { ChevronDown, ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react'
 import { NavLink, useParams } from 'react-router-dom'
 import Star from '../../assets/star.svg'
 import WayToPay from '../../assets/ways-to-pay.png'
@@ -21,22 +21,22 @@ const ProductDetails = () => {
     const { productid } = useParams();
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
     const [isZooming, setIsZooming] = useState(false);
-    const [containerHeight, setContainerHeight] = useState(0);
+    // const [containerHeight, setContainerHeight] = useState(0);
     const contentSectionRef = useRef(null);
     
-    useEffect(() => {
-        const updateHeight = () => {
-            if (contentSectionRef.current) {
-                const height = contentSectionRef.current.offsetHeight;
-                setContainerHeight(height);
-            }
-        };
+    // useEffect(() => {
+    //     const updateHeight = () => {
+    //         if (contentSectionRef.current) {
+    //             const height = contentSectionRef.current.offsetHeight;
+    //             setContainerHeight(height);
+    //         }
+    //     };
         
-        updateHeight();
-        window.addEventListener('resize', updateHeight);
+    //     updateHeight();
+    //     window.addEventListener('resize', updateHeight);
         
-        return () => window.removeEventListener('resize', updateHeight);
-    }, []);
+    //     return () => window.removeEventListener('resize', updateHeight);
+    // }, []);
     
     const productImages = [pdp1, pdp2, pdp3, pdp4];
     
@@ -67,7 +67,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="product-details-content-section" ref={contentSectionRef}>
-                    <div className="imgae-slider-container" style={{ height: containerHeight > 0 ? `${containerHeight}px` : 'auto' }}>
+                    <div className="imgae-slider-container">
                         <Swiper
                             spaceBetween={10}
                             navigation={true}
@@ -126,6 +126,10 @@ const ProductDetails = () => {
                             </div>
                         </div>
 
+                        <div className="product-short-description">
+                            <p>The Mommy First® Peri Bottle is a must-have essential for every new mom’s postpartum recovery journey. The Mommy First® Peri Bottle is a must-have essential for every new mom’s postpartum recovery journey. </p>
+                        </div>
+
                         <div className="product-price-section">
                             <p className="list-price">$29.99 USD</p>
                             <p className="sale-price">$19.99 USD <span className='offer' >SAVE 55%</span></p>
@@ -151,7 +155,7 @@ const ProductDetails = () => {
                         </div>
 
                         <div className="details-footer-section">
-                            <div className="mf-features-section">
+                            {/* <div className="mf-features-section">
                                 <div className="feature">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.0003 18.3333C14.6027 18.3333 18.3337 14.6023 18.3337 9.99996C18.3337 5.39759 14.6027 1.66663 10.0003 1.66663C5.39795 1.66663 1.66699 5.39759 1.66699 9.99996C1.66699 14.6023 5.39795 18.3333 10.0003 18.3333Z" fill="#5ED34B"/>
@@ -175,6 +179,53 @@ const ProductDetails = () => {
                                     </svg>
                                     <span>Secure Payments</span>
                                 </div>
+                            </div> */}
+
+                            <div class="accordion accordion-flush" id="productDetailsAccordian">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Description
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Usage
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion body. Let’s imagine this being filled with some actual content.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Composition
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Care & Use Information
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="add-to-cart-func-container">
@@ -182,10 +233,10 @@ const ProductDetails = () => {
                                 <button className='button-pink-border buy-now-btn'>Buy Now | $19.99 USD <span className='offer' >SAVE 55%</span></button>
                             </div>
 
-                            <div className="ways-to-pay">
+                            {/* <div className="ways-to-pay">
                                 <p className="way-heading">Ways to pay</p>
                                 <img src={WayToPay} alt="" />
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
