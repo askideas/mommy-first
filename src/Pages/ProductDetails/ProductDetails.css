@@ -463,6 +463,8 @@
                 align-items: center;
                 justify-content: space-between;
                 background-color: var(--white);
+                padding-left: 0;
+                padding-right: 0;
 
                 &:focus {
                     box-shadow: none;

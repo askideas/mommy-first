@@ -244,6 +244,12 @@ const ProductDetails = () => {
             </div>
         </div>
 
+        <div className="container">
+            <div className="product-all-images-container">
+                
+            </div>
+        </div>
+
         <BoughtTogether />
         <ImageCardContainer />
         <MomsReviewsSlider />
