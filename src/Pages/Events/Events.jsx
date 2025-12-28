@@ -25,6 +25,7 @@ const Events = () => {
         description: ["5th November - 09th November 2025"],
         buttonlabel: "Learn more",
         labelonimage: false,
+        link: "/events/1",
       },
       {
         id: 2,
@@ -33,6 +34,7 @@ const Events = () => {
         description: ["5th August - 09th August 2026"],
         buttonlabel: "Book your slot",
         labelonimage: false,
+        link: "/events/2",
       },
       {
         id: 3,
@@ -41,6 +43,7 @@ const Events = () => {
         description: ["Saturday March 21st, 2026"],
         buttonlabel: "Join Us",
         labelonimage: false,
+        link: "/events/3",
       },
       {
         id: 4,
@@ -49,6 +52,7 @@ const Events = () => {
         description: ["5th August - 09th August 2026"],
         buttonlabel: "Book your slot",
         labelonimage: false,
+        link: "/events/4",
       },
       {
         id: 5,
@@ -57,6 +61,7 @@ const Events = () => {
         description: ["5th November - 09th November 2025"],
         buttonlabel: "Learn more",
         labelonimage: false,
+        link: "/events/5",
       },
       {
         id: 6,
@@ -65,6 +70,7 @@ const Events = () => {
         description: ["Saturday March 21st, 2026"],
         buttonlabel: "Join Us",
         labelonimage: false,
+        link: "/events/6",
       },
       {
         id: 7,
@@ -73,6 +79,7 @@ const Events = () => {
         description: ["Saturday March 21st, 2026"],
         buttonlabel: "Join Us",
         labelonimage: false,
+        link: "/events/7",
       },
       {
         id: 8,
@@ -81,6 +88,7 @@ const Events = () => {
         description: ["5th November - 09th November 2025"],
         buttonlabel: "Learn more",
         labelonimage: false,
+        link: "/events/8",
       },
       {
         id: 9,
@@ -89,6 +97,7 @@ const Events = () => {
         description: ["5th August - 09th August 2026"],
         buttonlabel: "Book your slot",
         labelonimage: false,
+        link: "/events/9",
       },
       {
         id: 10,
@@ -97,6 +106,7 @@ const Events = () => {
         description: ["5th November - 09th November 2025"],
         buttonlabel: "Learn more",
         labelonimage: false,
+        link: "/events/10",
       },
       {
         id: 11,
@@ -105,6 +115,7 @@ const Events = () => {
         description: ["5th August - 09th August 2026"],
         buttonlabel: "Book your slot",
         labelonimage: false,
+        link: "/events/11",
       },
       {
         id: 12,
@@ -113,6 +124,7 @@ const Events = () => {
         description: ["Saturday March 21st, 2026"],
         buttonlabel: "Join Us",
         labelonimage: false,
+        link: "/events/12",
       },
       {
         id: 13,
@@ -121,6 +133,7 @@ const Events = () => {
         description: ["5th August - 09th August 2026"],
         buttonlabel: "Book your slot",
         labelonimage: false,
+        link: "/events/13",
       },
       {
         id: 14,
@@ -129,6 +142,7 @@ const Events = () => {
         description: ["5th November - 09th November 2025"],
         buttonlabel: "Learn more",
         labelonimage: false,
+        link: "/events/14",
       },
       {
         id: 15,
@@ -137,6 +151,7 @@ const Events = () => {
         description: ["Saturday March 21st, 2026"],
         buttonlabel: "Join Us",
         labelonimage: false,
+        link: "/events/15",
       },
       {
         id: 16,
@@ -145,6 +160,7 @@ const Events = () => {
         description: ["Saturday March 21st, 2026"],
         buttonlabel: "Join Us",
         labelonimage: false,
+        link: "/events/16",
       },
       {
         id: 17,
@@ -153,6 +169,7 @@ const Events = () => {
         description: ["5th November - 09th November 2025"],
         buttonlabel: "Learn more",
         labelonimage: false,
+        link: "/events/17",
       },
       {
         id: 18,
@@ -161,6 +178,7 @@ const Events = () => {
         description: ["5th August - 09th August 2026"],
         buttonlabel: "Book your slot",
         labelonimage: false,
+        link: "/events/18",
       },
     ];
 
