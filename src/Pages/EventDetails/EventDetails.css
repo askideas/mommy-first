@@ -1,0 +1,113 @@
+.breadcrumbs-section {
+    width: fit-content;
+    height: fit-content;
+    background: var(--white);
+    box-shadow: 0px 16px 16px 0px #FF408E1A;
+    border-radius: 6px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+    margin-bottom: 60px;
+
+    svg {
+        width: 12px;
+        height: 12px;
+        stroke: var(--primary-dark);
+    }
+
+    a {
+        font: 400 12px var(--font);
+        color: var(--primary-dark);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    span {
+        font: 400 12px var(--font);
+        color: var(--primary-pink);
+        text-decoration: none;
+    }
+}
+
+.event-details-heading {
+    font: 600 36px var(--font);
+    color: var(--primary-dark);
+    margin-bottom: 24px;
+}
+
+.event-details-main-container {
+    width: 100%;
+    height: fit-content;
+    padding: 42px;
+    box-shadow: 0px 15px 50px 0px #FF509940;
+    border-radius: 16px;
+    background: var(--white);
+    margin-bottom: 60px;
+
+    .event-image {
+        width: 100%;
+        height: 360px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+    }
+
+    .event-description {
+        border-bottom: 1px solid var(--pink-border);
+        padding-bottom: 24px;
+
+        h1 {
+            font: 600 24px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font: 300 16px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 24px;
+        }
+    }
+
+    .event-schedule-container {
+        border-bottom: 1px solid var(--pink-border);
+        padding: 24px 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+
+        .schedule-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            h1 {
+                font: 600 18px var(--font);
+                color: var(--primary-dark);
+                margin: 0;
+            }
+
+            p {
+                font: 400 16px var(--font);
+                color: var(--primary-light);
+                margin: 0;
+            }
+        }
+    }
+
+    .book-slot-btn {
+        box-shadow: none;
+        height: 40px;
+    }
+}
+
+.related-events-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 90px;
+}
