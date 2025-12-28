@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Events.css'
 import S1 from '../../assets/s-1.svg'
 import S2 from '../../assets/s-2.svg'
@@ -8,6 +8,9 @@ import Heading from '../../Components/Heading/Heading'
 import CardWithImage from '../../Components/CardwithImage/CardWithImage'
 
 const Events = () => {
+    const [displayedItems, setDisplayedItems] = useState(9);
+    const ITEMS_PER_PAGE = 9;
+
     const headingData = {
         'title': "What’s On",
         'subtitle': "Our Activities & Engagements",
@@ -161,6 +164,13 @@ const Events = () => {
       },
     ];
 
+    const visibleItems = Items.slice(0, displayedItems);
+    const hasMore = displayedItems < Items.length;
+
+    const handleLoadMore = () => {
+        setDisplayedItems(prev => Math.min(prev + ITEMS_PER_PAGE, Items.length));
+    };
+
     return (
         <div className='container' style={{marginBottom: '154px', marginTop: '90px'}}>
         <Heading data={headingData}/>
@@ -171,7 +181,7 @@ const Events = () => {
         </div>
         <div className="activities-home-container">
             {
-            Items.map((item,index)=> {
+            visibleItems.map((item,index)=> {
                 return (
                 <CardWithImage key={index} item={item} />
                 )
@@ -179,11 +189,13 @@ const Events = () => {
             }
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center">
-            <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+            <p className='progress-bar-text'>You've seen {visibleItems.length} out of {Items.length} activities</p>
             <div className="progress-bar-con">
-                <span></span>
+                <span style={{ width: `${(visibleItems.length / Items.length) * 100}%` }}></span>
             </div>
-            <button className='button-label'>View all</button>
+            {hasMore && (
+                <button className='button-label' onClick={handleLoadMore}>Load more</button>
+            )}
         </div>
         </div>
     )
