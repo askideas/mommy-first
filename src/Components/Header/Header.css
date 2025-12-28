@@ -90,5 +90,14 @@
         justify-content: flex-end;
         align-items: center;
         column-gap: 32px;
+
+        .icon {
+            width: 24px;
+            min-width: 24px;
+            height: 24px;
+            min-height: 24px;
+            stroke: var(--primary-dark);
+            cursor: pointer;
+        }
     }
 }

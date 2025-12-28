@@ -6,6 +6,7 @@ import Search from '../../assets/search.svg'
 import Profile from '../../assets/profile.svg'
 import Cart from '../../assets/cart.svg'
 import Hamburger from '../../assets/hamburger.svg'
+import { Heart } from 'lucide-react'
 
 const Header = () => {
   return (
@@ -25,6 +26,7 @@ const Header = () => {
             <div className="menu-action-icons-container">
                 <img src={Search} alt="" data-bs-toggle="offcanvas" data-bs-target="#SearchModal" style={{cursor: 'pointer'}} />
                 <img src={Profile} alt="" data-bs-toggle="offcanvas" data-bs-target="#AuthenticationModal" style={{cursor: 'pointer'}} />
+                <Heart className="icon" data-bs-toggle="offcanvas" data-bs-target="#WishlistModal" />
                 <img src={Cart} alt="" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}} />
                 <img src={Hamburger} alt="" data-bs-toggle="offcanvas" data-bs-target="#MegaMenuModal" style={{cursor: 'pointer'}} />
             </div>
