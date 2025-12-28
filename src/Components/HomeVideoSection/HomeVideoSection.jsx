@@ -6,6 +6,7 @@ const HomeVideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef(null);
   const iframeRef = useRef(null);
+  const containerRef = useRef(null);
 
   // Initialize YouTube Player API
   useEffect(() => {
@@ -34,6 +35,38 @@ const HomeVideoSection = () => {
     };
   }, []);
 
+  // Intersection Observer for autoplay/pause based on viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (playerRef.current) {
+            if (entry.isIntersecting) {
+              // Video is in viewport - autoplay
+              playerRef.current.playVideo();
+            } else {
+              // Video is out of viewport - pause
+              playerRef.current.pauseVideo();
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of video is visible
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   const togglePlayPause = () => {
     if (playerRef.current) {
       if (isPlaying) {
@@ -52,7 +85,7 @@ const HomeVideoSection = () => {
             <button className='filter-button'>C-Section Recovery Kit </button>
             <button className='filter-button'>Mega Recovery Kit </button>
         </div>
-        <div className="video-container">
+        <div className="video-container" ref={containerRef}>
             <div className="video">
               <iframe
                 id="youtube-player"

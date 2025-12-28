@@ -92,7 +92,7 @@ export const MegaMenu = [
     items: [
       {
         label: "Story",
-        link: "/about/story",
+        link: "/stories",
         tag: false,
       },
       {
@@ -102,7 +102,7 @@ export const MegaMenu = [
       },
       {
         label: "Events",
-        link: "/about/events",
+        link: "/events",
         tag: false,
       },
       {
