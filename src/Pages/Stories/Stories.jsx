@@ -15,6 +15,7 @@ import M11 from '../../assets/Reviews/m11.svg'
 import M12 from '../../assets/Reviews/m12.svg'
 import M13 from '../../assets/Reviews/m13.svg'
 import Shade from '../../assets/Reviews/shade.svg'
+import AllStories from '../../Components/AllStories/AllStories'
 
 const Stories = () => {
     const INTERVAL = 2500;
@@ -122,6 +123,8 @@ const Stories = () => {
                 </div> */}
             </div>
         </div>
+
+        <AllStories />
     </div>
   )
 }
