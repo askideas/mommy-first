@@ -11,6 +11,8 @@ import { shopProducts } from '../../data/productsData'
 import EsImage1 from '../../assets/Hero/slider-img.png'
 import EsImage2 from '../../assets/Hero/hero1.png'
 import EsImage3 from '../../assets/Hero/hero2.png'
+import MF1 from '../../assets/MF1.png'
+import MF2 from '../../assets/MF2.png'
 
 const Shop = () => {
     const PRODUCTS_PER_PAGE = 16;
@@ -19,10 +21,10 @@ const Shop = () => {
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [currentCount, setCurrentCount] = useState(PRODUCTS_PER_PAGE);
 
-    const espotsIndex = [3, 8, 14];
+    const espotsIndex = [3, 5, 14];
     
     // Espot images data - you can replace these URLs with your actual espot images
-    const espotImages = [ EsImage1, EsImage2, EsImage3 ]
+    const espotImages = [ MF1, MF2, EsImage1 ]
 
     const filters = [
         {
