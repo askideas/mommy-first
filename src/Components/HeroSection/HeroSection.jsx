@@ -9,6 +9,8 @@ import HeroShade3 from '../../assets/Hero/hero-shade-3.png'
 import HeroImage2 from '../../assets/Hero/hero-img-2.png'
 import SliderSample from '../../assets/Hero/slider-img.png'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import MF1 from '../../assets/MF1.png'
+import MF2 from '../../assets/MF2.png'
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -26,7 +28,7 @@ const HeroSection = () => {
         'description': false
     }
 
-    const HeroSlider = [SliderSample,Hero1,Hero2,SliderSample]
+    const HeroSlider = [SliderSample,MF1,MF2]
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex)
@@ -73,7 +75,7 @@ const HeroSection = () => {
                 HeroSlider.map((item, index)=> {
                   return (
                     <SwiperSlide>
-                      <img src={item} alt="Hero Slide 1" style={{ width: '100%', height: 'auto' }} />
+                      <img src={item} alt="Hero Slide 1" className='hero-slide-image' style={{ width: '100%', height: 'auto' }} />
                     </SwiperSlide>
                   )
                 })

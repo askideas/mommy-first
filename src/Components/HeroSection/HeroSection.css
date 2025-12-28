@@ -78,6 +78,11 @@
             z-index: -1;
         }
 
+        .hero-slide-image {
+            width: 100%;
+            height: 100% !important;
+        }
+
         .swiper {
             width: 100%;
             height: 100%;
