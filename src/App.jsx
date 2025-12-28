@@ -17,6 +17,7 @@ import Modals from './Pages/Modals/Modals'
 import PageLoader from './Components/PageLoader/PageLoader'
 import { useLoading } from './contexts/LoadingContext'
 import { usePageLoading } from './hooks/usePageLoading'
+import Stories from './Pages/Stories/Stories'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -42,6 +43,7 @@ const AppContent = () => {
           <Route element={<ComingSoon/>} path='/pregnancy-care' />
           <Route element={<ComingSoon/>} path='/postpartum-care' />
           <Route element={<ComingSoon/>} path='/gift-sets' />
+          <Route element={<Stories/>} path='/stories' />
         </Routes>
         <ContactBanner />
         <Footer />
