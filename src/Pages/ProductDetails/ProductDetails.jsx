@@ -7,15 +7,16 @@ import WayToPay from '../../assets/ways-to-pay.png'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
-import ImageCardContainer from '../../Components/ImageCardContainer/ImageCardContainer'
 import pdp1 from '../../assets/products/pdp1.png'
 import pdp2 from '../../assets/products/pdp2.png'
 import pdp3 from '../../assets/products/pdp3.png'
 import pdp4 from '../../assets/products/pdp4.png'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
+import DefaultImg from '../../assets/default.png'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
 
 const ProductDetails = () => {
     const { productid } = useParams();
@@ -38,7 +39,7 @@ const ProductDetails = () => {
     //     return () => window.removeEventListener('resize', updateHeight);
     // }, []);
     
-    const productImages = [pdp1, pdp2, pdp3, pdp4];
+    const productImages = [pdp1, pdp2, pdp3, pdp4, pdp1, pdp2, pdp3, pdp4, pdp3, pdp4];
     
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -55,7 +56,7 @@ const ProductDetails = () => {
         setIsZooming(false);
     };
   return (
-    <>
+    <div className='productDetailsPageContent'>
         <div className="container">
             <div className="product-details-main-container">
                 <div className="breadcrumbs-section">
@@ -244,17 +245,22 @@ const ProductDetails = () => {
             </div>
         </div>
 
+        <BoughtTogether />
+
         <div className="container">
             <div className="product-all-images-container">
-                
+                {productImages.slice(0, 10).map((image, index) => (
+                    <div key={index} className={`grid-image-item item-${index + 1}`}>
+                        <img src={image} alt={`Product view ${index + 1}`} onError={DefaultImg} />
+                    </div>
+                ))}
             </div>
         </div>
-
-        <BoughtTogether />
-        <ImageCardContainer />
+        
+        <AllBundlesSlider />
         <MomsReviewsSlider />
         <MomsMomentsSlider />
-    </>
+    </div>
     
   )
 }

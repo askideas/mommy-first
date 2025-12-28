@@ -6,7 +6,7 @@ import { Check, Plus } from 'lucide-react'
 
 const BoughtTogether = () => {
   return (
-    <div className="container" style={{marginBottom: '154px'}}>
+    <div className="container boughtTogetherCon" style={{marginBottom: '154px'}}>
         <div className="bought-together-container">
             <h1 className="head">Frequently bought together</h1>
             <div className="items-details-container">
