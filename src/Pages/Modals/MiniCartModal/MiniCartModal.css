@@ -117,6 +117,11 @@
                 .items-actions-container {
                     width: fit-content;
                     height: fit-content;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    justify-content: center;
+                    row-gap: 4px;
 
                     .item-quantity {
                         width: fit-content;
@@ -161,6 +166,16 @@
                             align-items: center;
                             margin: 0 8px;
                         }
+                    }
+
+                    .remove-item-btn {
+                        width: fit-content;
+                        height: fit-content;
+                        border: 0;
+                        background: none;
+                        outline: none;
+                        font: 400 12px var(--font);
+                        color: var(--primary-dark);
                     }
                 }
             }

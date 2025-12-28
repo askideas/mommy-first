@@ -25,7 +25,7 @@ const MiniCartModal = () => {
         currency: "USD"
       },
       image: Prd2,
-      quantity: 2
+      quantity: 10
     },
     {
       id: 3,
@@ -63,9 +63,10 @@ const MiniCartModal = () => {
                     <div className="items-actions-container">
                       <div className="item-quantity">
                         <button><Minus /></button>
-                        <p className="quantity-count">{item.quantity}</p>
+                        <p className="quantity-count">{item.quantity < 10 ? '0' : ''}{item.quantity}</p>
                         <button><Plus /></button>
                       </div>
+                      <button className="remove-item-btn">Remove</button>
                     </div>
                   </div>
                 )
