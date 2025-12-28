@@ -7,8 +7,10 @@ import P1 from '../../assets/products/prd1.svg'
 import P2 from '../../assets/products/prd2.svg'
 import P3 from '../../assets/products/prd3.svg'
 import P4 from '../../assets/products/prd4.svg'
+import { useNavigate } from 'react-router-dom'
 
 const NewArrivals = () => {
+    const navigate = useNavigate()
     const headingData = {
         'title': "NEW ARRIVALS",
         'subtitle': "Every Step, Wrapped in Comfort",
@@ -88,7 +90,7 @@ const NewArrivals = () => {
                 <div className="progress-bar-con">
                     <span></span>
                 </div>
-                <button className='button-label'>View more</button>
+                <button className='button-label' onClick={()=> navigate('/shop')}>View more</button>
             </div>
             
         </div>

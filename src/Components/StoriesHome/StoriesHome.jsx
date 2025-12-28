@@ -15,11 +15,13 @@ import M11 from '../../assets/Reviews/m11.svg'
 import M12 from '../../assets/Reviews/m12.svg'
 import M13 from '../../assets/Reviews/m13.svg'
 import Shade from '../../assets/Reviews/shade.svg'
+import { useNavigate } from 'react-router-dom'
 
 const StoriesHome = () => {
     const INTERVAL_FAST = 2000;
     const INTERVAL_MEDIUM = 2500;
     const INTERVAL_SLOW = 3000;
+    const navigate = useNavigate();
     const SlideStack = ({ images = [], start = 0, interval = 2500 }) => {
         const [index, setIndex] = useState(start % images.length)
 
@@ -115,7 +117,7 @@ const StoriesHome = () => {
                 <div className="progress-bar">
                     <span></span>
                 </div>
-                <button className='button-label'>View all  Stories</button>
+                <button className='button-label' onClick={()=> navigate('/stories')}>View all  Stories</button>
             </div>
         </div>
     </div>

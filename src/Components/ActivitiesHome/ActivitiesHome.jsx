@@ -5,8 +5,10 @@ import S1 from '../../assets/s-1.svg'
 import S2 from '../../assets/s-2.svg'
 import S3 from '../../assets/s-3.svg'
 import CardWithImage from '../CardwithImage/CardWithImage'
+import { useNavigate } from 'react-router-dom'
 
 const ActivitiesHome = () => {
+  const navigate = useNavigate()
   const headingData = {
     'title': "What’s On",
     'subtitle': "Our Activities & Engagements",
@@ -22,7 +24,8 @@ const ActivitiesHome = () => {
           '5th November - 09th November 2025',
         ],
         'buttonlabel': 'Learn more',
-        'labelonimage': false
+        'labelonimage': false,
+        'link': '/events/1'
       },
       {
         'id': 2,
@@ -32,7 +35,8 @@ const ActivitiesHome = () => {
           '5th August - 09th August 2026'
         ],
         'buttonlabel': 'Book your slot',
-        'labelonimage': false
+        'labelonimage': false,
+        'link': '/events/2'
       },
       {
         'id': 3,
@@ -42,7 +46,8 @@ const ActivitiesHome = () => {
           'Saturday March 21st, 2026'
         ],
         'buttonlabel': 'Join Us',
-        'labelonimage': false
+        'labelonimage': false,
+        'link': '/events/3'
       }
     ]
 
@@ -68,7 +73,7 @@ const ActivitiesHome = () => {
           <div className="progress-bar-con">
               <span></span>
           </div>
-          <button className='button-label'>View all</button>
+          <button className='button-label' onClick={()=> navigate('/events')}>View all</button>
       </div>
     </div>
     
