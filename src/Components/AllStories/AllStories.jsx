@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './AllStories.css'
 import Star from '../../assets/Reviews/star.svg'
 import M1 from '../../assets/Reviews/m1.svg'
 
 const AllStories = () => {
+    const [displayedItems, setDisplayedItems] = useState(12);
+    const ITEMS_PER_PAGE = 12;
+
     const Stories = [
       {
         id: 1,
@@ -263,6 +266,13 @@ const AllStories = () => {
       },
     ];
 
+    const visibleStories = Stories.slice(0, displayedItems);
+    const hasMore = displayedItems < Stories.length;
+
+    const handleLoadMore = () => {
+        setDisplayedItems(prev => Math.min(prev + ITEMS_PER_PAGE, Stories.length));
+    };
+
   return (
     <div className="container">
         <div className="all-stories-container">
@@ -273,7 +283,7 @@ const AllStories = () => {
             </div>
 
             <div className="reviews-list">
-                {Stories.map((story, index) => {
+                {visibleStories.map((story, index) => {
                     const paragraphs = story.reviewText.split('|');
                     return (
                         <div key={`${story.id}-${index}`} className="review-card">
@@ -297,11 +307,13 @@ const AllStories = () => {
             </div>
 
             <div className="d-flex flex-column justify-content-center align-items-center">
-                <p className='progress-bar-text'>You’ve seen 3 out of 12 Stories</p>
+                <p className='progress-bar-text'>You've seen {visibleStories.length} out of {Stories.length} Stories</p>
                 <div className="progress-bar-con">
-                    <span></span>
+                    <span style={{ width: `${(visibleStories.length / Stories.length) * 100}%` }}></span>
                 </div>
-                <button className='button-label'>Load more</button>
+                {hasMore && (
+                    <button className='button-label' onClick={handleLoadMore}>Load more</button>
+                )}
             </div>
         </div>
     </div>
