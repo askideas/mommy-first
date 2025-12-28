@@ -17,7 +17,9 @@ import M13 from '../../assets/Reviews/m13.svg'
 import Shade from '../../assets/Reviews/shade.svg'
 
 const StoriesHome = () => {
-    const INTERVAL = 2500;
+    const INTERVAL_FAST = 2000;
+    const INTERVAL_MEDIUM = 2500;
+    const INTERVAL_SLOW = 3000;
     const SlideStack = ({ images = [], start = 0, interval = 2500 }) => {
         const [index, setIndex] = useState(start % images.length)
 
@@ -57,51 +59,51 @@ const StoriesHome = () => {
                 {/* keep same gallery-item structure; each item has a shade then a slide stack */}
                 <div className="gallery-item one">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={0} interval={INTERVAL} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={1} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={0} interval={INTERVAL_MEDIUM} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={1} interval={INTERVAL_SLOW} />
                 </div>
 
                 <div className="gallery-item two">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={2} interval={INTERVAL} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={3} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={3} interval={INTERVAL_FAST} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={5} interval={INTERVAL_MEDIUM} />
                 </div>
 
                 <div className="gallery-item three">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={4} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={7} interval={INTERVAL_SLOW} />
                 </div>
 
                 <div className="gallery-item four">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={5} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={2} interval={INTERVAL_FAST} />
                 </div>
 
                 <div className="gallery-item five">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={6} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={9} interval={INTERVAL_MEDIUM} />
                 </div>
 
                 <div className="gallery-item four">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={7} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={4} interval={INTERVAL_SLOW} />
                 </div>
 
                 <div className="gallery-item three">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={8} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={11} interval={INTERVAL_FAST} />
                 </div>
 
                 <div className="gallery-item two">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={9} interval={INTERVAL} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={10} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={6} interval={INTERVAL_SLOW} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={8} interval={INTERVAL_MEDIUM} />
                 </div>
 
                 <div className="gallery-item one">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={11} interval={INTERVAL} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={12} interval={INTERVAL} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={10} interval={INTERVAL_FAST} />
+                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={12} interval={INTERVAL_MEDIUM} />
                 </div>
             </div>
 
