@@ -2,6 +2,7 @@ import React from 'react'
 import './ProductTile.css'
 import { Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import DefaultImg from '../../assets/default.png'
 
 const ProductTile = (props) => {
     const product = props.data;
@@ -9,7 +10,7 @@ const ProductTile = (props) => {
   return (
     <div className={`product-tile-container`} onClick={()=>navigate(`/shop/${product.id}`)}>
         <p className={`pt-label ${product.label ? '' : 'd-none'}`}>{product.label}</p>
-        <img src={product.image} alt="" className='prd-image'/>
+        <img src={product.image || DefaultImg} alt="" className='prd-image' onError={(e) => e.target.src = DefaultImg} />
         <div className="product-details-con">
             <p className="prd-name">{product.name}</p>
             <p className="prd-price">${product.price}USD</p>
