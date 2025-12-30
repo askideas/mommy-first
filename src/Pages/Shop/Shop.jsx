@@ -24,11 +24,21 @@ const Shop = () => {
     const [error, setError] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const [totalProducts, setTotalProducts] = useState(0);
+    const [activeFilter, setActiveFilter] = useState('ALL');
+    const [selectedCollection, setSelectedCollection] = useState(null);
 
     const espotsIndex = [3, 5, 14];
     
     // Espot images data - you can replace these URLs with your actual espot images
     const espotImages = [ MF1, MF2, EsImage1 ]
+
+    // Quick filter buttons configuration
+    const quickFilters = [
+        { id: 'ALL', label: 'ALL', collectionId: null },
+        { id: 'MATERNITY', label: 'MATERNITY 🤰', collectionId: 'maternity-care' },
+        { id: 'POSTPARTUM', label: 'Postpartum 🤱', collectionId: 'postpartum-care' },
+        { id: 'WELLNESS', label: 'Wellness & Comfort 🌿', collectionId: 'wellness-comfort' }
+    ];
 
     const filters = [
         {
@@ -159,19 +169,24 @@ const Shop = () => {
     };
 
     // Function to fetch products from Shopify with pagination
-    const fetchProducts = async (token, page = 1, isLoadMore = false) => {
+    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionId = null) => {
         try {
-            console.log(`Fetching products page ${page} with token...`);
+            console.log(`Fetching products page ${page} with token${collectionId ? ` for collection: ${collectionId}` : ''}...`);
             if (isLoadMore) {
                 setLoadingMore(true);
             } else {
                 setLoading(true);
             }
             
-            // Construct URL based on page number
-            const url = page === 1 
+            // Construct URL based on page number and collection
+            let url = page === 1 
                 ? `${import.meta.env.VITE_API_BASE_URL}/products`
                 : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
+            
+            // Add collection ID as query parameter if provided
+            if (collectionId) {
+                url += `?cid=${collectionId}`;
+            }
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -248,7 +263,16 @@ const Shop = () => {
     const handleLoadMore = async () => {
         const nextPage = currentPage + 1;
         setCurrentPage(nextPage);
-        await fetchProducts(authToken, nextPage, true);
+        await fetchProducts(authToken, nextPage, true, selectedCollection);
+    };
+
+    // Handle quick filter click
+    const handleQuickFilterClick = async (filter) => {
+        setActiveFilter(filter.id);
+        setSelectedCollection(filter.collectionId);
+        setCurrentPage(1);
+        setDisplayedProducts([]);
+        await fetchProducts(authToken, 1, false, filter.collectionId);
     };
 
     // Calculate current count and progress percentage
@@ -290,10 +314,15 @@ const Shop = () => {
         <div className="container" style={{marginBottom: '154px'}}>
             <div className="shop-filters-section">
                 <div className="quick-filters-section">
-                    <button className='filter-button active'>ALL</button>
-                    <button className='filter-button'>MATERNITY 🤰</button>
-                    <button className='filter-button'>Postpartum 🤱</button>
-                    <button className='filter-button'>Wellness & Comfort 🌿</button>
+                    {quickFilters.map((filter) => (
+                        <button 
+                            key={filter.id}
+                            className={`filter-button ${activeFilter === filter.id ? 'active' : ''}`}
+                            onClick={() => handleQuickFilterClick(filter)}
+                        >
+                            {filter.label}
+                        </button>
+                    ))}
                 </div>
                 <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
             </div>
