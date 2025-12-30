@@ -161,20 +161,20 @@ const SearchModal = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className='clear-btn' onClick={handleClear}>Clear</button>
+                {/* Show loader while loading, clear button only in stage 2 (results) and stage 3 (no results) */}
+                {loading ? (
+                    <button className='clear-btn' disabled>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </button>
+                ) : (searchQuery.trim() && (searchResults.length > 0 || noResults)) && (
+                    <button className='clear-btn' onClick={handleClear}>Clear</button>
+                )}
             </div>
 
             {/* Initial Stage - No search query */}
             {!searchQuery.trim() && !loading && (
                 <div className="search-initial-state">
                     <p className="search-placeholder-text">Start typing to search for products...</p>
-                </div>
-            )}
-
-            {/* Loading State */}
-            {loading && (
-                <div className="search-loading-state">
-                    <p>Searching...</p>
                 </div>
             )}
 
