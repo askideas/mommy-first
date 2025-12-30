@@ -192,7 +192,7 @@ const SearchModal = () => {
                             >
                                 <div className="prd-img">
                                     <img 
-                                        src={item.image} 
+                                        src={item.image || DefaultImg} 
                                         alt={item.title}
                                         onError={(e) => e.target.src = DefaultImg}
                                     />
