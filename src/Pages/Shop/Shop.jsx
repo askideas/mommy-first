@@ -79,7 +79,7 @@ const Shop = () => {
     const fetchAuthToken = async () => {
         try {
             console.log('Fetching auth token...');
-            const response = await fetch('/api/auth/token', {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ const Shop = () => {
         try {
             console.log('Fetching products with token...');
             setLoading(true);
-            const response = await fetch('/api/products', {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
