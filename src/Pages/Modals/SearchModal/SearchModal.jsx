@@ -140,7 +140,7 @@ const SearchModal = () => {
     };
 
     const handleSeeAllResults = () => {
-        navigate(`/shop?search=${encodeURIComponent(searchQuery)}`);
+        navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
         // Close modal
         const modalElement = document.getElementById('SearchModal');
         const modal = window.bootstrap.Offcanvas.getInstance(modalElement);

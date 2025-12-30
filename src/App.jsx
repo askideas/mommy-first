@@ -21,6 +21,7 @@ import Stories from './Pages/Stories/Stories'
 import Events from './Pages/Events/Events'
 import EventDetails from './Pages/EventDetails/EventDetails'
 import Wishlist from './Pages/Wishlist/Wishlist'
+import SearchResults from './Pages/SearchResults/SearchResults'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -40,6 +41,8 @@ const AppContent = () => {
         <Routes>
           <Route element={<Home/>} path='/' />
           <Route element={<Shop/>} path='/shop' />
+          <Route element={<SearchResults/>} path='/search' />
+          <Route element={<SearchResults/>} path='/search/:query' />
           <Route element={<ProductDetails/>} path='/shop/:productid' />
           <Route element={<Bundles/>} path='/bundles' />
           <Route element={<BundlesRecommended/>} path='/bundles/recommended' />
