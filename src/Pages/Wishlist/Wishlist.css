@@ -9,5 +9,59 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 24px;
+        margin-bottom: 48px;
+    }
+}
+
+.wishlist-progress-bar-text {
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.wishlist-progress-bar-con {
+    width: 300px;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.wishlist-progress-bar-con span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #FD8CBB 0%, #DC5F92 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .wishlist-items-main-container {
+        width: 85%;
+    }
+
+    .wishlist-items-main-container .wishlist-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .wishlist-progress-bar-con {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .wishlist-items-main-container {
+        width: 95%;
+    }
+
+    .wishlist-items-main-container .wishlist-items {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .wishlist-progress-bar-con {
+        width: 200px;
     }
 }
