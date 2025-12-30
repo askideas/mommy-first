@@ -318,7 +318,7 @@ body {
 .progress-bar-con {
     width: 336px;
     height: 5px;
-    background: var(--pink-shade);
+    background: var(--white) !important;
     border-radius: 40px;
     margin: 30px 0;
     position: relative;

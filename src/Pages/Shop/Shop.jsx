@@ -17,12 +17,13 @@ const Shop = () => {
     const PRODUCTS_PER_PAGE = 16;
     
     const [displayedProducts, setDisplayedProducts] = useState([]);
-    const [allProducts, setAllProducts] = useState([]);
-    const [currentCount, setCurrentCount] = useState(PRODUCTS_PER_PAGE);
+    const [currentPage, setCurrentPage] = useState(1);
     const [authToken, setAuthToken] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [error, setError] = useState(null);
-    const TOTAL_PRODUCTS = allProducts.length;
+    const [hasMore, setHasMore] = useState(true);
+    const [totalProducts, setTotalProducts] = useState(0);
 
     const espotsIndex = [3, 5, 14];
     
@@ -157,12 +158,22 @@ const Shop = () => {
         };
     };
 
-    // Function to fetch products from Shopify
-    const fetchProducts = async (token) => {
+    // Function to fetch products from Shopify with pagination
+    const fetchProducts = async (token, page = 1, isLoadMore = false) => {
         try {
-            console.log('Fetching products with token...');
-            setLoading(true);
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products`, {
+            console.log(`Fetching products page ${page} with token...`);
+            if (isLoadMore) {
+                setLoadingMore(true);
+            } else {
+                setLoading(true);
+            }
+            
+            // Construct URL based on page number
+            const url = page === 1 
+                ? `${import.meta.env.VITE_API_BASE_URL}/products`
+                : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
+            
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -187,8 +198,23 @@ const Shop = () => {
             if (data.success && data.products) {
                 const transformedProducts = data.products.map(transformProduct);
                 console.log('Transformed products:', transformedProducts);
-                setAllProducts(transformedProducts);
-                setDisplayedProducts(transformedProducts.slice(0, PRODUCTS_PER_PAGE));
+                
+                if (isLoadMore) {
+                    // Append to existing products
+                    setDisplayedProducts(prev => [...prev, ...transformedProducts]);
+                } else {
+                    // Set initial products
+                    setDisplayedProducts(transformedProducts);
+                }
+                
+                // Update total products count if available
+                if (data.totalProductCount) {
+                    setTotalProducts(data.totalProductCount);
+                }
+                
+                // Check if there are more products to load using hasNextPage from API
+                setHasMore(data.hasNextPage || false);
+                
                 setError(null);
             } else {
                 throw new Error('Failed to fetch products');
@@ -200,6 +226,7 @@ const Shop = () => {
             setError(`Failed to load products: ${err.message}`);
         } finally {
             setLoading(false);
+            setLoadingMore(false);
         }
     };
 
@@ -218,14 +245,16 @@ const Shop = () => {
     }, []);
 
     // Handle Load More button click
-    const handleLoadMore = () => {
-        const newCount = Math.min(currentCount + PRODUCTS_PER_PAGE, TOTAL_PRODUCTS);
-        setDisplayedProducts(allProducts.slice(0, newCount));
-        setCurrentCount(newCount);
+    const handleLoadMore = async () => {
+        const nextPage = currentPage + 1;
+        setCurrentPage(nextPage);
+        await fetchProducts(authToken, nextPage, true);
     };
 
-    // Calculate progress percentage
-    const progressPercentage = (currentCount / TOTAL_PRODUCTS) * 100;
+    // Calculate current count and progress percentage
+    const currentCount = displayedProducts.length;
+    const TOTAL_PRODUCTS = totalProducts || currentCount;
+    const progressPercentage = totalProducts > 0 ? (currentCount / totalProducts) * 100 : 100;
 
     // Function to render products with espots
     const renderProductsWithEspots = () => {
@@ -285,17 +314,22 @@ const Shop = () => {
 
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <p className='progress-bar-text'>
-                            You've seen {currentCount} out of {TOTAL_PRODUCTS} items
+                            You've seen {currentCount} out of {totalProducts > 0 ? TOTAL_PRODUCTS : currentCount} items
                         </p>
                         <div className="progress-bar-con">
                             <span style={{ width: `${progressPercentage}%` }}></span>
                         </div>
-                        {currentCount < TOTAL_PRODUCTS && (
+                        {hasMore && (
                             <button 
                                 className='button-label' 
                                 onClick={handleLoadMore}
+                                disabled={loadingMore}
+                                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                             >
-                                Load more
+                                {loadingMore && (
+                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                )}
+                                {!loadingMore && 'Load more'}
                             </button>
                         )}
                     </div>
