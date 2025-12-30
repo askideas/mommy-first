@@ -1,0 +1,13 @@
+.wishlist-items-main-container {
+    width: 68%;
+    height: fit-content;
+    margin: 20px auto;
+    
+    .wishlist-items {
+        width: 100%;
+        height: fit-content;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+}

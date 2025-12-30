@@ -20,6 +20,7 @@ import { usePageLoading } from './hooks/usePageLoading'
 import Stories from './Pages/Stories/Stories'
 import Events from './Pages/Events/Events'
 import EventDetails from './Pages/EventDetails/EventDetails'
+import Wishlist from './Pages/Wishlist/Wishlist'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -46,6 +47,7 @@ const AppContent = () => {
           <Route element={<ComingSoon/>} path='/postpartum-care' />
           <Route element={<ComingSoon/>} path='/gift-sets' />
           <Route element={<Stories/>} path='/stories' />
+          <Route element={<Wishlist/>} path='/wishlist' />
           <Route element={<Events />} path='/events' />
           <Route element={<EventDetails />} path='/events/:eventId' />
         </Routes>
