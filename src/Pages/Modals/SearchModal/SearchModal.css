@@ -78,6 +78,10 @@
             border: 1.5px solid var(--pink-dark);
             margin-bottom: 32px;
 
+            &.initial-stage-input {
+                border: 1.5px solid var(--gray-dark);
+            }
+
             input {
                 flex: 1;
                 height: 100%;
@@ -100,6 +104,45 @@
                 border-radius: 6px;
             }
         }
+
+        .search-initial-state {
+            width: 100%;
+            height: fit-content;
+
+            .quick-search-terms-con {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: fit-content;
+
+                .quick-search-heading {
+                    font: 400 12px var(--font);
+                    color: var(--primary-dark);
+                    margin-bottom: 16px;
+                }
+
+                .quick-search-btn-con {
+                    width: 100%;
+                    height: fit-content;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 15px;
+
+                    button {
+                        width: fit-content;
+                        height: fit-content;
+                        border: 1px solid var(--gray);
+                        outline: none;
+                        font: 400 14px var(--font);
+                        color: var(--gray);
+                        border-radius: 8px;
+                        padding: 8px 12px;
+                        background: none;
+                    }
+                }
+            }
+        }
+        
 
         .search-results-container {
             flex: 1;
@@ -183,6 +226,33 @@
                         }
                     }
                 }
+            }
+        }
+
+        .search-no-results-con {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            row-gap: 12px;
+
+            img {
+                width: 142px;
+                height: 142px;
+            }
+
+            h1 {
+                font: 600 24px var(--font);
+                color: var(--primary-dark);
+                margin: 0;
+            }
+
+            p {
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+                margin: 0;
             }
         }
 

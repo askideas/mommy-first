@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import './SearchModal.css'
 import DefaultImg from '../../../assets/default.png'
 import { useNavigate } from 'react-router-dom'
+import NoResultsImagefrom from '../../../assets/search/no-results-search-icon.svg'
 
 const SearchModal = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -154,7 +155,7 @@ const SearchModal = () => {
         </div>
 
         <div className="search-modal-body-container">
-            <div className="search-bar-container">
+            <div className={`search-bar-container ${searchQuery.length > 0 ? '' : 'initial-stage-input'}`}>
                 <input 
                     type="text" 
                     placeholder="Search for products..."
@@ -174,7 +175,16 @@ const SearchModal = () => {
             {/* Initial Stage - No search query */}
             {!searchQuery.trim() && !loading && (
                 <div className="search-initial-state">
-                    <p className="search-placeholder-text">Start typing to search for products...</p>
+                    <div className="quick-search-terms-con">
+                        <p className="quick-search-heading">Quick search for</p>
+                        <div className="quick-search-btn-con">
+                            <button onClick={(e) => setSearchQuery('Peri bottle')}>Peri bottle</button>
+                            <button onClick={(e) => setSearchQuery('Postpartum care kit')}>Postpartum care kit</button>
+                            <button onClick={(e) => setSearchQuery('C-Section Kit')}>C-Section kit</button>
+                            <button onClick={(e) => setSearchQuery('Cooling Pad')}>Cooling Pad</button>
+                            <button onClick={(e) => setSearchQuery('Underwear')}>Underwear</button>
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -209,12 +219,10 @@ const SearchModal = () => {
 
             {/* No Results Stage */}
             {!loading && searchQuery.trim() && noResults && (
-                <div className="search-no-results">
-                    <p className="no-results-title">No results found</p>
-                    <p className="no-results-text">
-                        We couldn't find any products matching "{searchQuery}". 
-                        Try different keywords or check your spelling.
-                    </p>
+                <div className="search-no-results-con">
+                    <img src={NoResultsImagefrom} alt="" />
+                    <h1>No  result found</h1>
+                    <p>We can’t find any item matching your search</p>
                 </div>
             )}
 
