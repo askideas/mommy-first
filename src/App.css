@@ -3,6 +3,10 @@ body {
     background-color: #fbf2f6 !important;
 }
 
+button {
+    text-transform: uppercase !important;
+}
+
 .button-white {
     width: fit-content;
     height: fit-content;
