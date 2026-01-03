@@ -22,7 +22,7 @@ const Header = () => {
                 <NavLink to="/pregnancy-care">Pregnancy Care </NavLink>
                 <NavLink to="/postpartum-care">Postpartum Care</NavLink>
                 <NavLink to="/bundles">Bundles</NavLink>
-                <NavLink to="/gift-sets">Gift Sets 🎁</NavLink>
+                <NavLink to="/care-hub">Care Hub</NavLink>
             </div>
             <div className="menu-action-icons-container">
                 <img src={Search} alt="" data-bs-toggle="offcanvas" data-bs-target="#SearchModal" style={{cursor: 'pointer'}} />

@@ -48,7 +48,7 @@ const AppContent = () => {
           <Route element={<BundlesRecommended/>} path='/bundles/recommended' />
           <Route element={<ComingSoon/>} path='/pregnancy-care' />
           <Route element={<ComingSoon/>} path='/postpartum-care' />
-          <Route element={<ComingSoon/>} path='/gift-sets' />
+          <Route element={<ComingSoon/>} path='/care-hub' />
           <Route element={<Stories/>} path='/stories' />
           <Route element={<Wishlist/>} path='/wishlist' />
           <Route element={<Events />} path='/events' />
