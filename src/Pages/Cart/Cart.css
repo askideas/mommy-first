@@ -241,7 +241,7 @@
                         text-decoration: line-through;
 
                         &.price {
-                            font: 400 14px var(--font);
+                            font: 600 14px var(--font);
                             color: var(--primary-dark);
                             margin: 0;
                             text-decoration: none;
@@ -295,6 +295,9 @@
                     .right {
                         font: 500 16px var(--font);
                         color: var(--primary-light);
+                        display: flex;
+                        align-items: center;
+                        column-gap: 4px;
 
                         &.active {
                             color: var(--primary-pink);
