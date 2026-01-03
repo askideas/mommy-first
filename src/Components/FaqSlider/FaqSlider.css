@@ -51,8 +51,19 @@
             cursor: pointer;
             transition: all 0.3s ease;
 
-            &:hover {
-                background: #DC5F9266;
+            &:hover:not(:disabled) {
+                background: linear-gradient(135deg, #FD8CBB 0%, #DC5F92 100%);
+                transform: scale(1.05);
+                box-shadow: 0px 6px 12px rgba(220, 95, 146, 0.3);
+
+                svg {
+                    stroke: var(--white);
+                }
+            }
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
             }
 
             svg {
@@ -60,6 +71,7 @@
                 stroke-width: 1.5;
                 width: 20px;
                 height: 20px;
+                transition: stroke 0.3s ease;
             }
         }
     }

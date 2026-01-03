@@ -17,11 +17,27 @@ body {
     border: none;
     outline: none;
     background: var(--white);
+    transition: all 0.3s ease;
+    cursor: pointer;
 
     .icon {
         width: 20px;
         height: 18px;
         color: var(--primary-dark);
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0px 8px 16px rgba(220, 95, 146, 0.15);
+
+        .icon {
+            transform: scale(1.1);
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
     }
 }
 
@@ -39,11 +55,31 @@ body {
     align-items: center;
     column-gap: 10px;
     padding: 8px 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 
     .icon {
         width: 15px;
         height: 12px;
         color: var(--primary-dark);
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
+        color: var(--white);
+        border-color: var(--primary-pink);
+        transform: translateY(-2px);
+        box-shadow: 0px 8px 16px rgba(220, 95, 146, 0.3);
+
+        .icon {
+            color: var(--white);
+            transform: scale(1.1);
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
     }
 }
 
@@ -57,6 +93,20 @@ body {
     outline: none;
     font: 500 15px var(--font);
     color: var(--primary-pink);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: 0px 8px 16px rgba(220, 95, 146, 0.3);
+        border-color: transparent;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
 }
 
 .button-pink-bg {
@@ -76,10 +126,44 @@ body {
     font: 700 16px var(--font);
     color: var(--white);
     background-clip: padding-box;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 
     .icon {
         width: 20px;
         height: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 14px 24px rgba(220, 95, 146, 0.4);
+        background: linear-gradient(218.44deg, #FF96C1 4.36%, #E9669D 86.2%);
+
+        .icon {
+            transform: scale(1.1);
+        }
+
+        &::before {
+            left: 100%;
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px);
     }
 }
 
@@ -94,12 +178,20 @@ body {
     font: 500 14px var(--font);
     color: var(--primary-pink);
     outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
 
     &:hover {
         background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
         border: 1px solid var(--primary-pink);
         color: var(--white);
         font: 500 14px var(--font);
+        transform: translateY(-2px);
+        box-shadow: 0px 12px 20px rgba(220, 95, 146, 0.35);
+    }
+
+    &:active {
+        transform: translateY(0);
     }
 }
 
@@ -359,6 +451,35 @@ body {
     column-gap: 16px;
     outline: none;
     background-clip: padding-box;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 16px 40px rgba(255, 0, 106, 0.5);
+        background: linear-gradient(218.44deg, #FF8DC1 4.36%, #E9558F 86.2%);
+
+        &::before {
+            left: 100%;
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px);
+    }
 }
 
 .button-pink-center {
@@ -377,6 +498,35 @@ body {
     column-gap: 16px;
     outline: none;
     background-clip: padding-box;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 16px 40px rgba(255, 0, 106, 0.5);
+        background: linear-gradient(218.44deg, #FF8DC1 4.36%, #E9558F 86.2%);
+
+        &::before {
+            left: 100%;
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px);
+    }
 }
 
 .button-pink-border {
@@ -390,12 +540,20 @@ body {
     font: 500 14px var(--font);
     color: var(--primary-pink);
     outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
 
     &:hover {
         background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
         border: 1px solid var(--primary-pink);
         color: var(--white);
         font: 500 14px var(--font);
+        transform: translateY(-2px);
+        box-shadow: 0px 12px 20px rgba(220, 95, 146, 0.35);
+    }
+
+    &:active {
+        transform: translateY(0);
     }
 }
 
@@ -417,6 +575,8 @@ body {
         font: 400 14px var(--font);
         padding: 10px 14px;
         border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
         &.show {
             background: none;
@@ -430,6 +590,8 @@ body {
             background-color: var(--white);
             color: var(--gray);
             border: 1.5px solid var(--pink-dark);
+            transform: translateY(-1px);
+            box-shadow: 0px 4px 8px rgba(220, 95, 146, 0.15);
         }
 
         &:active {
