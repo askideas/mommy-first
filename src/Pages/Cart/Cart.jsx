@@ -1,9 +1,75 @@
 import React from 'react'
 import './Cart.css'
 import { NavLink } from 'react-router-dom'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Minus, Plus } from 'lucide-react'
+import DefaultImg from '../../assets/default.png'
+import prdImg from '../../assets/products/prd1.svg'
 
 const Cart = () => {
+
+    const Items = [
+      {
+        "id": "EC-PB-12OZ-001",
+        "productName": "EasyCleanse Peri Bottle",
+        "size": "12.2 OZ",
+        "image": prdImg,
+        "originalPrice": 18.99,
+        "salePrice": 13.99,
+        "quantity": 2,
+        "lineTotal": 13.99,
+        "actions": {
+          "increment": true,
+          "decrement": true,
+          "remove": true
+        }
+      },
+      {
+        "id": "EC-PB-12OZ-002",
+        "productName": "EasyCleanse Peri Bottle",
+        "size": "12.2 OZ",
+        "image": prdImg,
+        "originalPrice": 18.99,
+        "salePrice": 13.99,
+        "quantity": 2,
+        "lineTotal": 13.99,
+        "actions": {
+          "increment": true,
+          "decrement": true,
+          "remove": true
+        }
+      },
+      {
+        "id": "EC-PB-12OZ-003",
+        "productName": "EasyCleanse Peri Bottle",
+        "size": "12.2 OZ",
+        "image": prdImg,
+        "originalPrice": 18.99,
+        "salePrice": 13.99,
+        "quantity": 2,
+        "lineTotal": 13.99,
+        "actions": {
+          "increment": true,
+          "decrement": true,
+          "remove": true
+        }
+      },
+      {
+        "id": "EC-PB-12OZ-004",
+        "productName": "EasyCleanse Peri Bottle",
+        "size": "12.2 OZ",
+        "image": prdImg,
+        "originalPrice": 18.99,
+        "salePrice": 13.99,
+        "quantity": 2,
+        "lineTotal": 13.99,
+        "actions": {
+          "increment": true,
+          "decrement": true,
+          "remove": true
+        }
+      }
+    ]
+
   return (
     <div className="container mt-5">
         <div className="breadcrumbs-cart-section">
@@ -14,7 +80,44 @@ const Cart = () => {
         <h1 className="cart-heading">Review your cart</h1>
         <div className="cart-items-summary-main-container">
             <div className="cart-items-container">
-
+                <div className="cart-items-header">
+                    <p className="product">Product</p>
+                    <p className="price">Price</p>
+                    <p className="quantity">Quantity</p>
+                    <p className="amount">Total</p>
+                </div>
+                <div className="cart-items-section">
+                    {
+                        Items.map((item, index)=> {
+                            return (
+                                <div className="cart-item-card-container" key={index}>
+                                    <div className="prd-product">
+                                        <div className="product-image">
+                                            <img src={item.image} alt="" onError={(e) => e.target.src = DefaultImg} />
+                                        </div>
+                                        <div className="product-name">
+                                            <p>{item.productName}</p>
+                                            <button>Remove</button>
+                                        </div>
+                                    </div>
+                                    <p className="prd-price">
+                                        <span>$18.99</span> <br /> <span className='price'>$13.99</span>
+                                    </p>
+                                    <div className="prd-quantity">
+                                        <div className="item-quantity">
+                                            <button><Minus /></button>
+                                            <p className="quantity-count">{item.quantity < 10 ? '0' : ''}{item.quantity}</p>
+                                            <button><Plus /></button>
+                                        </div>
+                                    </div>
+                                    <p className="prd-amount">
+                                        <span>$18.99</span> <br /> <span className='price'>$13.99</span>
+                                    </p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
             <div className="cart-summary">
                 <div className="summary-header">
