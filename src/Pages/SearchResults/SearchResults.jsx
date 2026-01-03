@@ -5,12 +5,13 @@ import ProductTile from '../../Components/ProductTile/ProductTile'
 import { ChevronRight, Settings2 } from 'lucide-react'
 
 const SearchResults = () => {
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { query: pathQuery } = useParams();
     const navigate = useNavigate();
     
     // Support both query params (?q=) and path params (/search/query)
-    const searchQuery = searchParams.get('q') || pathQuery || '';
+    const urlQuery = searchParams.get('q') || pathQuery || '';
+    const [searchQuery, setSearchQuery] = useState(urlQuery);
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -135,13 +136,32 @@ const SearchResults = () => {
         }
     };
 
-    // Initialize search when component mounts or query changes
+    // Sync local searchQuery with URL query when URL changes
     useEffect(() => {
-        const initializeSearch = async () => {
-            if (!searchQuery) {
-                navigate('/shop');
+        const newUrlQuery = searchParams.get('q') || pathQuery || '';
+        if (newUrlQuery !== searchQuery) {
+            setSearchQuery(newUrlQuery);
+        }
+    }, [searchParams, pathQuery]);
+
+    // Fetch token on component mount
+    useEffect(() => {
+        fetchAuthToken();
+    }, []);
+
+    // Debounced search effect - triggers search when user types
+    useEffect(() => {
+        const timer = setTimeout(async () => {
+            if (!searchQuery.trim()) {
+                setProducts([]);
+                setLoading(false);
+                setError(null);
+                // Don't update URL when input is empty, keep the existing URL
                 return;
             }
+
+            // Update URL with current search query only when there's a valid query
+            setSearchParams({ q: searchQuery });
 
             let token = authToken;
             if (!token) {
@@ -154,9 +174,9 @@ const SearchResults = () => {
                 setError('Failed to authenticate');
                 setLoading(false);
             }
-        };
+        }, 500);
 
-        initializeSearch();
+        return () => clearTimeout(timer);
     }, [searchQuery]);
 
     return (
@@ -182,9 +202,20 @@ const SearchResults = () => {
                         </div>
                         <div className="search-results-header">
                             <h1 className="search-query-title">Search Results</h1>
-                            <div className="srp-input-container">
-                                <input type="text" value={searchQuery} />
-                                <button className='clear-btn'>Clear</button>
+                            <div className={`srp-input-container ${searchQuery.length > 0 ? '' : 'initial-stage-input'}`}>
+                                <input 
+                                    type="text" 
+                                    value={searchQuery} 
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search for products..."
+                                />
+                                {loading ? (
+                                    <button className='clear-btn' disabled>
+                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </button>
+                                ) : searchQuery.trim() && (
+                                    <button className='clear-btn' onClick={() => setSearchQuery('')}>Clear</button>
+                                )}
                             </div>
                         </div>
                         <div className="results-found-container">
@@ -198,16 +229,43 @@ const SearchResults = () => {
                         </div>
                     </>
                 ) : (
-                    <div className="search-no-results-container">
-                        <h2>No results found for "{searchQuery}"</h2>
-                        <p>
-                            We couldn't find any products matching your search. 
-                            Try different keywords or browse our shop for more options.
-                        </p>
-                        <button className="back-to-shop-btn" onClick={() => navigate('/shop')}>
-                            Browse All Products
-                        </button>
-                    </div>
+                    <>
+                        <div className="breadcrumbs-search-results-section">
+                            <NavLink to="/">Home</NavLink>
+                            <ChevronRight />
+                            <span>Search results</span>
+                        </div>
+                        <div className="search-results-header">
+                            <h1 className="search-query-title">Search Results</h1>
+                            <div className={`srp-input-container ${searchQuery.length > 0 ? '' : 'initial-stage-input'}`}>
+                                <input 
+                                    type="text" 
+                                    value={searchQuery} 
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search for products..."
+                                />
+                                {loading ? (
+                                    <button className='clear-btn' disabled>
+                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </button>
+                                ) : searchQuery.trim() && (
+                                    <button className='clear-btn' onClick={() => setSearchQuery('')}>Clear</button>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="search-no-results-container">
+                            <h2>No results found </h2>
+                            <p>
+                                We couldn't find any products matching your search. 
+                                Try different keywords or browse our shop for more options.
+                            </p>
+                            <button className="back-to-shop-btn button-pink-center" onClick={() => navigate('/shop')}>
+                                Browse All Products
+                            </button>
+                        </div>
+                    </>
+                    
                 )}
             </div>
         </div>

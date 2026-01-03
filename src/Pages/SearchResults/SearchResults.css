@@ -73,6 +73,24 @@
         color: var(--pink-light);
         outline: none;
         border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover:not(:disabled) {
+            background: var(--pink-light);
+            color: var(--white);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .spinner-border-sm {
+            width: 14px;
+            height: 14px;
+            border-width: 2px;
+        }
     }
 }
 
@@ -164,33 +182,20 @@
 }
 
 .search-no-results-container h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
+    font: 600 40px var(--font);
+    color: var(--primary-dark);
 }
 
 .search-no-results-container p {
-    font-size: 16px;
-    color: #666;
+    font: 400 13px var(--font);
+    color: var(--primary-dark);
     max-width: 500px;
 }
 
 .back-to-shop-btn {
-    padding: 12px 32px;
-    background-color: #FF69B4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    width: fit-content;
 }
 
-.back-to-shop-btn:hover {
-    background-color: #FF1493;
-    transform: translateY(-2px);
-}
 
 /* Responsive Design */
 @media (max-width: 1200px) {
