@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams, useNavigate, useParams } from 'react-router-dom'
+import { useSearchParams, useNavigate, useParams, NavLink } from 'react-router-dom'
 import './SearchResults.css'
 import ProductTile from '../../Components/ProductTile/ProductTile'
+import { ChevronRight, Settings2 } from 'lucide-react'
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
@@ -174,11 +175,21 @@ const SearchResults = () => {
                     </div>
                 ) : products.length > 0 ? (
                     <>
+                        <div className="breadcrumbs-search-results-section">
+                            <NavLink to="/">Home</NavLink>
+                            <ChevronRight />
+                            <span>Search results</span>
+                        </div>
                         <div className="search-results-header">
-                            <h1 className="search-query-title">Search results for "{searchQuery}"</h1>
-                            <p className="search-results-count">
-                                {products.length} product{products.length > 1 ? 's' : ''} found
-                            </p>
+                            <h1 className="search-query-title">Search Results</h1>
+                            <div className="srp-input-container">
+                                <input type="text" value={searchQuery} />
+                                <button className='clear-btn'>Clear</button>
+                            </div>
+                        </div>
+                        <div className="results-found-container">
+                            <p>{products.length} Results found</p>
+                            <button className="srp-filter-btn-modal">FILTER <Settings2 /></button>
                         </div>
                         <div className="search-products-grid">
                             {products.map((product, index) => (
