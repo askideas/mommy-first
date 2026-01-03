@@ -4,8 +4,10 @@ import { Minus, Plus, X } from 'lucide-react'
 import Prd1 from '../../../assets/products/prd1.svg'
 import Prd2 from '../../../assets/products/prd1.svg'
 import Prd3 from '../../../assets/products/prd1.svg'
+import { useNavigate } from 'react-router-dom'
 
 const MiniCartModal = () => {
+  const navigate = useNavigate();
   const cartItems = [
     {
       id: 1,
@@ -82,7 +84,7 @@ const MiniCartModal = () => {
           </p>
           <div className="button-container">
             <button className='button-pink-center' style={{width: '48%', height: '40px', boxShadow: 'none'}}>Check out</button>
-            <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}}>View cart</button>
+            <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} onClick={()=>navigate('/cart')}>View cart</button>
           </div>
         </div>
     </div>
