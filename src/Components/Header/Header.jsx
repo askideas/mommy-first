@@ -14,7 +14,7 @@ const Header = () => {
     <div className='header container-fluid'>
         <div className='row w-100 m-0'>
             <div className="logo-container flash-animation">
-                <img src={Logo} alt="Mommy FIrst" />
+                <img src={Logo} alt="Mommy FIrst" onClick={()=>navigate('/')} />
             </div>
             <div className="menu-container">
                 <NavLink to="/">Home</NavLink>
