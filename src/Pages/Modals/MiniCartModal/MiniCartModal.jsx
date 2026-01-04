@@ -84,7 +84,7 @@ const MiniCartModal = () => {
           </p>
           <div className="button-container">
             <button className='button-pink-center' style={{width: '48%', height: '40px', boxShadow: 'none'}}>Check out</button>
-            <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} onClick={()=>navigate('/cart')}>View cart</button>
+            <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} data-bs-dismiss="offcanvas" onClick={()=>navigate('/cart')}>View cart</button>
           </div>
         </div>
     </div>

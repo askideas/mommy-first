@@ -228,7 +228,7 @@ const SearchModal = () => {
 
             {searchResults.length > 0 && (
                 <div className="search-modal-footer">
-                    <button className='button-pink-center' onClick={handleSeeAllResults}>
+                    <button className='button-pink-center' data-bs-dismiss="offcanvas" onClick={handleSeeAllResults}>
                         See all results...
                     </button>
                 </div>
