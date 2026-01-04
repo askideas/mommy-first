@@ -116,11 +116,13 @@
 
         .details-content-container {
             width: 49%;
-            height: fit-content;
+            height: 740px;
             padding: 24px;
             box-shadow: 0px 16px 16px 0px #FF408E1A;
             border-radius: 16px;
             background: var(--white);
+            display: flex;
+            flex-direction: column;
 
             .stock-details-container {
                 display: flex;
@@ -401,8 +403,58 @@
                 }
             }
 
+            .product-price-con {
+                display: flex;
+                flex-direction: column;
+                padding: 20px 0;
+                margin-bottom: 20px;
+                position: relative;
+                padding-left: 24px;
+
+                &::before {
+                    content: "";
+                    width: 1px;
+                    height: 45%;
+                    background: var(--pink-border);
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    left: 0;
+                }
+
+                .heading {
+                    font: 400 12px var(--font);
+                    color: var(--primary-dark);
+                    margin-bottom: 10px;
+                }
+
+                .strike-price {
+                    font: 400 14px var(--font);
+                    color: var(--gray);
+                    text-decoration: line-through;
+                }
+
+                .price {
+                    font: 600 24px var(--font);
+                    color: var(--primary-dark);
+                }
+            }
+
+            .details-header-section {
+                width: 100%;
+                height: fit-content;
+            }
+
+            .details-body-section {
+                width: 100%;
+                flex: 1;
+                overflow-y: auto;
+            }
+
             .details-footer-section {
                 /* margin-top: 145px; */
+                width: 100%;
+                height: fit-content;
 
                 .mf-features-section {
                     display: flex;
