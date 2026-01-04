@@ -1,9 +1,13 @@
 import React from 'react'
 import './Cart.css'
 import { NavLink } from 'react-router-dom'
-import { ChevronRight, Minus, Plus } from 'lucide-react'
+import { ChevronRight, Minus, Plus, Heart } from 'lucide-react'
 import DefaultImg from '../../assets/default.png'
 import prdImg from '../../assets/products/prd1.svg'
+import { shopProducts } from '../../data/productsData'
+import BundleImg from '../../assets/BundleRecom/bundle-tile-img.png'
+import ProductTile from '../../Components/ProductTile/ProductTile'
+import MF1 from '../../assets/MF1.png'
 
 const Cart = () => {
 
@@ -78,6 +82,7 @@ const Cart = () => {
             <span>Search results</span>
         </div>
         <h1 className="cart-heading">Review your cart</h1>
+
         <div className="cart-items-summary-main-container">
             <div className="cart-items-container">
                 <div className="cart-items-header">
@@ -159,6 +164,20 @@ const Cart = () => {
                         <path d="M5.90625 10L8.40625 12.5L13.4062 7.5" stroke="#DC5F92" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div className="cart-recommended-products-section">
+            <h2 className="recommended-heading">Recommended products</h2>
+            <div className="recommended-products-grid">
+                {shopProducts.slice(0, 3).map((product, index) => (
+                    <ProductTile data={product} key={product.id + '-' + index} />
+                ))}
+                <div className="espot-card">
+                    <img src={MF1} alt="" />
                 </div>
             </div>
         </div>

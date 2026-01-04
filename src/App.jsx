@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from './Components/Header/Header'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './Pages/Home/Home'
 import Footer from './Components/Footer/Footer'
 import ContactBanner from './Components/ContactBanner/ContactBanner'
@@ -23,6 +23,7 @@ import EventDetails from './Pages/EventDetails/EventDetails'
 import Wishlist from './Pages/Wishlist/Wishlist'
 import SearchResults from './Pages/SearchResults/SearchResults'
 import Cart from './Pages/Cart/Cart'
+import * as bootstrap from "bootstrap";
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -32,6 +33,28 @@ const AppContent = () => {
   usePageLoading()
   
   const { isLoading } = useLoading()
+  const location = useLocation()
+
+  // Close all offcanvas modals on route change
+  useEffect(() => {
+    // Close offcanvas
+    document.querySelectorAll(".offcanvas.show").forEach((el) => {
+      const instance = bootstrap.Offcanvas.getInstance(el);
+      if (instance) {
+        instance.hide();
+        instance.dispose(); // 🔴 important
+      }
+    });
+
+    // Remove backdrop manually
+    document.querySelectorAll(".offcanvas-backdrop").forEach((el) => {
+      el.remove();
+    });
+
+    // Reset body styles
+    document.body.classList.remove("offcanvas-backdrop", "overflow-hidden");
+    document.body.style.removeProperty("padding-right");
+  }, [location.pathname]);
 
   return (
     <>
