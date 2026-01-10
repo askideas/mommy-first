@@ -23,6 +23,7 @@ import EventDetails from './Pages/EventDetails/EventDetails'
 import Wishlist from './Pages/Wishlist/Wishlist'
 import SearchResults from './Pages/SearchResults/SearchResults'
 import Cart from './Pages/Cart/Cart'
+import About from './Pages/About/About'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -55,6 +56,7 @@ const AppContent = () => {
           <Route element={<Cart/>} path='/cart' />
           <Route element={<Events />} path='/events' />
           <Route element={<EventDetails />} path='/events/:eventId' />
+          <Route element={<About/>} path='/about' />
         </Routes>
         <ContactBanner />
         <Footer />
