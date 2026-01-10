@@ -87,6 +87,7 @@
     height: fit-content;
     position: relative;
     margin: 90px auto;
+    margin-bottom: 150px;
     transform: rotate(-4deg);
 
     .mf-pf-card {
@@ -205,5 +206,223 @@
         transform: translateY(-50%);
         right: -198px;
         z-index: 1;
+    }
+}
+
+.doctors-cards-section {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    margin-bottom: 152px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .doc-flower1 {
+        position: absolute;
+        width: 152px;
+        height: 152px;
+        left: 90px;
+        top: 52%;
+    }
+
+    .doc-flower2 {
+        position: absolute;
+        width: 107px;
+        height: 107px;
+        right: 223px;
+        bottom: -83px;
+    }
+
+    .doc-card-shade1 {
+        width: 466px;
+        height: 374px;
+        border-radius: 40px;
+        background: var(--white);
+        opacity: 0.5;
+        backdrop-filter: blur(22px);
+        box-shadow: 0px 34px 43px 0px var(--dark-pink1);
+        position: absolute;
+        left: 14%;
+        bottom: -20px;
+    }
+
+    .doc-card-shade2 {
+        width: 466px;
+        height: 374px;
+        border-radius: 40px;
+        background: var(--white);
+        opacity: 0.5;
+        backdrop-filter: blur(22px);
+        box-shadow: 0px 34px 43px 0px var(--dark-pink1);
+        position: absolute;
+        left: 50%;
+        bottom: -20px;
+    }
+
+    .doctor-card {
+        width: 502px;
+        height: 372px;
+        background-color: var(--dark-pink);
+        backdrop-filter: blur(22px);
+        box-shadow: 0px 34px 43px 0px var(--pink-shade2);
+        border-radius: 32px;
+        padding: 54px;
+
+        &.two {
+            background: var(--dark-pink1);
+        }
+
+        .name-section {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: fit-content;
+            column-gap: 14px;
+
+            img {
+                width: 64px;
+                height: 64px;
+                border: 2px solid var(--white);
+                box-shadow: 0px 24px 24px 0px var(--dark-pink1);
+                border-radius: 24px;
+            }
+
+            .name {
+                font: 600 20px var(--font);
+                color: var(--white);
+                margin: 0;
+
+                span {
+                    font: 400 20px var(--font);
+                }
+            }
+        }
+
+        .doc-desc {
+            font: 300 20px var(--font);
+            color: var(--white);
+            margin: 0;
+            margin-top: 30px;
+            line-height: 30px;
+        }
+    }
+}
+
+.about-infrastructure-section {
+    margin-bottom: 152px;
+    position: relative;
+
+    .image-shade {
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        left: -200px;
+        top: 20%;
+    }
+
+    .flower-img-1 {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        left: 14%;
+        top: 15%;
+    }
+
+    .flower-img-2 {
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        right: 12%;
+        top: 15%;
+    }
+
+    .flower-img-3 {
+        width: 135px;
+        height: 135px;
+        position: absolute;
+        bottom: -52px;
+        left: 16%;
+        z-index: -1;
+    }
+
+    .head-ing {
+        font: 400 44px var(--font);
+        color: var(--primary-dark);
+        text-align: center;
+        margin-bottom: 34px;
+
+        sup {
+            font: 300 30px var(--font);
+        }
+    }
+
+    .sub-head-ing {
+        font: 400 20px var(--font);
+        color: var(--primary-dark);
+        text-align: center;
+        line-height: 32px;
+    }
+
+    .infrastructure-details-section {
+        width: 100%;
+        height: 610px;
+        background: var(--white);
+        border-radius: 24px;
+        box-shadow: 0px 34px 43px 0px var(--pink-shade1);
+        margin-top: 50px;
+        display: flex;
+
+        .section-deatails {
+            width: 365px;
+            height: 100%;
+
+            .sec-det-item {
+                width: 100%;
+                height: 208px;
+                box-shadow: 0px 34px 43px 0px var(--pink-shade1);
+                backdrop-filter: blur(4px);
+                padding: 32px;
+
+                &:last-child {
+                    box-shadow: none;
+                    backdrop-filter: blur(0);
+                }
+
+                .heading {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    column-gap: 18px;
+                    font: 400 24px var(--font);
+                    color: var(--primary-dark);
+
+                    img {
+                        width: 32px;
+                        height: 32px;
+                    }
+                }
+
+                .desc {
+                    font: 400 16px var(--font);
+                    color: var(--primary-dark);
+                    line-height: 24px;
+                }
+
+            }
+        }
+
+        .image-container {
+            flex: 1;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 0 24px 24px 0;
+                object-fit: cover;
+            }
+        }
     }
 }
