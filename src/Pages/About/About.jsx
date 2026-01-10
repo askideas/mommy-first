@@ -18,7 +18,7 @@ const About = () => {
                 <p className="heading">Who we are!</p>
                 <img src={Flower} alt="" className='flower' />
                 <p className="sub-heading">The Science of Safety. <br />
-                    <span>The Heart of a Mother.</span>
+                    <span>The Heart of a <span className='strike-span'>Mother.</span> </span>
                 </p>
                 <p className="description">Born in New York from the partnership of a Clinical Pharmacist who saw the <br /> medical gap, and a Clinical Quality Specialist who lived through it.</p>
                 

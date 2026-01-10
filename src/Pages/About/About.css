@@ -32,7 +32,25 @@
             text-align: center;
             transform: translateX(30px);
             margin-left: 104px;
+
+            .strike-span {
+                position: relative;
+                margin-left: 0;
+
+                &::after {
+                    position: absolute;
+                    content: '';
+                    background: url('../../assets//About/strike1.svg');
+                    background-repeat: no-repeat;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    bottom: -88px;
+                }
+            }
+            
         }
+        
     }
 
     .description {
