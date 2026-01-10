@@ -8,6 +8,7 @@ import RightImg from '../../assets/About/right-img.png'
 import Certificate from '../../assets/About/certificate.svg'
 import Shield from '../../assets/About/shield.svg'
 import Heart from '../../assets/About/heart.svg'
+import Clock from '../../assets/About/clock.svg'
 
 const About = () => {
   return (
@@ -109,6 +110,16 @@ const About = () => {
                 </div>
             </div>
             
+        </div>
+
+        <div className="about-drives-us-section">
+            <img src={FlowerShade} alt="" className='flower-shade-10' />
+            <img src={Flower} alt="" className='flower-10' />
+            <img src={Flower} alt="" className='flower-11' />
+            <h1>What Drives Us</h1>
+            <h2>Redefining  the "After."</h2>
+            <p>We believe dignity is a medical necessity. <br /> Whether you are relying on our Science (formulated for sensitive skin) or <br /> our Support (designed for real life), our goal is simple:</p>
+            <h3>To ensure  that when you look in the mirror <img src={Clock} alt="" />  24 hours <br /> <span>after birth, you feel held, healed, and human.</span></h3>
         </div>
     </>
     
