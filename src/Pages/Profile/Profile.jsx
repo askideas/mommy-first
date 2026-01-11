@@ -15,6 +15,8 @@ import Tag from '../../assets/profile/tag.svg'
 import Settings from '../../assets/profile/settings.svg'
 import { NavLink, useLocation } from 'react-router-dom'
 import ProfileSection from '../../Components/ProfileSection/ProfileSection'
+import Flower from '../../assets/About/flower.svg'
+import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
 
 const Profile = () => {
     const location = useLocation();
@@ -101,6 +103,10 @@ const Profile = () => {
 
     return (
         <div className="profile-main-container">
+            <img src={Flower} alt="" className="flowerone" />
+            <img src={Flower} alt="" className="flowertwo" />
+            <img src={Flower} alt="" className="flowerthree" />
+            <img src={FlowerShadeHalf} alt="" className="flower-shade-one" />
             <div className="container">
                 <div className="profile-header-section">
                     <div className="profile-image">

@@ -1,3 +1,40 @@
+.profile-main-container {
+    position: relative;
+
+    .flowerone {
+        left: 36%;
+        transform: translateX(-50%);
+        top: -234px;
+        width: 232px;
+        height: 232px;
+        position: absolute;
+    }
+
+    .flowertwo {
+        left: 20%;
+        top: 58px;
+        width: 22px;
+        height: 22px;
+        position: absolute;
+    }
+
+    .flowerthree {
+        right: 24%;
+        top: 0;
+        width: 34px;
+        height: 34px;
+        position: absolute;
+    }
+
+    .flower-shade-one {
+        right: 0;
+        top: -142px;
+        width: 190px;
+        height: 380px;
+        position: absolute;
+    }
+}
+
 .profile-header-section {
     margin-top: 90px;
     margin-bottom: 60px;
