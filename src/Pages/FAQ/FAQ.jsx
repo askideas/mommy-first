@@ -25,7 +25,7 @@ const FAQ = () => {
     {
       "id": 3,
       "question": "What is your return policy?",
-      "answer": "We offer free returns on unused products within 30 days of purchase. For hygienic reasons, opened or used products cannot be accepted. If you have any questions or concerns about your order, please reach out to us at admin@themommyfirst.com — we’re here to help."
+      "answer": "We offer free returns on unused products within 30 days of purchase. For hygienic reasons, opened or used products cannot be accepted. If you have any questions or concerns about your order, please reach out to us at <strong>admin@themommyfirst.com</strong> — we’re here to help."
     },
     {
       "id": 4,
@@ -70,7 +70,7 @@ const FAQ = () => {
                                     </button>
                                 </h2>
                                 <div id={`flush-collapse${faq.id}`} className="accordion-collapse collapse" data-bs-parent="#faqsAccordian">
-                                    <div className="accordion-body">{faq.answer}</div>
+                                    <div className="accordion-body" dangerouslySetInnerHTML={{ __html: faq.answer }}></div>
                                 </div>
                             </div>
                         )
