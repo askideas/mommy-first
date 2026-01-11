@@ -1,6 +1,6 @@
 import React from 'react'
 import './Contact.css'
-import { Clock } from 'lucide-react'
+import { Clock, Mail, Smartphone } from 'lucide-react'
 
 const Contact = () => {
   return (
@@ -21,6 +21,50 @@ const Contact = () => {
             <div className="contact-details-section">
                 <h2 className="sub-heading">The Recovery Concierge Whether you are building your hospital bag or need <br /> help sizing your kit, our team is on standby to help you prepare.</h2>
                 <p className="desc">If you are currently in labor or experiencing a medical emergency, please contact your healthcare provider immediately.</p>
+            </div>
+
+            <div className='contact-section-details-con'>
+                <div className="row w-100 m-0 p-0">
+                    <div className="col-4 email-details-section">
+                        <p className="heading"><Mail />  Email</p>
+                        <p className="response-txt"><Clock /> Response time: within 8 hours.</p>
+
+                        <p className="email-item">
+                            <span className="active">For general enquires</span>
+                            <span className="txt-mail">care@themommyfirst.com</span>
+                        </p>
+
+                        <p className="email-item">
+                            <span className="active">For order queries</span>
+                            <span className="txt-mail">orders@themommyfirst.com</span>
+                        </p>
+
+                        <p className="email-item">
+                            <span className="active">For support</span>
+                            <span className="txt-mail">support@themommyfirst.com</span>
+                        </p>
+
+                        <p className="description-txt">For assistance outside these hours, please email customer support.</p>
+                    </div>
+
+                    <div className="col-4 mobile-details-section">
+                        <p className="heading"><Smartphone />  Phone</p>
+                        <p className="response-txt"><Clock /> Mon - Sat 9:00 AM - 5:00 PM - EST</p>
+                        <p className="mobile-number">(845) 300-9289</p>
+
+                        <p className="heading margin-more"><Smartphone />  WhatsApp</p>
+                        <p className="response-txt"><Clock /> Response time: within 4 hours.</p>
+                        <p className="mobile-number">(845) 300-9289</p>
+
+                        <p className="description-txt">For assistance outside these hours, please email customer support.</p>
+                    </div>
+
+                    <div className="col-4 contact-det-sec">
+                        <h1>Global Infrastructure. <br /> Local Care.</h1>
+                        <h2>Partner with the leader in premium postpartum solutions.</h2>
+                        <button className='button-pink-center' >BUSINESS ENQUIRIES</button>
+                    </div>
+                </div>
             </div>
 
             <div className='contact-return-text-changes'>
