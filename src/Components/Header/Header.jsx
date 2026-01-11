@@ -17,12 +17,11 @@ const Header = () => {
                 <img src={Logo} alt="Mommy FIrst" onClick={()=>navigate('/')} />
             </div>
             <div className="menu-container">
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/shop">Shop</NavLink>
-                <NavLink to="/pregnancy-care">Pregnancy Care </NavLink>
-                <NavLink to="/postpartum-care">Postpartum Care</NavLink>
-                <NavLink to="/bundles">Bundles</NavLink>
-                <NavLink to="/care-hub">Care Hub</NavLink>
+                <div className='menu-item-div'><NavLink to="/">Home</NavLink></div>
+                <div className='menu-item-div'><NavLink to="/shop">Shop</NavLink></div>
+                <div className='menu-item-div'><NavLink to="/bundles">Bundles </NavLink><span className='flash-animation' style={{background: '#FF1F1F'}} >SALE</span></div>
+                <div className='menu-item-div'><NavLink to="/care-hub">Care Hub </NavLink><span className='flash-animation' style={{background: '#5ED34B'}} >NEW</span></div>
+                <div className='menu-item-div'><NavLink to="/story">Story</NavLink></div>
             </div>
             <div className="menu-action-icons-container">
                 <img src={Search} alt="" data-bs-toggle="offcanvas" data-bs-target="#SearchModal" style={{cursor: 'pointer'}} />

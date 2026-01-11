@@ -39,6 +39,27 @@
             background: #37203533;
         }
 
+        .menu-item-div {
+            width: fit-content;
+            height: 40px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+
+            span {
+                position: absolute;
+                width: fit-content;
+                height: fit-content;
+                right: 10px;
+                top: -4px;
+                padding: 2px 4px;
+                border-radius: 4px;
+                font: 400 7px var(--font);
+                color: var(--white);
+            }
+        }
+
         a {
             font: 400 14px var(--font);
             color: var(--primary-dark);
@@ -49,6 +70,7 @@
             border-radius: 8px;
             overflow: hidden;
             transition: color 0.3s ease;
+            position: relative;
 
             &::before {
                 content: '';
