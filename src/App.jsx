@@ -27,6 +27,7 @@ import About from './Pages/About/About'
 import Contact from './Pages/Contact/Contact'
 import FAQ from './Pages/FAQ/FAQ'
 import Enquiries from './Pages/Enquiries/Enquiries'
+import Profile from './Pages/Profile/Profile'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -63,6 +64,7 @@ const AppContent = () => {
           <Route element={<Contact/>} path='/contact' />
           <Route element={<FAQ/>} path='/faqs' />
           <Route element={<Enquiries/>} path='/enquiries' />
+          <Route element={<Profile/>} path='/profile' />
         </Routes>
         <ContactBanner />
         <Footer />
