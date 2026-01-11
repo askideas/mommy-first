@@ -91,7 +91,21 @@ const Enquiries = () => {
                                     <div id={`panelsStayOpen-collapse${item.id}`} class="accordion-collapse collapse show">
                                         <div class="accordion-body" dangerouslySetInnerHTML={{ __html: item.answer }}></div>
                                         <div className="active-items-section">
-
+                                            {
+                                                item.activeItems.map((label, index)=> {
+                                                    return (
+                                                        <div className={`active-item ${item.activeItems.length > 1 ? 'multiple' : 'single'} `}>
+                                                            <p className="label">{label.label}</p>
+                                                            <div className="active-value">
+                                                                <span>{label.value}</span>
+                                                                {
+                                                                    label.isCopyEnabled && <button><span>COPY</span></button>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -100,6 +114,11 @@ const Enquiries = () => {
                         })
                     }
                     
+                </div>
+
+                <div className="enquiries-contact-section">
+                    <p>Still have questions? We’re happy to help 🙂</p>
+                    <button className='button-pink-center'>CONTACT US</button>
                 </div>
             </div>
         </div>
