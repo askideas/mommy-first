@@ -14,6 +14,7 @@ import Bell from '../../assets/profile/bell.svg'
 import Tag from '../../assets/profile/tag.svg'
 import Settings from '../../assets/profile/settings.svg'
 import { NavLink, useLocation } from 'react-router-dom'
+import ProfileSection from '../../Components/ProfileSection/ProfileSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -135,7 +136,7 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-content-based-on-selection">
-                        
+                        {activeSection === "#profile" && <ProfileSection />}
                     </div>
                 </div>
             </div>
