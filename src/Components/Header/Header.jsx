@@ -21,7 +21,7 @@ const Header = () => {
                 <div className='menu-item-div'><NavLink to="/shop">Shop</NavLink></div>
                 <div className='menu-item-div'><NavLink to="/bundles">Bundles </NavLink><span className='flash-animation' style={{background: '#FF1F1F'}} >SALE</span></div>
                 <div className='menu-item-div'><NavLink to="/care-hub">Care Hub </NavLink><span className='flash-animation' style={{background: '#5ED34B'}} >NEW</span></div>
-                <div className='menu-item-div'><NavLink to="/story">Story</NavLink></div>
+                <div className='menu-item-div'><NavLink to="/about">Story</NavLink></div>
             </div>
             <div className="menu-action-icons-container">
                 <img src={Search} alt="" data-bs-toggle="offcanvas" data-bs-target="#SearchModal" style={{cursor: 'pointer'}} />
