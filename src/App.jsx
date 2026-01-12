@@ -38,6 +38,15 @@ const AppContent = () => {
   
   const { isLoading } = useLoading()
 
+  const location = useLocation();
+
+  useEffect(() => {
+    const closeBtn = document.querySelector('#MegaMenuModal .close-btn');
+      if (closeBtn) {
+        closeBtn.click();
+      }
+  }, [location.pathname]);
+
   return (
     <>
       {isLoading && <PageLoader />}

@@ -92,12 +92,12 @@ export const MegaMenu = [
     items: [
       {
         label: "Story",
-        link: "/stories",
+        link: "/about",
         tag: false,
       },
       {
         label: "Contact Us",
-        link: "/about/contact-us",
+        link: "/contact",
         tag: false,
       },
       {
@@ -127,7 +127,7 @@ export const MegaMenu = [
     items: [
       {
         label: "FAQs",
-        link: "/help/faqs",
+        link: "/faqs",
         tag: false,
       },
       {
