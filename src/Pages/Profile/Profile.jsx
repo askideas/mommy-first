@@ -18,6 +18,7 @@ import ProfileSection from '../../Components/ProfileSection/ProfileSection'
 import Flower from '../../assets/About/flower.svg'
 import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
 import BabiesSection from '../../Components/BabiesSection/BabiesSection'
+import AddressSection from '../../Components/AddressSection/AddressSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -148,6 +149,7 @@ const Profile = () => {
                     <div className="profile-content-based-on-selection">
                         {activeSection === "#profile" && <ProfileSection />}
                         {activeSection === "#mybabies" && <BabiesSection />}
+                        {activeSection === "#address" && <AddressSection />}
                     </div>
                 </div>
             </div>
