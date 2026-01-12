@@ -3,6 +3,8 @@ import './HeroSection.css'
 import Heading from '../Heading/Heading'
 import Hero1 from '../../assets/Hero/hero1.png'
 import Hero2 from '../../assets/Hero/hero2.png'
+import Hero3 from '../../assets/Hero/sd-img2.png'
+import Hero4 from '../../assets/Hero/sd-img3.png'
 import HeroShade from '../../assets/Hero/hero-shade.png'
 import HeroShade1 from '../../assets/Hero/hero-shade1.png'
 import HeroShade3 from '../../assets/Hero/hero-shade-3.png'
@@ -28,7 +30,7 @@ const HeroSection = () => {
         'description': false
     }
 
-    const HeroSlider = [SliderSample,MF1,MF2]
+    const HeroSlider = [SliderSample,Hero3,Hero4]
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex)
