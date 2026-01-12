@@ -60,6 +60,13 @@ const AuthenticationModal = () => {
     if (lastInput) lastInput.focus()
   }
 
+  const closeModal = ()=> {
+    const closeBtn = document.querySelector('#AuthenticationModal .close-btn');
+    if (closeBtn) {
+      closeBtn.click();
+    }
+  }
+
   return (
     <div class="offcanvas offcanvas-end" tabindex="-1" id="AuthenticationModal" aria-labelledby="offcanvasRightLabel">
       {
@@ -178,9 +185,10 @@ const AuthenticationModal = () => {
         {
           suceessScreen ? (
             <div className='login-sucess-screen-container'>
+              <button className="close-btn d-none" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
               <img src={successImg} alt="" />
               <p className="text">You’re all set! <br /> Welcome to MommyFirst 👋</p>
-              <Link className='button-pink-center' to='/shop'>Continue Shopping</Link>
+              <Link className='button-pink-center' onClick={()=> closeModal()} to='/profile#profile'>Continue Shopping</Link>
             </div>
           ) : (<></>)
         }
