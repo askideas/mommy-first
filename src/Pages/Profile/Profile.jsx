@@ -17,6 +17,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import ProfileSection from '../../Components/ProfileSection/ProfileSection'
 import Flower from '../../assets/About/flower.svg'
 import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
+import BabiesSection from '../../Components/BabiesSection/BabiesSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -138,11 +139,15 @@ const Profile = () => {
                                 )
                             })
                         }
-                        <button className="logout-btn">Log Out</button>
+                        <div className="logout-div-con">
+                            <button className="logout-btn">Log Out</button>
+                        </div>
+                        
                     </div>
 
                     <div className="profile-content-based-on-selection">
                         {activeSection === "#profile" && <ProfileSection />}
+                        {activeSection === "#mybabies" && <BabiesSection />}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,368 @@
+.my-babies-section-container {
+    width: 100%;
+    height: fit-content;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .babies-section-header {
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid var(--pink-border);
+        padding: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .heading {
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 14px;
+            margin: 0;
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+
+            span {
+                font: 400 16px var(--font);
+                color: var(--primary-dark);
+            }
+        }
+
+        .profile-completion {
+            font: 400 14px var(--font);
+            color: var(--primary-dark);
+            margin: 0;
+
+            span {
+                font: 600 16px var(--font);
+                color: var(--primary-dark);
+                margin-left: 4px;
+            }
+        }
+    }
+
+    .babies-section-body {
+        flex: 1;
+        width: 100%;
+        padding: 32px;
+
+        #babiesListAccordian {
+            .accordion-item {
+                width: 100%;
+                height: fit-content;
+                background: var(--pink-shade-bg);
+                margin-bottom: 16px;
+                border-radius: 16px;
+                border: none;
+
+                .accordion-header {
+                    width: 100%;
+                    height: 88px;
+                    border: 0;
+
+                    .accordion-button {
+                        background: none;
+                        outline: none;
+                        border: none;
+                        width: 100%;
+                        height: 100%;
+                        box-shadow: none;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        &::after {
+                            display: none;
+                        }
+
+                        .accordian-icon {
+                            width: 40px;
+                            height: 40px;
+                            background: var(--pink-border);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 12px;
+                            border: none;
+                            outline: none;
+
+                            svg {
+                                stroke: var(--primary-dark);
+                                transition: all 0.6s ease;
+                                transform-origin: center;
+                            }
+                        }
+
+                        .baby-name {
+                            width: fit-content;
+                            height: fit-content;
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            color: var(--primary-dark);
+                            font: 400 16px var(--font);
+                            column-gap: 12px;
+                            margin: 0;
+
+                            .avatar {
+                                width: 40px;
+                                height: 40px;
+                                border: 3px solid var(--white);
+                                color: var(--white);
+                                font: 400 16px var(--font);
+                                text-transform: uppercase;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border-radius: 12px;
+                                box-shadow: 0px 4px 4px 0px #D87AA140;
+                            }
+                        }
+
+                        .baby-date-of-birth {
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            width: fit-content;
+                            height: fit-content;
+                            margin: 0;
+                            column-gap: 12px;
+
+                            img {
+                                width: 20px;
+                                height: 20px;
+                            }
+
+                            span {
+                                font: 400 14px var(--font);
+                                color: var(--primary-dark);
+                            }
+                        }
+                    }
+
+                    .accordion-button:not(.collapsed) {
+                        svg {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+
+                .accordion-body {
+                    padding: 32px;
+                    padding-top: 0;
+
+                    .baby-in-detail-section {
+                        height: fit-content;
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 10px;
+                        border-top: 3px solid var(--white);
+                        padding: 24px 0;
+
+                        .baby-detail-item {
+                            width: 100%;
+                            height: fit-content;
+                            display: flex;
+                            flex-direction: column;
+                            row-gap: 8px;
+
+                            .label {
+                                font: 400 12px var(--font);
+                                color: var(--gray);
+                            }
+
+                            .value {
+                                font: 400 16px var(--font);
+                                color: var(--primary-dark);
+                            }
+                        }
+                    }
+
+                    .action-btns {
+                        border-top: 3px solid var(--white);
+                        padding-top: 24px;
+                        display: flex;
+                        justify-content: flex-end;
+                        column-gap: 14px;
+
+                        button {
+                            box-shadow: none;
+                            height: 40px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .add-baby-section {
+        width: 100%;
+        height: fit-content;
+        padding: 32px;
+        border-top: 1px solid var(--pink-border);
+
+        #addBabyAccordian {
+            width: 100%;
+            height: fit-content;
+
+            .accordion-item {
+                width: 100%;
+                height: fit-content;
+                background: var(--pink-shade-bg);
+                border-radius: 16px;
+                padding: 16px;
+                padding: 0;
+
+                .accordion-header {
+                    width: 100%;
+                    height: fit-content;
+
+                    .accordion-button {
+                        width: 100%;
+                        height: fit-content;
+                        background: none;
+                        outline: none;
+                        box-shadow: none;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font: 400 20px var(--font);
+                        color: var(--primary-dark);
+
+                        &::after {
+                            display: none;
+                        }
+
+                        .plus-icon {
+                            display: flex;
+                        }
+
+                        .minus-icon {
+                            display: none;
+                        }
+
+                        .accordian-icon {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 8px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background: var(--pink-dark);
+                            outline: none;
+                            border: none;
+
+                            svg {
+                                stroke: var(--white);
+                            }
+                        }
+                    }
+
+                    .accordion-button:not(.collapsed) {
+                        .plus-icon {
+                            display: none;
+                        }
+
+                        .minus-icon {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+
+            .add-baby-inputs-container {
+                width: 100%;
+                height: fit-content;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+
+                .input-group-con {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 6px;
+
+                    .label {
+                        font: 400 12px var(--font);
+                        color: var(--primary-dark);
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 40px;
+                        border: 1.5px solid var(--gray-dark);
+                        outline: none;
+                        background: var(--white);
+                        border-radius: 8px;
+                        padding: 8px 12px;
+                        font: 400 14px var(--font);
+                        color: var(--primary-dark);
+                    }
+
+                    .dropdown {
+                        width: 100%;
+                        height: 40px;
+
+                        .dropdown-toggle {
+                            width: 100%;
+                            height: 100%;
+                            background: none;
+                            border: 1.5px solid var(--gray-dark);
+                            background: var(--white);
+                            border-radius: 8px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            font: 400 14px var(--font);
+                            color: var(--primary-dark);
+
+                            &::after {
+                                display: none;
+                            }
+
+                            svg {
+                                padding: 4px;
+                                transition: all 0.6s ease;
+                                transform-origin: center;
+                            }
+
+                            &.show {
+                                svg {
+                                    transform: rotate(180deg);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .babies-section-footer {
+        width: 100%;
+        height: 64px;
+        padding: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 10px;
+        margin-bottom: 30px;
+
+        .notification-message {
+            flex: 1;
+            height: fit-content;
+            margin: 0;
+        }
+
+        button {
+            width: fit-content;
+            height: 40px;
+        }
+    }
+}
