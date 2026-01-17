@@ -23,6 +23,15 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
+        animation: cardfromLeft linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+
+        .sub-heading-span {
+            animation: cardfromRight linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 100%;
+        }
 
         span {
             background: linear-gradient(0deg, #7C2C75, #7C2C75);
@@ -186,6 +195,10 @@
         transform: translateY(-50%);
         z-index: 1;
         right: -198px;
+        transform-origin: center;
+        animation: rotatemode linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
     }
 
     .flower-shade2 {
@@ -196,6 +209,10 @@
         transform: translateY(-50%);
         z-index: 1;
         left: -33px;
+        transform-origin: center;
+        animation: rotatemode linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
     }
 
     .flower1 {
@@ -299,6 +316,10 @@
         height: 152px;
         left: 90px;
         top: 52%;
+        transform-origin: center;
+        animation: rotatemode linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
     }
 
     .doc-flower2 {
@@ -307,6 +328,10 @@
         height: 107px;
         right: 223px;
         bottom: -83px;
+        transform-origin: center;
+        animation: rotatemode linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
     }
 
     .doc-card-shade1 {
