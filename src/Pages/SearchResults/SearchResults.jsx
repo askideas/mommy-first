@@ -218,6 +218,15 @@ const SearchResults = () => {
                                 )}
                             </div>
                         </div>
+                        <div className="search-results-filter">
+                            <p className="results-found">You searched for ’peri bott’</p>
+                            <div className="filters-section">
+                                <button className='active'>Products (4)</button>
+                                <button>Events (4)</button>
+                                <button>Blog (4)</button>
+                                <button>Care Hub (4)</button>
+                            </div>
+                        </div>
                         <div className="results-found-container">
                             <p>{products.length} Results found</p>
                             <button className="srp-filter-btn-modal">FILTER <Settings2 /></button>
