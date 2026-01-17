@@ -281,3 +281,45 @@
         }
     }
 }
+
+.search-results-filter {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--pink-border);
+    margin-bottom: 18px;
+
+    .results-found {
+        font: 400 12px var(--font);
+        color: var(--primary-dark);
+    }
+
+    .filters-section {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 10px;
+        margin: 0;
+
+        button {
+            width: fit-content;
+            height: fit-content;
+            padding: 8px 12px;
+            font: 400 12px var(--font);
+            color: var(--pink-dark);
+            padding: 8px 12px;
+            background: var(--white);
+            border: none;
+            outline: none;
+            border-radius: 100px;
+            border: 1px solid var(--primary-pink);
+
+            &.active {
+                background: var(--pink-dark);
+                color: var(--white);
+            }
+        }
+    }
+}
