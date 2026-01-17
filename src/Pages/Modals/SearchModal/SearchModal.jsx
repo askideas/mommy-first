@@ -191,10 +191,10 @@ const SearchModal = () => {
             {/* Results Stage */}
             {!loading && searchQuery.trim() && searchResults.length > 0 && (
                 
-                <div className="search-results-container">
-                    <div className="search-results-filter">
+                <div className="search-results-container left">
+                    <div className="search-results-filter left">
                         <p className="results-found">You searched for ’peri bott’</p>
-                        <div className="filters-section">
+                        <div className="filters-section left">
                             <button className='active'>Products (4)</button>
                             <button>Events (4)</button>
                             <button>Blog (4)</button>

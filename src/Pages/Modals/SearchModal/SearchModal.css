@@ -289,9 +289,15 @@
     border-bottom: 1px solid var(--pink-border);
     margin-bottom: 18px;
 
+    &.left {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
     .results-found {
         font: 400 12px var(--font);
         color: var(--primary-dark);
+        text-align: left;
     }
 
     .filters-section {
@@ -302,6 +308,10 @@
         align-items: center;
         column-gap: 10px;
         margin: 0;
+
+        &.left {
+            justify-content: flex-start;
+        }
 
         button {
             width: fit-content;
