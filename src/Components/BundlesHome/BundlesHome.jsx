@@ -15,19 +15,43 @@ import { ArrowRight, ChevronDown, Clock, Info } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import BundlesRecommendedModal from '../BundlesRecommendedModal/BundlesRecommendedModal'
 
-const BundlesHome = () => {
+const BundlesHome = (props) => {
+  const data = props.data;
   const navigate = useNavigate();
-    const headingData = {
-        'title': "PREMIUM BUNDLES",
-        'subtitle': "Your Recovery, Simplified.",
-        'description': [' Curated bundles designed to take the guesswork out of', ' postpartum care — premium, practical, and priced to save.']
-    }
+  
+  const headingData = {
+      'title': data && data.heading && data.heading.heading ? data && data.heading && data.heading.heading : 'PREMIUM BUNDLES',
+      'subtitle': data && data.heading && data.heading.subheading ? data && data.heading && data.heading.subheading : "Your Recovery, Simplified.",
+      'description': data && data.heading && data.heading.description ? [`${data && data.heading && data.heading.description}`] : ['Curated bundles designed to take the guesswork out ofpostpartum care — premium, practical, and priced to save.']
+  }
+
+  const content = {
+    description : data && data.content && data.content.description ? data && data.content && data.content.description : 'Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks.</br>Our systems remove the guesswork with 2–21 days of care in one box.',
+    sections : [
+      {
+        label : data && data.content && data.content.sections ? data && data.content && data.content.sections[0].label : '',
+        value : data && data.content && data.content.sections ? data && data.content && data.content.sections[0].value : '',
+      },
+      {
+        label : data && data.content && data.content.sections ? data && data.content && data.content.sections[1].label : '',
+        value : data && data.content && data.content.sections ? data && data.content && data.content.sections[1].value : '',
+      },
+      {
+        label : data && data.content && data.content.sections ? data && data.content && data.content.sections[2].label : '',
+        value : data && data.content && data.content.sections ? data && data.content && data.content.sections[2].value : '',
+      },
+      {
+        label : data && data.content && data.content.sections ? data && data.content && data.content.sections[3].label : '',
+        value : data && data.content && data.content.sections ? data && data.content && data.content.sections[3].value : '',
+      }
+    ]
+  }
 
   return (
     <div className="container" style={{marginBottom: '154px'}}>
         <Heading data={headingData} />
         <div className="bundles-home-container">
-          <img src={BG} alt="" className='bg-image' />
+          <img src={data && data.image && data.image.image ? data && data.image && data.image.image : BG} alt="" className='bg-image' />
           <img src={WebExc} alt="" className='website-exclusive' />
           <div className="badge-con">
             <img src={Badge} alt="" />
@@ -48,36 +72,36 @@ const BundlesHome = () => {
             <div className="bundle-details-item">
               <img src={Calendar} alt="" />
               <div className="text-container">
-                <h1 className="heading">2–21</h1>
-                <h1 className="sub-heading">days of care</h1>
+                <h1 className="heading">{content.sections[0].label}</h1>
+                <h1 className="sub-heading">{content.sections[0].value}</h1>
               </div>
             </div>
 
             <div className="bundle-details-item">
               <img src={Shield} alt="" />
               <div className="text-container">
-                <h1 className="sub-heading">One less thing</h1>
-                <h1 className="sub-heading">to worry about</h1>
+                <h1 className="heading">{content.sections[1].label}</h1>
+                <h1 className="sub-heading">{content.sections[1].value}</h1>
               </div>
             </div>
 
             <div className="bundle-details-item">
               <img src={Certificate} alt="" />
               <div className="text-container">
-                <h1 className="heading">OB/GYN</h1>
-                <h1 className="sub-heading">Approved Essentials</h1>
+                <h1 className="heading">{content.sections[2].label}</h1>
+                <h1 className="sub-heading">{content.sections[2].value}</h1>
               </div>
             </div>
 
             <div className="bundle-details-item">
               <img src={Heart} alt="" />
               <div className="text-container">
-                <h1 className="heading">10,000+</h1>
-                <h1 className="sub-heading">Trusted MOMS</h1>
+                <h1 className="heading">{content.sections[3].label}</h1>
+                <h1 className="sub-heading">{content.sections[3].value}</h1>
               </div>
             </div>
           </div>
-          <p className="description-item">Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks. <br /> Our systems remove the guesswork with 2–21 days of care in one box.</p>
+          <p className="description-item" dangerouslySetInnerHTML={{ __html: content.description }}></p>
           <div className="w-100 d-flex justify-content-center align-items-center">
             <button className="button-pink-full" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
           </div>
