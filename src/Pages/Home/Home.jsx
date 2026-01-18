@@ -43,22 +43,27 @@ const Home = () => {
   // Get herosection data from homeData
   // Try to find by id 'herosection' or use the first document if not found
   const heroSectionData = homeData?.find(item => item.id === 'herosection') || homeData?.[0] || null
+  const bundlesHome = homeData?.find(item => item.id === 'recommendedbundles') || homeData?.[0] || null
+  const newArrivals = homeData?.find(item => item.id === 'newarrivals') || homeData?.[0] || null
+  const shopByCategory = homeData?.find(item => item.id === 'shopbycategory') || homeData?.[0] || null
+  const seeHowItWorks = homeData?.find(item => item.id === 'seehowworks') || homeData?.[0] || null
+  const homeReviews = homeData?.find(item => item.id === 'reviews') || homeData?.[0] || null
+  const freeGuide = homeData?.find(item => item.id === 'freeguide') || homeData?.[0] || null
   
-  console.log('heroSectionData being passed:', heroSectionData)
 
   return (
     <>
       <Snowfall />
       <HeroSection data={heroSectionData} loading={loading} />
       <HeroTextSection />
-      <BundlesHome />
-      <NewArrivals />
-      <ImageCardContainer />
+      <BundlesHome data={bundlesHome} loading={loading} />
+      <NewArrivals data={newArrivals} loading={loading} />
+      <ImageCardContainer data={shopByCategory} />
       <MommyFirstTrust />
-      <HomeVideoSection />
-      <StoriesHome />
+      <HomeVideoSection data={seeHowItWorks} loading={loading} />
+      <StoriesHome data={homeReviews} loading={loading} />
       <ActivitiesHome />
-      <FreeGuide />
+      <FreeGuide data={freeGuide} loading={loading} />
       <MomsHub />
     </>
   )

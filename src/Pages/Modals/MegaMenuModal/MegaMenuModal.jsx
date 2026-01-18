@@ -12,7 +12,7 @@ import { MegaMenu } from '../../../data/menuData'
 
 const MegaMenuModal = () => {
   return (
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="MegaMenuModal" aria-labelledby="offcanvasRightLabel">
+    <div className="offcanvas offcanvas-end" tabIndex="-1" id="MegaMenuModal" aria-labelledby="offcanvasRightLabel">
         <div className="mf-off-canvas-header">
             <p className="head-ing">Menu</p>
             <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
@@ -27,7 +27,7 @@ const MegaMenuModal = () => {
                                 {
                                     item.items.map((menu, i)=> {
                                         return (
-                                            <NavLink key={index} to={menu.link}>{menu.label} 
+                                            <NavLink key={i} to={menu.link}>{menu.label} 
                                                 {
                                                     menu.tag ? (
                                                         <span style={{background: menu.tag.bgColor, color: menu.tag.color}} className='flash-animation' >{menu.tag.label}</span>

@@ -148,7 +148,7 @@ const SearchModal = () => {
         if (modal) modal.hide();
     };
   return (
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="SearchModal" aria-labelledby="offcanvasRightLabel">
+    <div className="offcanvas offcanvas-end" tabIndex="-1" id="SearchModal" aria-labelledby="offcanvasRightLabel">
         <div className="mf-off-canvas-header">
             <p className="head-ing">Search</p>
             <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
