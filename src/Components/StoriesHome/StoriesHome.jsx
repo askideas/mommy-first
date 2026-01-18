@@ -17,7 +17,8 @@ import M13 from '../../assets/Reviews/m13.svg'
 import Shade from '../../assets/Reviews/shade.svg'
 import { useNavigate } from 'react-router-dom'
 
-const StoriesHome = () => {
+const StoriesHome = (props) => {
+    const data = props.data
     const INTERVAL_FAST = 2000;
     const INTERVAL_MEDIUM = 2500;
     const INTERVAL_SLOW = 3000;
@@ -46,6 +47,19 @@ const StoriesHome = () => {
             </div>
         )
     }
+
+    const fetchImages = (images)=> {
+        const Images = []
+        images.map((item,index)=> Images.push(item.url))
+        return Images;
+    }
+
+    const rHeading = data && data.reviewData && data.reviewData.heading ? data.reviewData.heading : 'Read Reviews,<br/>Shop with confidence';
+    const rLabel = data && data.reviewData && data.reviewData.label ? data.reviewData.label : 'Love from Moms'
+    const rdesc1 = data && data.reviewData && data.reviewData.descriptionOne ? data.reviewData.descriptionOne : 'Love from Moms'
+    const rdesc2 = data && data.reviewData && data.reviewData.descriptionTwo ? data.reviewData.descriptionTwo : 'Love from Moms'
+    const rbuttonLabel = data && data.reviewData && data.reviewData.buttonLabel ? data.reviewData.buttonLabel : 'Love from Moms'
+    const rimages = data && data.reviewData && data.reviewData.images ? fetchImages(data.reviewData.images) : [M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13];
   return (
     <div className="container">
         <div className="stories-home-container">
@@ -56,68 +70,69 @@ const StoriesHome = () => {
                 <img src={Star} alt="" />
                 <img src={Star} alt="" />
             </div>
-            <h1 className="star-heading">Read Reviews,<br/>Shop with confidence</h1>
+            <h1 className="star-heading" dangerouslySetInnerHTML={{ __html: rHeading }}></h1>
             <div className="gallery-container">
                 {/* keep same gallery-item structure; each item has a shade then a slide stack */}
                 <div className="gallery-item one">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={0} interval={INTERVAL_MEDIUM} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={1} interval={INTERVAL_SLOW} />
+                    <SlideStack images={rimages} start={0} interval={INTERVAL_MEDIUM} />
+                    <SlideStack images={rimages} start={1} interval={INTERVAL_SLOW} />
                 </div>
 
                 <div className="gallery-item two">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={3} interval={INTERVAL_FAST} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={5} interval={INTERVAL_MEDIUM} />
+                    <SlideStack images={rimages} start={3} interval={INTERVAL_FAST} />
+                    <SlideStack images={rimages} start={5} interval={INTERVAL_MEDIUM} />
                 </div>
 
                 <div className="gallery-item three">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={7} interval={INTERVAL_SLOW} />
+                    <SlideStack images={rimages} start={7} interval={INTERVAL_SLOW} />
                 </div>
 
                 <div className="gallery-item four">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={2} interval={INTERVAL_FAST} />
+                    <SlideStack images={rimages} start={2} interval={INTERVAL_FAST} />
                 </div>
 
                 <div className="gallery-item five">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={9} interval={INTERVAL_MEDIUM} />
+                    <SlideStack images={rimages} start={9} interval={INTERVAL_MEDIUM} />
                 </div>
 
                 <div className="gallery-item four">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={4} interval={INTERVAL_SLOW} />
+                    <SlideStack images={rimages} start={4} interval={INTERVAL_SLOW} />
                 </div>
 
                 <div className="gallery-item three">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={11} interval={INTERVAL_FAST} />
+                    <SlideStack images={rimages} start={11} interval={INTERVAL_FAST} />
                 </div>
 
                 <div className="gallery-item two">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={6} interval={INTERVAL_SLOW} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={8} interval={INTERVAL_MEDIUM} />
+                    <SlideStack images={rimages} start={6} interval={INTERVAL_SLOW} />
+                    <SlideStack images={rimages} start={8} interval={INTERVAL_MEDIUM} />
                 </div>
 
                 <div className="gallery-item one">
                     <div className="shade"></div>
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={10} interval={INTERVAL_FAST} />
-                    <SlideStack images={[M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13]} start={12} interval={INTERVAL_MEDIUM} />
+                    <SlideStack images={rimages} start={10} interval={INTERVAL_FAST} />
+                    <SlideStack images={rimages} start={12} interval={INTERVAL_MEDIUM} />
                 </div>
             </div>
 
             <div className="reviews-text-container">
                 <img src={Shade} className="shade-con" alt="" />
-                <div className="label">Love from Moms</div>
-                <div className="review-text">I absolutely loved this postpartum kit. I just recently gave birth to my <br/>son and bought this kit to help ease my pain and it definitely did that!<br/> The cold pads are the perfect size covering the whole area. <br/><br/>The herbal spray felt amazing as it really cools and soothes your lady<br/> parts and is a great essential to have. The peri spray bottle is also<br/> helpful due to the multi-use friendly sprayer. I would definitely <br/>recommend this kit for any mamas looking to feel better<br/> postpartum!!</div>
+                <div className="label">{rLabel}</div>
+                <div className="review-text">{rdesc1}</div>
+                <div className="review-text">{rdesc2}</div>
                 <div className="reviewr-name">Jessica <br /> <span>Fort Worth, Texas</span></div>
                 <div className="progress-bar">
                     <span></span>
                 </div>
-                <button className='button-label' onClick={()=> navigate('/stories')}>View all  Stories</button>
+                <button className='button-label' onClick={()=> navigate('/stories')}>{rbuttonLabel}</button>
             </div>
         </div>
     </div>
