@@ -99,7 +99,9 @@ const NewArrivals = (props) => {
 
             if (result && result.products.length > 0) {
                 const products = result.products
-                setProductsData(products.slice(0, 4)); // Show only first 4 products
+                const transformedProducts = products.slice(0, 4).map(transformProduct);
+                setProductsData(transformedProducts); // Show only first 4 products
+
                 setError(null);
             } else {
                 throw new Error(result.message || 'Failed to fetch products');
