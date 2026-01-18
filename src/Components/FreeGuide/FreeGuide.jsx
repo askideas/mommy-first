@@ -5,7 +5,8 @@ import FreeTag from '../../assets/free-guide/free-tag.svg'
 import Divider from '../../assets/free-guide/divider.svg'
 import { ArrowRight, Clock } from 'lucide-react'
 
-const FreeGuide = () => {
+const FreeGuide = (props) => {
+    const data = props.data;
   return (
     <div className="container">
         <div className="free-guide-container">
@@ -14,14 +15,14 @@ const FreeGuide = () => {
                 <div className="contents-sec">
                     <img src={FreeTag} alt="" />
                     <div className="heading-sec">
-                        <h1>Free Guide for</h1>
+                        <h1>{data && data.guideData && data.guideData.headingOne ? data.guideData.headingOne : 'Free Guide for'}</h1>
                         <img src={Divider} alt="" />
-                        <h1 className='second'>New Moms</h1>
-                        <p>Get our doctor-approved “6-Week<br/> Recovery Playbook” when you sign up.</p>
-                        <button className='button-white'>Get My Free Guide <ArrowRight /></button>
+                        <h1 className='second'>{data && data.guideData && data.guideData.headingTwo ? data.guideData.headingTwo : 'New Moms'}</h1>
+                        <p dangerouslySetInnerHTML={{ __html:  data && data.guideData && data.guideData.description ? data.guideData.description : 'Get our doctor-approved “6-Week<br/> Recovery Playbook” when you sign up.'}}></p>
+                        <button className='button-white'>{data && data.guideData && data.guideData.buttonLabel ? data.guideData.buttonLabel : 'Get My Free Guide'} <ArrowRight /></button>
                     </div>
                     <div className="label-con flash-animation">
-                        <div className="text"><Clock className='icon' />Limited deal</div>
+                        <div className="text"><Clock className='icon' />{data && data.guideData && data.guideData.flashLabelText ? data.guideData.flashLabelText : 'Limited deal'} </div>
                     </div>
                 </div>
             </div>
