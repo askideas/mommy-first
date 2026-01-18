@@ -23,9 +23,6 @@ const NewArrivals = (props) => {
         'description': false
     }
 
-    // console.log(data);
-    
-
     // Fetch authentication token
     const fetchAuthToken = async () => {
         try {
