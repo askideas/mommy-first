@@ -49,8 +49,6 @@ const HeroSection = (props) => {
       productImage: data && data.rightside && data.rightside.image ? data.rightside.image : HeroImage2
   }
 
-    console.log('HeroSection received data:', data)
-
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex)
     }
