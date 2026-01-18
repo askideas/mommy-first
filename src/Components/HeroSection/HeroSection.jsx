@@ -20,38 +20,34 @@ import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 import { ArrowRight } from 'lucide-react'
 
-const HeroSection = ({ data, loading }) => {
-    const [activeIndex, setActiveIndex] = useState(0)
-    const swiperRef = useRef(null)
-    
-    // Default slider images
-    const defaultSliderImages = [SliderSample, Hero3, Hero4]
-    
-    const headingData = {
-        'title': "WHAT'S NEW",
-        'subtitle': false,
-        'description': false
-    }
-
-    // Use data from props if available, otherwise use default images
-    // Ensure HeroSlider is always an array
-    const HeroSlider = Array.isArray(data?.slider) ? data.slider : defaultSliderImages
+const HeroSection = (props) => {
+  const data = props.data;
+  const [activeIndex, setActiveIndex] = useState(0)
+  const swiperRef = useRef(null)
+  
+  const HeroSlider = data && data.slider && data.slider.images ? data && data.slider && data.slider.images : []
+  
+  const headingData = {
+    title: "WHAT'S NEW",
+    subtitle: false,
+    description: false,
+  };
     
     // Get left and right section data from props with safe defaults
-    const leftside = {
-        label: data?.leftside?.labelText || "FLASH SALE - Ships in 24 Hours",
-        heading: data?.leftside?.description || "Witch Hazel Foam + Liners Combo",
-        image: data?.leftside?.backgroundImage || Hero1,
-        buttonText: data?.leftside?.buttonText || "Shop"
-    }
-    
-    const rightside = {
-        heading: data?.rightside?.heading || "Exclusive",
-        subHeading: data?.rightside?.subHeading || "Bundle Deals",
-        buttonText: data?.rightside?.buttonText || "Shop All Brands",
-        image: data?.rightside?.backgroundImage || Hero2,
-        productImage: data?.rightside?.productImage || HeroImage2
-    }
+  const leftside = {
+      label: data && data.leftside && data.leftside.labelText ?  data.leftside.labelText : "FLASH SALE - Ships in 24 Hours",
+      heading: data && data.leftside && data.leftside.description ? data.leftside.description : "Witch Hazel Foam + Liners Combo",
+      image: data && data.leftside && data.leftside.backgroundImage ? data.leftside.backgroundImage : Hero1,
+      buttonText: data && data.leftside && data.leftside.buttonText ? data.leftside.buttonText : "Shop"
+  }
+  
+  const rightside = {
+      heading: data && data.rightside && data.rightside.heading ? data.rightside.heading : "Exclusive",
+      subHeading: data && data.rightside && data.rightside.subHeading ? data.rightside.subHeading : "Bundle Deals",
+      buttonText: data && data.rightside && data.rightside.buttonText ? data.rightside.buttonText : "Shop All Brands",
+      image: data && data.rightside && data.rightside.backgroundImage ? data.rightside.backgroundImage : Hero2,
+      productImage: data && data.rightside && data.rightside.image ? data.rightside.image : HeroImage2
+  }
 
     console.log('HeroSection received data:', data)
 
@@ -100,7 +96,7 @@ const HeroSection = ({ data, loading }) => {
                 HeroSlider.map((item, index)=> {
                   return (
                     <SwiperSlide key={index}>
-                      <img src={item} alt="Hero Slide 1" className='hero-slide-image' style={{ width: '100%', height: 'auto' }} />
+                      <img src={item.url} alt="Hero Slide 1" className='hero-slide-image' style={{ width: '100%', height: 'auto' }} />
                     </SwiperSlide>
                   )
                 })

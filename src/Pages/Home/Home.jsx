@@ -11,58 +11,95 @@ import BundlesHome from '../../Components/BundlesHome/BundlesHome'
 import HeroSection from '../../Components/HeroSection/HeroSection'
 import HeroTextSection from '../../Components/HeroTextSection/HeroTextSection'
 import Snowfall from '../../Components/Snowfall/Snowfall'
+
 import { db } from '../../firebase/config'
-import { collection, getDocs } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
+
+/**
+ * 🔍 DEBUG Firestore Fetch
+ */
+const getSectionData = async (collectionName, documentId) => {
+
+  try {
+    const docRef = doc(db, collectionName, documentId)
+
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      const data = {
+        id: docSnap.id,
+        ...docSnap.data(),
+      }
+      return data
+    } else {
+      return null
+    }
+  } catch (error) {
+    return null
+  }
+}
 
 const Home = () => {
-  const [homeData, setHomeData] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Fetch all home page data from Firebase
+  const [heroSectionData, setHeroSectionData] = useState(null)
+  const [bundlesHome, setBundlesHome] = useState(null)
+  const [newArrivals, setNewArrivals] = useState(null)
+  const [shopByCategory, setShopByCategory] = useState(null)
+  const [seeHowItWorks, setSeeHowItWorks] = useState(null)
+  const [homeReviews, setHomeReviews] = useState(null)
+  const [freeGuide, setFreeGuide] = useState(null)
+
   useEffect(() => {
-    const fetchHomeData = async () => {
+    const fetchHomePageData = async () => {
+      setLoading(true)
+
       try {
-        const homeCollection = collection(db, 'homepage')
-        const homeSnapshot = await getDocs(homeCollection)
-        const homeList = homeSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        setHomeData(homeList)
-        setLoading(false)
-        console.log('Home page data from Firebase:', homeList)
+        const hero = await getSectionData('homepage', 'herosection')
+        const bundles = await getSectionData('homepage', 'recommendedbundles')
+        const arrivals = await getSectionData('homepage', 'newarrivals')
+        const category = await getSectionData('homepage', 'shopbycategory')
+        const howItWorks = await getSectionData('homepage', 'seehowworks')
+        const reviews = await getSectionData('homepage', 'reviews')
+        const guide = await getSectionData('homepage', 'freeguide')
+
+        setHeroSectionData(hero)
+        setBundlesHome(bundles)
+        setNewArrivals(arrivals)
+        setShopByCategory(category)
+        setSeeHowItWorks(howItWorks)
+        setHomeReviews(reviews)
+        setFreeGuide(guide)
       } catch (error) {
-        console.error('Error fetching home page data:', error)
+        console.error('🔥 HOME PAGE FETCH FAILED:', error)
+      } finally {
         setLoading(false)
+        console.log('✅ FETCH COMPLETE')
       }
     }
 
-    fetchHomeData()
+    fetchHomePageData()
   }, [])
-
-  // Get herosection data from homeData
-  // Try to find by id 'herosection' or use the first document if not found
-  const heroSectionData = homeData?.find(item => item.id === 'herosection') || homeData?.[0] || null
-  const bundlesHome = homeData?.find(item => item.id === 'recommendedbundles') || homeData?.[0] || null
-  const newArrivals = homeData?.find(item => item.id === 'newarrivals') || homeData?.[0] || null
-  const shopByCategory = homeData?.find(item => item.id === 'shopbycategory') || homeData?.[0] || null
-  const seeHowItWorks = homeData?.find(item => item.id === 'seehowworks') || homeData?.[0] || null
-  const homeReviews = homeData?.find(item => item.id === 'reviews') || homeData?.[0] || null
-  const freeGuide = homeData?.find(item => item.id === 'freeguide') || homeData?.[0] || null
-  
 
   return (
     <>
       <Snowfall />
+
       <HeroSection data={heroSectionData} loading={loading} />
       <HeroTextSection />
+
       <BundlesHome data={bundlesHome} loading={loading} />
       <NewArrivals data={newArrivals} loading={loading} />
-      <ImageCardContainer data={shopByCategory} />
+
+      <ImageCardContainer data={shopByCategory} loading={loading} />
+
       <MommyFirstTrust />
+
       <HomeVideoSection data={seeHowItWorks} loading={loading} />
       <StoriesHome data={homeReviews} loading={loading} />
+
       <ActivitiesHome />
+
       <FreeGuide data={freeGuide} loading={loading} />
       <MomsHub />
     </>
