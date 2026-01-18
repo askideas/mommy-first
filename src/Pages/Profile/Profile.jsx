@@ -21,6 +21,7 @@ import BabiesSection from '../../Components/BabiesSection/BabiesSection'
 import AddressSection from '../../Components/AddressSection/AddressSection'
 import PaymentSection from '../../Components/PaymentSection/PaymentSection'
 import SettingsSection from '../../Components/SettingsSection/SettingsSection'
+import NotificationsSection from '../../Components/NotificationsSection/NotificationsSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -154,6 +155,7 @@ const Profile = () => {
                         {activeSection === "#address" && <AddressSection />}
                         {activeSection === "#payments" && <PaymentSection />}
                         {activeSection === "#settings" && <SettingsSection />}
+                        {activeSection === "#notifications" && <NotificationsSection />}
                     </div>
                 </div>
             </div>
