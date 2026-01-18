@@ -20,7 +20,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 import { ArrowRight } from 'lucide-react'
 
-const HeroSection = () => {
+const HeroSection = ({ data, loading }) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const swiperRef = useRef(null)
     
@@ -30,7 +30,24 @@ const HeroSection = () => {
         'description': false
     }
 
-    const HeroSlider = [SliderSample,Hero3,Hero4]
+    // Use data from props if available, otherwise use default images
+    const HeroSlider = data?.slider || [SliderSample, Hero3, Hero4]
+    
+    // Get left and right section data from props
+    const leftside = data?.leftside || {
+        label: data.leftside ? data.leftside.labelText : "FLASH SALE - Ships in 24 Hours",
+        heading: data.description ? data.description :  "Witch Hazel Foam + Liners Combo",
+        image: data.backgroundImage ? data.backgroundImage : Hero1
+    }
+    
+    const rightside = data?.rightside || {
+        heading: "Exclusive",
+        subHeading: "Bundle Deals",
+        buttonText: "Shop All Brands",
+        image: Hero2
+    }
+
+    console.log('HeroSection received data:', data)
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex)
@@ -48,12 +65,12 @@ const HeroSection = () => {
         <div className="hero-section-container d-flex justify-content-center align-items-center">
 
           <div className="left-side-container">
-            <img src={Hero1} alt="" className='bg-image' />
+            <img src={leftside.image} alt="" className='bg-image' />
             <img src={HeroShade1} alt="" className='hero-shade' />
             <div className="hero-section-content-container">
-              <p className="label flash-animation">FLASH SALE - Ships in 24 Hours</p>
-              <p className="headinf-sec">Witch Hazel Foam + <br /> Liners Combo</p>
-              <button>Shop <ArrowRight /></button>
+              <p className="label flash-animation">{leftside.label}</p>
+              <p className="headinf-sec" dangerouslySetInnerHTML={{ __html: leftside.heading?.replace(/\n/g, '<br />') || 'Witch Hazel Foam + <br /> Liners Combo' }}></p>
+              <button>{leftside.buttonText || 'Shop'} <ArrowRight /></button>
             </div>
           </div>
 
@@ -101,14 +118,14 @@ const HeroSection = () => {
           </div>
 
           <div className="right-side-container">
-            <img src={Hero2} alt="" className='bg-image' />
+            <img src={rightside.image || Hero2} alt="" className='bg-image' />
             <img src={HeroShade3} alt="" className='hero-shade' />
             <div className="hero-section-content-container">
               <p className="heading">
-                Exclusive <br /> <span>Bundle Deals</span>
+                {rightside.heading || 'Exclusive'} <br /> <span>{rightside.subHeading || 'Bundle Deals'}</span>
               </p>
-              <img src={HeroImage2} alt="" className='img-bg' />
-              <button>Shop All Brands <ArrowRight /></button>
+              <img src={rightside.productImage || HeroImage2} alt="" className='img-bg' />
+              <button>{rightside.buttonText || 'Shop All Brands'} <ArrowRight /></button>
             </div>
           </div>
 
