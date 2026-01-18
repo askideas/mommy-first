@@ -19,6 +19,8 @@ import Flower from '../../assets/About/flower.svg'
 import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
 import BabiesSection from '../../Components/BabiesSection/BabiesSection'
 import AddressSection from '../../Components/AddressSection/AddressSection'
+import PaymentSection from '../../Components/PaymentSection/PaymentSection'
+import SettingsSection from '../../Components/SettingsSection/SettingsSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -150,6 +152,8 @@ const Profile = () => {
                         {activeSection === "#profile" && <ProfileSection />}
                         {activeSection === "#mybabies" && <BabiesSection />}
                         {activeSection === "#address" && <AddressSection />}
+                        {activeSection === "#payments" && <PaymentSection />}
+                        {activeSection === "#settings" && <SettingsSection />}
                     </div>
                 </div>
             </div>
