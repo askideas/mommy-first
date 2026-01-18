@@ -41,7 +41,10 @@ const Home = () => {
   }, [])
 
   // Get herosection data from homeData
-  const heroSectionData = homeData?.find(item => item.id === 'herosection') || null
+  // Try to find by id 'herosection' or use the first document if not found
+  const heroSectionData = homeData?.find(item => item.id === 'herosection') || homeData?.[0] || null
+  
+  console.log('heroSectionData being passed:', heroSectionData)
 
   return (
     <>
