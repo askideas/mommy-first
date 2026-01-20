@@ -12,8 +12,10 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [customer, setCustomer] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isNewCustomer, setIsNewCustomer] = useState(false)
 
   // Check for existing session on mount
   useEffect(() => {
@@ -24,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const sessionToken = localStorage.getItem('sessionToken')
       const storedUser = localStorage.getItem('user')
+      const storedCustomer = localStorage.getItem('customer')
       
       if (sessionToken && storedUser) {
         // Validate the session token with the server
@@ -37,6 +40,9 @@ export const AuthProvider = ({ children }) => {
         
         if (data.success) {
           setUser(JSON.parse(storedUser))
+          if (storedCustomer) {
+            setCustomer(JSON.parse(storedCustomer))
+          }
           setIsAuthenticated(true)
         } else {
           // Try to refresh the session
@@ -59,9 +65,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('refreshToken', refreshToken)
   }
 
-  const setUserData = (userData) => {
+  const setUserData = (userData, customerData = null, isNew = false) => {
     localStorage.setItem('user', JSON.stringify(userData))
     setUser(userData)
+    
+    if (customerData) {
+      localStorage.setItem('customer', JSON.stringify(customerData))
+      setCustomer(customerData)
+    }
+    
+    localStorage.setItem('isNewCustomer', JSON.stringify(isNew))
+    setIsNewCustomer(isNew)
     setIsAuthenticated(true)
   }
 
@@ -69,13 +83,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('sessionToken')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('user')
+    localStorage.removeItem('customer')
+    localStorage.removeItem('isNewCustomer')
     setUser(null)
+    setCustomer(null)
+    setIsNewCustomer(false)
     setIsAuthenticated(false)
   }
 
-  const login = (sessionToken, refreshToken, userData) => {
+  const login = (sessionToken, refreshToken, userData, customerData = null, isNew = false) => {
     setTokens(sessionToken, refreshToken)
-    setUserData(userData)
+    setUserData(userData, customerData, isNew)
   }
 
   const logout = async () => {
@@ -128,14 +146,21 @@ export const AuthProvider = ({ children }) => {
     return localStorage.getItem('sessionToken')
   }
 
+  const getCustomer = () => {
+    return customer || JSON.parse(localStorage.getItem('customer'))
+  }
+
   const value = {
     user,
+    customer,
     isAuthenticated,
     isLoading,
+    isNewCustomer,
     login,
     logout,
     refreshSession,
     getSessionToken,
+    getCustomer,
     checkAuthStatus
   }
 

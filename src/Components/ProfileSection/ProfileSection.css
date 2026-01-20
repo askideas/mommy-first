@@ -213,6 +213,37 @@
                     color: var(--primary-dark);
                 }
             }
+
+            .account-info {
+                margin-top: 32px;
+                padding-top: 24px;
+                border-top: 1px solid var(--pink-border);
+
+                .heading {
+                    font: 400 16px var(--font);
+                    color: var(--primary-pink);
+                    margin-bottom: 24px;
+                }
+
+                .profile-input-group {
+                    width: 100%;
+                    height: fit-content;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 24px;
+
+                    label {
+                        font: 400 12px var(--font);
+                        color: var(--primary-dark);
+                        margin-bottom: 6px;
+                    }
+
+                    .profile-value {
+                        font: 400 16px var(--font);
+                        color: var(--primary-dark);
+                    }
+                }
+            }
         }
     }
 

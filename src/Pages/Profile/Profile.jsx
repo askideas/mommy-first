@@ -27,7 +27,7 @@ import { useAuth } from '../../contexts/AuthContext'
 const Profile = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { user, logout } = useAuth();
+    const { user, customer, logout } = useAuth();
     const [activeSection, setActiveSection] = useState("#profile");
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -133,13 +133,13 @@ const Profile = () => {
                 <div className="profile-header-section">
                     <div className="profile-image">
                         {user?.picture ? (
-                            <img src={user.picture} alt={user.name || 'Profile'} />
+                            <img src={user.picture} alt={customer?.fullName || user?.name || 'Profile'} />
                         ) : (
                             <img src={ProfileImg} alt="" />
                         )}
                         <span className="active"></span>
                     </div>
-                    <p className="profile-name">Hi, <strong>{user?.name || 'there'}</strong> 👋 </p>
+                    <p className="profile-name">Hi, <strong>{customer?.fullName || user?.name || 'there'}</strong> 👋 </p>
                     <p className="greeting">Hope you’re feeling good today</p>
                     <p className="info"><Info />You’re 20% there! Complete your profile to enjoy full benefits and special surprises ✨</p>
                 </div>

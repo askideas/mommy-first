@@ -19,7 +19,7 @@ import {
 } from '../../../services/authService'
 
 const AuthenticationModal = () => {
-  const { login, isAuthenticated, user } = useAuth()
+  const { login, isAuthenticated, user, customer } = useAuth()
   const navigate = useNavigate()
   
   // UI State
@@ -158,7 +158,13 @@ const AuthenticationModal = () => {
       }
 
       if (response.success) {
-        login(response.sessionToken, response.refreshToken, response.user)
+        login(
+          response.sessionToken, 
+          response.refreshToken, 
+          response.user, 
+          response.customer, 
+          response.isNewCustomer
+        )
         setSuccessScreen(true)
         setError('')
       } else {
@@ -263,15 +269,18 @@ const AuthenticationModal = () => {
           <div className="user-welcome-section">
             <div className="user-avatar">
               {user.picture ? (
-                <img src={user.picture} alt={user.name || 'User'} />
+                <img src={user.picture} alt={customer?.fullName || user.name || 'User'} />
               ) : (
                 <div className="avatar-placeholder">
-                  {(user.name || user.email || 'U').charAt(0).toUpperCase()}
+                  {(customer?.fullName || user.name || user.email || 'U').charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
-            <h3 className="user-name">Hi, {user.name || 'there'}! </h3>
-            <p className="user-email">{user.email || user.phone}</p>
+            <h3 className="user-name">Hi, {customer?.fullName || user.name || 'there'}! </h3>
+            <p className="user-email">{customer?.email || user.email || customer?.phone || user.phone}</p>
+            {customer?.ordersCount > 0 && (
+              <p className="user-orders">You have {customer.ordersCount} order{customer.ordersCount > 1 ? 's' : ''}</p>
+            )}
           </div>
           <Link 
             className='button-pink-center' 

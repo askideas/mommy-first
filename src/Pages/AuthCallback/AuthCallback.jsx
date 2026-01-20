@@ -63,11 +63,20 @@ const AuthCallback = () => {
       }
 
       if (response.success) {
-        // Store tokens and user data
-        login(response.sessionToken, response.refreshToken, response.user)
+        // Store tokens, user data, and customer data
+        login(
+          response.sessionToken, 
+          response.refreshToken, 
+          response.user,
+          response.customer,
+          response.isNewCustomer
+        )
         
         setStatus('success')
-        setMessage('Login successful! Redirecting to your profile...')
+        setMessage(response.isNewCustomer 
+          ? 'Account created! Redirecting to your profile...' 
+          : 'Login successful! Redirecting to your profile...'
+        )
         
         // Redirect to profile page
         setTimeout(() => navigate('/profile#profile'), 1500)
