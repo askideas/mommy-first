@@ -365,7 +365,7 @@ const Shop = () => {
                 </>
             )}
 
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="shopFilterModal" aria-labelledby="offcanvasRightLabel">
+            <div className="offcanvas offcanvas-end" tabIndex="-1" id="shopFilterModal" aria-labelledby="offcanvasRightLabel">
                 <div style={{flex: '1'}}>
                     <div className="heading"><Settings2 /> Filter by</div>
                     <div className="filters-items-container">

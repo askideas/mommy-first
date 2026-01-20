@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import ProfileImg from '../../assets/profile/pf-def.png'
-import { Info } from 'lucide-react'
+import { Info, Loader2 } from 'lucide-react'
 import UserIcon from '../../assets/profile/user-square.svg'
 import Smile from '../../assets/profile/smile.svg'
 import Map from '../../assets/profile/map.svg'
@@ -13,7 +13,7 @@ import Help from '../../assets/profile/help.svg'
 import Bell from '../../assets/profile/bell.svg'
 import Tag from '../../assets/profile/tag.svg'
 import Settings from '../../assets/profile/settings.svg'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import ProfileSection from '../../Components/ProfileSection/ProfileSection'
 import Flower from '../../assets/About/flower.svg'
 import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
@@ -22,15 +22,32 @@ import AddressSection from '../../Components/AddressSection/AddressSection'
 import PaymentSection from '../../Components/PaymentSection/PaymentSection'
 import SettingsSection from '../../Components/SettingsSection/SettingsSection'
 import NotificationsSection from '../../Components/NotificationsSection/NotificationsSection'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Profile = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const { user, logout } = useAuth();
     const [activeSection, setActiveSection] = useState("#profile");
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     useEffect(() => {
         const hash = location.hash;
         setActiveSection(hash || "profile");
     }, [location.hash]);
+
+    // Handle logout
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        } finally {
+            setIsLoggingOut(false);
+        }
+    };
 
     const Profilemenu = [
         {
@@ -115,10 +132,14 @@ const Profile = () => {
             <div className="container">
                 <div className="profile-header-section">
                     <div className="profile-image">
-                        <img src={ProfileImg} alt="" />
+                        {user?.picture ? (
+                            <img src={user.picture} alt={user.name || 'Profile'} />
+                        ) : (
+                            <img src={ProfileImg} alt="" />
+                        )}
                         <span className="active"></span>
                     </div>
-                    <p className="profile-name">Hi, <strong>Sarah</strong> 👋 </p>
+                    <p className="profile-name">Hi, <strong>{user?.name || 'there'}</strong> 👋 </p>
                     <p className="greeting">Hope you’re feeling good today</p>
                     <p className="info"><Info />You’re 20% there! Complete your profile to enjoy full benefits and special surprises ✨</p>
                 </div>
@@ -144,7 +165,9 @@ const Profile = () => {
                             })
                         }
                         <div className="logout-div-con">
-                            <button className="logout-btn">Log Out</button>
+                            <button className="logout-btn" onClick={handleLogout} disabled={isLoggingOut}>
+                                {isLoggingOut ? <><Loader2 className="logout-spinner" /> Logging out...</> : 'Log Out'}
+                            </button>
                         </div>
                         
                     </div>

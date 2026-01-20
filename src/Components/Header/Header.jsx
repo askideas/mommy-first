@@ -7,9 +7,20 @@ import Profile from '../../assets/profile.svg'
 import Cart from '../../assets/cart.svg'
 import Hamburger from '../../assets/hamburger.svg'
 import { Heart } from 'lucide-react'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Header = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
+    // Handle profile icon click - redirect to profile if logged in, otherwise open login modal
+    const handleProfileClick = () => {
+        if (isAuthenticated) {
+            navigate('/profile#profile');
+        }
+        // If not authenticated, the data-bs-toggle will open the login modal
+    };
+
   return (
     <div className='header container-fluid'>
         <div className='row w-100 m-0'>
@@ -25,7 +36,14 @@ const Header = () => {
             </div>
             <div className="menu-action-icons-container">
                 <img src={Search} alt="" data-bs-toggle="offcanvas" data-bs-target="#SearchModal" style={{cursor: 'pointer'}} />
-                <img src={Profile} alt="" data-bs-toggle="offcanvas" data-bs-target="#AuthenticationModal" style={{cursor: 'pointer'}} />
+                <img 
+                    src={Profile} 
+                    alt="" 
+                    onClick={handleProfileClick}
+                    data-bs-toggle={isAuthenticated ? undefined : "offcanvas"} 
+                    data-bs-target={isAuthenticated ? undefined : "#AuthenticationModal"} 
+                    style={{cursor: 'pointer'}} 
+                />
                 <Heart className="icon" onClick={()=>navigate('/wishlist')} />
                 <img src={Cart} alt="" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}} />
                 <img src={Hamburger} alt="" data-bs-toggle="offcanvas" data-bs-target="#MegaMenuModal" style={{cursor: 'pointer'}} />

@@ -42,7 +42,7 @@ const MiniCartModal = () => {
   ];
 
   return (
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="MiniCartModal" aria-labelledby="offcanvasRightLabel">
+    <div className="offcanvas offcanvas-end" tabIndex="-1" id="MiniCartModal" aria-labelledby="offcanvasRightLabel">
         <div className="mf-off-canvas-header">
             <p className="head-ing">Cart <span className="cart-items-count">03</span></p>
             <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
