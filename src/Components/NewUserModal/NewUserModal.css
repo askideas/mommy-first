@@ -1,0 +1,300 @@
+.new-user-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(55, 32, 53, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.new-user-modal-container {
+    width: 100%;
+    max-width: 480px;
+    background: var(--white);
+    border-radius: 24px;
+    position: relative;
+    padding: 40px 32px 32px;
+    box-shadow: 0px 24px 48px rgba(55, 32, 53, 0.25);
+    animation: modalSlideUp 0.3s ease-out;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.new-user-modal-profile-image {
+    position: absolute;
+    top: -45px;
+    right: -45px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-pink);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0px 8px 24px rgba(220, 95, 146, 0.3);
+}
+
+.new-user-modal-profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.new-user-modal-content {
+    width: 100%;
+}
+
+.new-user-modal-header {
+    margin-bottom: 24px;
+}
+
+.new-user-modal-title {
+    font: 600 24px var(--font);
+    color: var(--primary-pink);
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.new-user-modal-title span {
+    font-size: 20px;
+}
+
+.new-user-modal-subtitle {
+    font: 400 14px var(--font);
+    color: var(--gray);
+    margin: 0;
+}
+
+.new-user-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.new-user-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.new-user-form-group.full-width {
+    width: 100%;
+}
+
+.new-user-form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.new-user-form-row .new-user-form-group {
+    flex: 1;
+}
+
+.new-user-form-group label {
+    font: 400 12px var(--font);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.optional-badge {
+    font: 600 8px var(--font);
+    color: var(--white);
+    background: var(--primary-pink);
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.new-user-form-group input {
+    width: 100%;
+    height: 44px;
+    border: 1.5px solid var(--pink-border);
+    border-radius: 8px;
+    padding: 0 14px;
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.new-user-form-group input:focus {
+    border-color: var(--primary-pink);
+}
+
+.new-user-form-group input::placeholder {
+    color: var(--gray);
+}
+
+.new-user-form-group input[type="date"] {
+    cursor: pointer;
+}
+
+.new-user-form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+/* Dropdown styles */
+.new-user-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.new-user-dropdown-toggle {
+    width: 100%;
+    height: 44px;
+    border: 1.5px solid var(--pink-border);
+    border-radius: 8px;
+    padding: 0 14px;
+    font: 400 14px var(--font);
+    background: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.new-user-dropdown-toggle:focus,
+.new-user-dropdown-toggle:hover {
+    border-color: var(--primary-pink);
+}
+
+.new-user-dropdown-toggle span.placeholder {
+    color: var(--gray);
+}
+
+.new-user-dropdown-toggle span.selected {
+    color: var(--primary-dark);
+}
+
+.new-user-dropdown-toggle svg {
+    color: var(--gray);
+    transition: transform 0.2s ease;
+}
+
+.new-user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1.5px solid var(--pink-border);
+    border-radius: 8px;
+    margin-top: 4px;
+    padding: 4px 0;
+    z-index: 10;
+    box-shadow: 0px 8px 24px rgba(55, 32, 53, 0.1);
+}
+
+.new-user-dropdown-item {
+    width: 100%;
+    padding: 10px 14px;
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.new-user-dropdown-item:hover {
+    background: var(--pink-shade);
+}
+
+/* Error message */
+.new-user-error-message {
+    font: 400 12px var(--font);
+    color: var(--red);
+    margin: 0;
+    text-align: center;
+}
+
+/* Submit button */
+.new-user-submit-btn {
+    width: 100%;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--dark-pink) 100%);
+    border: none;
+    border-radius: 24px;
+    font: 600 14px var(--font);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.new-user-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 24px rgba(220, 95, 146, 0.4);
+}
+
+.new-user-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.new-user-submit-btn .spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+    .new-user-modal-container {
+        padding: 32px 20px 24px;
+        max-width: 100%;
+        margin: 0 16px;
+    }
+
+    .new-user-modal-profile-image {
+        top: -35px;
+        right: -15px;
+        width: 70px;
+        height: 70px;
+    }
+
+    .new-user-modal-title {
+        font-size: 20px;
+    }
+
+    .new-user-form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+}

@@ -22,19 +22,46 @@ import AddressSection from '../../Components/AddressSection/AddressSection'
 import PaymentSection from '../../Components/PaymentSection/PaymentSection'
 import SettingsSection from '../../Components/SettingsSection/SettingsSection'
 import NotificationsSection from '../../Components/NotificationsSection/NotificationsSection'
+import NewUserModal from '../../Components/NewUserModal/NewUserModal'
 import { useAuth } from '../../contexts/AuthContext'
 
 const Profile = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { user, customer, logout } = useAuth();
+    const { user, customer, logout, isNewCustomer } = useAuth();
     const [activeSection, setActiveSection] = useState("#profile");
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [showNewUserModal, setShowNewUserModal] = useState(false);
+    const [customerData, setCustomerData] = useState(customer);
 
     useEffect(() => {
         const hash = location.hash;
         setActiveSection(hash || "profile");
     }, [location.hash]);
+
+    // Check if new user and show modal
+    useEffect(() => {
+        const storedIsNew = localStorage.getItem('isNewCustomer')
+        const profileCompleted = localStorage.getItem('profileCompleted')
+        
+        if ((isNewCustomer || storedIsNew === 'true') && profileCompleted !== 'true') {
+            setShowNewUserModal(true)
+        }
+    }, [isNewCustomer]);
+
+    // Update customer data when customer changes
+    useEffect(() => {
+        setCustomerData(customer)
+    }, [customer]);
+
+    const handleNewUserModalClose = () => {
+        setShowNewUserModal(false)
+    }
+
+    const handleNewUserModalSuccess = (updatedCustomer) => {
+        setCustomerData(updatedCustomer)
+        setShowNewUserModal(false)
+    }
 
     // Handle logout
     const handleLogout = async () => {
@@ -125,6 +152,13 @@ const Profile = () => {
 
     return (
         <div className="profile-main-container">
+            {/* New User Modal */}
+            <NewUserModal 
+                isOpen={showNewUserModal} 
+                onClose={handleNewUserModalClose}
+                onSuccess={handleNewUserModalSuccess}
+            />
+            
             <img src={Flower} alt="" className="flowerone" />
             <img src={Flower} alt="" className="flowertwo" />
             <img src={Flower} alt="" className="flowerthree" />
@@ -133,13 +167,13 @@ const Profile = () => {
                 <div className="profile-header-section">
                     <div className="profile-image">
                         {user?.picture ? (
-                            <img src={user.picture} alt={customer?.fullName || user?.name || 'Profile'} />
+                            <img src={user.picture} alt={customerData?.fullName || user?.name || 'Profile'} />
                         ) : (
                             <img src={ProfileImg} alt="" />
                         )}
                         <span className="active"></span>
                     </div>
-                    <p className="profile-name">Hi, <strong>{customer?.fullName || user?.name || 'there'}</strong> 👋 </p>
+                    <p className="profile-name">Hi, <strong>{customerData?.fullName || user?.name || 'there'}</strong> 👋 </p>
                     <p className="greeting">Hope you’re feeling good today</p>
                     <p className="info"><Info />You’re 20% there! Complete your profile to enjoy full benefits and special surprises ✨</p>
                 </div>

@@ -1,25 +1,137 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ProfileSection.css'
 import UserIcon from '../../assets/profile/user-square.svg'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Loader2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { updateNewUserProfile } from '../../services/userService'
 
 const ProfileSection = () => {
-    const { user, customer } = useAuth()
+    const { user, customer, updateCustomer, getCustomerMetafields } = useAuth()
     const [action, setAction] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState({ type: '', text: '' })
+    const [customerData, setCustomerData] = useState(customer)
+    
+    // Get metafields from customer data (from API response)
+    const customerMetafields = getCustomerMetafields()
     
     // Form state for editing
     const [formData, setFormData] = useState({
         firstName: customer?.firstName || '',
         lastName: customer?.lastName || '',
-        nationality: '',
-        gender: '',
-        birthday: '',
-        dueDate: ''
+        nationality: customerMetafields?.nationality || '',
+        gender: customerMetafields?.gender || '',
+        birthday: customerMetafields?.dateOfBirth || '',
+        dueDate: customerMetafields?.dueDate || ''
     })
+
+    // Update form data when customer changes
+    useEffect(() => {
+        if (customer) {
+            setCustomerData(customer)
+            const metafields = getCustomerMetafields()
+            setFormData(prev => ({
+                ...prev,
+                firstName: customer.firstName || prev.firstName,
+                lastName: customer.lastName || prev.lastName,
+                nationality: metafields?.nationality || prev.nationality,
+                gender: metafields?.gender || prev.gender,
+                birthday: metafields?.dateOfBirth || prev.birthday,
+                dueDate: metafields?.dueDate || prev.dueDate
+            }))
+        }
+    }, [customer])
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }))
+        setMessage({ type: '', text: '' })
+    }
+
+    const handleUpdate = async () => {
+        // Validate required fields
+        if (!formData.firstName.trim()) {
+            setMessage({ type: 'error', text: 'First name is required' })
+            return
+        }
+
+        setIsLoading(true)
+        setMessage({ type: '', text: '' })
+
+        try {
+            const userId = customer?.id || customerData?.id
+
+            if (!userId) {
+                setMessage({ type: 'error', text: 'User ID not found. Please try logging in again.' })
+                setIsLoading(false)
+                return
+            }
+
+            // Update profile with metafields
+            const response = await updateNewUserProfile(userId, {
+                firstName: formData.firstName.trim(),
+                lastName: formData.lastName.trim(),
+                gender: formData.gender,
+                dateOfBirth: formData.birthday,
+                dueDate: formData.dueDate,
+                nationality: formData.nationality
+            })
+
+            if (response.success) {
+                // Update customer in context with new data including metafields
+                const updatedCustomer = {
+                    ...customerData,
+                    ...response.data,
+                    firstName: formData.firstName.trim(),
+                    lastName: formData.lastName.trim(),
+                    fullName: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+                    metafields: response.data?.metafields || {
+                        custom: {
+                            nationality: { value: formData.nationality, type: 'single_line_text_field' },
+                            gender: { value: formData.gender, type: 'single_line_text_field' },
+                            date_of_birth: { value: formData.birthday, type: 'date' },
+                            due_date: { value: formData.dueDate, type: 'date' }
+                        }
+                    }
+                }
+                updateCustomer(updatedCustomer)
+                setCustomerData(updatedCustomer)
+
+                setMessage({ type: 'success', text: 'Profile updated successfully!' })
+                
+                // Switch back to view mode after a short delay
+                setTimeout(() => {
+                    setAction('')
+                    setMessage({ type: '', text: '' })
+                }, 1500)
+            } else {
+                setMessage({ type: 'error', text: response.message || 'Failed to update profile. Please try again.' })
+            }
+        } catch (err) {
+            console.error('Profile update error:', err)
+            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleEditClick = () => {
+        // Reset form with current data when entering edit mode
+        const metafields = getCustomerMetafields()
+        setFormData({
+            firstName: customerData?.firstName || customer?.firstName || '',
+            lastName: customerData?.lastName || customer?.lastName || '',
+            nationality: metafields?.nationality || '',
+            gender: metafields?.gender || '',
+            birthday: metafields?.dateOfBirth || '',
+            dueDate: metafields?.dueDate || ''
+        })
+        setMessage({ type: '', text: '' })
+        setAction('edit')
+    }
+
+    const handleCancelEdit = () => {
+        setAction('')
+        setMessage({ type: '', text: '' })
     }
 
     return (
@@ -134,31 +246,31 @@ const ProfileSection = () => {
                                     <div className="col-4" style={{paddingLeft: 0}}>
                                         <div className="profile-input-group">
                                             <label>First Name</label>
-                                            <p className="profile-value">{customer?.firstName || 'Not set'}</p>
+                                            <p className="profile-value">{customerData?.firstName || customer?.firstName || 'Not set'}</p>
                                         </div>
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-input-group">
                                             <label>Last Name</label>
-                                            <p className="profile-value">{customer?.lastName || 'Not set'}</p>
+                                            <p className="profile-value">{customerData?.lastName || customer?.lastName || 'Not set'}</p>
                                         </div>
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-drop-down">
                                             <label>Nationality</label>
-                                            <p className="profile-value">{formData.nationality || 'Not set'}</p>
+                                            <p className="profile-value">{customerMetafields?.nationality || 'Not set'}</p>
                                         </div>
                                     </div>
                                     <div className="col-4" style={{paddingLeft: 0}}>
                                         <div className="profile-drop-down">
                                             <label>Gender</label>
-                                            <p className="profile-value">{formData.gender || 'Not set'}</p>
+                                            <p className="profile-value">{customerMetafields?.gender || 'Not set'}</p>
                                         </div>
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-input-group">
                                             <label>Birthday</label>
-                                            <p className="profile-value">{formData.birthday || 'Not set'}</p>
+                                            <p className="profile-value">{customerMetafields?.dateOfBirth || 'Not set'}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +282,7 @@ const ProfileSection = () => {
                                     <div className="col-4" style={{paddingLeft: 0}}>
                                         <div className="profile-input-group">
                                             <label>Due date</label>
-                                            <p className="profile-value">{formData.dueDate || 'Not set'}</p>
+                                            <p className="profile-value">{customerMetafields?.dueDate || 'Not set'}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -183,19 +295,19 @@ const ProfileSection = () => {
                                     <div className="col-4" style={{paddingLeft: 0}}>
                                         <div className="profile-input-group">
                                             <label>Email</label>
-                                            <p className="profile-value">{customer?.email || user?.email || 'Not set'}</p>
+                                            <p className="profile-value">{customerData?.email || customer?.email || user?.email || 'Not set'}</p>
                                         </div>
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-input-group">
                                             <label>Phone</label>
-                                            <p className="profile-value">{customer?.phone || user?.phone || 'Not set'}</p>
+                                            <p className="profile-value">{customerData?.phone || customer?.phone || user?.phone || 'Not set'}</p>
                                         </div>
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-input-group">
                                             <label>Total Orders</label>
-                                            <p className="profile-value">{customer?.ordersCount || 0}</p>
+                                            <p className="profile-value">{customerData?.ordersCount || customer?.ordersCount || 0}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -206,9 +318,29 @@ const ProfileSection = () => {
             </div>
 
             <div className="profile-section-footer">
-                <p className="notification-message"></p>
+                <p className={`notification-message ${message.type}`}>
+                    {message.text}
+                </p>
                 {
-                    action == 'edit' ? (<button className='button-pink-center' onClick={()=>setAction('')}>UPDATE</button>) : (<button className='button-pink-center' onClick={()=>setAction('edit')}>EDIT</button>)
+                    action == 'edit' ? (
+                        <div className="footer-buttons">
+                            <button className='button-outline' onClick={handleCancelEdit} disabled={isLoading}>
+                                CANCEL
+                            </button>
+                            <button className='button-pink-center' onClick={handleUpdate} disabled={isLoading}>
+                                {isLoading ? (
+                                    <>
+                                        <Loader2 className="spinner" size={16} />
+                                        UPDATING...
+                                    </>
+                                ) : (
+                                    'UPDATE'
+                                )}
+                            </button>
+                        </div>
+                    ) : (
+                        <button className='button-pink-center' onClick={handleEditClick}>EDIT</button>
+                    )
                 }
             </div>
         </div>

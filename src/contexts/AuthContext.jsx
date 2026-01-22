@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
       const sessionToken = localStorage.getItem('sessionToken')
       const storedUser = localStorage.getItem('user')
       const storedCustomer = localStorage.getItem('customer')
+      const storedIsNew = localStorage.getItem('isNewCustomer')
       
       if (sessionToken && storedUser) {
         // Validate the session token with the server
@@ -42,6 +43,9 @@ export const AuthProvider = ({ children }) => {
           setUser(JSON.parse(storedUser))
           if (storedCustomer) {
             setCustomer(JSON.parse(storedCustomer))
+          }
+          if (storedIsNew === 'true') {
+            setIsNewCustomer(true)
           }
           setIsAuthenticated(true)
         } else {
@@ -150,6 +154,36 @@ export const AuthProvider = ({ children }) => {
     return customer || JSON.parse(localStorage.getItem('customer'))
   }
 
+  const updateCustomer = (customerData) => {
+    localStorage.setItem('customer', JSON.stringify(customerData))
+    setCustomer(customerData)
+  }
+
+  const clearNewCustomerFlag = () => {
+    localStorage.removeItem('isNewCustomer')
+    localStorage.setItem('profileCompleted', 'true')
+    setIsNewCustomer(false)
+  }
+
+  // Helper function to extract metafield values from customer data
+  const getCustomerMetafield = (fieldName) => {
+    if (!customer?.metafields?.custom) return null
+    const field = customer.metafields.custom[fieldName]
+    return field?.value || null
+  }
+
+  // Get all customer metafields as a flat object
+  const getCustomerMetafields = () => {
+    if (!customer?.metafields?.custom) return {}
+    const metafields = customer.metafields.custom
+    return {
+      nationality: metafields.nationality?.value || '',
+      gender: metafields.gender?.value || '',
+      dueDate: metafields.due_date?.value || '',
+      dateOfBirth: metafields.date_of_birth?.value || ''
+    }
+  }
+
   const value = {
     user,
     customer,
@@ -161,7 +195,11 @@ export const AuthProvider = ({ children }) => {
     refreshSession,
     getSessionToken,
     getCustomer,
-    checkAuthStatus
+    updateCustomer,
+    clearNewCustomerFlag,
+    checkAuthStatus,
+    getCustomerMetafield,
+    getCustomerMetafields
   }
 
   return (
