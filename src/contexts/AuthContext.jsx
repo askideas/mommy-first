@@ -23,6 +23,24 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus()
   }, [])
 
+  // Check session expiry every minute
+  useEffect(() => {
+    const checkSessionExpiry = () => {
+      const loginTime = localStorage.getItem('loginTime')
+      if (loginTime) {
+        const now = Date.now()
+        const elapsed = now - parseInt(loginTime, 10)
+        const maxSession = 5 * 60 * 60 * 1000 // 5 hours in ms
+        if (elapsed > maxSession) {
+          logout()
+          alert('Your session has expired. Please log in again.')
+        }
+      }
+    }
+    const interval = setInterval(checkSessionExpiry, 60 * 1000)
+    return () => clearInterval(interval)
+  }, [])
+
   const checkAuthStatus = async () => {
     try {
       const sessionToken = localStorage.getItem('sessionToken')
@@ -90,6 +108,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user')
     localStorage.removeItem('customer')
     localStorage.removeItem('isNewCustomer')
+    localStorage.removeItem('loginTime')
     setUser(null)
     setCustomer(null)
     setIsNewCustomer(false)
