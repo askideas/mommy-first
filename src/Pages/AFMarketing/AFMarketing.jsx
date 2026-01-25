@@ -10,6 +10,9 @@ import Percentage from '../../assets/af-marketing/percentage.svg'
 import Folder from '../../assets/af-marketing/folder.svg'
 import Help from '../../assets/af-marketing/help.svg'
 import CoinShade from '../../assets/af-marketing/coin-shade.png'
+import OrangeShadeLeft from '../../assets/af-marketing/orangeshadeleft.png'
+import GreenShade from '../../assets/af-marketing/greenshade.png'
+import CoinsShade from '../../assets/af-marketing/coinsshade.png'
 import FAQComponent from '../../Components/FAQComponent/FAQComponent'
 
 const AFMarketing = () => {
@@ -28,6 +31,9 @@ const AFMarketing = () => {
 
   return (
     <div className="af-marketing-container-section">
+        <img src={OrangeShadeLeft} className='orange-shade' alt="" />
+        <img src={CoinsShade} className='coins-shade' alt="" />
+        <img src={GreenShade} className='green-shade' alt="" />
         <div className="container">
             <div className="af-marketing-hero-section">
                 <img src={HeroImg} alt="" className="hero-img" />

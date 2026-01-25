@@ -1,3 +1,34 @@
+.af-marketing-container-section {
+    position: relative;
+
+    .orange-shade {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 294px;
+        height: 521px;
+    }
+
+    .coins-shade {
+        position: absolute;
+        right: 156px;
+        top: -200px;
+        width: 489px;
+        height: 521px;
+        transform: rotate(-26deg);
+    }
+
+    .green-shade {
+        position: absolute;
+        left: 26%;
+        top: -5%;
+        width: 489px;
+        height: 521px;
+        transform: rotate(-26deg);
+        z-index: -1;
+    }
+}
+
 .af-marketing-hero-section {
     display: flex;
     flex-direction: column;
