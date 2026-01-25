@@ -10,6 +10,7 @@
         font: 600 40px var(--font);
         color: var(--primary-dark);
         margin-bottom: 20px;
+        text-align: center;
     }
 
     h2 {
@@ -18,6 +19,7 @@
         letter-spacing: 12px;
         margin-bottom: 20px;
         text-transform: uppercase;
+        text-align: center;
     }
 
     .description {
