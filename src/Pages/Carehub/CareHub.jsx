@@ -18,6 +18,7 @@ import EventCard from '../../Components/EventCard/EventCard'
 import { blogsData } from '../../data/blogsData'
 import { eventsData } from '../../data/eventsData'
 import { Baby, Video, Heart as HeartIcon } from 'lucide-react'
+import Carehubnewsletterimage from '../../assets/carehub/care-hub-news-letter.png'
 
 const CareHub = () => {
   const navigate = useNavigate()
@@ -210,6 +211,7 @@ const CareHub = () => {
 
         {/* Newsletter Section */}
         <div className="carehub-newsletter-section">
+            <img src={Carehubnewsletterimage} alt="" className='care-hub-bg-image' />
             <div className="carehub-newsletter-content">
                 <h2 className="carehub-newsletter-title">Want guidance<br/>before you need it?</h2>
                 <p className="carehub-newsletter-desc">
@@ -226,9 +228,9 @@ const CareHub = () => {
                     <button className="button-pink-center carehub-newsletter-btn">Subscribe</button>
                 </div>
             </div>
-            <div className="carehub-newsletter-image">
+            {/* <div className="carehub-newsletter-image">
                 <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop" alt="Newsletter" />
-            </div>
+            </div> */}
         </div>
 
     </div>

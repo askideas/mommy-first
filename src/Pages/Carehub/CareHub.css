@@ -331,20 +331,28 @@
 .carehub-newsletter-section {
     width: 100%;
     min-height: 280px;
-    background: linear-gradient(135deg, #DC5F92 0%, #E07E9A 50%, #F2B8C6 100%);
+    /* background: linear-gradient(135deg, #DC5F92 0%, #E07E9A 50%, #F2B8C6 100%); */
     border-radius: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 40px 60px;
+    padding-left: 0;
     margin-bottom: 80px;
     position: relative;
     overflow: hidden;
 }
 
+.care-hub-bg-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
 .carehub-newsletter-content {
     flex: 1;
     z-index: 1;
+    padding-left: 60px;
 }
 
 .carehub-newsletter-title {
