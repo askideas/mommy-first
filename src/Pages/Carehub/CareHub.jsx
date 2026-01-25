@@ -17,11 +17,12 @@ import BlogCard from '../../Components/BlogCard/BlogCard'
 import EventCard from '../../Components/EventCard/EventCard'
 import { blogsData } from '../../data/blogsData'
 import { eventsData } from '../../data/eventsData'
-import { Baby, Video, Heart as HeartIcon } from 'lucide-react'
+import { Baby, Video, Heart as HeartIcon, Star, Download } from 'lucide-react'
 import Carehubnewsletterimage from '../../assets/carehub/care-hub-news-letter.png'
 import Boy from '../../assets/carehub/boy.svg'
 import Girl from '../../assets/carehub/girl.svg'
 import Email from '../../assets/carehub/email.svg'
+import CareGuideImage from '../../assets/carehub/care-guide-img.png'
 
 const CareHub = () => {
   const navigate = useNavigate()
@@ -137,6 +138,79 @@ const CareHub = () => {
                 <button className='button-pink-center care-btn'>Care Guides</button>
                 <button className='button-pink-border jour-btn'>The Journal</button>
                 <button className='button-pink-center live-btn'>LIVE Sessions</button>
+            </div>
+        </div>
+
+        {/* Care Hub Section */}
+        <div className="care-hub-section-container">
+            <h1 className="care-guide-head">Care Guides</h1>
+            <h2 className="care-guide-subhead">Saveable guides designed to reduce overwhelm and answer the <br /> questions moms don’t always know to ask.</h2>
+            <div className="care-guide-content-con">
+                <div className="left-section">
+                    <p className="labels-section-in-con">
+                        <span className="active-green">FREE</span>
+                        <span className='active-green-shade'>10.2k Downloads</span>
+                        <span className="active-brown"><Star />Featured</span>
+                    </p>
+
+                    <div className="details-section">
+                        <h1>Ultimate Postpartum Recovery Guide </h1>
+                        <h2>(0–6 Weeks)</h2>
+                        <p>Your calm, week-by-week recovery companion—comfort routines, hygiene basics, what’s normal, and when to check in. Built to support you through the first six weeks without overwhelm.</p>
+                    </div>
+
+                    <div className="buttons-section">
+                        <p className="label">Free with Email · $19 Value ✨</p>
+                        <button className='button-pink-center'>Shop to Unlock</button>
+                    </div>
+                </div>
+
+                <div className="middle-section">
+                    <div className="item-sec-card">
+                        <p className="label-section">
+                            <span className="active-green">FREE</span>
+                            <span className="active-green-shade">400 Downloads</span>
+                        </p>
+                        <div className="heading-section">
+                            <p className="heading">
+                                Hospital Bag Checklist <span>Mom, Baby & Partner essentials.</span>
+                            </p>
+                            <button className="button-pink-center"><Download /></button>
+                        </div>
+                    </div>
+                    <div className="item-sec-card">
+                        <p className="label-section">
+                            <span className="active-green">FREE</span>
+                            <span className="active-green-shade">165 Downloads</span>
+                        </p>
+                        <div className="heading-section">
+                            <p className="heading">
+                                Postpartum Hygiene Checklist <span>Simple daily routines for healing.</span>
+                            </p>
+                            <button className="button-pink-center"><Download /></button>
+                        </div>
+                    </div>
+                    <div className="item-sec-card">
+                        <p className="label-section">
+                            <span className="active-green">FREE</span>
+                            <span className="active-green-shade">28 Downloads</span>
+                        </p>
+                        <div className="heading-section">
+                            <p className="heading">
+                                Pregnancy Discomforts <span>What’s Normal & How to Find Relief.</span>
+                            </p>
+                            <button className="button-pink-center"><Download /></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="right-section">
+                    <img src={CareGuideImage} alt="" />
+                </div>
+            </div>
+            <div className="care-guide-btns-con">
+                <p className="label-desc">For educational use only. Always consult your provider for medical advice.</p>
+                <button className="button-pink-border">View all care guides</button>
             </div>
         </div>
 
