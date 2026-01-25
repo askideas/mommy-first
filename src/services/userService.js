@@ -106,39 +106,21 @@ export const updateUserDetails = async (userId, userData) => {
 /**
  * Update user profile for new customers
  * @param {number} userId - The Shopify customer ID
- * @param {Object} profileData - Profile data to update
- * @param {string} profileData.firstName - User's first name
- * @param {string} profileData.lastName - User's last name
- * @param {string} [profileData.gender] - User's gender
- * @param {string} [profileData.dateOfBirth] - User's date of birth (YYYY-MM-DD)
- * @param {string} [profileData.dueDate] - User's due date (YYYY-MM-DD)
- * @param {string} [profileData.nationality] - User's nationality
+ * @param {Object} updatePayload - The complete update payload in API format
  * @returns {Promise} - Response with updated customer data
  */
-export const updateNewUserProfile = async (userId, profileData) => {
+export const updateNewUserProfile = async (userId, updatePayload) => {
   try {
     const token = await fetchAuthToken()
     
     if (!token) {
+      console.error('Failed to get auth token')
       return { success: false, message: 'Failed to authenticate. Please try again.' }
     }
     
-    // Build the update payload with metafields
-    const updatePayload = {
-      firstName: profileData.firstName,
-      lastName: profileData.lastName
-    }
-    
-    // Add metafields if provided
-    const metafields = {}
-    if (profileData.gender) metafields.gender = profileData.gender
-    if (profileData.dateOfBirth) metafields.date_of_birth = profileData.dateOfBirth
-    if (profileData.dueDate) metafields.due_date = profileData.dueDate
-    if (profileData.nationality) metafields.nationality = profileData.nationality
-    
-    if (Object.keys(metafields).length > 0) {
-      updatePayload.metafields = metafields
-    }
+    console.log('Auth token obtained successfully')
+    console.log('PUT request to:', `${API_BASE_URL}/user/${userId}`)
+    console.log('Request payload:', JSON.stringify(updatePayload, null, 2))
     
     const response = await fetch(`${API_BASE_URL}/user/${userId}`, {
       method: 'PUT',
@@ -149,7 +131,12 @@ export const updateNewUserProfile = async (userId, profileData) => {
       body: JSON.stringify(updatePayload)
     })
     
-    return response.json()
+    console.log('Response status:', response.status)
+    
+    const result = await response.json()
+    console.log('Response data:', result)
+    
+    return result
   } catch (error) {
     console.error('Update New User Profile Error:', error)
     return { success: false, message: 'Failed to update profile. Please try again.' }
