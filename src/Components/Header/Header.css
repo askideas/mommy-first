@@ -2,17 +2,33 @@
     background: var(--white);
     backdrop-filter: blur(50px);
     box-shadow: 0px 15px 50px 0px #FF509940;
-    width: 96% !important;
+    width: 100% !important;
     height: 76px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 36px;
+    left: 0;
+    top: 0;
     z-index: 10;
-    border-radius: 200px;
+
+
+    &.active {
+        background: var(--white);
+        backdrop-filter: blur(50px);
+        box-shadow: 0px 15px 50px 0px #FF509940;
+        width: 96% !important;
+        height: 76px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 36px;
+        z-index: 10;
+        border-radius: 200px;
+    }
 
     .logo-container {
         width: 108px;

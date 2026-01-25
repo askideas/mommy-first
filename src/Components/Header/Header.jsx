@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Header.css'
 import Logo from '../../assets/logo.svg'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -14,6 +14,22 @@ const Header = () => {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
     const { totalQuantity } = useCart();
+
+    // Add scroll event to toggle 'active' class
+    useEffect(() => {
+        const handleScroll = () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 0) {
+                header?.classList.add('active');
+            } else {
+                header?.classList.remove('active');
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        // Initial check
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Handle profile icon click - redirect to profile if logged in, otherwise open login modal
     const handleProfileClick = () => {
