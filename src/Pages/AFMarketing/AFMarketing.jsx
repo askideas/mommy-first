@@ -9,6 +9,7 @@ import Box from '../../assets/af-marketing/box.svg'
 import Percentage from '../../assets/af-marketing/percentage.svg'
 import Folder from '../../assets/af-marketing/folder.svg'
 import Help from '../../assets/af-marketing/help.svg'
+import FAQComponent from '../../Components/FAQComponent/FAQComponent'
 
 const AFMarketing = () => {
     const headingData = {
@@ -16,6 +17,14 @@ const AFMarketing = () => {
         'subtitle': "Elevate the Fourth Trimester. <br/> Join the Mommy First™ Pro-Circle.",
         'description': ' A postpartum affiliate program for doulas, midwives, and maternal health professionals <br/> promoting alcohol-free postpartum recovery products and advanced cooling solutions.'
     }
+
+    const faqs = [
+        { id: 1, question: "How does the Mommy First™ affiliate program work?", answer: "Answer 1" },
+        { id: 2, question: "Who can apply?", answer: "Answer 2" },
+        { id: 3, question: "How can apply?", answer: "Answer 2" },
+        { id: 4, question: "Is this a medical or prescription product?", answer: "Answer 2" },
+    ]
+
   return (
     <div className="af-marketing-container-section">
         <div className="container">
@@ -119,6 +128,13 @@ const AFMarketing = () => {
                 </p>
                 <button className='button-pink-center mt-5'>Apply for the Pro-Circle Affiliate Program</button>
             </div>
+
+            <FAQComponent
+                faqs={faqs}
+                title=""
+                subtitle="Frequently Asked Questions"
+                description=""
+            />
         </div>
     </div>
   )
