@@ -7,21 +7,20 @@ import prdImg from '../../assets/products/prd1.svg'
 import { shopProducts } from '../../data/productsData'
 import ProductTile from '../../Components/ProductTile/ProductTile'
 import MF1 from '../../assets/MF1.png'
-import { useAuth } from '../../contexts/AuthContext'
-import { 
-    getCart, 
-    addToCart, 
-    updateCartItems, 
-    removeFromCart, 
-    goToCheckout 
-} from '../../services/cartService'
+import { useCart } from '../../contexts/CartContext'
+import { goToCheckout } from '../../services/cartService'
 
 const Cart = () => {
-    const { customer } = useAuth()
-    const [cart, setCart] = useState(null)
-    const [items, setItems] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [isUpdating, setIsUpdating] = useState(false)
+    const { 
+        cart, 
+        items, 
+        isLoading, 
+        isUpdating, 
+        fetchCart,
+        updateCartItems, 
+        removeFromCart 
+    } = useCart()
+    
     const [updatingLineId, setUpdatingLineId] = useState(null)
     const [message, setMessage] = useState({ type: '', text: '' })
     const [orderNote, setOrderNote] = useState('')
@@ -29,34 +28,11 @@ const Cart = () => {
     // Fetch cart on mount
     useEffect(() => {
         fetchCart()
-    }, [customer?.id])
-
-    const fetchCart = async () => {
-        setIsLoading(true)
-        try {
-            const response = await getCart(customer?.id || null)
-            console.log('Cart response:', response)
-            
-            if (response.success && response.data) {
-                setCart(response.data)
-                setItems(response.data.items || [])
-            } else {
-                // Cart might not exist yet, that's okay
-                setCart(null)
-                setItems([])
-            }
-        } catch (error) {
-            console.error('Error fetching cart:', error)
-            setMessage({ type: 'error', text: 'Failed to load cart' })
-        } finally {
-            setIsLoading(false)
-        }
-    }
+    }, [])
 
     const handleQuantityChange = async (lineId, newQuantity) => {
         if (newQuantity < 0) return
         
-        setIsUpdating(true)
         setUpdatingLineId(lineId)
         setMessage({ type: '', text: '' })
 
@@ -65,20 +41,15 @@ const Cart = () => {
             
             if (newQuantity === 0) {
                 // Remove item
-                response = await removeFromCart([lineId], customer?.id || null)
+                response = await removeFromCart([lineId])
             } else {
                 // Update quantity
-                response = await updateCartItems(
-                    [{ lineId, quantity: newQuantity }],
-                    customer?.id || null
-                )
+                response = await updateCartItems([{ lineId, quantity: newQuantity }])
             }
 
             console.log('Update response:', response)
 
-            if (response.success && response.data) {
-                setCart(response.data)
-                setItems(response.data.items || [])
+            if (response.success) {
                 if (newQuantity === 0) {
                     setMessage({ type: 'success', text: 'Item removed from cart' })
                 }
@@ -89,23 +60,19 @@ const Cart = () => {
             console.error('Error updating cart:', error)
             setMessage({ type: 'error', text: 'Something went wrong' })
         } finally {
-            setIsUpdating(false)
             setUpdatingLineId(null)
         }
     }
 
     const handleRemoveItem = async (lineId) => {
-        setIsUpdating(true)
         setUpdatingLineId(lineId)
         setMessage({ type: '', text: '' })
 
         try {
-            const response = await removeFromCart([lineId], customer?.id || null)
+            const response = await removeFromCart([lineId])
             console.log('Remove response:', response)
 
-            if (response.success && response.data) {
-                setCart(response.data)
-                setItems(response.data.items || [])
+            if (response.success) {
                 setMessage({ type: 'success', text: 'Item removed from cart' })
             } else {
                 setMessage({ type: 'error', text: response.message || 'Failed to remove item' })
@@ -114,7 +81,6 @@ const Cart = () => {
             console.error('Error removing item:', error)
             setMessage({ type: 'error', text: 'Something went wrong' })
         } finally {
-            setIsUpdating(false)
             setUpdatingLineId(null)
         }
     }

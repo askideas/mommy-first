@@ -3,13 +3,12 @@ import './ProductTile.css'
 import { Heart, Loader2, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DefaultImg from '../../assets/default.png'
-import { useAuth } from '../../contexts/AuthContext'
-import { addToCart } from '../../services/cartService'
+import { useCart } from '../../contexts/CartContext'
 
 const ProductTile = (props) => {
     const product = props.data;
     const navigate = useNavigate()
-    const { customer } = useAuth()
+    const { addToCart } = useCart()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
@@ -32,7 +31,7 @@ const ProductTile = (props) => {
             }]
 
             console.log('Adding to cart:', items)
-            const response = await addToCart(items, customer?.id || null)
+            const response = await addToCart(items)
             console.log('Add to cart response:', response)
 
             if (response.success) {

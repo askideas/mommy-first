@@ -4,14 +4,16 @@ import Logo from '../../assets/logo.svg'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Search from '../../assets/search.svg'
 import Profile from '../../assets/profile.svg'
-import Cart from '../../assets/cart.svg'
+import CartIcon from '../../assets/cart.svg'
 import Hamburger from '../../assets/hamburger.svg'
 import { Heart } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { useCart } from '../../contexts/CartContext'
 
 const Header = () => {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
+    const { totalQuantity } = useCart();
 
     // Handle profile icon click - redirect to profile if logged in, otherwise open login modal
     const handleProfileClick = () => {
@@ -45,7 +47,12 @@ const Header = () => {
                     style={{cursor: 'pointer'}} 
                 />
                 <Heart className="icon" onClick={()=>navigate('/wishlist')} />
-                <img src={Cart} alt="" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}} />
+                <div className="cart-icon-wrapper" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}}>
+                    <img src={CartIcon} alt="" />
+                    {totalQuantity > 0 && (
+                        <span className="cart-count-badge">{totalQuantity > 99 ? '99+' : totalQuantity}</span>
+                    )}
+                </div>
                 <img src={Hamburger} alt="" data-bs-toggle="offcanvas" data-bs-target="#MegaMenuModal" style={{cursor: 'pointer'}} />
             </div>
         </div>

@@ -259,7 +259,7 @@ hr {
     .cart-summary {
         width: 360px;
         min-height: 456px;
-        height: fit-content;
+        height: -webkit-fill-available;
         box-shadow: 0px 15px 50px 0px #FF509940;
         border-radius: 0 16px 16px 0;
         padding: 32px;

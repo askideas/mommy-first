@@ -31,6 +31,7 @@ import Profile from './Pages/Profile/Profile'
 import AuthCallback from './Pages/AuthCallback/AuthCallback'
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import { AuthProvider } from './contexts/AuthContext'
+import { CartProvider } from './contexts/CartContext'
 import CareHub from './Pages/Carehub/CareHub'
 import Blogs from './Pages/Blogs/Blogs'
 import BlogDetails from './Pages/BlogDetails/BlogDetails'
@@ -98,9 +99,11 @@ const AppContent = () => {
 const App = () => {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+      <CartProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </CartProvider>
     </AuthProvider>
   )
 }

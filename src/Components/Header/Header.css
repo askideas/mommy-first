@@ -125,5 +125,41 @@
             stroke: var(--primary-dark);
             cursor: pointer;
         }
+
+        .cart-icon-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .cart-count-badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                min-width: 18px;
+                height: 18px;
+                padding: 0 5px;
+                background: linear-gradient(135deg, #FD8CBB 0%, #DC5F92 100%);
+                color: white;
+                font: 600 10px var(--font);
+                border-radius: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: cartBadgePop 0.3s ease;
+            }
+        }
+    }
+}
+
+@keyframes cartBadgePop {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 }
