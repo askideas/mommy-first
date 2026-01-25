@@ -411,3 +411,155 @@ hr {
         }
     }
 }
+
+/* Cart Loading State */
+.cart-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 16px;
+
+    .spinner {
+        animation: spin 1s linear infinite;
+        color: var(--primary-pink);
+    }
+
+    p {
+        font: 400 16px var(--font);
+        color: var(--gray);
+    }
+}
+
+/* Empty Cart State */
+.empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 16px;
+    text-align: center;
+    padding: 40px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0px 15px 50px 0px #FF509940;
+    margin-bottom: 42px;
+
+    svg {
+        color: var(--pink-border);
+    }
+
+    h2 {
+        font: 600 28px var(--font);
+        color: var(--primary-dark);
+        margin: 0;
+    }
+
+    p {
+        font: 400 16px var(--font);
+        color: var(--gray);
+        margin: 0;
+        max-width: 400px;
+    }
+
+    .button-pink-center {
+        margin-top: 16px;
+        text-decoration: none;
+        padding: 12px 32px;
+    }
+}
+
+/* Cart Message */
+.cart-message {
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font: 400 14px var(--font);
+    text-align: center;
+
+    &.success {
+        background: #dcfce7;
+        color: #16a34a;
+        border: 1px solid #86efac;
+    }
+
+    &.error {
+        background: #fef2f2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+    }
+}
+
+/* Cart Item Updating State */
+.cart-item-card-container {
+    transition: opacity 0.3s ease;
+
+    &.updating {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+}
+
+/* Variant Title */
+.variant-title {
+    font: 400 12px var(--font);
+    color: var(--gray);
+    margin-top: 2px;
+}
+
+/* Remove Button with Icon */
+.remove-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+/* Quantity Spinner */
+.quantity-count {
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+/* Checkout Button Loading */
+.checkout-btn {
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+/* Quantity Buttons Disabled */
+.item-quantity button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+        background: var(--pink-border);
+        transform: none;
+        box-shadow: none;
+
+        svg {
+            stroke: var(--primary-dark);
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

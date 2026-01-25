@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { mergeCartsOnLogin, clearGuestCartId } from '../services/cartService'
 
 const AuthContext = createContext()
 
@@ -95,9 +96,25 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false)
   }
 
-  const login = (sessionToken, refreshToken, userData, customerData = null, isNew = false) => {
+  const login = async (sessionToken, refreshToken, userData, customerData = null, isNew = false) => {
     setTokens(sessionToken, refreshToken)
     setUserData(userData, customerData, isNew)
+    
+    // Merge guest cart with user cart on login
+    if (customerData?.id) {
+      try {
+        console.log('Merging carts on login for user:', customerData.id)
+        const mergeResponse = await mergeCartsOnLogin(customerData.id)
+        console.log('Cart merge response:', mergeResponse)
+        
+        if (mergeResponse.success && mergeResponse.merged) {
+          console.log(`Merged ${mergeResponse.itemsMerged} items from guest cart`)
+        }
+      } catch (error) {
+        console.error('Cart merge error:', error)
+        // Don't fail login if cart merge fails
+      }
+    }
   }
 
   const logout = async () => {
@@ -114,6 +131,8 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error)
     } finally {
+      // Clear guest cart ID on logout
+      clearGuestCartId()
       clearAuth()
     }
   }

@@ -65,6 +65,55 @@
             align-items: flex-end;
             width: 100%;
             flex: 1;
+
+            .addtobag {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                min-width: 110px;
+                transition: all 0.3s ease;
+
+                &:disabled {
+                    opacity: 0.8;
+                    cursor: not-allowed;
+                }
+
+                &.added {
+                    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+                    color: white;
+                }
+
+                &.error {
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    color: white;
+                    font-size: 11px;
+                }
+
+                .spinner {
+                    animation: spin 1s linear infinite;
+                }
+            }
+
+            .wishlist {
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    fill: var(--primary-pink);
+                    stroke: var(--primary-pink);
+                    transform: scale(1.1);
+                }
+            }
         }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
