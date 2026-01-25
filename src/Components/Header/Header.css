@@ -1,15 +1,18 @@
 .header {
-    background: #ffffff91;
+    background: var(--white);
     backdrop-filter: blur(50px);
-    width: 100%;
-    height: 84px;
+    box-shadow: 0px 15px 50px 0px #FF509940;
+    width: 96% !important;
+    height: 76px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 36px;
     z-index: 10;
+    border-radius: 200px;
 
     .logo-container {
         width: 108px;
@@ -76,7 +79,7 @@
                 content: '';
                 position: absolute;
                 top: 0;
-                left: -100%;
+                left: -103%;
                 width: 100%;
                 height: 100%;
                 background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
@@ -108,7 +111,7 @@
 
     .menu-action-icons-container {
         width: fit-content;
-        height: 100%;
+        height: 40px;
         display: flex;
         justify-content: flex-end;
         align-items: center;

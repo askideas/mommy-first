@@ -9,6 +9,7 @@ import Box from '../../assets/af-marketing/box.svg'
 import Percentage from '../../assets/af-marketing/percentage.svg'
 import Folder from '../../assets/af-marketing/folder.svg'
 import Help from '../../assets/af-marketing/help.svg'
+import CoinShade from '../../assets/af-marketing/coin-shade.png'
 import FAQComponent from '../../Components/FAQComponent/FAQComponent'
 
 const AFMarketing = () => {
@@ -35,6 +36,7 @@ const AFMarketing = () => {
             </div>
 
             <div className="why-partner-section">
+                <img src={CoinShade} alt="" className='coin-shade-img' />
                 <p className="head"><img src={Trophy} alt="" />Why Partner With Mommy First™</p>
                 <div className="why-partner-items">
                     <div className="why-partner-item">

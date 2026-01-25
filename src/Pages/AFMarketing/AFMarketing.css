@@ -21,11 +21,21 @@
     width: 856px;
     height: fit-content;
     min-height: 586px;
-    background: var(--white);
+    background: #ffffffb8;
     box-shadow: 0px 34px 43px 0px #DC5F9233;
     border-radius: 24px;
     padding: 48px;
     margin: 0 auto 152px auto;
+    position: relative;
+
+    .coin-shade-img {
+        position: absolute;
+        top: 77px;
+        left: -240px;
+        width: 900px;
+        height: 900px;
+        z-index: -1;
+    }
 
     p.head {
         font: 400 26px var(--font);
