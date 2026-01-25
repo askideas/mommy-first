@@ -6,6 +6,7 @@
   flex-direction: column;
   transition: all 0.3s ease;
   box-shadow: 0px 15px 50px 0px #FF509940;
+  cursor: pointer;
 }
 
 .blog-card-wrapper:hover {

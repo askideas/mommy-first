@@ -1,9 +1,21 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './BlogCard.css'
 
 const BlogCard = ({ blog }) => {
+  const navigate = useNavigate()
+
+  const handleCardClick = () => {
+    navigate(`/blogs/${blog.id}`)
+  }
+
+  const handleButtonClick = (e) => {
+    e.stopPropagation()
+    navigate(`/blogs/${blog.id}`)
+  }
+
   return (
-    <div className="blog-card-wrapper">
+    <div className="blog-card-wrapper" onClick={handleCardClick}>
       <div className="blog-card-image-container">
         <img 
           src={blog.image} 
@@ -21,9 +33,9 @@ const BlogCard = ({ blog }) => {
         <p className="blog-card-description">{blog.description}</p>
         
         {blog.type === 'reserve' ? (
-          <button className="button-pink-border">Reserve</button>
+          <button className="button-pink-border" onClick={handleButtonClick}>Reserve</button>
         ) : (
-          <button className="button-pink-border">Read article</button>
+          <button className="button-pink-border" onClick={handleButtonClick}>Read article</button>
         )}
       </div>
     </div>
