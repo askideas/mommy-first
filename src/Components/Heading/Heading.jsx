@@ -13,7 +13,7 @@ const Heading = (props) => {
                 ? props.data.description.map((item, index) => (
                   <p key={index} className='description' dangerouslySetInnerHTML={{ __html: item }}></p>
                 ))
-                : <p className='description' dangerouslySetInnerHTML={{ __html: props.data.description }}>{props.data.description}</p>
+                : <p className='description' dangerouslySetInnerHTML={{ __html: props.data.description }}></p>
               )
             }
         </div>

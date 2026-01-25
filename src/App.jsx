@@ -32,6 +32,7 @@ import AuthCallback from './Pages/AuthCallback/AuthCallback'
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import { AuthProvider } from './contexts/AuthContext'
 import CareHub from './Pages/Carehub/CareHub'
+import Blogs from './Pages/Blogs/Blogs'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -76,6 +77,7 @@ const AppContent = () => {
           <Route element={<About/>} path='/about' />
           <Route element={<Contact/>} path='/contact' />
           <Route element={<FAQ/>} path='/faqs' />
+          <Route element={<Blogs/>} path='/blogs' />
           <Route element={<Enquiries/>} path='/enquiries' />
           <Route element={<ProtectedRoute><Profile/></ProtectedRoute>} path='/profile' />
           <Route element={<AuthCallback/>} path='/auth/callback' />
