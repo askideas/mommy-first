@@ -232,7 +232,7 @@
 /* From the Care Journal Section */
 .carehub-journal-section {
     width: 100%;
-    margin-bottom: 80px;
+    margin-bottom: 152px;
 }
 
 .carehub-journal-grid {
@@ -264,7 +264,7 @@
 /* LIVE Sessions Section */
 .carehub-live-section {
     width: 100%;
-    margin-bottom: 80px;
+    margin-bottom: 152px;
 }
 
 .carehub-live-title {
@@ -350,7 +350,7 @@
     align-items: center;
     padding: 40px 60px;
     padding-left: 0;
-    margin-bottom: 80px;
+    margin-bottom: 152px;
     position: relative;
     overflow: hidden;
 }
