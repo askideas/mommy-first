@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './CareHub.css'
 import MainImage from '../../assets/carehub/human.png'
 import Pinkround from '../../assets/carehub/pink-round.png'
@@ -11,8 +12,34 @@ import Img5 from '../../assets/Reviews/m5.svg'
 import Calendar from '../../assets/carehub/calendar.svg'
 import File from '../../assets/carehub/file-download.svg'
 import Heart from '../../assets/carehub/heart-rounded.svg'
+import Heading from '../../Components/Heading/Heading'
+import BlogCard from '../../Components/BlogCard/BlogCard'
+import EventCard from '../../Components/EventCard/EventCard'
+import { blogsData } from '../../data/blogsData'
+import { eventsData } from '../../data/eventsData'
+import { Baby, Video, Heart as HeartIcon } from 'lucide-react'
 
 const CareHub = () => {
+  const navigate = useNavigate()
+  const [visibleBlogs, setVisibleBlogs] = useState(3)
+  const [visibleEvents, setVisibleEvents] = useState(3)
+
+  const journalHeading = {
+    subtitle: "From the Care Journal",
+    description: "Short, supportive reads on pregnancy, postpartum recovery, and<br/>product-use education—written to feel calm and practical."
+  }
+
+  const displayedBlogs = blogsData.slice(0, visibleBlogs)
+  const displayedEvents = eventsData.slice(0, visibleEvents)
+
+  const handleViewAllBlogs = () => {
+    navigate('/blogs')
+  }
+
+  const handleViewAllEvents = () => {
+    navigate('/events')
+  }
+
   return (
     <div className="container">
         <div className="carehub-hero-section">
@@ -108,6 +135,102 @@ const CareHub = () => {
                 <button className='button-pink-center live-btn'>LIVE Sessions</button>
             </div>
         </div>
+
+        {/* From the Care Journal Section */}
+        <div className="carehub-journal-section">
+            <Heading data={journalHeading} />
+            
+            <div className="carehub-journal-grid">
+                {displayedBlogs.map((blog) => (
+                    <BlogCard key={blog.id} blog={blog} />
+                ))}
+            </div>
+
+            <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+                <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+                <div className="progress-bar-con">
+                    <span></span>
+                </div>
+                <button className='button-label' onClick={()=> navigate('/events')}>View all</button>
+            </div>
+        </div>
+
+        {/* LIVE Sessions Section */}
+        <div className="carehub-live-section">
+            <h2 className="carehub-live-title">LIVE Sessions</h2>
+            <p className="carehub-live-description">
+                Classes led by certified OB/GYN nurses and instructors—created<br/>
+                to educate, reduce fear, and build confidence.
+            </p>
+
+            <div className="carehub-live-features">
+                <div className="carehub-feature-item">
+                    <div className="carehub-feature-icon">
+                        <Baby size={24} />
+                    </div>
+                    <p className="carehub-feature-text">
+                        <span>Stroller Cart</span>
+                        <span>Moms</span>
+                    </p>
+                </div>
+                <div className="carehub-feature-item">
+                    <div className="carehub-feature-icon">
+                        <Video size={24} />
+                    </div>
+                    <p className="carehub-feature-text">
+                        <span>Online</span>
+                        <span>Yoga</span>
+                    </p>
+                </div>
+                <div className="carehub-feature-item">
+                    <div className="carehub-feature-icon">
+                        <HeartIcon size={24} />
+                    </div>
+                    <p className="carehub-feature-text">
+                        <span>Live</span>
+                        <span>Virtual</span>
+                    </p>
+                </div>
+            </div>
+
+            <div className="carehub-events-grid">
+                {displayedEvents.map((event) => (
+                    <EventCard key={event.id} event={event} />
+                ))}
+            </div>
+
+            <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+                <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+                <div className="progress-bar-con">
+                    <span></span>
+                </div>
+                <button className='button-label' onClick={()=> navigate('/events')}>View all</button>
+            </div>
+        </div>
+
+        {/* Newsletter Section */}
+        <div className="carehub-newsletter-section">
+            <div className="carehub-newsletter-content">
+                <h2 className="carehub-newsletter-title">Want guidance<br/>before you need it?</h2>
+                <p className="carehub-newsletter-desc">
+                    Join the Mommy First email community to unlock premium<br/>
+                    care guides and get Live Session updates—supportive<br/>
+                    messages only, no spam.
+                </p>
+                <div className="carehub-newsletter-form">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email address" 
+                        className="carehub-newsletter-input"
+                    />
+                    <button className="button-pink-center carehub-newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+            <div className="carehub-newsletter-image">
+                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop" alt="Newsletter" />
+            </div>
+        </div>
+
     </div>
   )
 }

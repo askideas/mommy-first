@@ -1,0 +1,116 @@
+.event-card-wrapper {
+  background-color: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0px 15px 50px 0px #FF509940;
+  cursor: pointer;
+}
+
+.event-card-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+.event-card-image-container {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+.event-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.event-card-live-badge {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: var(--red-1);
+  color: var(--white);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font: 500 10px var(--font);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.event-card-custom-badge {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  color: var(--white);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font: 500 10px var(--font);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.event-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.event-card-title {
+  font: 600 16px var(--font);
+  color: var(--primary-dark);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.event-card-subtitle {
+  font: 400 12px var(--font);
+  color: var(--gray);
+  margin: 0 0 12px;
+}
+
+.event-card-description {
+  font: 400 13px var(--font);
+  color: var(--primary-light);
+  margin: 0 0 18px;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.event-card-btn {
+  width: fit-content;
+  height: 36px;
+  box-shadow: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .event-card-image-container {
+    height: 180px;
+  }
+
+  .event-card-title {
+    font: 600 15px var(--font);
+  }
+
+  .event-card-description {
+    font: 400 12px var(--font);
+  }
+}
+
+@media (max-width: 480px) {
+  .event-card-image-container {
+    height: 160px;
+  }
+
+  .event-card-content {
+    padding: 0 15px 18px;
+  }
+
+  .event-card-title {
+    font: 600 14px var(--font);
+  }
+}

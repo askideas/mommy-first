@@ -224,7 +224,265 @@
     50% {
         transform: translateY(-20px);
     }
-    0% {
+    100% {
         transform: translateY(0);
+    }
+}
+
+/* From the Care Journal Section */
+.carehub-journal-section {
+    width: 100%;
+    margin-bottom: 80px;
+}
+
+.carehub-journal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.carehub-section-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.carehub-count-text {
+    font: 400 14px var(--font);
+    color: var(--gray);
+    margin: 0;
+}
+
+.carehub-view-all-btn {
+    width: fit-content;
+    height: 40px;
+}
+
+/* LIVE Sessions Section */
+.carehub-live-section {
+    width: 100%;
+    margin-bottom: 80px;
+}
+
+.carehub-live-title {
+    font: 600 32px var(--font);
+    color: var(--primary-dark);
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.carehub-live-description {
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.carehub-live-features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.carehub-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carehub-feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--pink-shade);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-pink);
+}
+
+.carehub-feature-text {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    span {
+        font: 400 12px var(--font);
+        color: var(--primary-dark);
+
+        &:first-child {
+            font-weight: 600;
+        }
+    }
+}
+
+.carehub-events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* Newsletter Section */
+.carehub-newsletter-section {
+    width: 100%;
+    min-height: 280px;
+    background: linear-gradient(135deg, #DC5F92 0%, #E07E9A 50%, #F2B8C6 100%);
+    border-radius: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 60px;
+    margin-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.carehub-newsletter-content {
+    flex: 1;
+    z-index: 1;
+}
+
+.carehub-newsletter-title {
+    font: 600 36px var(--font);
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.carehub-newsletter-desc {
+    font: 400 14px var(--font);
+    color: var(--white);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.carehub-newsletter-form {
+    display: flex;
+    gap: 12px;
+}
+
+.carehub-newsletter-input {
+    width: 280px;
+    height: 44px;
+    border-radius: 8px;
+    border: none;
+    padding: 0 16px;
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+    outline: none;
+}
+
+.carehub-newsletter-input::placeholder {
+    color: var(--gray);
+}
+
+.carehub-newsletter-btn {
+    height: 44px;
+    width: fit-content;
+    box-shadow: none;
+}
+
+.carehub-newsletter-image {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .carehub-journal-grid,
+    .carehub-events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .carehub-newsletter-section {
+        padding: 30px 40px;
+    }
+
+    .carehub-newsletter-image {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carehub-journal-grid,
+    .carehub-events-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .carehub-live-title {
+        font: 600 26px var(--font);
+    }
+
+    .carehub-live-features {
+        gap: 20px;
+    }
+
+    .carehub-newsletter-section {
+        flex-direction: column;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .carehub-newsletter-title {
+        font: 600 28px var(--font);
+    }
+
+    .carehub-newsletter-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carehub-newsletter-input {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .carehub-newsletter-image {
+        margin-top: 30px;
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carehub-journal-grid,
+    .carehub-events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .carehub-live-features {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .carehub-newsletter-title {
+        font: 600 24px var(--font);
+    }
+
+    .carehub-newsletter-desc {
+        font: 400 13px var(--font);
+    }
+
+    .carehub-newsletter-image {
+        width: 160px;
+        height: 160px;
     }
 }
