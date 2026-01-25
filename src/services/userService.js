@@ -142,3 +142,122 @@ export const updateNewUserProfile = async (userId, updatePayload) => {
     return { success: false, message: 'Failed to update profile. Please try again.' }
   }
 }
+
+/**
+ * Create a new address for user
+ * @param {number} userId - The Shopify customer ID
+ * @param {Object} addressData - Address data to create
+ * @returns {Promise} - Response with created address data
+ */
+export const createUserAddress = async (userId, addressData) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/user/${userId}/address`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(addressData)
+    })
+    
+    return response.json()
+  } catch (error) {
+    console.error('Create Address Error:', error)
+    return { success: false, message: 'Failed to create address. Please try again.' }
+  }
+}
+
+/**
+ * Update an existing address
+ * @param {number} userId - The Shopify customer ID
+ * @param {number} addressId - The address ID to update
+ * @param {Object} addressData - Address data to update
+ * @returns {Promise} - Response with updated address data
+ */
+export const updateUserAddress = async (userId, addressId, addressData) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/user/${userId}/address/${addressId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(addressData)
+    })
+    
+    return response.json()
+  } catch (error) {
+    console.error('Update Address Error:', error)
+    return { success: false, message: 'Failed to update address. Please try again.' }
+  }
+}
+
+/**
+ * Delete an address
+ * @param {number} userId - The Shopify customer ID
+ * @param {number} addressId - The address ID to delete
+ * @returns {Promise} - Response with deletion status
+ */
+export const deleteUserAddress = async (userId, addressId) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/user/${userId}/address/${addressId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    
+    return response.json()
+  } catch (error) {
+    console.error('Delete Address Error:', error)
+    return { success: false, message: 'Failed to delete address. Please try again.' }
+  }
+}
+
+/**
+ * Set an address as default
+ * @param {number} userId - The Shopify customer ID
+ * @param {number} addressId - The address ID to set as default
+ * @returns {Promise} - Response with updated address data
+ */
+export const setDefaultAddress = async (userId, addressId) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/user/${userId}/address/${addressId}/default`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    
+    return response.json()
+  } catch (error) {
+    console.error('Set Default Address Error:', error)
+    return { success: false, message: 'Failed to set default address. Please try again.' }
+  }
+}
