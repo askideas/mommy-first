@@ -111,15 +111,20 @@ export const MegaMenu = [
         tag: false,
       },
       {
-        label: "Careers",
-        link: "/about/careers",
+        label: "Blogs",
+        link: "/blogs",
         tag: false,
       },
       {
-        label: "Business Enquiries",
-        link: "/about/business-enquiries",
+        label: "Affiliate",
+        link: "/af-marketing",
         tag: false,
       },
+      // {
+      //   label: "Business Enquiries",
+      //   link: "/about/business-enquiries",
+      //   tag: false,
+      // },
     ],
   },
   {
