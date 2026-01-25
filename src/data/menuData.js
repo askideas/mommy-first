@@ -116,7 +116,7 @@ export const MegaMenu = [
         tag: false,
       },
       {
-        label: "Affiliate",
+        label: "Affiliate Marketing",
         link: "/af-marketing",
         tag: false,
       },
