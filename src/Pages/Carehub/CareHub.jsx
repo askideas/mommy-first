@@ -19,6 +19,9 @@ import { blogsData } from '../../data/blogsData'
 import { eventsData } from '../../data/eventsData'
 import { Baby, Video, Heart as HeartIcon } from 'lucide-react'
 import Carehubnewsletterimage from '../../assets/carehub/care-hub-news-letter.png'
+import Boy from '../../assets/carehub/boy.svg'
+import Girl from '../../assets/carehub/girl.svg'
+import Email from '../../assets/carehub/email.svg'
 
 const CareHub = () => {
   const navigate = useNavigate()
@@ -167,7 +170,7 @@ const CareHub = () => {
             <div className="carehub-live-features">
                 <div className="carehub-feature-item">
                     <div className="carehub-feature-icon">
-                        <Baby size={24} />
+                        <img src={Boy} alt="" />
                     </div>
                     <p className="carehub-feature-text">
                         <span>Stroller Cart</span>
@@ -176,7 +179,7 @@ const CareHub = () => {
                 </div>
                 <div className="carehub-feature-item">
                     <div className="carehub-feature-icon">
-                        <Video size={24} />
+                        <img src={Girl} alt="" />
                     </div>
                     <p className="carehub-feature-text">
                         <span>Online</span>
@@ -185,7 +188,7 @@ const CareHub = () => {
                 </div>
                 <div className="carehub-feature-item">
                     <div className="carehub-feature-icon">
-                        <HeartIcon size={24} />
+                        <img src={Email} alt="" />
                     </div>
                     <p className="carehub-feature-text">
                         <span>Live</span>
