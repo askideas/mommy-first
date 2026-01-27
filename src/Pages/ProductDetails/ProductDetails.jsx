@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import './ProductDetails.css'
 import { ChevronDown, ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react'
 import { NavLink, useParams } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
+import { getProductDetails } from '../../services/productService'
 import Star from '../../assets/star.svg'
 import WayToPay from '../../assets/ways-to-pay.png'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
@@ -19,42 +21,90 @@ import 'swiper/css/navigation'
 import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
 
 const ProductDetails = () => {
-    const { productid } = useParams();
+    const { productHandle } = useParams();
+    const { getSessionToken } = useAuth();
+    const [authToken, setAuthToken] = useState(null);
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
     const [isZooming, setIsZooming] = useState(false);
-    // const [containerHeight, setContainerHeight] = useState(0);
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
     const contentSectionRef = useRef(null);
-    
-    // useEffect(() => {
-    //     const updateHeight = () => {
-    //         if (contentSectionRef.current) {
-    //             const height = contentSectionRef.current.offsetHeight;
-    //             setContainerHeight(height);
-    //         }
-    //     };
-        
-    //     updateHeight();
-    //     window.addEventListener('resize', updateHeight);
-        
-    //     return () => window.removeEventListener('resize', updateHeight);
-    // }, []);
-    
-    const productImages = [pdp1, pdp2, pdp3, pdp4, pdp1, pdp2, pdp3, pdp4, pdp3, pdp4];
-    
+
+    useEffect(() => {
+        const fetchAuthToken = async () => {
+            // Try context/localStorage first
+            let token = getSessionToken();
+            if (!token) {
+                try {
+                    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            clientId: import.meta.env.VITE_API_CLIENT_ID,
+                            clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
+                        })
+                    });
+                    const data = await response.json();
+                    if (data.success && data.token) {
+                        token = data.token;
+                        setAuthToken(token);
+                    }
+                } catch (err) {
+                    console.error('Error fetching auth token:', err);
+                }
+            } else {
+                setAuthToken(token);
+            }
+        };
+        fetchAuthToken();
+    }, [getSessionToken]);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            setLoading(true);
+            const token = authToken;
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+            const res = await getProductDetails(productHandle, token);
+            if (res.success) {
+                setProduct(res.product);
+            }
+            setLoading(false);
+        };
+        if (authToken) fetchProduct();
+    }, [productHandle, authToken]);
+
+    const productImages = product?.images?.edges?.map(img => img.node.url) || [pdp1, pdp2, pdp3, pdp4];
+
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
         setZoomPosition({ x, y });
     };
-    
+
     const handleMouseEnter = () => {
         setIsZooming(true);
     };
-    
+
     const handleMouseLeave = () => {
         setIsZooming(false);
     };
+
+    console.log("sfdlk;gjsd;lfg"+productHandle);
+    
+
+    if (loading) {
+        return <div className="productDetailsPageContent"><div className="container"><p>Loading product details...</p></div></div>;
+    }
+
+    if (!product) {
+        return <div className="productDetailsPageContent"><div className="container"><p>Product not found.</p></div></div>;
+    }
+    
+
   return (
     <div className='productDetailsPageContent'>
         <div className="container">
@@ -64,7 +114,7 @@ const ProductDetails = () => {
                     <ChevronRight />
                     <NavLink to="/shop">Shop</NavLink>
                     <ChevronRight />
-                    <span>EasyCleanse Peri Bottle</span>
+                    <span>{product.title}</span>
                 </div>
 
                 <div className="product-details-content-section" ref={contentSectionRef}>
@@ -115,15 +165,15 @@ const ProductDetails = () => {
                             </div>
 
                             <div className="product name-section">
-                                <p className="prd-name">EasyCleanse Peri Bottle 12.2 OZ</p>
+                                <p className="prd-name">{product.title}</p>
                                 <div className='ratings-view'>
-                                    <siv className="stars">
+                                    <div className="stars">
                                         <img src={Star} alt="" className='star' />
                                         <img src={Star} alt="" className='star' />
                                         <img src={Star} alt="" className='star' />
                                         <img src={Star} alt="" className='star' />
                                         <img src={Star} alt="" className='star' />
-                                    </siv>
+                                    </div>
                                     <p className="text-rating"><span>4.9/5</span> <span>Out of 2,698 Reviews</span></p>
                                 </div>
                             </div>
@@ -131,7 +181,7 @@ const ProductDetails = () => {
                         
                         <div className="details-body-section">
                             <div className="product-short-description">
-                                <p>The Mommy First® Peri Bottle is a must-have essential for every new mom’s postpartum recovery journey. The Mommy First® Peri Bottle is a must-have essential for every new mom’s postpartum recovery journey. </p>
+                                <p>{product.description}</p>
                             </div>
 
                             {/* <div className="product-price-section">
@@ -139,15 +189,17 @@ const ProductDetails = () => {
                                 <p className="sale-price">$19.99 USD <span className='offer' >SAVE 55%</span></p>
                             </div> */}
 
-                            <div className="product-variations-container">
-                                <p className="var-heading">Choose model</p>
-                                <div className="variations-list">
-                                    <button className="variation-item active">Pink</button>
-                                    <button className="variation-item">Green</button>
-                                    <button className="variation-item">Blue</button>
-                                    <button className="variation-item">Peach</button>
+                            {/* Variants rendering (if available) */}
+                            {product.variants?.edges?.length > 0 && (
+                                <div className="product-variations-container">
+                                    <p className="var-heading">Choose Variant</p>
+                                    <div className="variations-list">
+                                        {product.variants.edges.map((variant, idx) => (
+                                            <button key={variant.node.id} className={`variation-item${idx === 0 ? ' active' : ''}`}>{variant.node.title}</button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                             <div className="d-flex justify-content-start align-items-center" style={{columnGap: '24px'}}>
                                 <div className="product-quantity-section">
                                     <p className="qty-heading">Select Quantity</p>
@@ -160,11 +212,12 @@ const ProductDetails = () => {
 
                                 <div className="product-price-con">
                                     <span className="heading">Price</span>
-                                    <span className='strike-price'>$29.99 USD</span>
-                                    <span className="price">$19.99 USD</span>
+                                    <span className='strike-price'>{product.variants?.edges?.[0]?.node?.compareAtPrice?.amount ? `$${product.variants.edges[0].node.compareAtPrice.amount} ${product.variants.edges[0].node.compareAtPrice.currencyCode}` : ''}</span>
+                                    <span className="price">{product.variants?.edges?.[0]?.node?.price?.amount ? `$${product.variants.edges[0].node.price.amount} ${product.variants.edges[0].node.price.currencyCode}` : ''}</span>
                                 </div>
                             </div>
                             
+                            {/* Example: You can parse product.description for sections, or use metafields if available for accordion content. Keeping static for now. */}
                             <div className="accordion accordion-flush" id="productDetailsAccordian">
                                 <div className="accordion-item">
                                     <h2 className="accordion-header">
@@ -174,42 +227,10 @@ const ProductDetails = () => {
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
-                                    <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+                                    <div className="accordion-body">{product.description}</div>
                                     </div>
                                 </div>
-                                <div className="accordion-item">
-                                    <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                            Usage
-                                            <Plus />
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
-                                    <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion body. Let’s imagine this being filled with some actual content.</div>
-                                    </div>
-                                </div>
-                                <div className="accordion-item">
-                                    <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                            Composition
-                                            <Plus />
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
-                                    <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-                                    </div>
-                                </div>
-                                <div className="accordion-item">
-                                    <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                            Care & Use Information
-                                            <Plus />
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseFour" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
-                                    <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-                                    </div>
-                                </div>
+                                {/* Add more sections as needed, e.g. Usage, Composition, etc. */}
                             </div>
                         </div>
                         

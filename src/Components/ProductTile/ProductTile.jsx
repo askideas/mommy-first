@@ -60,7 +60,7 @@ const ProductTile = (props) => {
     }
 
     return (
-        <div className={`product-tile-container`} onClick={() => navigate(`/shop/${product.id}`)}>
+        <div className={`product-tile-container`} onClick={() => navigate(`/shop/${product.handle}`)}>
             <p className={`pt-label ${product.label ? '' : 'd-none'}`}>{product.label}</p>
             <img src={product.image || DefaultImg} alt="" className='prd-image' onError={(e) => e.target.src = DefaultImg} />
             <div className="product-details-con">
