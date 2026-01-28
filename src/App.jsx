@@ -36,6 +36,7 @@ import CareHub from './Pages/Carehub/CareHub'
 import Blogs from './Pages/Blogs/Blogs'
 import BlogDetails from './Pages/BlogDetails/BlogDetails'
 import AFMarketing from './Pages/AFMarketing/AFMarketing'
+import Collection from './Pages/Collection/Collection'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -64,6 +65,7 @@ const AppContent = () => {
         <Routes>
           <Route element={<Home/>} path='/' />
           <Route element={<Shop/>} path='/shop' />
+          <Route element={<Collection/>} path='/collection/:collectionHandle' />
           <Route element={<SearchResults/>} path='/search' />
           <Route element={<SearchResults/>} path='/search/:query' />
           <Route element={<ProductDetails/>} path='/shop/:productHandle' />
