@@ -72,14 +72,44 @@ const AuthCallback = () => {
           response.isNewCustomer
         )
         
+        // Check if profile needs completion
+        let needsCompletion = false
+        
+        // If new customer
+        if (response.isNewCustomer) {
+          needsCompletion = true
+        }
+        
+        // If no customer data
+        if (!response.customer) {
+          needsCompletion = true
+        }
+        
+        // Check for unverified email/phone or missing fields
+        if (response.user && response.customer) {
+          // Check verification status
+          if (!response.user.verifiedEmail && !response.user.verifiedPhone) {
+            needsCompletion = true
+          }
+          
+          // Check for missing required fields
+          if (!response.customer.firstName || !response.customer.lastName) {
+            needsCompletion = true
+          }
+        }
+        
         setStatus('success')
-        setMessage(response.isNewCustomer 
-          ? 'Account created! Redirecting to your profile...' 
-          : 'Login successful! Redirecting to your profile...'
+        setMessage(needsCompletion
+          ? 'Setting up your profile...' 
+          : 'Login successful! Redirecting to home...'
         )
         
-        // Redirect to profile page
-        setTimeout(() => navigate('/profile#profile'), 1500)
+        // Redirect based on profile completion status
+        if (needsCompletion) {
+          setTimeout(() => navigate('/profile#profile'), 1500)
+        } else {
+          setTimeout(() => navigate('/'), 1500)
+        }
       } else {
         setStatus('error')
         setMessage(response.message || 'Login failed. Redirecting to home...')

@@ -28,7 +28,7 @@ import { useAuth } from '../../contexts/AuthContext'
 const Profile = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { user, customer, logout, isNewCustomer } = useAuth();
+    const { user, customer, logout, isNewCustomer, needsProfileCompletion } = useAuth();
     const [activeSection, setActiveSection] = useState("#profile");
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [showNewUserModal, setShowNewUserModal] = useState(false);
@@ -39,15 +39,12 @@ const Profile = () => {
         setActiveSection(hash || "profile");
     }, [location.hash]);
 
-    // Check if new user and show modal
+    // Check if profile needs completion and show modal
     useEffect(() => {
-        const storedIsNew = localStorage.getItem('isNewCustomer')
-        const profileCompleted = localStorage.getItem('profileCompleted')
-        
-        if ((isNewCustomer || storedIsNew === 'true') && profileCompleted !== 'true') {
+        if (needsProfileCompletion && needsProfileCompletion()) {
             setShowNewUserModal(true)
         }
-    }, [isNewCustomer]);
+    }, [isNewCustomer, customer, user]);
 
     // Update customer data when customer changes
     useEffect(() => {
@@ -55,7 +52,8 @@ const Profile = () => {
     }, [customer]);
 
     const handleNewUserModalClose = () => {
-        setShowNewUserModal(false)
+        // Don't allow closing for new users - they must complete the form
+        // Modal will close itself after successful submission
     }
 
     const handleNewUserModalSuccess = (updatedCustomer) => {

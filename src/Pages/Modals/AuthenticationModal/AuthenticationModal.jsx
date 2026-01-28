@@ -246,7 +246,57 @@ const AuthenticationModal = () => {
 
   const handleSuccessContinue = () => {
     closeModal()
-    navigate('/profile#profile')
+    
+    // Check if profile needs completion
+    const storedIsNew = localStorage.getItem('isNewCustomer')
+    const storedCustomer = localStorage.getItem('customer')
+    const storedUser = localStorage.getItem('user')
+    const profileCompleted = localStorage.getItem('profileCompleted')
+    
+    let needsCompletion = false
+    
+    // If already completed, no need to show modal
+    if (profileCompleted === 'true') {
+      navigate('/')
+      return
+    }
+    
+    // If new customer, needs completion
+    if (storedIsNew === 'true') {
+      needsCompletion = true
+    }
+    
+    // If no customer data, needs completion
+    if (!storedCustomer || storedCustomer === 'null') {
+      needsCompletion = true
+    }
+    
+    // Check for unverified email/phone or missing fields
+    try {
+      if (storedUser && storedCustomer && storedCustomer !== 'null') {
+        const userData = JSON.parse(storedUser)
+        const customerData = JSON.parse(storedCustomer)
+        
+        // Check verification status
+        if (!userData.verifiedEmail && !userData.verifiedPhone) {
+          needsCompletion = true
+        }
+        
+        // Check for missing required fields
+        if (!customerData.firstName || !customerData.lastName) {
+          needsCompletion = true
+        }
+      }
+    } catch (error) {
+      console.error('Error checking profile completion:', error)
+    }
+    
+    // Redirect based on completion status
+    if (needsCompletion) {
+      navigate('/profile#profile')
+    } else {
+      navigate('/')
+    }
   }
 
   const closeModal = () => {
@@ -453,9 +503,9 @@ const AuthenticationModal = () => {
             <button className="close-btn d-none" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
             <img src={successImg} alt="" />
             <p className="text">You're all set! <br /> Welcome to MommyFirst </p>
-            <Link className='button-pink-center' onClick={handleSuccessContinue} to='/profile#profile'>
-              Continue Shopping
-            </Link>
+            <button className='button-pink-center' onClick={handleSuccessContinue}>
+              Continue
+            </button>
           </div>
         )}
       </div>

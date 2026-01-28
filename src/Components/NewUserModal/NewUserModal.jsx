@@ -4,22 +4,24 @@ import { ChevronDown, Loader2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile } from '../../services/userService'
 import ProfileImg from '../../assets/profile/pf-def.png'
+import { useNavigate } from 'react-router-dom'
 
 const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
+    const navigate = useNavigate()
     const { user, customer, updateCustomer, clearNewCustomerFlag, getCustomerMetafields } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
     
-    // Get existing metafields from customer
-    const existingMetafields = getCustomerMetafields()
+    // Get existing metafields from customer (handle null customer)
+    const existingMetafields = customer ? getCustomerMetafields() : {}
     
-    // Form state - use firstName and lastName separately
+    // Form state - use firstName and lastName separately, fallback to user data if customer is null
     const [formData, setFormData] = useState({
-        firstName: customer?.firstName || '',
-        lastName: customer?.lastName || '',
-        gender: existingMetafields.gender || '',
-        dateOfBirth: existingMetafields.dateOfBirth || '',
-        dueDate: existingMetafields.dueDate || ''
+        firstName: customer?.firstName || user?.givenName || '',
+        lastName: customer?.lastName || user?.familyName || '',
+        gender: existingMetafields?.gender || '',
+        dateOfBirth: existingMetafields?.dateOfBirth || '',
+        dueDate: existingMetafields?.dueDate || ''
     })
     
     const [showGenderDropdown, setShowGenderDropdown] = useState(false)
@@ -48,7 +50,8 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
         setError('')
 
         try {
-            const userId = customer?.id
+            // Get userId from customer or user object
+            const userId = customer?.id || user?.userId
             
             if (!userId) {
                 setError('User ID not found. Please try logging in again.')
@@ -60,6 +63,8 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
             const response = await updateNewUserProfile(userId, {
                 firstName: formData.firstName.trim(),
                 lastName: formData.lastName.trim(),
+                email: user?.email || customer?.email,
+                phone: user?.phone || customer?.phone,
                 gender: formData.gender,
                 dateOfBirth: formData.dateOfBirth,
                 dueDate: formData.dueDate
@@ -68,11 +73,14 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
             if (response.success) {
                 // Update customer in context with new data including metafields
                 const updatedCustomer = {
-                    ...customer,
+                    ...(customer || {}),
                     ...response.data,
+                    id: userId,
                     firstName: formData.firstName.trim(),
                     lastName: formData.lastName.trim(),
                     fullName: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+                    email: user?.email || customer?.email,
+                    phone: user?.phone || customer?.phone,
                     metafields: response.data?.metafields || {
                         custom: {
                             gender: { value: formData.gender, type: 'single_line_text_field' },
@@ -87,7 +95,9 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
                 clearNewCustomerFlag()
                 
                 onSuccess && onSuccess(updatedCustomer)
-                onClose()
+                
+                // Redirect to home page after profile completion
+                navigate('/')
             } else {
                 setError(response.message || 'Failed to update profile. Please try again.')
             }
@@ -102,8 +112,8 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
     if (!isOpen) return null
 
     return (
-        <div className="new-user-modal-overlay" onClick={onClose}>
-            <div className="new-user-modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="new-user-modal-overlay">
+            <div className="new-user-modal-container">
                 {/* Profile Image */}
                 <div className="new-user-modal-profile-image">
                     {user?.picture ? (

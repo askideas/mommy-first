@@ -203,6 +203,44 @@ export const AuthProvider = ({ children }) => {
     setIsNewCustomer(false)
   }
 
+  // Check if user needs to complete profile
+  const needsProfileCompletion = () => {
+    const storedUser = localStorage.getItem('user')
+    const storedCustomer = localStorage.getItem('customer')
+    const storedIsNew = localStorage.getItem('isNewCustomer')
+    const profileCompleted = localStorage.getItem('profileCompleted')
+    
+    // If profile is already marked as completed, no need to show modal
+    if (profileCompleted === 'true') return false
+    
+    // If new customer, needs profile completion
+    if (storedIsNew === 'true') return true
+    
+    // If no customer data exists, needs profile completion
+    if (!storedCustomer || storedCustomer === 'null') return true
+    
+    try {
+      const userData = storedUser ? JSON.parse(storedUser) : null
+      const customerData = storedCustomer ? JSON.parse(storedCustomer) : null
+      
+      // Check if email or phone is not verified
+      if (userData) {
+        if (!userData.verifiedEmail && !userData.verifiedPhone) return true
+      }
+      
+      // Check if essential customer fields are missing
+      if (customerData) {
+        const missingFields = !customerData.firstName || !customerData.lastName
+        if (missingFields) return true
+      }
+      
+      return false
+    } catch (error) {
+      console.error('Error checking profile completion:', error)
+      return false
+    }
+  }
+
   // Helper function to extract metafield values from customer data
   const getCustomerMetafield = (fieldName) => {
     if (!customer?.metafields?.custom) return null
@@ -237,7 +275,8 @@ export const AuthProvider = ({ children }) => {
     clearNewCustomerFlag,
     checkAuthStatus,
     getCustomerMetafield,
-    getCustomerMetafields
+    getCustomerMetafields,
+    needsProfileCompletion
   }
 
   return (
