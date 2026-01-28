@@ -35,8 +35,8 @@ const Shop = () => {
     // Quick filter buttons configuration
     const quickFilters = [
         { id: 'ALL', label: 'ALL', collectionId: null },
-        { id: 'MATERNITY', label: 'MATERNITY 🤰', collectionId: 'maternity-care' },
-        { id: 'POSTPARTUM', label: 'Postpartum 🤱', collectionId: 'postpartum-care' },
+        { id: 'MATERNITY', label: 'MATERNITY 🤰', collectionId: 'maternity' },
+        { id: 'POSTPARTUM', label: 'Postpartum 🤱', collectionId: 'postpartum' },
         { id: 'WELLNESS', label: 'Wellness & Comfort 🌿', collectionId: 'wellness-comfort' }
     ];
 
