@@ -41,7 +41,7 @@ const Profile = () => {
 
     // Check if profile needs completion and show modal
     useEffect(() => {
-        if (needsProfileCompletion && needsProfileCompletion()) {
+        if (isNewCustomer) {
             setShowNewUserModal(true)
         }
     }, [isNewCustomer, customer, user]);

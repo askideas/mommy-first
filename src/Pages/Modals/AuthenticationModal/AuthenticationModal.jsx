@@ -308,42 +308,42 @@ const AuthenticationModal = () => {
   }
 
   // If user is already authenticated, show quick profile access
-  if (isAuthenticated && user) {
-    return (
-      <div className="offcanvas offcanvas-end" tabIndex="-1" id="AuthenticationModal" aria-labelledby="offcanvasRightLabel">
-        <div className="mf-off-canvas-header">
-          <p className="head-ing">Welcome back!</p>
-          <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
-        </div>
-        <div className="login-modal-body-con authenticated-view">
-          <div className="user-welcome-section">
-            <div className="user-avatar">
-              {user.picture ? (
-                <img src={user.picture} alt={customer?.fullName || user.name || 'User'} />
-              ) : (
-                <div className="avatar-placeholder">
-                  {(customer?.fullName || user.name || user.email || 'U').charAt(0).toUpperCase()}
-                </div>
-              )}
-            </div>
-            <h3 className="user-name">Hi, {customer?.fullName || user.name || 'there'}! </h3>
-            <p className="user-email">{customer?.email || user.email || customer?.phone || user.phone}</p>
-            {customer?.ordersCount > 0 && (
-              <p className="user-orders">You have {customer.ordersCount} order{customer.ordersCount > 1 ? 's' : ''}</p>
-            )}
-          </div>
-          <Link 
-            className='button-pink-center' 
-            onClick={closeModal} 
-            to='/profile#profile'
-            style={{ textDecoration: 'none', marginTop: '24px' }}
-          >
-            Go to Profile
-          </Link>
-        </div>
-      </div>
-    )
-  }
+  // if (isAuthenticated && user) {
+  //   return (
+  //     <div className="offcanvas offcanvas-end" tabIndex="-1" id="AuthenticationModal" aria-labelledby="offcanvasRightLabel">
+  //       <div className="mf-off-canvas-header">
+  //         <p className="head-ing">Welcome back!</p>
+  //         <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
+  //       </div>
+  //       <div className="login-modal-body-con authenticated-view">
+  //         <div className="user-welcome-section">
+  //           <div className="user-avatar">
+  //             {user.picture ? (
+  //               <img src={user.picture} alt={customer?.fullName || user.name || 'User'} />
+  //             ) : (
+  //               <div className="avatar-placeholder">
+  //                 {(customer?.fullName || user.name || user.email || 'U').charAt(0).toUpperCase()}
+  //               </div>
+  //             )}
+  //           </div>
+  //           <h3 className="user-name">Hi, {customer?.fullName || user.name || 'there'}! </h3>
+  //           <p className="user-email">{customer?.email || user.email || customer?.phone || user.phone}</p>
+  //           {customer?.ordersCount > 0 && (
+  //             <p className="user-orders">You have {customer.ordersCount} order{customer.ordersCount > 1 ? 's' : ''}</p>
+  //           )}
+  //         </div>
+  //         <Link 
+  //           className='button-pink-center' 
+  //           onClick={closeModal} 
+  //           to='/profile#profile'
+  //           style={{ textDecoration: 'none', marginTop: '24px' }}
+  //         >
+  //           Go to Profile
+  //         </Link>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="offcanvas offcanvas-end" tabIndex="-1" id="AuthenticationModal" aria-labelledby="offcanvasRightLabel">
