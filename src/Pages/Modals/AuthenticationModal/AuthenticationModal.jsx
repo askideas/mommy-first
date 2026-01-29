@@ -165,6 +165,11 @@ const AuthenticationModal = () => {
           response.customer, 
           response.isNewCustomer
         )
+        if (response.isNewCustomer) {
+          navigate('/profile#profile')
+        } else {
+          navigate('/')
+        }
         setSuccessScreen(true)
         setError('')
       } else {
