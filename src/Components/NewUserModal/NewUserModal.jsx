@@ -115,13 +115,13 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
         <div className="new-user-modal-overlay">
             <div className="new-user-modal-container">
                 {/* Profile Image */}
-                <div className="new-user-modal-profile-image">
+                {/* <div className="new-user-modal-profile-image">
                     {user?.picture ? (
                         <img src={user.picture} alt={customer?.fullName || user?.name || 'Profile'} />
                     ) : (
                         <img src={ProfileImg} alt="Profile" />
                     )}
-                </div>
+                </div> */}
 
                 {/* Modal Content */}
                 <div className="new-user-modal-content">

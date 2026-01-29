@@ -436,6 +436,20 @@
             font: 400 16px var(--font);
             color: var(--gray);
             margin: 0;
+
+            &.noaddress-heading {
+                font: 600 24px var(--font);
+                color: var(--primary-dark);
+                text-align: center;
+                margin-bottom: 14px;
+            }
+
+            &.no-address-sub-heading {
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+                text-align: center;
+                margin-bottom: 14px;
+            }
         }
     }
 

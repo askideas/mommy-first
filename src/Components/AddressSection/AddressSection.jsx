@@ -10,6 +10,7 @@ import {
     deleteUserAddress, 
     setDefaultAddress 
 } from '../../services/userService'
+import LocationIcon from '../../assets/profile/location.svg'
 
 const AddressSection = () => {
     const { customer, updateCustomer } = useAuth()
@@ -296,7 +297,9 @@ const AddressSection = () => {
             <div className="address-section-body">
                 {addresses.length === 0 && !isFetching ? (
                     <div className="no-addresses">
-                        <p>No addresses saved yet. Add your first address below.</p>
+                        <img src={LocationIcon} alt="" />
+                        <p className="noaddress-heading">No Address added</p>
+                        <p className="no-address-sub-heading">Add from below</p>
                     </div>
                 ) : (
                     <div className="accordion accordion-flush" id="addressListAccordian">
