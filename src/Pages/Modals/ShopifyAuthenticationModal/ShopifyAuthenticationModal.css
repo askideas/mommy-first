@@ -1,0 +1,216 @@
+.shopify-auth-modal .mf-off-canvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.shopify-auth-modal .mf-off-canvas-header .head-ing {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin: 0;
+}
+
+.shopify-auth-modal .mf-off-canvas-header .close-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #1A1A1A;
+    cursor: pointer;
+}
+
+.shopify-auth-modal .login-modal-body-con {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.shopify-auth-modal .tab-switching-container {
+    display: flex;
+    background: #F5F5F5;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 24px;
+    position: relative;
+    border: 1px solid #EAEAEA;
+}
+
+.shopify-auth-modal .tab-switching-container button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+.shopify-auth-modal .tab-switching-container button.active {
+    color: #1A1A1A;
+    font-weight: 600;
+}
+
+.shopify-auth-modal .tab-switching-container .toggle-slider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: calc(50% - 4px);
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.shopify-auth-modal .tab-switching-container .toggle-slider.left {
+    transform: translateX(0);
+}
+
+.shopify-auth-modal .tab-switching-container .toggle-slider.right {
+    transform: translateX(100%);
+    left: 4px;
+    /* Adjust based on padding */
+}
+
+/* Ensure consistent input styling */
+.shopify-auth-modal .mf-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.shopify-auth-modal .mf-input-container label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.shopify-auth-modal .mf-input-container input {
+    /* width: 100%; */
+    padding: 12px 16px;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.shopify-auth-modal .mf-input-container input:focus {
+    border-color: #E85D75;
+    /* Brand Pink */
+}
+
+.shopify-auth-modal .button-pink-center {
+    width: 100%;
+    background-color: #E85D75;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.shopify-auth-modal .button-pink-center:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.shopify-auth-modal .error-message {
+    background-color: #FEF2F2;
+    color: #EF4444;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    text-align: center;
+    border: 1px solid #FECACA;
+}
+
+.shopify-auth-modal .row-fields {
+    display: flex;
+    gap: 12px;
+}
+
+.shopify-auth-modal .row-fields .mf-input-container {
+    flex: 1;
+}
+
+/* Spinner */
+.shopify-auth-modal .spinner {
+    animation: spin 1s linear infinite;
+    width: 20px;
+    height: 20px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Footer Section */
+.shopify-auth-modal .login-modal-footer {
+    width: 100%;
+    height: fit-content;
+    padding: 32px;
+    border-top: 1px solid #E5E5E5;
+}
+
+.shopify-auth-modal .login-alternate-button-section {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.shopify-auth-modal .login-alternate-button-section button {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #666;
+    /* gray-dark equivalent */
+    outline: none;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 14px;
+    font-size: 14px;
+    color: #1A1A1A;
+    /* primary-dark equivalent */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.shopify-auth-modal .login-alternate-button-section button:hover {
+    border-color: #E85D75;
+    /* primary-pink equivalent */
+    background: #FFF5F7;
+    /* pink-shade equivalent */
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(220, 95, 146, 0.15);
+}
+
+.shopify-auth-modal .login-alternate-button-section button:active {
+    transform: translateY(0);
+}
+
+.shopify-auth-modal .login-alternate-button-section button img {
+    width: 24px;
+    height: 24px;
+}

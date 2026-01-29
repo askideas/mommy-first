@@ -84,6 +84,41 @@ export const verifyMobileOTP = async (phone, code) => {
 }
 
 // ============================================
+// SHOPIFY EMAIL/PASSWORD AUTHENTICATION
+// ============================================
+
+/**
+ * Login with Shopify Email & Password
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise}
+ */
+export const shopifyLogin = async (email, password) => {
+  try {
+    const data = await apiCall('/login/shopify/login', { email, password })
+    return data
+  } catch (error) {
+    console.error('Shopify Login Error:', error)
+    return { success: false, message: 'Login failed. Please try again.' }
+  }
+}
+
+/**
+ * Register with Shopify
+ * @param {Object} data - { email, password, firstName, lastName }
+ * @returns {Promise}
+ */
+export const shopifyRegister = async (data) => {
+  try {
+    const response = await apiCall('/login/shopify/register', data)
+    return response
+  } catch (error) {
+    console.error('Shopify Register Error:', error)
+    return { success: false, message: 'Registration failed. Please try again.' }
+  }
+}
+
+// ============================================
 // GOOGLE OAUTH
 // ============================================
 

@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { mergeCartsOnLogin, clearGuestCartId } from '../services/cartService'
+import {
+  shopifyLogin,
+  shopifyRegister,
+  verifyEmailOTP,
+  verifyMobileOTP
+} from '../services/authService'
 
 const AuthContext = createContext()
 
@@ -47,7 +53,7 @@ export const AuthProvider = ({ children }) => {
       const storedUser = localStorage.getItem('user')
       const storedCustomer = localStorage.getItem('customer')
       const storedIsNew = localStorage.getItem('isNewCustomer')
-      
+
       if (sessionToken && storedUser) {
         // Validate the session token with the server
         const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/validate`, {
@@ -55,9 +61,9 @@ export const AuthProvider = ({ children }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionToken })
         })
-        
+
         const data = await response.json()
-        
+
         if (data.success) {
           setUser(JSON.parse(storedUser))
           if (storedCustomer) {
@@ -91,12 +97,12 @@ export const AuthProvider = ({ children }) => {
   const setUserData = (userData, customerData = null, isNew = false) => {
     localStorage.setItem('user', JSON.stringify(userData))
     setUser(userData)
-    
+
     if (customerData) {
       localStorage.setItem('customer', JSON.stringify(customerData))
       setCustomer(customerData)
     }
-    
+
     localStorage.setItem('isNewCustomer', JSON.stringify(isNew))
     setIsNewCustomer(isNew)
     setIsAuthenticated(true)
@@ -118,14 +124,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (sessionToken, refreshToken, userData, customerData = null, isNew = false) => {
     setTokens(sessionToken, refreshToken)
     setUserData(userData, customerData, isNew)
-    
+
     // Merge guest cart with user cart on login
     if (customerData?.id) {
       try {
         console.log('Merging carts on login for user:', customerData.id)
         const mergeResponse = await mergeCartsOnLogin(customerData.id)
         console.log('Cart merge response:', mergeResponse)
-        
+
         if (mergeResponse.success && mergeResponse.merged) {
           console.log(`Merged ${mergeResponse.itemsMerged} items from guest cart`)
         }
@@ -139,7 +145,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken')
-      
+
       if (refreshToken) {
         await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/logout`, {
           method: 'POST',
@@ -159,24 +165,24 @@ export const AuthProvider = ({ children }) => {
   const refreshSession = async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken')
-      
+
       if (!refreshToken) {
         return false
       }
-      
+
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken })
       })
-      
+
       const data = await response.json()
-      
+
       if (data.success) {
         setTokens(data.sessionToken, data.refreshToken)
         return true
       }
-      
+
       return false
     } catch (error) {
       console.error('Session refresh failed:', error)
@@ -237,7 +243,12 @@ export const AuthProvider = ({ children }) => {
     clearNewCustomerFlag,
     checkAuthStatus,
     getCustomerMetafield,
-    getCustomerMetafields
+    getCustomerMetafield,
+    getCustomerMetafields,
+    shopifyLogin,
+    shopifyRegister,
+    verifyEmailOTP,
+    verifyMobileOTP
   }
 
   return (

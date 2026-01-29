@@ -15,7 +15,7 @@ import MF2 from '../../assets/MF2.png'
 
 const Shop = () => {
     const PRODUCTS_PER_PAGE = 16;
-    
+
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [authToken, setAuthToken] = useState(null);
@@ -28,16 +28,17 @@ const Shop = () => {
     const [selectedCollection, setSelectedCollection] = useState(null);
 
     const espotsIndex = [3, 5, 14];
-    
+
     // Espot images data - you can replace these URLs with your actual espot images
-    const espotImages = [ MF1, MF2, EsImage1 ]
+    const espotImages = [MF1, MF2, EsImage1]
 
     // Quick filter buttons configuration
     const quickFilters = [
         { id: 'ALL', label: 'ALL', collectionId: null },
         { id: 'MATERNITY', label: 'MATERNITY 🤰', collectionId: 'maternity-care' },
         { id: 'POSTPARTUM', label: 'Postpartum 🤱', collectionId: 'postpartum-care' },
-        { id: 'WELLNESS', label: 'Wellness & Comfort 🌿', collectionId: 'wellness-comfort' }
+        { id: 'WELLNESS', label: 'Wellness & Comfort 🌿', collectionId: 'wellness-comfort' },
+        { id: 'BUNDLE', label: 'Bundle', collectionId: 'bundle' } // Example of getting Bundle products
     ];
 
     const filters = [
@@ -45,36 +46,36 @@ const Shop = () => {
             id: 'stage',
             label: 'Stage',
             filters: [
-            { id: 'new_moms', label: 'New Moms' },
-            { id: 'experienced_moms', label: 'Experienced Moms' },
-            { id: 'working_moms', label: 'Working Moms' },
-            { id: 'travel_friendly', label: 'Travel friendly' },
-            { id: 'pregnancy', label: 'Pregnancy' }
+                { id: 'new_moms', label: 'New Moms' },
+                { id: 'experienced_moms', label: 'Experienced Moms' },
+                { id: 'working_moms', label: 'Working Moms' },
+                { id: 'travel_friendly', label: 'Travel friendly' },
+                { id: 'pregnancy', label: 'Pregnancy' }
             ]
         },
         {
             id: 'price_range',
             label: 'Price range',
             filters: [
-            { id: 'low_to_high', label: 'Low to High' },
-            { id: 'high_to_low', label: 'High to Low' }
+                { id: 'low_to_high', label: 'Low to High' },
+                { id: 'high_to_low', label: 'High to Low' }
             ]
         },
         {
             id: 'sort_by',
             label: 'Sort by',
             filters: [
-            { id: 'best_sellers', label: 'Best Sellers' },
-            { id: 'new_arrivals', label: 'New Arrivals' },
-            { id: 'customer_rating', label: 'Customer Rating' }
+                { id: 'best_sellers', label: 'Best Sellers' },
+                { id: 'new_arrivals', label: 'New Arrivals' },
+                { id: 'customer_rating', label: 'Customer Rating' }
             ]
         },
         {
             id: 'availability',
             label: 'Availability',
             filters: [
-            { id: 'in_stock', label: 'In Stock' },
-            { id: 'out_of_stock', label: 'Out of Stock' }
+                { id: 'in_stock', label: 'In Stock' },
+                { id: 'out_of_stock', label: 'Out of Stock' }
             ]
         }
     ];
@@ -102,7 +103,7 @@ const Shop = () => {
             });
 
             console.log('Auth response status:', response.status);
-            
+
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('Auth error response:', errorText);
@@ -111,7 +112,7 @@ const Shop = () => {
 
             const data = await response.json();
             console.log('Auth response data:', data);
-            
+
             if (data.success && data.token) {
                 setAuthToken(data.token);
                 console.log('Token received successfully');
@@ -130,7 +131,7 @@ const Shop = () => {
     const transformProduct = (shopifyProduct) => {
         const firstVariant = shopifyProduct.variants?.edges?.[0]?.node;
         const firstImage = shopifyProduct.images?.edges?.[0]?.node;
-        
+
         return {
             id: shopifyProduct.id,
             name: shopifyProduct.title,
@@ -177,17 +178,17 @@ const Shop = () => {
             } else {
                 setLoading(true);
             }
-            
+
             // Construct URL based on page number and collection
-            let url = page === 1 
+            let url = page === 1
                 ? `${import.meta.env.VITE_API_BASE_URL}/products`
                 : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
-            
+
             // Add collection ID as query parameter if provided
             if (collectionId) {
                 url += `?cid=${collectionId}`;
             }
-            
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -200,7 +201,7 @@ const Shop = () => {
 
             console.log('Products response status:', response.status);
             console.log('Response headers:', [...response.headers.entries()]);
-            
+
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('Error response:', errorText);
@@ -209,11 +210,11 @@ const Shop = () => {
 
             const data = await response.json();
             console.log('Products response:', data);
-            
+
             if (data.success && data.products) {
                 const transformedProducts = data.products.map(transformProduct);
                 console.log('Transformed products:', transformedProducts);
-                
+
                 if (isLoadMore) {
                     // Append to existing products
                     setDisplayedProducts(prev => [...prev, ...transformedProducts]);
@@ -221,15 +222,15 @@ const Shop = () => {
                     // Set initial products
                     setDisplayedProducts(transformedProducts);
                 }
-                
+
                 // Update total products count if available
                 if (data.totalProductCount) {
                     setTotalProducts(data.totalProductCount);
                 }
-                
+
                 // Check if there are more products to load using hasNextPage from API
                 setHasMore(data.hasNextPage || false);
-                
+
                 setError(null);
             } else {
                 throw new Error('Failed to fetch products');
@@ -288,16 +289,16 @@ const Shop = () => {
             items.push(
                 <ProductTile data={product} key={product.id + '-' + index} />
             );
-            
+
             // Check if we need to insert an espot after this product
             const productPosition = index + 1; // 1-indexed position
             const espotIndexPosition = espotsIndex.indexOf(productPosition);
-            
+
             if (espotIndexPosition !== -1 && productPosition <= currentCount) {
                 items.push(
                     <div className="espot-container" key={`espot-${productPosition}`}>
-                        <img 
-                            src={espotImages[espotIndexPosition % espotImages.length]} 
+                        <img
+                            src={espotImages[espotIndexPosition % espotImages.length]}
                             alt={`Espot ${espotIndexPosition + 1}`}
                             className="espot-image"
                         />
@@ -308,100 +309,100 @@ const Shop = () => {
         return items;
     };
 
-  return (
-    <>
-        <HeroImageLabel data={HeroLabel} />
-        <div className="container" style={{marginBottom: '154px'}}>
-            <div className="shop-filters-section">
-                <div className="quick-filters-section">
-                    {quickFilters.map((filter) => (
-                        <button 
-                            key={filter.id}
-                            className={`filter-button ${activeFilter === filter.id ? 'active' : ''}`}
-                            onClick={() => handleQuickFilterClick(filter)}
-                        >
-                            {filter.label}
-                        </button>
-                    ))}
-                </div>
-                <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
-            </div>
-
-            {loading ? (
-                <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
-                    <p>Loading products...</p>
-                </div>
-            ) : error ? (
-                <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
-                    <p style={{color: 'red'}}>{error}</p>
-                </div>
-            ) : (
-                <>
-                    <div className="products-list-container">
-                        {renderProductsWithEspots()}
-                    </div>
-
-                    <div className="d-flex flex-column justify-content-center align-items-center">
-                        <p className='progress-bar-text'>
-                            You've seen {currentCount} out of {totalProducts > 0 ? TOTAL_PRODUCTS : currentCount} items
-                        </p>
-                        <div className="progress-bar-con">
-                            <span style={{ width: `${progressPercentage}%` }}></span>
-                        </div>
-                        {hasMore && (
-                            <button 
-                                className='button-label' 
-                                onClick={handleLoadMore}
-                                disabled={loadingMore}
-                                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+    return (
+        <>
+            <HeroImageLabel data={HeroLabel} />
+            <div className="container" style={{ marginBottom: '154px' }}>
+                <div className="shop-filters-section">
+                    <div className="quick-filters-section">
+                        {quickFilters.map((filter) => (
+                            <button
+                                key={filter.id}
+                                className={`filter-button ${activeFilter === filter.id ? 'active' : ''}`}
+                                onClick={() => handleQuickFilterClick(filter)}
                             >
-                                {loadingMore && (
-                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                )}
-                                {!loadingMore && 'Load more'}
+                                {filter.label}
                             </button>
-                        )}
+                        ))}
                     </div>
-                </>
-            )}
+                    <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
+                </div>
 
-            <div className="offcanvas offcanvas-end" tabIndex="-1" id="shopFilterModal" aria-labelledby="offcanvasRightLabel">
-                <div style={{flex: '1'}}>
-                    <div className="heading"><Settings2 /> Filter by</div>
-                    <div className="filters-items-container">
-                        {
-                            filters.map((item, index)=> {
-                                return (
-                                    <div className="filters-item-sec" key={index}>
-                                        <h1 className="fil-heading">{item.label}</h1>
-                                        <div className="filter-selection-con">
-                                            {
-                                                item.filters.map((filter, i)=> {
-                                                    return (
-                                                        <button className="filter-item" key={i}>{filter.label}</button>
-                                                    )
-                                                })
-                                            }
+                {loading ? (
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
+                        <p>Loading products...</p>
+                    </div>
+                ) : error ? (
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
+                        <p style={{ color: 'red' }}>{error}</p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="products-list-container">
+                            {renderProductsWithEspots()}
+                        </div>
+
+                        <div className="d-flex flex-column justify-content-center align-items-center">
+                            <p className='progress-bar-text'>
+                                You've seen {currentCount} out of {totalProducts > 0 ? TOTAL_PRODUCTS : currentCount} items
+                            </p>
+                            <div className="progress-bar-con">
+                                <span style={{ width: `${progressPercentage}%` }}></span>
+                            </div>
+                            {hasMore && (
+                                <button
+                                    className='button-label'
+                                    onClick={handleLoadMore}
+                                    disabled={loadingMore}
+                                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                                >
+                                    {loadingMore && (
+                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    )}
+                                    {!loadingMore && 'Load more'}
+                                </button>
+                            )}
+                        </div>
+                    </>
+                )}
+
+                <div className="offcanvas offcanvas-end" tabIndex="-1" id="shopFilterModal" aria-labelledby="offcanvasRightLabel">
+                    <div style={{ flex: '1' }}>
+                        <div className="heading"><Settings2 /> Filter by</div>
+                        <div className="filters-items-container">
+                            {
+                                filters.map((item, index) => {
+                                    return (
+                                        <div className="filters-item-sec" key={index}>
+                                            <h1 className="fil-heading">{item.label}</h1>
+                                            <div className="filter-selection-con">
+                                                {
+                                                    item.filters.map((filter, i) => {
+                                                        return (
+                                                            <button className="filter-item" key={i}>{filter.label}</button>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        }
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <button className='button-pink-center' style={{ width: '48%', height: '40px', boxShadow: 'none' }}>Apply Filter</button>
+                        <button className='button-pink-border' style={{ width: '48%', height: '40px', boxShadow: 'none' }} data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
                     </div>
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
-                    <button className='button-pink-center' style={{width: '48%', height: '40px', boxShadow: 'none'}}>Apply Filter</button>
-                    <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
-                </div>
+
             </div>
 
-        </div>
-
-        <MomsReviewsSlider />
-        <MomsMomentsSlider />
-        <FaqSlider />
-    </>
-  )
+            <MomsReviewsSlider />
+            <MomsMomentsSlider />
+            <FaqSlider />
+        </>
+    )
 }
 
 export default Shop

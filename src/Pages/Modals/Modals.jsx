@@ -1,7 +1,7 @@
 import React from 'react'
 import MiniCartModal from './MiniCartModal/MiniCartModal'
 import MegaMenuModal from './MegaMenuModal/MegaMenuModal'
-import AuthenticationModal from './AuthenticationModal/AuthenticationModal'
+import ShopifyAuthenticationModal from './ShopifyAuthenticationModal/ShopifyAuthenticationModal'
 import SearchModal from './SearchModal/SearchModal'
 
 const Modals = () => {
@@ -10,9 +10,9 @@ const Modals = () => {
       <SearchModal />
       <MiniCartModal />
       <MegaMenuModal />
-      <AuthenticationModal/>
+      <ShopifyAuthenticationModal />
     </>
-    
+
   )
 }
 

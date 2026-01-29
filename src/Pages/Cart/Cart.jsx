@@ -8,22 +8,26 @@ import { shopProducts } from '../../data/productsData'
 import ProductTile from '../../Components/ProductTile/ProductTile'
 import MF1 from '../../assets/MF1.png'
 import { useCart } from '../../contexts/CartContext'
-import { goToCheckout } from '../../services/cartService'
+import { useAuth } from '../../contexts/AuthContext'
+import { goToCheckout, initiateCheckout } from '../../services/cartService'
 
 const Cart = () => {
-    const { 
-        cart, 
-        items, 
-        isLoading, 
-        isUpdating, 
+    const {
+        cart,
+        items,
+        isLoading,
+        isUpdating,
         fetchCart,
-        updateCartItems, 
-        removeFromCart 
+        updateCartItems,
+        removeFromCart
     } = useCart()
-    
+
+    const { getSessionToken } = useAuth()
+
     const [updatingLineId, setUpdatingLineId] = useState(null)
     const [message, setMessage] = useState({ type: '', text: '' })
     const [orderNote, setOrderNote] = useState('')
+    const [isCheckoutLoading, setIsCheckoutLoading] = useState(false)
 
     // Fetch cart on mount
     useEffect(() => {
@@ -32,13 +36,13 @@ const Cart = () => {
 
     const handleQuantityChange = async (lineId, newQuantity) => {
         if (newQuantity < 0) return
-        
+
         setUpdatingLineId(lineId)
         setMessage({ type: '', text: '' })
 
         try {
             let response
-            
+
             if (newQuantity === 0) {
                 // Remove item
                 response = await removeFromCart([lineId])
@@ -85,9 +89,27 @@ const Cart = () => {
         }
     }
 
-    const handleCheckout = () => {
-        if (cart?.checkoutUrl) {
-            goToCheckout(cart.checkoutUrl)
+    const handleCheckout = async () => {
+        setIsCheckoutLoading(true)
+        setMessage({ type: '', text: '' })
+        try {
+            const token = getSessionToken()
+            console.log(token)
+            if (token) {
+                const response = await initiateCheckout(cart.cartId, token)
+                if (response.success && response.checkoutUrl) {
+                    goToCheckout(response.checkoutUrl)
+                } else {
+                    setMessage({ type: 'error', text: response.message || 'Checkout failed' })
+                    setIsCheckoutLoading(false)
+                }
+            } else {
+                goToCheckout(cart?.checkoutUrl)
+            }
+        } catch (error) {
+            console.error('Checkout error:', error)
+            setMessage({ type: 'error', text: 'Something went wrong during checkout' })
+            setIsCheckoutLoading(false)
         }
     }
 
@@ -188,10 +210,10 @@ const Cart = () => {
                                 <div className={`cart-item-card-container ${isItemUpdating ? 'updating' : ''}`} key={item.lineId || index}>
                                     <div className="prd-product">
                                         <div className="product-image">
-                                            <img 
-                                                src={productImage} 
-                                                alt={productTitle} 
-                                                onError={(e) => e.target.src = DefaultImg} 
+                                            <img
+                                                src={productImage}
+                                                alt={productTitle}
+                                                onError={(e) => e.target.src = DefaultImg}
                                             />
                                         </div>
                                         <div className="product-name">
@@ -199,7 +221,7 @@ const Cart = () => {
                                             {variantTitle && variantTitle !== 'Default Title' && (
                                                 <span className="variant-title">{variantTitle}</span>
                                             )}
-                                            <button 
+                                            <button
                                                 onClick={() => handleRemoveItem(item.lineId)}
                                                 disabled={isUpdating}
                                                 className="remove-btn"
@@ -214,7 +236,7 @@ const Cart = () => {
                                     </p>
                                     <div className="prd-quantity">
                                         <div className="item-quantity">
-                                            <button 
+                                            <button
                                                 onClick={() => handleQuantityChange(item.lineId, item.quantity - 1)}
                                                 disabled={isUpdating || item.quantity <= 1}
                                             >
@@ -227,7 +249,7 @@ const Cart = () => {
                                                     item.quantity < 10 ? `0${item.quantity}` : item.quantity
                                                 )}
                                             </p>
-                                            <button 
+                                            <button
                                                 onClick={() => handleQuantityChange(item.lineId, item.quantity + 1)}
                                                 disabled={isUpdating}
                                             >
@@ -255,7 +277,7 @@ const Cart = () => {
                                     )}
                                 </span>
                             </div>
-                            
+
                             {cart?.cost?.totalTax?.amount > 0 && (
                                 <div className="summary-item">
                                     <span className='left'>Tax</span>
@@ -272,8 +294,8 @@ const Cart = () => {
                                 <span className='left'>Shipping</span>
                                 <span className='right'>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.0013 18.3333C14.6037 18.3333 18.3346 14.6023 18.3346 9.99996C18.3346 5.39759 14.6037 1.66663 10.0013 1.66663C5.39893 1.66663 1.66797 5.39759 1.66797 9.99996C1.66797 14.6023 5.39893 18.3333 10.0013 18.3333Z" fill="#5ED34B"/>
-                                    <path d="M5.90625 10L8.40625 12.5L13.4062 7.5" stroke="white" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M10.0013 18.3333C14.6037 18.3333 18.3346 14.6023 18.3346 9.99996C18.3346 5.39759 14.6037 1.66663 10.0013 1.66663C5.39893 1.66663 1.66797 5.39759 1.66797 9.99996C1.66797 14.6023 5.39893 18.3333 10.0013 18.3333Z" fill="#5ED34B" />
+                                        <path d="M5.90625 10L8.40625 12.5L13.4062 7.5" stroke="white" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                     FREE
                                 </span>
@@ -281,7 +303,7 @@ const Cart = () => {
                         </div>
                         <div className="add-notes-container">
                             <p>Order note (if any)</p>
-                            <textarea 
+                            <textarea
                                 placeholder='Write here'
                                 value={orderNote}
                                 onChange={(e) => setOrderNote(e.target.value)}
@@ -299,12 +321,12 @@ const Cart = () => {
                             </span>
                         </p>
                         <p className='tax-description'>Taxes calculated at checkout</p>
-                        <button 
+                        <button
                             className='button-pink-center checkout-btn'
                             onClick={handleCheckout}
-                            disabled={isUpdating || items.length === 0}
+                            disabled={isUpdating || items.length === 0 || isCheckoutLoading}
                         >
-                            {isUpdating ? (
+                            {(isUpdating || isCheckoutLoading) ? (
                                 <>
                                     <Loader2 className="spinner" size={16} />
                                     Updating...
@@ -313,8 +335,8 @@ const Cart = () => {
                                 <>
                                     Checkout
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10.0013 18.3333C14.6037 18.3333 18.3346 14.6023 18.3346 9.99996C18.3346 5.39759 14.6037 1.66663 10.0013 1.66663C5.39893 1.66663 1.66797 5.39759 1.66797 9.99996C1.66797 14.6023 5.39893 18.3333 10.0013 18.3333Z" fill="white"/>
-                                        <path d="M5.90625 10L8.40625 12.5L13.4062 7.5" stroke="#DC5F92" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M10.0013 18.3333C14.6037 18.3333 18.3346 14.6023 18.3346 9.99996C18.3346 5.39759 14.6037 1.66663 10.0013 1.66663C5.39893 1.66663 1.66797 5.39759 1.66797 9.99996C1.66797 14.6023 5.39893 18.3333 10.0013 18.3333Z" fill="white" />
+                                        <path d="M5.90625 10L8.40625 12.5L13.4062 7.5" stroke="#DC5F92" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </>
                             )}
