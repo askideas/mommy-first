@@ -5,6 +5,7 @@ import { ChevronDown, Minus, Plus, Loader2 } from 'lucide-react'
 import CalenderHeart from '../../assets/profile/calendar-heart.svg'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile, getUserDetails } from '../../services/userService'
+import BabiesIcon from '../../assets/profile/babies.svg'
 
 const BabiesSection = () => {
     const { user, customer, updateCustomer } = useAuth()
@@ -400,7 +401,9 @@ const BabiesSection = () => {
                     </div>
                 ) : (
                     <div className="no-babies-message">
-                        <p>No babies added yet. Click "Add another Baby" to get started!</p>
+                        <img src={BabiesIcon} alt="" />
+                        <p className="nobabies-heading">No Baby added</p>
+                        <p className="no-babies-sub-heading">Add from below</p>
                     </div>
                 )}
             </div>
