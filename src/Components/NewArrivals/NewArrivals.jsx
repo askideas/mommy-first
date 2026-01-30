@@ -55,19 +55,20 @@ const NewArrivals = (props) => {
         }
     };
 
-    // Transform Shopify product data
-    const transformProduct = (shopifyProduct) => {
-        const firstVariant = shopifyProduct.variants?.edges?.[0]?.node;
-        const firstImage = shopifyProduct.images?.edges?.[0]?.node;
+    // Transform product data to match expected format
+    const transformProduct = (product) => {
+        // New API already returns the data in a flat structure
+        const firstVariant = product.variants?.[0];
+        const firstImage = product.images?.[0];
         
         return {
-            id: shopifyProduct.id,
-            name: shopifyProduct.title,
-            title: shopifyProduct.title,
+            id: product.id,
+            name: product.title,
+            title: product.title,
             image: firstImage?.url || '',
-            price: parseFloat(firstVariant?.price?.amount || '0').toFixed(2),
-            label: shopifyProduct.tags?.[0] || '10K+ bought in past month',
-            ...shopifyProduct
+            price: parseFloat(firstVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount || '0').toFixed(2),
+            label: product.tags?.[0] || '10K+ bought in past month',
+            ...product
         };
     };
 
@@ -75,7 +76,8 @@ const NewArrivals = (props) => {
     const fetchProductsFromCollection = async (token) => {
         try {
             setLoading(true);
-            const url = `${import.meta.env.VITE_API_BASE_URL}/products?cid=${data && data.collections[0].collectionId ? data.collections[0].collectionId : 'new-arrivals'}`;
+            const collectionHandle = data && data.collections[0].collectionId ? data.collections[0].collectionId : 'new-arrivals';
+            const url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -94,11 +96,9 @@ const NewArrivals = (props) => {
             const result = await response.json();
             console.log('New arrivals products:', result);
 
-            if (result && result.products.length > 0) {
-                const products = result.products
-                const transformedProducts = products.slice(0, 4).map(transformProduct);
+            if (result.success && result.data && result.data.length > 0) {
+                const transformedProducts = result.data.slice(0, 4).map(transformProduct);
                 setProductsData(transformedProducts); // Show only first 4 products
-
                 setError(null);
             } else {
                 throw new Error(result.message || 'Failed to fetch products');

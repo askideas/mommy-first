@@ -69,14 +69,14 @@ const ProductDetails = () => {
             }
             const res = await getProductDetails(productHandle, token);
             if (res.success) {
-                setProduct(res.product);
+                setProduct(res.data); // Changed from res.product to res.data (new API structure)
             }
             setLoading(false);
         };
         if (authToken) fetchProduct();
     }, [productHandle, authToken]);
 
-    const productImages = product?.images?.edges?.map(img => img.node.url) || [pdp1, pdp2, pdp3, pdp4];
+    const productImages = product?.images?.map(img => img.url) || [pdp1, pdp2, pdp3, pdp4]; // Updated to match new API structure
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -190,12 +190,12 @@ const ProductDetails = () => {
                             </div> */}
 
                             {/* Variants rendering (if available) */}
-                            {product.variants?.edges?.length > 0 && (
+                            {product.variants?.length > 0 && (
                                 <div className="product-variations-container">
                                     <p className="var-heading">Choose Variant</p>
                                     <div className="variations-list">
-                                        {product.variants.edges.map((variant, idx) => (
-                                            <button key={variant.node.id} className={`variation-item${idx === 0 ? ' active' : ''}`}>{variant.node.title}</button>
+                                        {product.variants.map((variant, idx) => (
+                                            <button key={variant.id} className={`variation-item${idx === 0 ? ' active' : ''}`}>{variant.title}</button>
                                         ))}
                                     </div>
                                 </div>
@@ -212,8 +212,8 @@ const ProductDetails = () => {
 
                                 <div className="product-price-con">
                                     <span className="heading">Price</span>
-                                    <span className='strike-price'>{product.variants?.edges?.[0]?.node?.compareAtPrice?.amount ? `$${product.variants.edges[0].node.compareAtPrice.amount} ${product.variants.edges[0].node.compareAtPrice.currencyCode}` : ''}</span>
-                                    <span className="price">{product.variants?.edges?.[0]?.node?.price?.amount ? `$${product.variants.edges[0].node.price.amount} ${product.variants.edges[0].node.price.currencyCode}` : ''}</span>
+                                    <span className='strike-price'>{product.variants?.[0]?.compareAtPrice?.amount ? `$${product.variants[0].compareAtPrice.amount} ${product.variants[0].compareAtPrice.currencyCode}` : ''}</span>
+                                    <span className="price">{product.variants?.[0]?.price?.amount ? `$${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}` : ''}</span>
                                 </div>
                             </div>
                             

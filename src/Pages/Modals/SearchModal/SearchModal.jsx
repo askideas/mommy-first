@@ -71,17 +71,18 @@ const SearchModal = () => {
 
             const data = await response.json();
             
-            if (data.success && data.products && data.products.length > 0) {
+            if (data.success && data.data && data.data.length > 0) {
                 // Transform products to match expected format
-                const transformedProducts = data.products.map(product => {
-                    const firstVariant = product.variants?.edges?.[0]?.node;
-                    const firstImage = product.images?.edges?.[0]?.node;
+                const transformedProducts = data.data.map(product => {
+                    const firstVariant = product.variants?.[0];
+                    const firstImage = product.images?.[0];
                     
                     return {
                         id: product.id,
                         title: product.title,
-                        price: parseFloat(firstVariant?.price?.amount || '0').toFixed(2),
-                        currency: firstVariant?.price?.currencyCode || 'USD',
+                        handle: product.handle,
+                        price: parseFloat(firstVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount || '0').toFixed(2),
+                        currency: firstVariant?.price?.currencyCode || product.priceRange?.minVariantPrice?.currencyCode || 'USD',
                         image: firstImage?.url || DefaultImg
                     };
                 });

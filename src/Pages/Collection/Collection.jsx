@@ -126,45 +126,31 @@ const Collection = () => {
         }
     };
 
-    // Function to transform Shopify product data to match the expected format
-    const transformProduct = (shopifyProduct) => {
-        const firstVariant = shopifyProduct.variants?.edges?.[0]?.node;
-        const firstImage = shopifyProduct.images?.edges?.[0]?.node;
+    // Function to transform new API product data to match the expected format
+    const transformProduct = (product) => {
+        // New API already returns the data in a flat structure
+        const firstVariant = product.variants?.[0];
+        const firstImage = product.images?.[0];
         
         return {
-            id: shopifyProduct.id,
-            name: shopifyProduct.title,
-            title: shopifyProduct.title,
-            description: shopifyProduct.description,
-            handle: shopifyProduct.handle,
-            productType: shopifyProduct.productType,
-            vendor: shopifyProduct.vendor,
-            tags: shopifyProduct.tags,
-            label: shopifyProduct.tags?.[0] || '',
-            price: parseFloat(firstVariant?.price?.amount || '0').toFixed(2),
-            currencyCode: firstVariant?.price?.currencyCode || 'INR',
+            id: product.id,
+            name: product.title,
+            title: product.title,
+            description: product.description,
+            handle: product.handle,
+            productType: product.productType,
+            vendor: product.vendor,
+            tags: product.tags,
+            label: product.tags?.[0] || '',
+            price: parseFloat(firstVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount || '0').toFixed(2),
+            currencyCode: firstVariant?.price?.currencyCode || product.priceRange?.minVariantPrice?.currencyCode || 'USD',
             compareAtPrice: firstVariant?.compareAtPrice?.amount || null,
-            availableForSale: shopifyProduct.availableForSale,
+            availableForSale: product.availableForSale,
             image: firstImage?.url || '',
-            images: shopifyProduct.images?.edges?.map(edge => ({
-                id: edge.node.id,
-                url: edge.node.url,
-                altText: edge.node.altText,
-                width: edge.node.width,
-                height: edge.node.height
-            })) || [],
-            variants: shopifyProduct.variants?.edges?.map(edge => ({
-                id: edge.node.id,
-                title: edge.node.title,
-                price: edge.node.price?.amount || '0',
-                currencyCode: edge.node.price?.currencyCode || 'INR',
-                compareAtPrice: edge.node.compareAtPrice?.amount || null,
-                availableForSale: edge.node.availableForSale,
-                quantityAvailable: edge.node.quantityAvailable,
-                selectedOptions: edge.node.selectedOptions,
-                image: edge.node.image?.url || ''
-            })) || [],
-            priceRange: shopifyProduct.priceRange
+            images: product.images || [],
+            variants: product.variants || [],
+            priceRange: product.priceRange,
+            bundleComponents: product.bundleComponents || null
         };
     };
 
@@ -178,15 +164,8 @@ const Collection = () => {
                 setLoading(true);
             }
             
-            // Construct URL based on page number and collection
-            let url = page === 1 
-                ? `${import.meta.env.VITE_API_BASE_URL}/products`
-                : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
-            
-            // Add collection ID as query parameter
-            if (collectionHandle) {
-                url += `?cid=${collectionHandle}`;
-            }
+            // Use new collections endpoint
+            const url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -210,8 +189,8 @@ const Collection = () => {
             const data = await response.json();
             console.log('Products response:', data);
             
-            if (data.success && data.products) {
-                const transformedProducts = data.products.map(transformProduct);
+            if (data.success && data.data) {
+                const transformedProducts = data.data.map(transformProduct);
                 console.log('Transformed products:', transformedProducts);
                 
                 if (isLoadMore) {
@@ -220,11 +199,17 @@ const Collection = () => {
                     setDisplayedProducts(transformedProducts);
                 }
                 
-                if (data.totalProductCount) {
-                    setTotalProducts(data.totalProductCount);
+                // Update collection name from API response
+                if (data.collection?.title) {
+                    setCollectionName(data.collection.title);
                 }
                 
-                setHasMore(data.hasNextPage || false);
+                if (data.totalProducts) {
+                    setTotalProducts(data.totalProducts);
+                }
+                
+                // Collections endpoint returns all products, so no pagination
+                setHasMore(false);
                 setError(null);
             } else {
                 throw new Error('Failed to fetch products');
