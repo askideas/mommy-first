@@ -459,7 +459,8 @@ export const getCheckoutUrlForAuthenticatedCustomer = async (cartId, customerAcc
     const response = await fetch(`${API_BASE_URL}/cart/checkout`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'content-type': 'application/json'
       },
       body: JSON.stringify({ cartId, customerAccessToken })
     })
