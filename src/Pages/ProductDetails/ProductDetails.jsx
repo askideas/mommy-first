@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react
 import { NavLink, useParams } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { getProductDetails } from '../../services/productService'
+import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
 import Star from '../../assets/star.svg'
 import WayToPay from '../../assets/ways-to-pay.png'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
@@ -97,7 +98,13 @@ const ProductDetails = () => {
     
 
     if (loading) {
-        return <div className="productDetailsPageContent"><div className="container"><p>Loading product details...</p></div></div>;
+        return (
+            <div className="productDetailsPageContent">
+                <div className="container">
+                    <ProductsLoader text="Loading product details..." />
+                </div>
+            </div>
+        );
     }
 
     if (!product) {

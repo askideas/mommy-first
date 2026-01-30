@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate, useParams, NavLink } from 'react-router-dom'
 import './SearchResults.css'
 import ProductTile from '../../Components/ProductTile/ProductTile'
+import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
 import { ChevronRight, Settings2 } from 'lucide-react'
 
 const SearchResults = () => {
@@ -168,9 +169,7 @@ const SearchResults = () => {
         <div className="search-results-page">
             <div className="container">
                 {loading ? (
-                    <div className="search-loading-container">
-                        <p>Searching for "{searchQuery}"...</p>
-                    </div>
+                    <ProductsLoader text={`Searching for "${searchQuery}"...`} />
                 ) : error ? (
                     <div className="search-error-container">
                         <p>{error}</p>

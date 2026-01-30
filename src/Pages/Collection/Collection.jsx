@@ -5,6 +5,7 @@ import HeroImageLabel from '../../Components/HeroImageLabel/HeroImageLabel'
 import HeroImage from '../../assets/hero-label.png'
 import { Settings2 } from 'lucide-react'
 import ProductTile from '../../Components/ProductTile/ProductTile'
+import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
@@ -294,9 +295,7 @@ const Collection = () => {
                 </div>
 
                 {loading ? (
-                    <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
-                        <p>Loading products...</p>
-                    </div>
+                    <ProductsLoader text={`Loading ${collectionName || 'collection'} products...`} />
                 ) : error ? (
                     <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
                         <p style={{color: 'red'}}>{error}</p>

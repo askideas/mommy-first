@@ -7,6 +7,7 @@ import ProductTile from '../../Components/ProductTile/ProductTile'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
+import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
 import EsImage1 from '../../assets/Hero/slider-img.png'
 import EsImage2 from '../../assets/Hero/hero1.png'
 import EsImage3 from '../../assets/Hero/hero2.png'
@@ -314,9 +315,7 @@ const Shop = () => {
             </div>
 
             {loading ? (
-                <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
-                    <p>Loading products...</p>
-                </div>
+                <ProductsLoader text="Discovering the perfect products for you..." />
             ) : error ? (
                 <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
                     <p style={{color: 'red'}}>{error}</p>
