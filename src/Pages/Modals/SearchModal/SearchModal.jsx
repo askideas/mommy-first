@@ -57,7 +57,7 @@ const SearchModal = () => {
             setLoading(true);
             setNoResults(false);
             
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products/search?q=${encodeURIComponent(query)}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/search/${encodeURIComponent(query)}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
