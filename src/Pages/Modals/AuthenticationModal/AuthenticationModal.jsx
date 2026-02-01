@@ -21,7 +21,7 @@ import {
 const AuthenticationModal = () => {
   const { login, isAuthenticated, user, customer } = useAuth()
   const navigate = useNavigate()
-  
+
   // UI State
   const [toggleAction, setToggleAction] = useState('left')
   const [loginAction, setLoginAction] = useState('email')
@@ -29,7 +29,7 @@ const AuthenticationModal = () => {
   const [successScreen, setSuccessScreen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  
+
   // Form State
   const [email, setEmail] = useState('')
   const [mobile, setMobile] = useState('')
@@ -98,7 +98,7 @@ const AuthenticationModal = () => {
 
     try {
       let response
-      
+
       if (loginAction === 'email') {
         if (!email || !email.includes('@')) {
           setError('Please enter a valid email address')
@@ -138,7 +138,7 @@ const AuthenticationModal = () => {
   // Verify OTP Handler
   const handleVerifyOTP = async () => {
     const otpCode = otp.join('')
-    
+
     if (otpCode.length !== 6) {
       setError('Please enter the complete 6-digit code')
       return
@@ -149,7 +149,7 @@ const AuthenticationModal = () => {
 
     try {
       let response
-      
+
       if (loginAction === 'email') {
         response = await verifyEmailOTP(email, otpCode)
       } else {
@@ -159,11 +159,12 @@ const AuthenticationModal = () => {
 
       if (response.success) {
         login(
-          response.sessionToken, 
-          response.refreshToken, 
-          response.user, 
-          response.customer, 
-          response.isNewCustomer
+          response.sessionToken,
+          response.refreshToken,
+          response.user,
+          response.customer,
+          response.isNewCustomer,
+          response.shopifyCustomerAccessToken
         )
         if (response.isNewCustomer) {
           navigate('/profile#profile')
@@ -192,11 +193,11 @@ const AuthenticationModal = () => {
   const handleGoogleLogin = async () => {
     setIsLoading(true)
     setError('')
-    
+
     try {
       const redirectUrl = `${window.location.origin}/auth/callback?provider=google`
       const response = await startGoogleAuth(redirectUrl)
-      
+
       if (response.success && response.authUrl) {
         window.location.href = response.authUrl
       } else {
@@ -212,11 +213,11 @@ const AuthenticationModal = () => {
   const handleFacebookLogin = async () => {
     setIsLoading(true)
     setError('')
-    
+
     try {
       const redirectUrl = `${window.location.origin}/auth/callback?provider=facebook`
       const response = await startFacebookAuth(redirectUrl)
-      
+
       if (response.success && response.authUrl) {
         window.location.href = response.authUrl
       } else {
@@ -232,11 +233,11 @@ const AuthenticationModal = () => {
   const handleAppleLogin = async () => {
     setIsLoading(true)
     setError('')
-    
+
     try {
       const redirectUrl = `${window.location.origin}/auth/callback?provider=apple`
       const response = await startAppleAuth(redirectUrl)
-      
+
       if (response.success && response.authUrl) {
         window.location.href = response.authUrl
       } else {
@@ -251,42 +252,42 @@ const AuthenticationModal = () => {
 
   const handleSuccessContinue = () => {
     closeModal()
-    
+
     // Check if profile needs completion
     const storedIsNew = localStorage.getItem('isNewCustomer')
     const storedCustomer = localStorage.getItem('customer')
     const storedUser = localStorage.getItem('user')
     const profileCompleted = localStorage.getItem('profileCompleted')
-    
+
     let needsCompletion = false
-    
+
     // If already completed, no need to show modal
     if (profileCompleted === 'true') {
       navigate('/')
       return
     }
-    
+
     // If new customer, needs completion
     if (storedIsNew === 'true') {
       needsCompletion = true
     }
-    
+
     // If no customer data, needs completion
     if (!storedCustomer || storedCustomer === 'null') {
       needsCompletion = true
     }
-    
+
     // Check for unverified email/phone or missing fields
     try {
       if (storedUser && storedCustomer && storedCustomer !== 'null') {
         const userData = JSON.parse(storedUser)
         const customerData = JSON.parse(storedCustomer)
-        
+
         // Check verification status
         if (!userData.verifiedEmail && !userData.verifiedPhone) {
           needsCompletion = true
         }
-        
+
         // Check for missing required fields
         if (!customerData.firstName || !customerData.lastName) {
           needsCompletion = true
@@ -295,7 +296,7 @@ const AuthenticationModal = () => {
     } catch (error) {
       console.error('Error checking profile completion:', error)
     }
-    
+
     // Redirect based on completion status
     if (needsCompletion) {
       navigate('/profile#profile')
@@ -337,9 +338,9 @@ const AuthenticationModal = () => {
   //             <p className="user-orders">You have {customer.ordersCount} order{customer.ordersCount > 1 ? 's' : ''}</p>
   //           )}
   //         </div>
-  //         <Link 
-  //           className='button-pink-center' 
-  //           onClick={closeModal} 
+  //         <Link
+  //           className='button-pink-center'
+  //           onClick={closeModal}
   //           to='/profile#profile'
   //           style={{ textDecoration: 'none', marginTop: '24px' }}
   //         >
@@ -406,14 +407,14 @@ const AuthenticationModal = () => {
             <div className="mf-input-container">
               <label>Enter your mobile number</label>
               <div className="dropdown-section">
-                <div 
+                <div
                   className="country-sec"
                   onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                 >
                   <span className='flag'>{selectedCountry.flag}</span>
                   <span className="country-code">{selectedCountry.code}</span>
                   <ChevronDown />
-                  
+
                   {showCountryDropdown && (
                     <div className="country-dropdown">
                       {countryCodes.map((country, index) => (
@@ -457,13 +458,13 @@ const AuthenticationModal = () => {
 
         {displayOtp && !successScreen && (
           <div className='login-otp-section-container'>
-            <button 
+            <button
               className="back-btn"
               onClick={() => { setDisplayOtp(false); setOtp(['', '', '', '', '', '']); setError('') }}
             >
-               Back
+              Back
             </button>
-            
+
             <h3 className='otp-heading'>
               Enter the 6 digit code sent to
             </h3>
@@ -492,9 +493,9 @@ const AuthenticationModal = () => {
               Code not received? <span className='resend-link' onClick={handleResendOTP}>Resend</span>
             </p>
 
-            <button 
-              className='button-pink-center otp-submit-btn' 
-              style={{ height: '40px' }} 
+            <button
+              className='button-pink-center otp-submit-btn'
+              style={{ height: '40px' }}
               onClick={handleVerifyOTP}
               disabled={isLoading}
             >

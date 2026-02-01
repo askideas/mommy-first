@@ -75,7 +75,7 @@ const fetchAuthToken = async () => {
 export const createGuestCart = async (email = null) => {
   try {
     const body = email ? { email } : {}
-    
+
     const response = await fetch(`${API_BASE_URL}/cart`, {
       method: 'POST',
       headers: {
@@ -85,12 +85,12 @@ export const createGuestCart = async (email = null) => {
     })
 
     const result = await response.json()
-    
+
     // Store cartId in localStorage if successful
     if (result.success && result.data?.cartId) {
       setGuestCartId(result.data.cartId)
     }
-    
+
     return result
   } catch (error) {
     console.error('Create Guest Cart Error:', error)
@@ -106,7 +106,7 @@ export const createGuestCart = async (email = null) => {
 export const getCartById = async (cartId) => {
   try {
     const encodedCartId = encodeURIComponent(cartId)
-    
+
     const response = await fetch(`${API_BASE_URL}/cart/${encodedCartId}`, {
       method: 'GET',
       headers: {
@@ -130,7 +130,7 @@ export const getCartById = async (cartId) => {
 export const addItemsToGuestCart = async (cartId, items) => {
   try {
     const encodedCartId = encodeURIComponent(cartId)
-    
+
     const response = await fetch(`${API_BASE_URL}/cart/${encodedCartId}/items`, {
       method: 'POST',
       headers: {
@@ -155,7 +155,7 @@ export const addItemsToGuestCart = async (cartId, items) => {
 export const updateGuestCartItems = async (cartId, items) => {
   try {
     const encodedCartId = encodeURIComponent(cartId)
-    
+
     const response = await fetch(`${API_BASE_URL}/cart/${encodedCartId}/items`, {
       method: 'PUT',
       headers: {
@@ -180,7 +180,7 @@ export const updateGuestCartItems = async (cartId, items) => {
 export const removeItemsFromGuestCart = async (cartId, lineIds) => {
   try {
     const encodedCartId = encodeURIComponent(cartId)
-    
+
     const response = await fetch(`${API_BASE_URL}/cart/${encodedCartId}/items`, {
       method: 'DELETE',
       headers: {
@@ -210,7 +210,7 @@ export const removeItemsFromGuestCart = async (cartId, lineIds) => {
 export const mergeCartsOnLogin = async (userId, guestCartId = null) => {
   try {
     const token = await fetchAuthToken()
-    
+
     if (!token) {
       return { success: false, message: 'Failed to authenticate. Please try again.' }
     }
@@ -230,12 +230,12 @@ export const mergeCartsOnLogin = async (userId, guestCartId = null) => {
     })
 
     const result = await response.json()
-    
+
     // Clear guest cartId after successful merge
     if (result.success) {
       clearGuestCartId()
     }
-    
+
     return result
   } catch (error) {
     console.error('Merge Carts Error:', error)
@@ -251,7 +251,7 @@ export const mergeCartsOnLogin = async (userId, guestCartId = null) => {
 export const getUserCart = async (userId) => {
   try {
     const token = await fetchAuthToken()
-    
+
     if (!token) {
       return { success: false, message: 'Failed to authenticate. Please try again.' }
     }
@@ -280,7 +280,7 @@ export const getUserCart = async (userId) => {
 export const addItemsToUserCart = async (userId, items) => {
   try {
     const token = await fetchAuthToken()
-    
+
     if (!token) {
       return { success: false, message: 'Failed to authenticate. Please try again.' }
     }
@@ -310,7 +310,7 @@ export const addItemsToUserCart = async (userId, items) => {
 export const updateUserCartItems = async (userId, items) => {
   try {
     const token = await fetchAuthToken()
-    
+
     if (!token) {
       return { success: false, message: 'Failed to authenticate. Please try again.' }
     }
@@ -340,7 +340,7 @@ export const updateUserCartItems = async (userId, items) => {
 export const removeItemsFromUserCart = async (userId, lineIds) => {
   try {
     const token = await fetchAuthToken()
-    
+
     if (!token) {
       return { success: false, message: 'Failed to authenticate. Please try again.' }
     }
@@ -395,7 +395,7 @@ export const addToCart = async (items, userId = null) => {
     return addItemsToUserCart(userId, items)
   } else {
     let cartId = getGuestCartId()
-    
+
     // Create cart if doesn't exist
     if (!cartId) {
       const createResponse = await createGuestCart()
@@ -404,7 +404,7 @@ export const addToCart = async (items, userId = null) => {
       }
       cartId = createResponse.data.cartId
     }
-    
+
     return addItemsToGuestCart(cartId, items)
   }
 }
@@ -442,6 +442,33 @@ export const removeFromCart = async (lineIds, userId = null) => {
       return { success: false, message: 'No cart found' }
     }
     return removeItemsFromGuestCart(cartId, lineIds)
+  }
+}
+
+/**
+ * Get Checkout URL for authenticated Customer
+ */
+export const getCheckoutUrlForAuthenticatedCustomer = async (cartId, customerAccessToken) => {
+  try {
+    const token = await fetchAuthToken()
+
+    if (!token || !customerAccessToken) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/cart/checkout`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ cartId, customerAccessToken })
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Get Checkout URL for Authenticated Customer Error:', error)
+    return { success: false, message: 'Failed to get checkout URL. Please try again.' }
   }
 }
 
