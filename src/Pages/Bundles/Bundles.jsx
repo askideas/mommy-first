@@ -2,7 +2,7 @@ import React from 'react'
 import './Bundles.css'
 import BG from '../../assets/BundlesHome/bg-image.png'
 import Badge from '../../assets/BundlesHome/badge.png'
-import WebExc from '../../assets/BundlesHome/wb-ex.png'
+import WebExc from '../../assets/BundlesHome/web-exc.png'
 import Calendar from '../../assets/BundlesHome/calendar.svg'
 import Shield from '../../assets/BundlesHome/shield-tick.svg'
 import Certificate from '../../assets/BundlesHome/certificate.svg'
@@ -20,13 +20,13 @@ const Bundles = () => {
         <div className="bundles-page">
             <div className="container">
                 {/* Heading Section */}
-                <div className="bundles-heading-section">
+                {/* <div className="bundles-heading-section">
                 <h1 className="bundles-main-title">Your Recovery, Simplified</h1>
                 <p className="bundles-subtitle">
                     Curated bundles designed to take the guesswork out of<br />
                     postpartum care — premium, practical, and priced to save
                 </p>
-                </div>
+                </div> */}
 
                 {/* Hero Banner Section */}
                 <div className="bundles-hero-container">
@@ -34,7 +34,7 @@ const Bundles = () => {
                 <img src={WebExc} alt="Website Exclusive" className='website-exclusive' />
                 <div className="badge-con">
                     <img src={Badge} alt="" />
-                    <span className="badge-text">5 Bundles</span>
+                    <span className="badge-text">3 Bundles</span>
                 </div>
                 <div className="hero-content-section">
                     <h2 className="hero-main-text">
@@ -91,11 +91,11 @@ const Bundles = () => {
                 </p>
 
                 {/* CTA Button */}
-                <div className="bundles-cta-container">
-                <button className="button-pink-center" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal" style={{width: 'fit-content'}}>
-                    Not sure which bundle?
-                </button>
-                </div>
+                {/* <div className="bundles-cta-container">
+                    <button className="button-pink-center" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal" style={{width: 'fit-content'}}>
+                        Not sure which bundle?
+                    </button>
+                </div> */}
             </div>
         </div>
         <BundlesRecommendedModal />

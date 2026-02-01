@@ -29,7 +29,7 @@
     /* max-width: 862px; */
     margin-bottom: 40px;
     width: 100%;
-    height: 338px;
+    height: 365px;
     border-radius: 22px;
     background: var(--primary-pink);
     position: relative;
@@ -45,9 +45,9 @@
 
 .bundles-hero-container .website-exclusive {
     position: absolute;
-    width: 86px;
-    height: 55px;
-    left: 26px;
+    width: 178px;
+    height: 42px;
+    left: -15px;
     top: 26px;
 }
 
