@@ -7,6 +7,9 @@ import Calendar from '../../assets/BundlesHome/calendar.svg'
 import Shield from '../../assets/BundlesHome/shield-tick.svg'
 import Certificate from '../../assets/BundlesHome/certificate.svg'
 import Heart from '../../assets/BundlesHome/heart-rounded.svg'
+import Family from '../../assets/BundlesHome/family.svg'
+import Baby from '../../assets/BundlesHome/baby.svg'
+import Pregnant from '../../assets/BundlesHome/pregnant.svg'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
 import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
@@ -37,51 +40,50 @@ const Bundles = () => {
                     <span className="badge-text">3 Bundles</span>
                 </div>
                 <div className="hero-content-section">
+                    <p className="hero-sec-label-txt">Premium postpartum recovery bundles 2-21 days</p>
                     <h2 className="hero-main-text">
-                    Postpartum bleeding can last up<br />
-                    to 6 weeks, and Soreness often<br />
-                    lingers up to 3 weeks
+                        Everything you actually use<br />
+                        organised for the first <span>2–21 days</span>
                     </h2>
                     <p className="hero-sub-text">
-                    Our recovery systems give you the supplies you actually need<br />
-                    —without the guesswork.
+                    Pads, cooling relief, witch hazel soothing, soft supportive underwear, and a peri <br /> bottle for gentle cleansing—bundled so you can come home ready.
                     </p>
                 </div>
                 </div>
 
                 {/* Stats/Features Section */}
                 <div className="bundles-stats-container">
-                <div className="bundle-stat-item">
-                    <img src={Calendar} alt="Calendar" />
-                    <div className="stat-text-container">
-                    <h3 className="stat-heading">2–21</h3>
-                    <p className="stat-subheading">days of care</p>
+                    <div className="bundle-stat-item">
+                        <img src={Calendar} alt="Calendar" />
+                        <div className="stat-text-container">
+                        <h3 className="stat-heading">2–21</h3>
+                        <p className="stat-subheading">days of care</p>
+                        </div>
                     </div>
-                </div>
 
-                <div className="bundle-stat-item">
-                    <img src={Shield} alt="Shield" />
-                    <div className="stat-text-container">
-                    <p className="stat-subheading">One less thing</p>
-                    <p className="stat-subheading">to worry about</p>
+                    <div className="bundle-stat-item">
+                        <img src={Shield} alt="Shield" />
+                        <div className="stat-text-container">
+                        <p className="stat-subheading">One less thing</p>
+                        <p className="stat-subheading">to worry about</p>
+                        </div>
                     </div>
-                </div>
 
-                <div className="bundle-stat-item">
-                    <img src={Certificate} alt="Certificate" />
-                    <div className="stat-text-container">
-                    <h3 className="stat-heading">OB/GYN</h3>
-                    <p className="stat-subheading">Approved Essentials</p>
+                    <div className="bundle-stat-item">
+                        <img src={Certificate} alt="Certificate" />
+                        <div className="stat-text-container">
+                        <h3 className="stat-heading">OB/GYN</h3>
+                        <p className="stat-subheading">Approved Essentials</p>
+                        </div>
                     </div>
-                </div>
 
-                <div className="bundle-stat-item">
-                    <img src={Heart} alt="Heart" />
-                    <div className="stat-text-container">
-                    <h3 className="stat-heading">10,000+</h3>
-                    <p className="stat-subheading">Trusted MOMS</p>
+                    <div className="bundle-stat-item">
+                        <img src={Heart} alt="Heart" />
+                        <div className="stat-text-container">
+                        <h3 className="stat-heading">10,000+</h3>
+                        <p className="stat-subheading">Trusted MOMS</p>
+                        </div>
                     </div>
-                </div>
                 </div>
 
                 {/* Description Text */}
@@ -89,7 +91,13 @@ const Bundles = () => {
                 Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks.<br />
                 Our systems remove the guesswork with 2–21 days of care in one box.
                 </p>
-
+                
+                <div className="d-flex justify-content-center align-items-center">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                
                 {/* CTA Button */}
                 {/* <div className="bundles-cta-container">
                     <button className="button-pink-center" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal" style={{width: 'fit-content'}}>
@@ -98,6 +106,38 @@ const Bundles = () => {
                 </div> */}
             </div>
         </div>
+
+        <div className="container">
+            <div className="why-bundles-section-con">
+                <h1 className="heading">Why bundles (vs. piecing it together)?</h1>
+                <div className="why-bundles-cards-section">
+                    <div className="card-item">
+                        <img src={Pregnant} alt="" />
+                        <h1>Prepared <br /> before birth</h1>
+                        <p>Pack what you need for the <br /> hospital bag, keep the rest <br /> waiting at home.</p>
+                    </div>
+
+                    <div className="card-item">
+                        <img src={Baby} alt="" />
+                        <h1>Designed by real <br /> postpartum needs</h1>
+                        <p>Soothing, cooling, and <br /> support—together.</p>
+                    </div>
+
+                    <div className="card-item">
+                        <img src={Family} alt="" />
+                        <h1>Less stress on <br /> partners</h1>
+                        <p>Everything is already waiting <br /> at home.</p>
+                    </div>
+                </div>
+                <p className="description">You’ll need comfort + soothing + gentle cleansing—not just “pads.” <br /> This system keeps everything consistent and ready.</p>
+                <div className="d-flex justify-content-center align-items-center">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
         <BundlesRecommendedModal />
         <BoughtTogether />
         <AllBundlesSlider />
