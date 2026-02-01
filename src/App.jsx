@@ -37,6 +37,7 @@ import Blogs from './Pages/Blogs/Blogs'
 import BlogDetails from './Pages/BlogDetails/BlogDetails'
 import AFMarketing from './Pages/AFMarketing/AFMarketing'
 import Collection from './Pages/Collection/Collection'
+import Donation from './Pages/Donation/Donation'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -88,6 +89,7 @@ const AppContent = () => {
           <Route element={<AFMarketing/>} path='/af-marketing' />
           <Route element={<ProtectedRoute><Profile/></ProtectedRoute>} path='/profile' />
           <Route element={<AuthCallback/>} path='/auth/callback' />
+          <Route element={<Donation/>} path='/donation' />
         </Routes>
         <ContactBanner />
         <Footer />
