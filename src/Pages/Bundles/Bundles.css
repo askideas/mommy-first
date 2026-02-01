@@ -398,3 +398,25 @@
         margin-bottom: 60px;
     }
 }
+
+.bundles-list-container-section {
+    width: 100%;
+    height: fit-content;
+    min-height: 600px;
+    background: linear-gradient(180deg, #FBF2F6 0%, #EBA4B9 49.04%, #FBF2F6 100%);
+
+    .head-ing-sec {
+        font: 600 32px var(--font);
+        color: var(--primary-dark);
+        text-align: center;
+    }
+
+    .list-of-bundles {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 24px;
+        margin-top: 60px;
+        margin-bottom: 90px;
+    }
+}

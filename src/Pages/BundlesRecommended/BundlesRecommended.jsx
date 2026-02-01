@@ -46,7 +46,8 @@ const BundlesRecommended = () => {
         { "label": "Peri Bottle", "quantity": 1 },
         { "label": "Bag", "quantity": 1 }
       ],
-      "tags": ["postpartum", "healing", "starter-kit"]
+      "tags": ["postpartum", "healing", "starter-kit"],
+      "isActive": false
     },
     {
       "id": "21-day-postpartum-care",
@@ -73,7 +74,8 @@ const BundlesRecommended = () => {
         { "label": "Peri Bottle", "quantity": 1 },
         { "label": "Bag", "quantity": 1 }
       ],
-      "tags": ["postpartum", "healing", "complete-kit"]
+      "tags": ["postpartum", "healing", "complete-kit"],
+      "isActive": false
     }
   ]
     

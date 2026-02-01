@@ -1,16 +1,21 @@
 import React from 'react'
 import './BundleTile.css'
 import BundleTileImg from '../../assets/BundleRecom/bundle-item-1.png'
+import HightLightImg from '../../assets/BundlesHome/badge.png'
 
 const BundleTile = (props) => {
     const data = props.data;
     return (
-        <div className="bundles-best-value-section-tile">
-            {/* <div className="image-highlist">
-                <img src={HightLightImg} alt="" />
-                <span>Best Value</span>
-            </div> */}
-
+        <div className={`bundles-best-value-section-tile ${data.isActive ? 'activeTile' : ''}`}>
+            {
+                data.isActive ? (
+                    <div className="image-highlist">
+                        <img src={HightLightImg} alt="" />
+                        <span>Best Value</span>
+                    </div>
+                ) : (<></>)
+            }
+            
             <p className="heading-label-sec">
                 <span className="bundle-name">{data.title}</span>
                 <span className="days-label">{data.duration}</span>

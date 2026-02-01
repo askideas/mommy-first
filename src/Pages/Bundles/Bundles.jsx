@@ -16,8 +16,98 @@ import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSli
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import BundlesRecommendedModal from '../../Components/BundlesRecommendedModal/BundlesRecommendedModal'
+import BundleTile from '../../Components/BundleTile/BundleTile'
 
 const Bundles = () => {
+
+   const Bundles = [
+    {
+      "id": "first-week-healing-system",
+      "title": "The First Week Healing System",
+      "duration": "5–7 days",
+      "description": "Best for core support for the hardest days at home",
+      "price": 84.99,
+      "currency": "USD",
+      "retailValue": 120,
+      "savings": 35.01,
+      "cta": "Add to Bag",
+      "highlights": [
+        "Easy and Secure checkout",
+        "Loved by moms",
+        "FREE shipping",
+        "Hassle free return policy"
+      ],
+      "contents": [
+        { "label": "Pads", "quantity": 18 },
+        { "label": "Underwear", "quantity": 12 },
+        { "label": "Cooling Pads", "quantity": 12 },
+        { "label": "Liners", "quantity": 24 },
+        { "label": "Foam", "quantity": "5 fl oz" },
+        { "label": "Peri Bottle", "quantity": 1 },
+        { "label": "Bag", "quantity": 1 }
+      ],
+      "tags": ["postpartum", "healing", "starter-kit"],
+      "isActive": false
+    },
+    {
+      "id": "2-weeks-full-recovery-set",
+      "title": "2 Weeks Full Recovery Set",
+      "duration": "7–14 days",
+      "badge": "Best Value",
+      "description": "Best for core support for the hardest days at home",
+      "price": 139.99,
+      "currency": "USD",
+      "retailValue": 195,
+      "savings": 55.01,
+      "cta": "Add to Bag",
+      "highlights": [
+        "Secure checkout",
+        "Loved by moms",
+        "FREE shipping",
+        "Hassle free returns"
+      ],
+      "contents": [
+        { "label": "Pads", "quantity": 36 },
+        { "label": "Underwear", "quantity": 20 },
+        { "label": "Cooling Pads", "quantity": 20 },
+        { "label": "Liners", "quantity": 48 },
+        { "label": "Foam", "quantity": "10 fl oz" },
+        { "label": "Peri Bottle", "quantity": 1 },
+        { "label": "Bag", "quantity": 1 }
+      ],
+      "tags": ["postpartum", "healing", "best-value", "recommended"],
+      "isActive": true
+    },
+    {
+      "id": "21-day-postpartum-care",
+      "title": "21-Day Postpartum Care",
+      "duration": "17–21 days",
+      "description": "Best for core support for the hardest days at home",
+      "price": 84.99,
+      "currency": "USD",
+      "retailValue": 240,
+      "savings": 70.01,
+      "cta": "Add to Bag",
+      "highlights": [
+        "Secure checkout",
+        "Loved by moms",
+        "FREE shipping",
+        "Hassle free returns"
+      ],
+      "contents": [
+        { "label": "Pads", "quantity": 56 },
+        { "label": "Underwear", "quantity": 28 },
+        { "label": "Cooling Pads", "quantity": 28 },
+        { "label": "Liners", "quantity": 48 },
+        { "label": "Foam", "quantity": "10 fl oz" },
+        { "label": "Peri Bottle", "quantity": 1 },
+        { "label": "Bag", "quantity": 1 }
+      ],
+      "tags": ["postpartum", "healing", "complete-kit"],
+      "isActive": false
+    }
+  ]
+
   return (
     <>
         <div className="bundles-page">
@@ -134,6 +224,21 @@ const Bundles = () => {
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                </div>
+            </div>
+        </div>
+
+        <div className="bundles-list-container-section">
+            <div className="container">
+                <h1 className="head-ing-sec">Now, select a bundle that fits <br /> your recovery timeline.</h1>
+                <div className="list-of-bundles">
+                    {
+                        Bundles.map((bundle, index) => {
+                            return (
+                                <BundleTile data={bundle} key={index} />
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
