@@ -231,6 +231,7 @@ const Bundles = () => {
         <div className="bundles-list-container-section">
             <div className="container">
                 <h1 className="head-ing-sec">Now, select a bundle that fits <br /> your recovery timeline.</h1>
+                
                 <div className="list-of-bundles">
                     {
                         Bundles.map((bundle, index) => {
@@ -240,12 +241,24 @@ const Bundles = () => {
                         })
                     }
                 </div>
+
+                <div className="need-help-section">
+                    <h1>Need help choosing a bundle?</h1>
+                    <p>Answer two quick questions and we’ll match you with the bundle that fits your <br /> stage of recovery and how many days of care you want covered.</p>
+                    <button className='button-pink-center' data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal">Find My Bundle</button>
+                </div>
+
+                <div className="d-flex justify-content-center align-items-center">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
             </div>
         </div>
 
         <BundlesRecommendedModal />
-        <BoughtTogether />
-        <AllBundlesSlider />
+        {/* <BoughtTogether />
+        <AllBundlesSlider /> */}
         <MomsReviewsSlider />
         <MomsMomentsSlider />
         <FaqSlider />

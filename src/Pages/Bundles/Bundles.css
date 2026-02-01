@@ -419,4 +419,29 @@
         margin-top: 60px;
         margin-bottom: 90px;
     }
+
+    .need-help-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 90px;
+
+        h1 {
+            font: 600 32px var(--font);
+            color: var(--primary-dark);
+        }
+
+        p {
+            font: 400 16px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 40px;
+        }
+
+        button {
+            width: fit-content;
+            height: 40px;
+            font: 700 16px var(--font);
+        }
+    }
 }
