@@ -18,6 +18,12 @@ import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import BundlesRecommendedModal from '../../Components/BundlesRecommendedModal/BundlesRecommendedModal'
 import BundleTile from '../../Components/BundleTile/BundleTile'
 
+import Pads from '../../assets/BundlesHome/pad.svg'
+import Coolingpad from '../../assets/BundlesHome/coolingpad.svg'
+import Soft from '../../assets/BundlesHome/soft.svg'
+import PeriBottle from '../../assets/BundlesHome/peribottle.svg'
+import Underwear from '../../assets/BundlesHome/underwear.svg'
+
 const Bundles = () => {
 
    const Bundles = [
@@ -252,6 +258,44 @@ const Bundles = () => {
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                </div>
+            </div>
+        </div>
+
+        <div className="container">
+            <div className="whats-inside-section-container">
+                <h1 className="heading-sec">What’s inside every Mommy <br /> First recovery bundle</h1>
+                <p className="desc-tion">The essentials most moms reach for repeatedly especially during the first days at home.</p>
+                <div className="whats-inside-list">
+                    <div className="whats-inside-item">
+                        <img src={Pads} alt="" />
+                        <h1>Postpartum Pads</h1>
+                        <p>Reliable coverage for postpartum bleeding - so you can rest, not worry.</p>
+                    </div>
+
+                    <div className="whats-inside-item">
+                        <img src={Coolingpad} alt="" />
+                        <h1>Cooling Pads</h1>
+                        <p>Cooling relief to help reduce discomfort and support those tender first days.</p>
+                    </div>
+
+                    <div className="whats-inside-item">
+                        <img src={Soft} alt="" />
+                        <h1>Witch Hazel Liners + Foam</h1>
+                        <p>Soothing, cooling comfort to help reduce itch and burn during recovery.</p>
+                    </div>
+
+                    <div className="whats-inside-item">
+                        <img src={PeriBottle} alt="" />
+                        <h1>Peri Bottle + Travel Bag</h1>
+                        <p>Gentle cleansing after the bathroom - one of the most-used postpartum tools.</p>
+                    </div>
+
+                    <div className="whats-inside-item">
+                        <img src={Underwear} alt="" />
+                        <h1>Soft Underwear</h1>
+                        <p>Gentle, supportive underwear that helps keep everything comfortably in place.</p>
+                    </div>
                 </div>
             </div>
         </div>
