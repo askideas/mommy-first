@@ -10,6 +10,7 @@ import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
 import HightLightImg from '../../assets/BundlesHome/badge.png'
+import BundleTile from '../../Components/BundleTile/BundleTile'
 
 const BundlesRecommended = () => {
     const [movement, setMovement] = useState('')
@@ -18,6 +19,63 @@ const BundlesRecommended = () => {
         setMovement('moved')
       }, 2500);
     }, [])
+
+    const Bundles = [
+    {
+      "id": "first-week-healing-system",
+      "title": "The First Week Healing System",
+      "duration": "5–7 days",
+      "description": "Best for core support for the hardest days at home",
+      "price": 84.99,
+      "currency": "USD",
+      "retailValue": 120,
+      "savings": 35.01,
+      "cta": "Add to Bag",
+      "highlights": [
+        "Easy and Secure checkout",
+        "Loved by moms",
+        "FREE shipping",
+        "Hassle free return policy"
+      ],
+      "contents": [
+        { "label": "Pads", "quantity": 18 },
+        { "label": "Underwear", "quantity": 12 },
+        { "label": "Cooling Pads", "quantity": 12 },
+        { "label": "Liners", "quantity": 24 },
+        { "label": "Foam", "quantity": "5 fl oz" },
+        { "label": "Peri Bottle", "quantity": 1 },
+        { "label": "Bag", "quantity": 1 }
+      ],
+      "tags": ["postpartum", "healing", "starter-kit"]
+    },
+    {
+      "id": "21-day-postpartum-care",
+      "title": "21-Day Postpartum Care",
+      "duration": "17–21 days",
+      "description": "Best for core support for the hardest days at home",
+      "price": 84.99,
+      "currency": "USD",
+      "retailValue": 240,
+      "savings": 70.01,
+      "cta": "Add to Bag",
+      "highlights": [
+        "Secure checkout",
+        "Loved by moms",
+        "FREE shipping",
+        "Hassle free returns"
+      ],
+      "contents": [
+        { "label": "Pads", "quantity": 36 },
+        { "label": "Underwear", "quantity": 28 },
+        { "label": "Cooling Pads", "quantity": 28 },
+        { "label": "Liners", "quantity": 48 },
+        { "label": "Foam", "quantity": "10 fl oz" },
+        { "label": "Peri Bottle", "quantity": 1 },
+        { "label": "Bag", "quantity": 1 }
+      ],
+      "tags": ["postpartum", "healing", "complete-kit"]
+    }
+  ]
     
   return (
     <>
@@ -123,8 +181,28 @@ const BundlesRecommended = () => {
             </div>
         </div>
 
-        <BoughtTogether />
-        <AllBundlesSlider />
+        <div className="more-bundles-container">
+            <div className="container">
+                <div className="heading-sec">
+                    <h1>More Bundles, Add more anytime</h1>
+                    <h2>Choose based on how long you'd like your care to last.</h2>
+                </div>
+
+                <div className="bundles-more-section">
+                    {
+                        Bundles.map((bundle, index) => {
+                            return (
+                                <BundleTile data={bundle} key={index}/>
+                            )
+                        })
+                    }
+                </div>
+            </div>
+            
+        </div>
+
+        {/* <BoughtTogether />
+        <AllBundlesSlider /> */}
         <MomsReviewsSlider />
         <MomsMomentsSlider />
         <FaqSlider />

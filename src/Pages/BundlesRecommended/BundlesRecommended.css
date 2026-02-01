@@ -248,3 +248,36 @@
         }
     }
 }
+
+.more-bundles-container {
+    width: 100%;
+    height: fit-content;
+    min-height: 700px;
+    background: linear-gradient(180deg, #FBF2F6 0%, #EBA4B9 49.04%, #FBF2F6 100%);
+    margin-bottom: 152px;
+
+    .heading-sec {
+        margin-bottom: 80px;
+
+        h1 {
+            font: 500 32px var(--font);
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        h2 {
+            font: 400 14px var(--font);
+            color: var(--primary-dark);
+            text-align: center;
+        }
+    }
+
+    .bundles-more-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 24px;
+        width: 100%;
+        height: fit-content;
+    }
+}
