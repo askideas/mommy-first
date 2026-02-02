@@ -177,23 +177,25 @@ const Shop = () => {
     };
 
     // Function to fetch products from Shopify with pagination
-    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionId = null) => {
+    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionHandle = null) => {
         try {
-            console.log(`Fetching products page ${page} with token${collectionId ? ` for collection: ${collectionId}` : ''}...`);
+            console.log(`Fetching products page ${page} with token${collectionHandle ? ` for collection: ${collectionHandle}` : ''}...`);
             if (isLoadMore) {
                 setLoadingMore(true);
             } else {
                 setLoading(true);
             }
             
-            // Construct URL based on page number and collection
-            let url = page === 1 
-                ? `${import.meta.env.VITE_API_BASE_URL}/products`
-                : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
+            let url;
             
-            // Add collection ID as query parameter if provided
-            if (collectionId) {
-                url += `?cid=${collectionId}`;
+            // If collection handle is provided, use collections endpoint
+            if (collectionHandle) {
+                url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
+            } else {
+                // Otherwise use products endpoint
+                url = page === 1 
+                    ? `${import.meta.env.VITE_API_BASE_URL}/products`
+                    : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
             }
             
             const response = await fetch(url, {
