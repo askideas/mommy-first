@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Bundles.css'
 import BG from '../../assets/BundlesHome/bg-image.png'
 import Badge from '../../assets/BundlesHome/badge.png'
@@ -25,94 +25,90 @@ import PeriBottle from '../../assets/BundlesHome/peribottle.svg'
 import Underwear from '../../assets/BundlesHome/underwear.svg'
 
 const Bundles = () => {
+    const [bundlesData, setBundlesData] = useState([])
+    const [authToken, setAuthToken] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-   const Bundles = [
-    {
-      "id": "first-week-healing-system",
-      "title": "The First Week Healing System",
-      "duration": "5–7 days",
-      "description": "Best for core support for the hardest days at home",
-      "price": 84.99,
-      "currency": "USD",
-      "retailValue": 120,
-      "savings": 35.01,
-      "cta": "Add to Bag",
-      "highlights": [
-        "Easy and Secure checkout",
-        "Loved by moms",
-        "FREE shipping",
-        "Hassle free return policy"
-      ],
-      "contents": [
-        { "label": "Pads", "quantity": 18 },
-        { "label": "Underwear", "quantity": 12 },
-        { "label": "Cooling Pads", "quantity": 12 },
-        { "label": "Liners", "quantity": 24 },
-        { "label": "Foam", "quantity": "5 fl oz" },
-        { "label": "Peri Bottle", "quantity": 1 },
-        { "label": "Bag", "quantity": 1 }
-      ],
-      "tags": ["postpartum", "healing", "starter-kit"],
-      "isActive": false
-    },
-    {
-      "id": "2-weeks-full-recovery-set",
-      "title": "2 Weeks Full Recovery Set",
-      "duration": "7–14 days",
-      "badge": "Best Value",
-      "description": "Best for core support for the hardest days at home",
-      "price": 139.99,
-      "currency": "USD",
-      "retailValue": 195,
-      "savings": 55.01,
-      "cta": "Add to Bag",
-      "highlights": [
-        "Secure checkout",
-        "Loved by moms",
-        "FREE shipping",
-        "Hassle free returns"
-      ],
-      "contents": [
-        { "label": "Pads", "quantity": 36 },
-        { "label": "Underwear", "quantity": 20 },
-        { "label": "Cooling Pads", "quantity": 20 },
-        { "label": "Liners", "quantity": 48 },
-        { "label": "Foam", "quantity": "10 fl oz" },
-        { "label": "Peri Bottle", "quantity": 1 },
-        { "label": "Bag", "quantity": 1 }
-      ],
-      "tags": ["postpartum", "healing", "best-value", "recommended"],
-      "isActive": true
-    },
-    {
-      "id": "21-day-postpartum-care",
-      "title": "21-Day Postpartum Care",
-      "duration": "17–21 days",
-      "description": "Best for core support for the hardest days at home",
-      "price": 84.99,
-      "currency": "USD",
-      "retailValue": 240,
-      "savings": 70.01,
-      "cta": "Add to Bag",
-      "highlights": [
-        "Secure checkout",
-        "Loved by moms",
-        "FREE shipping",
-        "Hassle free returns"
-      ],
-      "contents": [
-        { "label": "Pads", "quantity": 56 },
-        { "label": "Underwear", "quantity": 28 },
-        { "label": "Cooling Pads", "quantity": 28 },
-        { "label": "Liners", "quantity": 48 },
-        { "label": "Foam", "quantity": "10 fl oz" },
-        { "label": "Peri Bottle", "quantity": 1 },
-        { "label": "Bag", "quantity": 1 }
-      ],
-      "tags": ["postpartum", "healing", "complete-kit"],
-      "isActive": false
-    }
-  ]
+    // Fetch authentication token
+    const fetchAuthToken = async () => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "clientId": import.meta.env.VITE_API_CLIENT_ID,
+                    "clientSecret": import.meta.env.VITE_API_CLIENT_SECRET
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            if (result.success && result.token) {
+                setAuthToken(result.token);
+                return result.token;
+            } else {
+                throw new Error(result.message || 'Failed to get authentication token');
+            }
+        } catch (err) {
+            console.error('Error fetching auth token:', err);
+            setError(`Failed to authenticate: ${err.message}`);
+            return null;
+        }
+    };
+
+    // Fetch bundles from collections
+    const fetchBundles = async (token) => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/collections/bundles`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'omit'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+
+            if (result.success && result.data) {
+                setBundlesData(result.data);
+                setError(null);
+            } else {
+                throw new Error(result.message || 'Failed to fetch bundles');
+            }
+            setLoading(false);
+        } catch (err) {
+            console.error('Error fetching bundles:', err);
+            setError(err.message);
+            setLoading(false);
+        }
+    };
+
+    // Fetch data on component mount
+    useEffect(() => {
+        const initFetch = async () => {
+            const token = await fetchAuthToken();
+            if (token) {
+                await fetchBundles(token);
+            }
+        };
+        initFetch();
+    }, []);
+
+  console.log(bundlesData);
+  
 
   return (
     <>
@@ -238,15 +234,27 @@ const Bundles = () => {
             <div className="container">
                 <h1 className="head-ing-sec">Now, select a bundle that fits <br /> your recovery timeline.</h1>
                 
-                <div className="list-of-bundles">
-                    {
-                        Bundles.map((bundle, index) => {
-                            return (
-                                <BundleTile data={bundle} key={index} />
-                            )
-                        })
-                    }
-                </div>
+                {loading ? (
+                    <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : error ? (
+                    <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
+                        <p style={{color: 'red'}}>{error}</p>
+                    </div>
+                ) : (
+                    <div className="list-of-bundles">
+                        {
+                            bundlesData.map((bundle, index) => {
+                                return (
+                                    <BundleTile data={bundle} key={bundle.id || index} />
+                                )
+                            })
+                        }
+                    </div>
+                )}
 
                 <div className="need-help-section">
                     <h1>Need help choosing a bundle?</h1>

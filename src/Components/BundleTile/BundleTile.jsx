@@ -5,10 +5,32 @@ import HightLightImg from '../../assets/BundlesHome/badge.png'
 
 const BundleTile = (props) => {
     const data = props.data;
+
+    // Extract price from API response
+    const price = data.priceRange?.minVariantPrice?.amount || data.variants?.[0]?.price?.amount || '0';
+    const currencyCode = data.priceRange?.minVariantPrice?.currencyCode || 'USD';
+    
+    // Extract image from API response
+    const image = data.images?.[0]?.url || BundleTileImg;
+    
+    // Parse tags from metafields
+    const tagsMetafield = data.metafields?.find(m => m.key === 'tags');
+    const contents = tagsMetafield ? tagsMetafield.value.split(',') : [];
+    const bundleDuration = data.metafields?.find(m => m.key === 'duration');
+    const isBestValue = data.metafields?.find(m => m.key === 'best_value');
+    
+    // Default highlights
+    const highlights = [
+        "Easy and Secure checkout",
+        "Loved by moms",
+        "FREE shipping",
+        "Hassle free return policy"
+    ];
+    
     return (
-        <div className={`bundles-best-value-section-tile ${data.isActive ? 'activeTile' : ''}`}>
+        <div className={`bundles-best-value-section-tile ${isBestValue.value ? 'activeTile' : ''}`}>
             {
-                data.isActive ? (
+                isBestValue.value ? (
                     <div className="image-highlist">
                         <img src={HightLightImg} alt="" />
                         <span>Best Value</span>
@@ -18,18 +40,18 @@ const BundleTile = (props) => {
             
             <p className="heading-label-sec">
                 <span className="bundle-name">{data.title}</span>
-                <span className="days-label">{data.duration}</span>
+                <span className="days-label">{bundleDuration.value || ''}</span>
             </p>
 
-            <p className="bundle-description">{data.description}</p>
+            <p className="bundle-description">{data.description || data.descriptionHtml?.replace(/<[^>]*>/g, '') || ''}</p>
 
-            <img src={BundleTileImg} alt="" className="bundle-tile-image" />
+            <img src={image} alt={data.title} className="bundle-tile-image" />
 
             <div className="bundle-items">
                 {
-                    data.contents.map((item, index) => {
+                    contents.map((item, index) => {
                         return (
-                            <span key={index}>{item.quantity} {item.label}</span>
+                            <span key={index}>{item}</span>
                         )
                     })
                 }
@@ -48,15 +70,15 @@ const BundleTile = (props) => {
             </svg>
 
             <p className="bundle-price">
-                <span className="price">${data.price}</span>
-                <span className="price-label">Retail value ${data.retailValue} | Save ${data.savings}</span>
+                <span className="price">${parseFloat(price).toFixed(2)}</span>
+                <span className="price-label">Retail value ${data.retailValue || parseFloat(price).toFixed(2)} | Save ${data.savings || '0.00'}</span>
             </p>
 
             <button className="button-pink-center">ADD TO BAG</button>
 
             <div className="feature-of-bundle">
                 {
-                    data.highlights.map((item,index) => {
+                    highlights.map((item,index) => {
                         return (
                             <p key={index}>
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
