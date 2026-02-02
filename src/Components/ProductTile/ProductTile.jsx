@@ -23,8 +23,8 @@ const ProductTile = (props) => {
     useEffect(() => {
         if (customer?.metafields?.custom?.wishlist_items?.value) {
             const wishlist = customer.metafields.custom.wishlist_items.value
-            const productHandle = product.handle
-            setIsInWishlist(wishlist.includes(productHandle))
+            const productIdToCheck = product.legacyResourceId || product.id
+            setIsInWishlist(wishlist.includes(productIdToCheck))
         }
     }, [customer, product])
 
@@ -87,15 +87,15 @@ const ProductTile = (props) => {
 
         try {
             const userId = customer.id
-            const productHandle = product.handle
+            const productIdToAdd = product.legacyResourceId || product.id
 
             let response
             if (isInWishlist) {
                 // Remove from wishlist
-                response = await removeFromWishlist(userId, productHandle)
+                response = await removeFromWishlist(userId, productIdToAdd)
             } else {
                 // Add to wishlist
-                response = await addToWishlist(userId, productHandle)
+                response = await addToWishlist(userId, productIdToAdd)
             }
 
             if (response.success) {
@@ -145,11 +145,15 @@ const ProductTile = (props) => {
                             'Add to Bag'
                         )}
                     </button>
-                    <Heart 
-                        className={`wishlist ${isInWishlist ? 'filled' : ''} ${isWishlisting ? 'loading' : ''}`}
-                        onClick={handleWishlist}
-                        fill={isInWishlist ? 'currentColor' : 'none'}
-                    />
+                    {isWishlisting ? (
+                        <Loader2 className="wishlist-spinner" size={20} />
+                    ) : (
+                        <Heart 
+                            className={`wishlist ${isInWishlist ? 'filled' : ''}`}
+                            onClick={handleWishlist}
+                            fill={isInWishlist ? 'currentColor' : 'none'}
+                        />
+                    )}
                 </div>
             </div>
         </div>

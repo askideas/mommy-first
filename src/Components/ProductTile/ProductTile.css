@@ -98,7 +98,7 @@
             .wishlist {
                 cursor: pointer;
                 transition: all 0.3s ease;
-                color: var(--primary-dark);
+                color: var(--primary-pink);
 
                 &:hover {
                     fill: var(--primary-pink);
@@ -110,11 +110,11 @@
                     color: var(--primary-pink);
                     stroke: var(--primary-pink);
                 }
+            }
 
-                &.loading {
-                    opacity: 0.6;
-                    cursor: not-allowed;
-                }
+            .wishlist-spinner {
+                color: var(--primary-pink);
+                animation: spin 1s linear infinite;
             }
         }
     }
