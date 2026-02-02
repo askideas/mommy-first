@@ -27,19 +27,12 @@ const Shop = () => {
     const [totalProducts, setTotalProducts] = useState(0);
     const [activeFilter, setActiveFilter] = useState('ALL');
     const [selectedCollection, setSelectedCollection] = useState(null);
+    const [collections, setCollections] = useState([]);
 
     const espotsIndex = [3, 5, 14];
     
     // Espot images data - you can replace these URLs with your actual espot images
     const espotImages = [ MF1, MF2, EsImage1 ]
-
-    // Quick filter buttons configuration
-    const quickFilters = [
-        { id: 'ALL', label: 'ALL', collectionId: null },
-        { id: 'MATERNITY', label: 'MATERNITY 🤰', collectionId: 'maternity' },
-        { id: 'POSTPARTUM', label: 'Postpartum 🤱', collectionId: 'postpartum' },
-        { id: 'WELLNESS', label: 'Wellness & Comfort 🌿', collectionId: 'wellness-comfort' }
-    ];
 
     const filters = [
         {
@@ -85,6 +78,34 @@ const Shop = () => {
         text: 'Designed to Maximize Comfort for Expecting Moms',
         height: 280,
         pwidth: 487
+    };
+
+    // Function to fetch collections
+    const fetchCollections = async (token) => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/collections`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'omit'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Collections response:', result);
+
+            if (result.success && result.data) {
+                setCollections(result.data);
+            }
+        } catch (err) {
+            console.error('Error fetching collections:', err);
+        }
     };
 
     // Function to fetch authentication token
@@ -237,6 +258,7 @@ const Shop = () => {
         const initializeProducts = async () => {
             const token = await fetchAuthToken();
             if (token) {
+                await fetchCollections(token);
                 await fetchProducts(token);
             } else {
                 setLoading(false);
@@ -254,12 +276,12 @@ const Shop = () => {
     };
 
     // Handle quick filter click
-    const handleQuickFilterClick = async (filter) => {
-        setActiveFilter(filter.id);
-        setSelectedCollection(filter.collectionId);
+    const handleQuickFilterClick = async (handle) => {
+        setActiveFilter(handle);
+        setSelectedCollection(handle === 'ALL' ? null : handle);
         setCurrentPage(1);
         setDisplayedProducts([]);
-        await fetchProducts(authToken, 1, false, filter.collectionId);
+        await fetchProducts(authToken, 1, false, handle === 'ALL' ? null : handle);
     };
 
     // Calculate current count and progress percentage
@@ -301,13 +323,19 @@ const Shop = () => {
         <div className="container" style={{marginBottom: '154px'}}>
             <div className="shop-filters-section">
                 <div className="quick-filters-section">
-                    {quickFilters.map((filter) => (
+                    <button 
+                        className={`filter-button ${activeFilter === 'ALL' ? 'active' : ''}`}
+                        onClick={() => handleQuickFilterClick('ALL')}
+                    >
+                        ALL
+                    </button>
+                    {collections.map((collection) => (
                         <button 
-                            key={filter.id}
-                            className={`filter-button ${activeFilter === filter.id ? 'active' : ''}`}
-                            onClick={() => handleQuickFilterClick(filter)}
+                            key={collection.id}
+                            className={`filter-button ${activeFilter === collection.handle ? 'active' : ''}`}
+                            onClick={() => handleQuickFilterClick(collection.handle)}
                         >
-                            {filter.label}
+                            {collection.title.toUpperCase()}
                         </button>
                     ))}
                 </div>
