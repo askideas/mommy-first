@@ -328,7 +328,13 @@ const BabiesSection = () => {
             )}
 
             <div className="babies-section-body">
-                {babies.length > 0 ? (
+                {babies.length == 0 && !isFetching  ? (
+                    <div className="no-babies-message">
+                        <img src={BabiesIcon} alt="" />
+                        <p className="nobabies-heading">No Baby added</p>
+                        <p className="no-babies-sub-heading">Add from below</p>
+                    </div>
+                ) : (
                     <div className="accordion accordion-flush" id="babiesListAccordian">
                         {babies.map((baby, index) => {
                             const fullName = `${baby.first_name || ''} ${baby.last_name || ''}`.trim()
@@ -398,12 +404,6 @@ const BabiesSection = () => {
                                 </div>
                             )
                         })}
-                    </div>
-                ) : (
-                    <div className="no-babies-message">
-                        <img src={BabiesIcon} alt="" />
-                        <p className="nobabies-heading">No Baby added</p>
-                        <p className="no-babies-sub-heading">Add from below</p>
                     </div>
                 )}
             </div>

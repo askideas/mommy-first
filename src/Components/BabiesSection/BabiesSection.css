@@ -5,6 +5,26 @@
     display: flex;
     flex-direction: column;
 
+    .profile-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        background-color: var(--pink-shade-bg);
+        font: 400 14px var(--font);
+        color: var(--primary-dark);
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
     .babies-section-header {
         width: 100%;
         height: 80px;

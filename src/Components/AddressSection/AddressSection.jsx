@@ -286,13 +286,14 @@ const AddressSection = () => {
                     <img src={Smile} alt="" />
                     <span>My Addresses</span>
                 </p>
-                {isFetching && (
-                    <div className="loading-indicator">
-                        <Loader2 className="spinner" size={16} />
-                        <span>Loading...</span>
-                    </div>
-                )}
             </div>
+
+            {isFetching && (
+                <div className="profile-loading">
+                    <Loader2 className="spinner" size={20} />
+                    <span>Loading addresses...</span>
+                </div>
+            )}
 
             <div className="address-section-body">
                 {addresses.length === 0 && !isFetching ? (
