@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import ProfileImg from '../../assets/profile/pf-def.png'
-import { Info, Loader2 } from 'lucide-react'
+import { CircleQuestionMark, Info, Loader2 } from 'lucide-react'
 import UserIcon from '../../assets/profile/user-square.svg'
 import Smile from '../../assets/profile/smile.svg'
 import Map from '../../assets/profile/map.svg'
 import Card from '../../assets/profile/card.svg'
 import Box from '../../assets/profile/cube.svg'
-import Return from '../../assets/profile/return.svg'
 import Heart from '../../assets/profile/heart.svg'
 import Help from '../../assets/profile/help.svg'
 import Bell from '../../assets/profile/bell.svg'
@@ -19,11 +18,10 @@ import Flower from '../../assets/About/flower.svg'
 import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
 import BabiesSection from '../../Components/BabiesSection/BabiesSection'
 import AddressSection from '../../Components/AddressSection/AddressSection'
-import PaymentSection from '../../Components/PaymentSection/PaymentSection'
-import SettingsSection from '../../Components/SettingsSection/SettingsSection'
 import NotificationsSection from '../../Components/NotificationsSection/NotificationsSection'
 import NewUserModal from '../../Components/NewUserModal/NewUserModal'
 import { useAuth } from '../../contexts/AuthContext'
+import HelpSection from '../../Components/HelpSection/HelpSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -93,11 +91,6 @@ const Profile = () => {
                     title : 'Addresses',
                     icon : Map,
                     hash : '#address'
-                },
-                {
-                    title : 'Payments',
-                    icon : Card,
-                    hash : '#payments'
                 }
             ]
         },
@@ -110,19 +103,9 @@ const Profile = () => {
                     hash : '#orders'
                 },
                 {
-                    title : 'Returns & Exchanges',
-                    icon : Return,
-                    hash : '#returnandexchange'
-                },
-                {
                     title : 'Wishlist',
                     icon : Heart,
                     hash : '#wishlist'
-                },
-                {
-                    title : 'Help',
-                    icon : Help,
-                    hash : '#help'
                 }
             ]
         },
@@ -135,14 +118,9 @@ const Profile = () => {
                     hash : '#notifications'
                 },
                 {
-                    title : 'Subscriptions',
-                    icon : Tag,
-                    hash : '#subscriptions'
-                },
-                {
-                    title : 'Settings',
-                    icon : Settings,
-                    hash : '#settings'
+                    title : 'Help',
+                    icon : Help,
+                    hash : '#help'
                 }
             ]
         },
@@ -208,8 +186,7 @@ const Profile = () => {
                         {activeSection === "#profile" && <ProfileSection />}
                         {activeSection === "#mybabies" && <BabiesSection />}
                         {activeSection === "#address" && <AddressSection />}
-                        {activeSection === "#payments" && <PaymentSection />}
-                        {activeSection === "#settings" && <SettingsSection />}
+                        {activeSection === "#help" && <HelpSection />}
                         {activeSection === "#notifications" && <NotificationsSection />}
                     </div>
                 </div>
