@@ -20,6 +20,8 @@ import DefaultImg from '../../assets/default.png'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
+import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
+import SomeWentWrong from '../../assets/something-went-wrong.svg'
 
 const ProductDetails = () => {
     const { productHandle } = useParams();
@@ -108,7 +110,34 @@ const ProductDetails = () => {
     }
 
     if (!product) {
-        return <div className="productDetailsPageContent"><div className="container"><p>Product not found.</p></div></div>;
+        return <div className="productDetailsPageContent">
+                <div className="container">
+                    <ErrorComponent data={
+                        {
+                            "title": "We can’t find the product",
+                            "subtitle": "The link may be broken, or the page may have been moved.",
+                            "image": SomeWentWrong,
+                            "buttons": [
+                                {
+                                    label: "Go to HOME",
+                                    className: "button-pink-center",
+                                    link:'/'
+                                },
+                                {
+                                    label: "SHOP",
+                                    className: "button-pink-border",
+                                    link:'/shop'
+                                },
+                                {
+                                    label: "Contact Support",
+                                    className: "button-pink-border",
+                                    link:'/contact'
+                                },
+                            ]
+                        }
+                    } />
+                </div>
+            </div>;
     }
     
 
