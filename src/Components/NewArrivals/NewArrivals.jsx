@@ -3,6 +3,7 @@ import './NewArrivals.css'
 import Heading from '../Heading/Heading'
 import { ChevronDown } from 'lucide-react'
 import ProductTile from '../ProductTile/ProductTile'
+import ProductsLoader from '../ProductsLoader/ProductsLoader'
 import P1 from '../../assets/products/prd1.svg'
 import P2 from '../../assets/products/prd2.svg'
 import P3 from '../../assets/products/prd3.svg'
@@ -16,6 +17,7 @@ const NewArrivals = (props) => {
     const [authToken, setAuthToken] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [activeCollection, setActiveCollection] = useState('new-arrivals')
 
     const headingData = {
         'title': "NEW ARRIVALS",
@@ -73,10 +75,9 @@ const NewArrivals = (props) => {
     };
 
     // Fetch products from collection
-    const fetchProductsFromCollection = async (token) => {
+    const fetchProductsFromCollection = async (token, collectionHandle = 'new-arrivals') => {
         try {
             setLoading(true);
-            const collectionHandle = data && data.collections[0].collectionId ? data.collections[0].collectionId : 'new-arrivals';
             const url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
             
             const response = await fetch(url, {
@@ -94,7 +95,7 @@ const NewArrivals = (props) => {
             }
 
             const result = await response.json();
-            console.log('New arrivals products:', result);
+            console.log(`Products from ${collectionHandle}:`, result);
 
             if (result.success && result.data && result.data.length > 0) {
                 const transformedProducts = result.data.slice(0, 4).map(transformProduct);
@@ -116,11 +117,16 @@ const NewArrivals = (props) => {
         const initFetch = async () => {
             const token = await fetchAuthToken();
             if (token) {
-                await fetchProductsFromCollection(token);
+                await fetchProductsFromCollection(token, activeCollection);
             }
         };
         initFetch();
-    }, []);
+    }, [activeCollection]);
+
+    // Handle filter button click
+    const handleFilterClick = (collection) => {
+        setActiveCollection(collection);
+    };
 
     // Fallback products if API fails
     const fallbackProducts = [
@@ -162,30 +168,60 @@ const NewArrivals = (props) => {
         <div className="container">
             <div className="new-arrivals-filter-section">
                 <div className="filters-section my-4 justify-content-start flex-fill">
-                    <button className='filter-button active'>ALL</button>
-                    <button className='filter-button'>MATERNITY </button>
-                    <button className='filter-button'>Postpartum </button>
-                    <button className='filter-button'>Wellness & Comfort </button>
+                    <button 
+                        className={`filter-button ${activeCollection === 'new-arrivals' ? 'active' : ''}`} 
+                        data-collection="new-arrivals"
+                        onClick={() => handleFilterClick('new-arrivals')}
+                    >
+                        ALL
+                    </button>
+                    <button 
+                        className={`filter-button ${activeCollection === 'maternity' ? 'active' : ''}`} 
+                        data-collection="maternity"
+                        onClick={() => handleFilterClick('maternity')}
+                    >
+                        MATERNITY
+                    </button>
+                    <button 
+                        className={`filter-button ${activeCollection === 'postpartum' ? 'active' : ''}`} 
+                        data-collection="postpartum"
+                        onClick={() => handleFilterClick('postpartum')}
+                    >
+                        POSTPARTUM
+                    </button>
+                    <button 
+                        className={`filter-button ${activeCollection === 'wellness-comfort' ? 'active' : ''}`} 
+                        data-collection="wellness-comfort"
+                        onClick={() => handleFilterClick('wellness-comfort')}
+                    >
+                        WELLNESS & COMFORT
+                    </button>
                 </div>
             </div> 
 
-            <div className="newarrivals-products-container">
-                {
-                    displayProducts.map((item, index)=> {
-                        return(
-                            <ProductTile data={item} key={index} />
-                        )
-                    })
-                }
-            </div>
-            
-            <div className="d-flex flex-column justify-content-center align-items-center">
-                <p className='progress-bar-text'>You've seen 4 out of 98 items</p>
-                <div className="progress-bar-con">
-                    <span></span>
-                </div>
-                <button className='button-label' onClick={()=> navigate('/shop')}>View more</button>
-            </div>
+            {loading ? (
+                <ProductsLoader text="Loading products..." />
+            ) : (
+                <>
+                    <div className="newarrivals-products-container">
+                        {
+                            displayProducts.map((item, index)=> {
+                                return(
+                                    <ProductTile data={item} key={index} />
+                                )
+                            })
+                        }
+                    </div>
+                    
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                        <p className='progress-bar-text'>You've seen 4 out of 98 items</p>
+                        <div className="progress-bar-con">
+                            <span></span>
+                        </div>
+                        <button className='button-label' onClick={()=> navigate('/shop')}>View more</button>
+                    </div>
+                </>
+            )}
             
         </div>
         

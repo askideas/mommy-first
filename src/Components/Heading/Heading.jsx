@@ -6,7 +6,7 @@ const Heading = (props) => {
     <div className="container">
         <div className="heading-container">
             <h2>{props && props.data && props.data.title ? props.data.title: ''}</h2>
-            <h1 dangerouslySetInnerHTML={{ __html: props.data.subtitle }}></h1>
+            <h1>{props && props.data && props.data.subtitle ? props.data.subtitle: ''}</h1>
             {
               props && props.data && props.data.description && (
                 Array.isArray(props.data.description)
