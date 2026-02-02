@@ -23,8 +23,8 @@ const ProductTile = (props) => {
     useEffect(() => {
         if (customer?.metafields?.custom?.wishlist_items?.value) {
             const wishlist = customer.metafields.custom.wishlist_items.value
-            const productIdToCheck = product.legacyResourceId || product.id
-            setIsInWishlist(wishlist.includes(productIdToCheck))
+            const productHandle = product.handle
+            setIsInWishlist(wishlist.includes(productHandle))
         }
     }, [customer, product])
 
@@ -87,15 +87,15 @@ const ProductTile = (props) => {
 
         try {
             const userId = customer.id
-            const productIdToAdd = product.legacyResourceId || product.id
+            const productHandle = product.handle
 
             let response
             if (isInWishlist) {
                 // Remove from wishlist
-                response = await removeFromWishlist(userId, productIdToAdd)
+                response = await removeFromWishlist(userId, productHandle)
             } else {
                 // Add to wishlist
-                response = await addToWishlist(userId, productIdToAdd)
+                response = await addToWishlist(userId, productHandle)
             }
 
             if (response.success) {

@@ -5,7 +5,6 @@ import Home from './Pages/Home/Home'
 import Footer from './Components/Footer/Footer'
 import ContactBanner from './Components/ContactBanner/ContactBanner'
 import { useGlobalFadeUpAnimations } from './hooks/useFadeUpAnimation'
-import './App.css'
 import BundlesRecommended from './Pages/BundlesRecommended/BundlesRecommended'
 import Bundles from './Pages/Bundles/Bundles'
 import Shop from './Pages/Shop/Shop'
@@ -41,6 +40,7 @@ import Donation from './Pages/Donation/Donation'
 import NotFound from './Pages/NotFound/NotFound'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import './App.css'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -73,7 +73,6 @@ const AppContent = () => {
         pauseOnFocusLoss={false}
         draggable={false}
         pauseOnHover={false}
-        theme="light"
       />
       <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}>
         <ScrollToTop />

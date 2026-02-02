@@ -265,10 +265,10 @@ export const setDefaultAddress = async (userId, addressId) => {
 /**
  * Add item to wishlist
  * @param {number} userId - The Shopify customer ID
- * @param {number|string} productId - The product ID to add
+ * @param {string} productHandle - The product handle to add
  * @returns {Promise} - Response with updated wishlist data
  */
-export const addToWishlist = async (userId, productId) => {
+export const addToWishlist = async (userId, productHandle) => {
   try {
     const token = await fetchAuthToken()
     
@@ -285,12 +285,12 @@ export const addToWishlist = async (userId, productId) => {
     const currentWishlist = userResponse.data?.metafields?.custom?.wishlist_items?.value || []
     
     // Check if item already exists
-    if (currentWishlist.includes(productId)) {
+    if (currentWishlist.includes(productHandle)) {
       return { success: false, message: 'Item already in wishlist' }
     }
 
     // Add new item
-    const updatedWishlist = [...currentWishlist, productId]
+    const updatedWishlist = [...currentWishlist, productHandle]
 
     // Update user metafields using updateNewUserProfile
     const response = await updateNewUserProfile(userId, {
@@ -314,10 +314,10 @@ export const addToWishlist = async (userId, productId) => {
 /**
  * Remove item from wishlist
  * @param {number} userId - The Shopify customer ID
- * @param {number|string} productId - The product ID to remove
+ * @param {string} productHandle - The product handle to remove
  * @returns {Promise} - Response with updated wishlist data
  */
-export const removeFromWishlist = async (userId, productId) => {
+export const removeFromWishlist = async (userId, productHandle) => {
   try {
     const token = await fetchAuthToken()
     
@@ -334,7 +334,7 @@ export const removeFromWishlist = async (userId, productId) => {
     const currentWishlist = userResponse.data?.metafields?.custom?.wishlist_items?.value || []
     
     // Remove item
-    const updatedWishlist = currentWishlist.filter(id => id !== productId)
+    const updatedWishlist = currentWishlist.filter(handle => handle !== productHandle)
 
     // Update user metafields using updateNewUserProfile
     const response = await updateNewUserProfile(userId, {
