@@ -6,6 +6,7 @@ import { useCart } from '../../../contexts/CartContext'
 import { goToCheckout, getCheckoutUrlForAuthenticatedCustomer } from '../../../services/cartService'
 import DefaultImg from '../../../assets/default.png'
 import { useAuth } from '../../../contexts/AuthContext'
+import EmptyCartImg from '../../../assets/empty-cart.svg'
 
 const MiniCartModal = () => {
   const navigate = useNavigate();
@@ -85,10 +86,10 @@ const MiniCartModal = () => {
 
   return (
     <div className="offcanvas offcanvas-end" tabIndex="-1" id="MiniCartModal" aria-labelledby="offcanvasRightLabel">
-      <div className="mf-off-canvas-header">
+      <div className={`mf-off-canvas-header`}>
         <p className="head-ing">
           Cart
-          <span className="cart-items-count">
+          <span className={`cart-items-count ${items.length === 0 ? 'd-none' : ''}`}>
             {totalQuantity < 10 ? `0${totalQuantity}` : totalQuantity}
           </span>
         </p>
@@ -103,8 +104,9 @@ const MiniCartModal = () => {
           </div>
         ) : items.length === 0 ? (
           <div className="minicart-empty">
-            <ShoppingBag size={60} strokeWidth={1} />
-            <p>Your cart is empty</p>
+            <img src={EmptyCartImg} alt="" />
+            <h2>Your cart is currently empty.</h2>
+            <p>Not sure where to start?</p>
             <button
               className="button-pink-border"
               data-bs-dismiss="offcanvas"
@@ -114,7 +116,7 @@ const MiniCartModal = () => {
             </button>
           </div>
         ) : (
-          <div className="cart-items-list">
+          <div className={`cart-items-list `}>
             {items.map((item, index) => {
               const productImage = item.variant?.image?.url || item.product?.featuredImage?.url || DefaultImg;
               const productTitle = item.product?.title || 'Product';
@@ -177,7 +179,7 @@ const MiniCartModal = () => {
         )}
       </div>
 
-      <div className="minicart-modal-footer">
+      <div className={`minicart-modal-footer ${items.length === 0 ? 'd-none' : ''}`}>
         <p className="price-container">
           <span>Sub total</span>
           <span className="price">

@@ -440,7 +440,7 @@ const ProfileSection = () => {
                 {
                     action == 'edit' ? (
                         <div className="footer-buttons">
-                            <button className='button-outline' onClick={handleCancelEdit} disabled={isLoading}>
+                            <button className='button-pink-border' onClick={handleCancelEdit} disabled={isLoading}>
                                 CANCEL
                             </button>
                             <button className='button-pink-center' onClick={handleUpdate} disabled={isLoading}>

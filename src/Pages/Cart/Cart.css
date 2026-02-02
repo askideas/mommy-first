@@ -468,6 +468,8 @@ hr {
         margin-top: 16px;
         text-decoration: none;
         padding: 12px 32px;
+        width: fit-content;
+        height: 40px;
     }
 }
 

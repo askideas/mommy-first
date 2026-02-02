@@ -10,6 +10,7 @@ import MF1 from '../../assets/MF1.png'
 import { useCart } from '../../contexts/CartContext'
 import { goToCheckout, getCheckoutUrlForAuthenticatedCustomer } from '../../services/cartService'
 import { useAuth } from '../../contexts/AuthContext'
+import EmptyCartImg from '../../assets/empty-cart.svg'
 
 const Cart = () => {
     const {
@@ -133,9 +134,9 @@ const Cart = () => {
                     <span>Cart</span>
                 </div>
                 <div className="empty-cart">
-                    <ShoppingBag size={80} strokeWidth={1} />
-                    <h2>Your cart is empty</h2>
-                    <p>Looks like you haven't added anything to your cart yet.</p>
+                    <img src={EmptyCartImg} alt="" />
+                    <h2>Your cart is currently empty.</h2>
+                    <p>Not sure where to start?</p>
                     <NavLink to="/shop" className="button-pink-center">
                         Continue Shopping
                     </NavLink>
