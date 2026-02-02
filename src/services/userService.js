@@ -261,3 +261,96 @@ export const setDefaultAddress = async (userId, addressId) => {
     return { success: false, message: 'Failed to set default address. Please try again.' }
   }
 }
+
+/**
+ * Add item to wishlist
+ * @param {number} userId - The Shopify customer ID
+ * @param {number|string} productId - The product ID to add
+ * @returns {Promise} - Response with updated wishlist data
+ */
+export const addToWishlist = async (userId, productId) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    // First get current wishlist
+    const userResponse = await getUserDetails(userId)
+    if (!userResponse.success) {
+      return { success: false, message: 'Failed to fetch user data.' }
+    }
+
+    const currentWishlist = userResponse.data?.metafields?.custom?.wishlist_items?.value || []
+    
+    // Check if item already exists
+    if (currentWishlist.includes(productId)) {
+      return { success: false, message: 'Item already in wishlist' }
+    }
+
+    // Add new item
+    const updatedWishlist = [...currentWishlist, productId]
+
+    // Update user metafields using updateNewUserProfile
+    const response = await updateNewUserProfile(userId, {
+      firstName: userResponse.data?.firstName,
+      lastName: userResponse.data?.lastName,
+      metafields: [{
+        namespace: 'custom',
+        key: 'wishlist_items',
+        value: JSON.stringify(updatedWishlist),
+        type: 'json'
+      }]
+    })
+    
+    return response
+  } catch (error) {
+    console.error('Add to Wishlist Error:', error)
+    return { success: false, message: 'Failed to add to wishlist. Please try again.' }
+  }
+}
+
+/**
+ * Remove item from wishlist
+ * @param {number} userId - The Shopify customer ID
+ * @param {number|string} productId - The product ID to remove
+ * @returns {Promise} - Response with updated wishlist data
+ */
+export const removeFromWishlist = async (userId, productId) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    // First get current wishlist
+    const userResponse = await getUserDetails(userId)
+    if (!userResponse.success) {
+      return { success: false, message: 'Failed to fetch user data.' }
+    }
+
+    const currentWishlist = userResponse.data?.metafields?.custom?.wishlist_items?.value || []
+    
+    // Remove item
+    const updatedWishlist = currentWishlist.filter(id => id !== productId)
+
+    // Update user metafields using updateNewUserProfile
+    const response = await updateNewUserProfile(userId, {
+      firstName: userResponse.data?.firstName,
+      lastName: userResponse.data?.lastName,
+      metafields: [{
+        namespace: 'custom',
+        key: 'wishlist_items',
+        value: JSON.stringify(updatedWishlist),
+        type: 'json'
+      }]
+    })
+    
+    return response
+  } catch (error) {
+    console.error('Remove from Wishlist Error:', error)
+    return { success: false, message: 'Failed to remove from wishlist. Please try again.' }
+  }
+}

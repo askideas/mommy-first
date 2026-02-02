@@ -98,11 +98,22 @@
             .wishlist {
                 cursor: pointer;
                 transition: all 0.3s ease;
+                color: var(--primary-dark);
 
                 &:hover {
                     fill: var(--primary-pink);
                     stroke: var(--primary-pink);
                     transform: scale(1.1);
+                }
+
+                &.filled {
+                    color: var(--primary-pink);
+                    stroke: var(--primary-pink);
+                }
+
+                &.loading {
+                    opacity: 0.6;
+                    cursor: not-allowed;
                 }
             }
         }

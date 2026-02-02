@@ -39,6 +39,8 @@ import AFMarketing from './Pages/AFMarketing/AFMarketing'
 import Collection from './Pages/Collection/Collection'
 import Donation from './Pages/Donation/Donation'
 import NotFound from './Pages/NotFound/NotFound'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -61,6 +63,18 @@ const AppContent = () => {
   return (
     <>
       {isLoading && <PageLoader />}
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        theme="light"
+      />
       <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}>
         <ScrollToTop />
         <Header />

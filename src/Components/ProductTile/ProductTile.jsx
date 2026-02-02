@@ -1,17 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ProductTile.css'
 import { Heart, Loader2, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DefaultImg from '../../assets/default.png'
 import { useCart } from '../../contexts/CartContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { addToWishlist, removeFromWishlist } from '../../services/userService'
+import { toast } from 'react-toastify'
 
 const ProductTile = (props) => {
     const product = props.data;
     const navigate = useNavigate()
     const { addToCart } = useCart()
+    const { user, customer } = useAuth()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
+    const [isWishlisting, setIsWishlisting] = useState(false)
+    const [isInWishlist, setIsInWishlist] = useState(false)
+
+    // Check if product is in wishlist
+    useEffect(() => {
+        if (customer?.metafields?.custom?.wishlist_items?.value) {
+            const wishlist = customer.metafields.custom.wishlist_items.value
+            const productIdToCheck = product.legacyResourceId || product.id
+            setIsInWishlist(wishlist.includes(productIdToCheck))
+        }
+    }, [customer, product])
 
     const handleAddToCart = async (e) => {
         e.stopPropagation() // Prevent navigation to product details
@@ -53,10 +68,58 @@ const ProductTile = (props) => {
         }
     }
 
-    const handleWishlist = (e) => {
+    const handleWishlist = async (e) => {
         e.stopPropagation() // Prevent navigation to product details
-        // Wishlist functionality can be added here
-        console.log('Add to wishlist:', product.id)
+        
+        // Check if user is logged in
+        if (!user || !customer) {
+            // Open login modal
+            const loginButton = document.querySelector('[data-bs-target="#loginoffcanvas"]')
+            if (loginButton) {
+                loginButton.click()
+            }
+            return
+        }
+
+        if (isWishlisting) return
+
+        setIsWishlisting(true)
+
+        try {
+            const userId = customer.id
+            const productIdToAdd = product.legacyResourceId || product.id
+
+            let response
+            if (isInWishlist) {
+                // Remove from wishlist
+                response = await removeFromWishlist(userId, productIdToAdd)
+            } else {
+                // Add to wishlist
+                response = await addToWishlist(userId, productIdToAdd)
+            }
+
+            if (response.success) {
+                setIsInWishlist(!isInWishlist)
+                toast.success(!isInWishlist ? 'Added to wishlist!' : 'Removed from wishlist', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                })
+            } else {
+                console.error('Wishlist error:', response.message)
+                toast.error(response.message || 'Failed to update wishlist', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                })
+            }
+        } catch (err) {
+            console.error('Wishlist error:', err)
+            toast.error('Something went wrong', {
+                autoClose: 1500,
+                hideProgressBar: true
+            })
+        } finally {
+            setIsWishlisting(false)
+        }
     }
 
     return (
@@ -82,7 +145,11 @@ const ProductTile = (props) => {
                             'Add to Bag'
                         )}
                     </button>
-                    <Heart className='wishlist' onClick={handleWishlist} />
+                    <Heart 
+                        className={`wishlist ${isInWishlist ? 'filled' : ''} ${isWishlisting ? 'loading' : ''}`}
+                        onClick={handleWishlist}
+                        fill={isInWishlist ? 'currentColor' : 'none'}
+                    />
                 </div>
             </div>
         </div>
