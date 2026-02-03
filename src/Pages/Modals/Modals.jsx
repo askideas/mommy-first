@@ -3,6 +3,7 @@ import MiniCartModal from './MiniCartModal/MiniCartModal'
 import MegaMenuModal from './MegaMenuModal/MegaMenuModal'
 import AuthenticationModal from './AuthenticationModal/AuthenticationModal'
 import SearchModal from './SearchModal/SearchModal'
+import SessionBookingModal from './SessionBookingModal/SessionBookingModal'
 
 const Modals = () => {
   return (
@@ -11,6 +12,7 @@ const Modals = () => {
       <MiniCartModal />
       <MegaMenuModal />
       <AuthenticationModal/>
+      <SessionBookingModal />
     </>
     
   )

@@ -24,17 +24,16 @@ const EventCard = ({ event }) => {
     year: 'numeric',
   }) : ''
 
-  const handleCardClick = () => {
-    navigate(`/events/${event.handle || event.id}`)
+  const handleCardClick = (e) => {
+    e.preventDefault();
   }
 
   const handleButtonClick = (e) => {
-    e.stopPropagation()
-    navigate(`/events/${event.handle || event.id}`)
+    e.stopPropagation();
   }
 
   return (
-    <div className="event-card-wrapper" onClick={handleCardClick}>
+    <div className="event-card-wrapper" onClick={()=> navigate(`/events/${event.handle || event.id}`)}>
       <div className="event-card-image-container">
         <img 
           src={event.image?.url || event.image} 
@@ -61,7 +60,14 @@ const EventCard = ({ event }) => {
           <p className="event-card-author">By {event.author.name}</p>
         )}
         
-        <button className="button-pink-border" onClick={handleButtonClick}>{buttonLabel ? buttonLabel : 'Reserve Slot'}</button>
+        <button 
+          className="button-pink-border" 
+          data-bs-toggle="offcanvas" 
+          data-bs-target="#sessionBookingModal"
+          onClick={handleButtonClick}
+        >
+          {buttonLabel ? buttonLabel : 'Reserve Slot'}
+        </button>
       </div>
     </div>
   )
