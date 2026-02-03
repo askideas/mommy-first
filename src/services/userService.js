@@ -423,3 +423,119 @@ export const updateNotificationSettings = async (userId, notificationSettings) =
     return { success: false, message: 'Failed to update notification settings. Please try again.' }
   }
 }
+
+/**
+ * Get user's wishlist with product details
+ * @param {number} userId - The Shopify customer ID
+ * @returns {Promise} - Response with wishlist products data
+ */
+export const getWishlist = async (userId) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/wishlist/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Get Wishlist Error:', error)
+    return { success: false, message: 'Failed to fetch wishlist. Please try again.' }
+  }
+}
+
+/**
+ * Add product to wishlist
+ * @param {number} userId - The Shopify customer ID
+ * @param {string} productHandle - The product handle to add
+ * @returns {Promise} - Response with updated wishlist
+ */
+export const addToWishlistNew = async (userId, productHandle) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/wishlist/${userId}/add`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ productHandle })
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Add to Wishlist Error:', error)
+    return { success: false, message: 'Failed to add to wishlist. Please try again.' }
+  }
+}
+
+/**
+ * Remove product from wishlist
+ * @param {number} userId - The Shopify customer ID
+ * @param {string} productHandle - The product handle to remove
+ * @returns {Promise} - Response with updated wishlist
+ */
+export const removeFromWishlistNew = async (userId, productHandle) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/wishlist/${userId}/remove`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ productHandle })
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Remove from Wishlist Error:', error)
+    return { success: false, message: 'Failed to remove from wishlist. Please try again.' }
+  }
+}
+
+/**
+ * Clear entire wishlist
+ * @param {number} userId - The Shopify customer ID
+ * @returns {Promise} - Response with empty wishlist
+ */
+export const clearWishlist = async (userId) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/wishlist/${userId}/clear`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Clear Wishlist Error:', error)
+    return { success: false, message: 'Failed to clear wishlist. Please try again.' }
+  }
+}

@@ -19,6 +19,7 @@ import FlowerShadeHalf from '../../assets/About/flower-shade-half.svg'
 import BabiesSection from '../../Components/BabiesSection/BabiesSection'
 import AddressSection from '../../Components/AddressSection/AddressSection'
 import NotificationsSection from '../../Components/NotificationsSection/NotificationsSection'
+import WishlistSection from '../../Components/WishlistSection/WishlistSection'
 import NewUserModal from '../../Components/NewUserModal/NewUserModal'
 import { useAuth } from '../../contexts/AuthContext'
 import HelpSection from '../../Components/HelpSection/HelpSection'
@@ -188,6 +189,7 @@ const Profile = () => {
                         {activeSection === "#mybabies" && <BabiesSection />}
                         {activeSection === "#address" && <AddressSection />}
                         {activeSection === "#orders" && <OrdersSection />}
+                        {activeSection === "#wishlist" && <WishlistSection />}
                         {activeSection === "#help" && <HelpSection />}
                         {activeSection === "#notifications" && <NotificationsSection userData={customerData} />}
                     </div>
