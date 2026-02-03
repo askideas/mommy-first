@@ -190,6 +190,25 @@ const OrdersSection = () => {
                     </p>
                   </div>
                 </div>
+
+                <div className="line-items-container">
+                  {
+                    orders[detailsIndex].line_items.map((item,index)=> {
+                      return (
+                        <div className="order-line-item" key={index}>
+                          <div className="line-item-details">
+                            <img src={item.image ? item.image.src : 'null'} alt="" onError={(e) => e.target.src = DefaultImg} />
+                            <p className="name">{item.title}</p>
+                          </div>
+                          <div className="button-section">
+                            <button className="button-pink-border">RETURN</button>
+                          </div>
+                        </div>
+                      )
+                      
+                    })
+                  }
+                </div>
             </div>
           )
         }
