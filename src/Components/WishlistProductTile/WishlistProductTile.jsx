@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import './WishlistProductTile.css'
-import { Heart, X, Loader2 } from 'lucide-react'
+import { Heart, X, Loader2, Check } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../contexts/CartContext'
 import { toast } from 'react-toastify'
 import DefaultImg from '../../assets/default.png'
+import { getProductDetails } from '../../services/productService'
 
 const WishlistProductTile = ({ data, onRemove }) => {
     const product = data
     const navigate = useNavigate()
     const { addToCart } = useCart()
     const [isRemoving, setIsRemoving] = useState(false)
-    const [isAddingToCart, setIsAddingToCart] = useState(false)
+    const [isAdding, setIsAdding] = useState(false)
+    const [isAdded, setIsAdded] = useState(false)
+    const [error, setError] = useState('')
 
     const handleAddToBag = async (e) => {
         e.stopPropagation()
@@ -21,20 +24,59 @@ const WishlistProductTile = ({ data, onRemove }) => {
             return
         }
 
-        setIsAddingToCart(true)
+        if (isAdding || isAdded) return
+        
+        setIsAdding(true)
+        setError('')
+
         try {
-            // You'll need to get the variant ID - for now using the product handle
-            // In a real scenario, you'd fetch product details to get the default variant ID
-            await addToCart([{ 
-                variantId: product.graphql_id.replace('Product', 'ProductVariant') + '/1', 
-                quantity: 1 
-            }])
-            toast.success('Added to cart!')
-        } catch (error) {
-            console.error('Error adding to cart:', error)
-            toast.error('Failed to add to cart')
+            // Fetch product details to get the actual variant ID
+            console.log('Fetching product details for:', product.handle)
+            const productResponse = await getProductDetails(product.handle)
+            
+            if (!productResponse.success || !productResponse.data?.variants?.length) {
+                console.error('Failed to get product details:', productResponse)
+                setError('Product not found')
+                toast.error('Unable to add product to cart')
+                setTimeout(() => setError(''), 3000)
+                setIsAdding(false)
+                return
+            }
+
+            // Get the first variant (default variant) - this is the correct variant ID
+            const variantId = productResponse.data.variants[0].id
+            
+            const items = [{
+                variantId: variantId,
+                quantity: 1
+            }]
+
+            console.log('Adding to cart with variant ID:', variantId)
+            const response = await addToCart(items)
+            console.log('Add to cart response:', response)
+
+            if (response.success) {
+                setIsAdded(true)
+                toast.success('Added to cart!')
+                
+                // Remove from wishlist after successful add to cart
+                if (onRemove) {
+                    setTimeout(async () => {
+                        await onRemove(product.handle)
+                    }, 500)
+                }
+            } else {
+                setError(response.message || 'Failed to add')
+                toast.error(response.message || 'Failed to add to cart')
+                setTimeout(() => setError(''), 3000)
+            }
+        } catch (err) {
+            console.error('Add to cart error:', err)
+            setError('Something went wrong')
+            toast.error('Something went wrong')
+            setTimeout(() => setError(''), 3000)
         } finally {
-            setIsAddingToCart(false)
+            setIsAdding(false)
         }
     }
 
@@ -78,12 +120,16 @@ const WishlistProductTile = ({ data, onRemove }) => {
                 </p>
                 <div className='wishlist-btn-section-con'>
                     <button 
-                        className='button-pink-border wishlist-add-to-bag'
+                        className={`button-pink-border wishlist-add-to-bag ${isAdded ? 'added' : ''} ${error ? 'error' : ''}`}
                         onClick={handleAddToBag}
-                        disabled={isAddingToCart || !product.available_for_sale}
+                        disabled={isAdding || !product.available_for_sale || isRemoving}
                     >
-                        {isAddingToCart ? (
+                        {isAdding ? (
                             <><Loader2 className="spinner" size={14} /> Adding...</>
+                        ) : isAdded ? (
+                            <><Check size={14} /> Added!</>
+                        ) : error ? (
+                            error
                         ) : (
                             'Add to Bag'
                         )}
@@ -91,7 +137,7 @@ const WishlistProductTile = ({ data, onRemove }) => {
                     <button 
                         className='button-pink-center remove-item' 
                         onClick={handleRemove}
-                        disabled={isRemoving}
+                        disabled={isRemoving || isAdding}
                     >
                         {isRemoving ? <Loader2 className="spinner" size={14} /> : <X />}
                     </button>
