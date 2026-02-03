@@ -33,10 +33,10 @@ const Footer = () => {
                         <p className='menu-heading'>Shop</p>
                         <NavLink to="/shop" target='_blank'>Shop All</NavLink>
                         <NavLink tp="/bundles" target='_blank'>Exclusive Bundles <span className='flash-animation' style={{background: '#FF1F1F', color: '#ffffff'}}>Sale</span></NavLink>
-                        <NavLink to="/collections/pregnancy-care" target='_blank'>Pregnancy Care</NavLink>
-                        <NavLink to="/collections/postpartum-care" target='_blank'>Postpartum Care</NavLink>
-                        <NavLink to="/collections/breast-care" target='_blank'>Breast Care</NavLink>
-                        <NavLink to="/collections/baby-care" target='_blank'>Baby Care</NavLink>
+                        <NavLink to="/collection/pregnancy-care" target='_blank'>Pregnancy Care</NavLink>
+                        <NavLink to="/collection/postpartum-care" target='_blank'>Postpartum Care</NavLink>
+                        <NavLink to="/collection/breast-care" target='_blank'>Breast Care</NavLink>
+                        <NavLink to="/collection/baby-care" target='_blank'>Baby Care</NavLink>
                     </div>
 
                     <div className="menu-item-section">

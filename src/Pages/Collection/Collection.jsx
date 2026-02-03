@@ -12,6 +12,8 @@ import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import MF1 from '../../assets/MF1.png'
 import MF2 from '../../assets/MF2.png'
 import EsImage1 from '../../assets/Hero/slider-img.png'
+import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
+import SomeWentWrong from '../../assets/something-went-wrong.svg'
 
 const Collection = () => {
     const { collectionHandle } = useParams();
@@ -298,7 +300,30 @@ const Collection = () => {
                     <ProductsLoader text={`Loading ${collectionName || 'collection'} products...`} />
                 ) : error ? (
                     <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
-                        <p style={{color: 'red'}}>{error}</p>
+                        <ErrorComponent data={
+                        {
+                            "title": "Something went wrong",
+                            "subtitle": "We’re having trouble loading this page. Please try again.",
+                            "image": SomeWentWrong,
+                            "buttons": [
+                                {
+                                    label: "Retry",
+                                    className: "button-pink-center",
+                                    link:''
+                                },
+                                {
+                                    label: "Go to HOME",
+                                    className: "button-pink-border",
+                                    link:'/'
+                                },
+                                {
+                                    label: "Contact Support",
+                                    className: "button-pink-border",
+                                    link:'/contact'
+                                },
+                            ]
+                        }
+                    } />
                     </div>
                 ) : (
                     <>
