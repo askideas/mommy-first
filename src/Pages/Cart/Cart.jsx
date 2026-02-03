@@ -11,6 +11,7 @@ import { useCart } from '../../contexts/CartContext'
 import { goToCheckout, getCheckoutUrlForAuthenticatedCustomer } from '../../services/cartService'
 import { useAuth } from '../../contexts/AuthContext'
 import EmptyCartImg from '../../assets/empty-cart.svg'
+import ConfirmationModal from '../../Components/ConfirmationModal/ConfirmationModal'
 
 const Cart = () => {
     const {
@@ -26,6 +27,8 @@ const Cart = () => {
     const [updatingLineId, setUpdatingLineId] = useState(null)
     const [message, setMessage] = useState({ type: '', text: '' })
     const [orderNote, setOrderNote] = useState('')
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
+    const [itemToRemove, setItemToRemove] = useState(null)
     const { isAuthenticated, getShopifyCustomerAccessToken } = useAuth()
 
     // Fetch cart on mount
@@ -68,11 +71,19 @@ const Cart = () => {
     }
 
     const handleRemoveItem = async (lineId) => {
-        setUpdatingLineId(lineId)
+        setItemToRemove(lineId)
+        setShowConfirmModal(true)
+    }
+
+    const confirmRemoveItem = async () => {
+        if (!itemToRemove) return
+
+        setUpdatingLineId(itemToRemove)
         setMessage({ type: '', text: '' })
+        setShowConfirmModal(false)
 
         try {
-            const response = await removeFromCart([lineId])
+            const response = await removeFromCart([itemToRemove])
             console.log('Remove response:', response)
 
             if (response.success) {
@@ -85,6 +96,7 @@ const Cart = () => {
             setMessage({ type: 'error', text: 'Something went wrong' })
         } finally {
             setUpdatingLineId(null)
+            setItemToRemove(null)
         }
     }
 
@@ -161,6 +173,19 @@ const Cart = () => {
 
     return (
         <div className="container mt-5">
+            <ConfirmationModal
+                isOpen={showConfirmModal}
+                onClose={() => {
+                    setShowConfirmModal(false)
+                    setItemToRemove(null)
+                }}
+                onConfirm={confirmRemoveItem}
+                title="Remove from Cart"
+                message="Are you sure you want to remove this item from your cart?"
+                confirmText="Yes, Remove"
+                cancelText="Cancel"
+                isLoading={updatingLineId === itemToRemove}
+            />
             <div className="breadcrumbs-cart-section">
                 <NavLink to="/">Home</NavLink>
                 <ChevronRight />

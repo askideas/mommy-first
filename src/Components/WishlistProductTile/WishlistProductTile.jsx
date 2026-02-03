@@ -6,6 +6,7 @@ import { useCart } from '../../contexts/CartContext'
 import { toast } from 'react-toastify'
 import DefaultImg from '../../assets/default.png'
 import { getProductDetails } from '../../services/productService'
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
 const WishlistProductTile = ({ data, onRemove }) => {
     const product = data
@@ -15,6 +16,7 @@ const WishlistProductTile = ({ data, onRemove }) => {
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
 
     const handleAddToBag = async (e) => {
         e.stopPropagation()
@@ -82,7 +84,12 @@ const WishlistProductTile = ({ data, onRemove }) => {
 
     const handleRemove = async (e) => {
         e.stopPropagation()
+        setShowConfirmModal(true)
+    }
+
+    const confirmRemove = async () => {
         setIsRemoving(true)
+        setShowConfirmModal(false)
         try {
             await onRemove(product.handle)
         } catch (error) {
@@ -100,11 +107,12 @@ const WishlistProductTile = ({ data, onRemove }) => {
     }
 
     return (
-        <div 
-            className={`wishlist-product-tile-container`} 
-            onClick={() => navigate(`/shop/${product.handle}`)}
-        >
-            {!product.available_for_sale && (
+        <>
+            <div 
+                className={`wishlist-product-tile-container`} 
+                onClick={() => navigate(`/shop/${product.handle}`)}
+            >
+                {!product.available_for_sale && (
                 <p className="wpt-label">Out of Stock</p>
             )}
             <img 
@@ -144,6 +152,18 @@ const WishlistProductTile = ({ data, onRemove }) => {
                 </div>
             </div>
         </div>
+
+        <ConfirmationModal
+            isOpen={showConfirmModal}
+            onClose={() => setShowConfirmModal(false)}
+            onConfirm={confirmRemove}
+            title="Remove from Wishlist"
+            message="Are you sure you want to remove this item from your wishlist?"
+            confirmText="Yes, Remove"
+            cancelText="Cancel"
+            isLoading={isRemoving}
+        />
+        </>
     )
 }
 

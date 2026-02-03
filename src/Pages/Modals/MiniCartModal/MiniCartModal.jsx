@@ -7,6 +7,7 @@ import { goToCheckout, getCheckoutUrlForAuthenticatedCustomer } from '../../../s
 import DefaultImg from '../../../assets/default.png'
 import { useAuth } from '../../../contexts/AuthContext'
 import EmptyCartImg from '../../../assets/empty-cart.svg'
+import ConfirmationModal from '../../../Components/ConfirmationModal/ConfirmationModal'
 
 const MiniCartModal = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const MiniCartModal = () => {
     removeFromCart
   } = useCart();
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
 
   // Fetch cart when modal opens
   useEffect(() => {
@@ -49,8 +52,17 @@ const MiniCartModal = () => {
     await updateCartItems([{ lineId, quantity: newQuantity }]);
   };
 
-  const handleRemoveItem = async (lineId) => {
-    await removeFromCart([lineId]);
+  const handleRemoveItem = (lineId) => {
+    setItemToRemove(lineId);
+    setShowConfirmModal(true);
+  };
+
+  const confirmRemoveItem = async () => {
+    if (itemToRemove) {
+      await removeFromCart([itemToRemove]);
+      setShowConfirmModal(false);
+      setItemToRemove(null);
+    }
   };
 
   const handleCheckout = async () => {
@@ -208,6 +220,20 @@ const MiniCartModal = () => {
           </button>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={showConfirmModal}
+        onClose={() => {
+          setShowConfirmModal(false);
+          setItemToRemove(null);
+        }}
+        onConfirm={confirmRemoveItem}
+        title="Remove Item"
+        message="Are you sure you want to remove this item from your cart?"
+        confirmText="Yes, Remove"
+        cancelText="Cancel"
+        isLoading={isUpdating}
+      />
     </div>
   )
 }
