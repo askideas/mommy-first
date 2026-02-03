@@ -22,49 +22,49 @@ const Footer = () => {
                 <div className="menu-items-section">
                     <div className="menu-item-section">
                         <p className='menu-heading'>About</p>
-                        <NavLink>Story</NavLink>
-                        <NavLink>Contact Us</NavLink>
-                        <NavLink>Events</NavLink>
-                        <NavLink>Reviews</NavLink>
-                        <NavLink>Careers</NavLink>
-                        <NavLink>Business Enquiries</NavLink>
+                        <NavLink to="/about" target='_blank'>Our Story</NavLink>
+                        <NavLink to="/stories" target='_blank'>Reviews</NavLink>
+                        <NavLink to="/events" target='_blank'>Events</NavLink>
+                        <NavLink to="/blogs" target='_blank'>News Room</NavLink>
+                        <NavLink to="/donation" target='_blank'>Giving Back</NavLink>
                     </div>
 
                     <div className="menu-item-section">
-                        <p className='menu-heading'>The Journal</p>
-                        <NavLink>Pregnancy care</NavLink>
-                        <NavLink>Postpartum care</NavLink>
-                        <NavLink>Breast care</NavLink>
-                        <NavLink>Baby care</NavLink>
-                        <NavLink>Mom care</NavLink>
-                        <NavLink>Milestones</NavLink>
-                        <NavLink>Wellness & Comfort</NavLink>
+                        <p className='menu-heading'>Shop</p>
+                        <NavLink to="/shop" target='_blank'>Shop All</NavLink>
+                        <NavLink tp="/bundles" target='_blank'>Exclusive Bundles <span className='flash-animation' style={{background: '#FF1F1F', color: '#ffffff'}}>Sale</span></NavLink>
+                        <NavLink to="/collections/pregnancy-care" target='_blank'>Pregnancy Care</NavLink>
+                        <NavLink to="/collections/postpartum-care" target='_blank'>Postpartum Care</NavLink>
+                        <NavLink to="/collections/breast-care" target='_blank'>Breast Care</NavLink>
+                        <NavLink to="/collections/baby-care" target='_blank'>Baby Care</NavLink>
                     </div>
 
                     <div className="menu-item-section">
-                        <p className='menu-heading'>Products</p>
-                        <NavLink>New & Noteworthy <span className='flash-animation' style={{background: '#5ED34B', color: '#ffffff'}}>New</span></NavLink>
-                        <NavLink>Pregnancy care</NavLink>
-                        <NavLink>Postpartum care</NavLink>
-                        <NavLink>Exclusive Bundles <span className='flash-animation' style={{background: '#FF1F1F', color: '#ffffff'}}>Sale</span></NavLink>
-                        <NavLink>Recovery Essentials</NavLink>
-                        <NavLink>Mega Recovery Kits</NavLink>
-                        <NavLink>Breast Care</NavLink>
+                        <p className='menu-heading'>Community</p>
+                        <NavLink to="/care-hub" target='_blank'>Care Hub <span className='flash-animation' style={{background: '#5ED34B', color: '#ffffff'}}>New</span></NavLink>
+                        <NavLink>Care Guides</NavLink>
+                        <NavLink>Live Sessions</NavLink>
+                        <NavLink to="/blogs" target='_blank'>Blog</NavLink>
+                        <NavLink to="/events" target='_blank'>Events</NavLink>
+                        <NavLink>Education</NavLink>
+                        <NavLink to="/donation" target='_blank'>Giving Back</NavLink>
                     </div>
 
                     <div className="menu-item-section">
                         <p className='menu-heading'>Help</p>
-                        <NavLink>FAQs</NavLink>
-                        <NavLink>Privacy Policy</NavLink>
-                        <NavLink>Terms & Conditions</NavLink>
-                        <NavLink>Shipping & Delivery</NavLink>
+                        <NavLink to="/faqs" target='_blank'>FAQs</NavLink>
                         <NavLink>Order Tracking</NavLink>
-                        <NavLink>Contact Us</NavLink>
+                        <NavLink to="/returns-refunds">Returns & Reunds</NavLink>
+                        <NavLink to="/contact">Contact Us</NavLink>
                     </div>
 
                     <div className="menu-item-section">
-                        <p className='menu-heading'>GCC Distribution</p>
-                        <NavLink>Call: +974 50330029</NavLink>
+                        <p className='menu-heading'>Work With Us</p>
+                        <NavLink>Wholesale</NavLink>
+                        <NavLink>Retail Partners</NavLink>
+                        <NavLink>Affiliates</NavLink>
+                        <NavLink>Healthcare Providers</NavLink>
+                        <NavLink to="tel:+97450330029">Call: +974 50330029</NavLink>
                         <button className='button-pink'>Send an Email <Mail className='icon'/></button>
                     </div>
                 </div>
