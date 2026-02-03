@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   // Fetch wishlist when user is authenticated
   useEffect(() => {
-    if (isAuthenticated && user?.id) {
+    if (isAuthenticated && customer?.id) {
       fetchWishlistHandles()
     } else {
       setWishlistHandles([])
@@ -284,7 +284,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch wishlist handles
   const fetchWishlistHandles = async () => {
     try {
-      const userId = user?.id
+      const userId = customer?.id
       if (!userId) return
 
       const response = await getWishlist(userId)

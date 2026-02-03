@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import WishlistImage from '../../assets/wishlist-heart-image.svg'
 
 const Wishlist = () => {
-    const { customer, isAuthenticated } = useAuth()
+    const { customer, isAuthenticated, removeFromWishlistHandles } = useAuth()
     const navigate = useNavigate()
     const [wishlistItems, setWishlistItems] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -70,6 +70,8 @@ const Wishlist = () => {
             if (response.success) {
                 // Remove item from local state
                 setWishlistItems(prev => prev.filter(item => item.handle !== productHandle))
+                // Update global wishlist state in AuthContext
+                removeFromWishlistHandles(productHandle)
                 toast.success('Removed from wishlist')
             } else {
                 toast.error(response.message || 'Failed to remove item')

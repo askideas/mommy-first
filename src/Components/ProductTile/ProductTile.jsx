@@ -12,7 +12,7 @@ const ProductTile = (props) => {
     const product = props.data;
     const navigate = useNavigate()
     const { addToCart } = useCart()
-    const { user, customer, isInWishlist: checkIsInWishlist, addToWishlistHandles, removeFromWishlistHandles } = useAuth()
+    const { user, customer, addToWishlistHandles, removeFromWishlistHandles, wishlistHandles } = useAuth()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
@@ -21,12 +21,15 @@ const ProductTile = (props) => {
 
     // Check if product is in wishlist using AuthContext
     useEffect(() => {
-        if (user && product?.handle) {
-            setIsInWishlist(checkIsInWishlist(product.handle))
+        if (customer && product?.handle) {
+            var wishlistItems = wishlistHandles;
+            setIsInWishlist(
+                wishlistItems.includes(product.handle)
+            )
         } else {
             setIsInWishlist(false)
         }
-    }, [user, product, checkIsInWishlist])
+    }, [customer, product])
 
     const handleAddToCart = async (e) => {
         e.stopPropagation() // Prevent navigation to product details
@@ -51,17 +54,29 @@ const ProductTile = (props) => {
 
             if (response.success) {
                 setIsAdded(true)
+                toast.success('Product added to cart!', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                })
                 // Reset after 2 seconds
                 setTimeout(() => {
                     setIsAdded(false)
                 }, 2000)
             } else {
                 setError(response.message || 'Failed to add')
+                toast.error(response.message || 'Failed to add product', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                })
                 setTimeout(() => setError(''), 3000)
             }
         } catch (err) {
             console.error('Add to cart error:', err)
             setError('Something went wrong')
+            toast.error('Something went wrong', {
+                autoClose: 1500,
+                hideProgressBar: true
+            })
             setTimeout(() => setError(''), 3000)
         } finally {
             setIsAdding(false)
