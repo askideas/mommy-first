@@ -22,6 +22,7 @@ import NotificationsSection from '../../Components/NotificationsSection/Notifica
 import NewUserModal from '../../Components/NewUserModal/NewUserModal'
 import { useAuth } from '../../contexts/AuthContext'
 import HelpSection from '../../Components/HelpSection/HelpSection'
+import OrdersSection from '../../Components/OrdersSection/OrdersSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -186,6 +187,7 @@ const Profile = () => {
                         {activeSection === "#profile" && <ProfileSection />}
                         {activeSection === "#mybabies" && <BabiesSection />}
                         {activeSection === "#address" && <AddressSection />}
+                        {activeSection === "#orders" && <OrdersSection />}
                         {activeSection === "#help" && <HelpSection />}
                         {activeSection === "#notifications" && <NotificationsSection />}
                     </div>

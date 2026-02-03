@@ -64,7 +64,7 @@ const AppContent = () => {
     <>
       {isLoading && <PageLoader />}
       <ToastContainer
-        position="top-right"
+        position="top-center"
         autoClose={1500}
         hideProgressBar={true}
         newestOnTop={false}
