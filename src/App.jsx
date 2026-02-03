@@ -41,6 +41,7 @@ import NotFound from './Pages/NotFound/NotFound'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
+import ReturnRefund from './Pages/ReturnRefund/ReturnRefund'
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -104,6 +105,7 @@ const AppContent = () => {
           <Route element={<ProtectedRoute><Profile/></ProtectedRoute>} path='/profile' />
           <Route element={<AuthCallback/>} path='/auth/callback' />
           <Route element={<Donation/>} path='/donation' />
+          <Route element={<ReturnRefund/>} path='/returns-refunds' />
           <Route element={<NotFound/>} path='*' />
         </Routes>
         <ContactBanner />
