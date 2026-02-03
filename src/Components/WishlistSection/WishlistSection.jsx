@@ -92,7 +92,7 @@ const WishlistSection = () => {
                     <div className="empty-wishlist">
                         <img src={WishlistImage} alt="" />
                         <h3>Wishlist is empty</h3>
-                        <p>You don't have any products in the wishlist yet.</p>
+                        <p>You don't have any products <br /> in the wishlist yet.</p>
                         <button className='button-pink-center' onClick={()=>navigate('/shop')}>RETURN TO SHOP</button>
                     </div>
                 ) : (

@@ -93,13 +93,14 @@
                 font: 600 20px var(--font);
                 color: var(--primary-dark);
                 margin: 0;
+                text-align: center;
             }
 
             p {
                 font: 400 14px var(--font);
                 color: var(--primary-dark);
-                opacity: 0.6;
                 margin: 0;
+                text-align: center;
             }
 
             button {
