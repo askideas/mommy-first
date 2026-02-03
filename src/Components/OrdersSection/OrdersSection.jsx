@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import './OrdersSection.css'
 import Box from '../../assets/profile/cube.svg'
 import { useAuth } from '../../contexts/AuthContext'
+import { Loader2 } from 'lucide-react'
+import DefaultImg from '../../assets/default.png'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
 
 const OrdersSection = () => {
   const { customer } = useAuth()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [orders, setOrders] = useState(null)
 
   useEffect(() => {
     if (customer?.id) {
@@ -71,6 +74,7 @@ const OrdersSection = () => {
       })
 
       const data = await response.json()
+      setOrders(data.data);
       console.log('Orders API Response:', data)
 
     } catch (error) {
@@ -79,7 +83,7 @@ const OrdersSection = () => {
       setIsLoading(false)
     }
   }
-
+  
   return (
     <div className="orders-section-container">
         <div className="orders-section-header">
@@ -88,7 +92,47 @@ const OrdersSection = () => {
                 <span>My Orders</span>
             </p>
         </div>
-        {isLoading && <p style={{padding: '20px'}}>Loading orders...</p>}
+
+        {isLoading && (
+              <div className="profile-loading">
+                  <Loader2 className="spinner" size={20} />
+                  <span>Loading Orders</span>
+              </div>
+        )}
+
+        <div className="list-of-orders-container">
+          {
+            orders && orders.map((order, index)=> {
+              return(
+                <div className="order-details-card-section" key={index}>
+                  <div className="heading-section">
+                    <span className='delivery-date'>Delivery date here</span>
+                    <span className='view-order-details'>View order details</span>
+                  </div>
+
+                  <div className="line-items-container">
+                    {
+                      order.line_items.map((item,index)=> {
+                        return (
+                          <div className="order-line-item" key={index}>
+                            <div className="line-item-details">
+                              <img src={item.image ? item.image.src : 'null'} alt="" onError={(e) => e.target.src = DefaultImg} />
+                              <p className="name">{item.title}</p>
+                            </div>
+                            <div className="button-section">
+                              <button className="button-pink-border">TRACK PACKAGE</button>
+                            </div>
+                          </div>
+                        )
+                        
+                      })
+                    }
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
     </div>
   )
 }
