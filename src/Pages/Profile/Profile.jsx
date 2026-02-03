@@ -189,7 +189,7 @@ const Profile = () => {
                         {activeSection === "#address" && <AddressSection />}
                         {activeSection === "#orders" && <OrdersSection />}
                         {activeSection === "#help" && <HelpSection />}
-                        {activeSection === "#notifications" && <NotificationsSection />}
+                        {activeSection === "#notifications" && <NotificationsSection userData={customerData} />}
                     </div>
                 </div>
             </div>

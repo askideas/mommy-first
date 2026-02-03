@@ -354,3 +354,72 @@ export const removeFromWishlist = async (userId, productHandle) => {
     return { success: false, message: 'Failed to remove from wishlist. Please try again.' }
   }
 }
+
+/**
+ * Update notification settings
+ * @param {number} userId - The Shopify customer ID
+ * @param {Object} notificationSettings - Notification settings to update
+ * @param {boolean} [notificationSettings.enableEmailNotification] - Enable email notifications
+ * @param {boolean} [notificationSettings.enableSmsNotification] - Enable SMS notifications
+ * @param {boolean} [notificationSettings.enableWhatsappNotification] - Enable WhatsApp notifications
+ * @returns {Promise} - Response with updated user data
+ */
+export const updateNotificationSettings = async (userId, notificationSettings) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    // Get current user data
+    const userResponse = await getUserDetails(userId)
+    if (!userResponse.success) {
+      return { success: false, message: 'Failed to fetch user data.' }
+    }
+
+    const metafields = []
+
+    // Add email notification setting if provided
+    if (notificationSettings.hasOwnProperty('enableEmailNotification')) {
+      metafields.push({
+        namespace: 'custom',
+        key: 'enable_email_notification',
+        value: notificationSettings.enableEmailNotification.toString(),
+        type: 'boolean'
+      })
+    }
+
+    // Add SMS notification setting if provided
+    if (notificationSettings.hasOwnProperty('enableSmsNotification')) {
+      metafields.push({
+        namespace: 'custom',
+        key: 'enable_sms_notification',
+        value: notificationSettings.enableSmsNotification.toString(),
+        type: 'boolean'
+      })
+    }
+
+    // Add WhatsApp notification setting if provided
+    if (notificationSettings.hasOwnProperty('enableWhatsappNotification')) {
+      metafields.push({
+        namespace: 'custom',
+        key: 'enable_whatsapp_notification',
+        value: notificationSettings.enableWhatsappNotification.toString(),
+        type: 'boolean'
+      })
+    }
+
+    // Update user metafields
+    const response = await updateNewUserProfile(userId, {
+      firstName: userResponse.data?.firstName,
+      lastName: userResponse.data?.lastName,
+      metafields
+    })
+    
+    return response
+  } catch (error) {
+    console.error('Update Notification Settings Error:', error)
+    return { success: false, message: 'Failed to update notification settings. Please try again.' }
+  }
+}

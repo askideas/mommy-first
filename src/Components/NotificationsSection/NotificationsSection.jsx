@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './NotificationsSection.css'
 import Bell from '../../assets/profile/bell.svg'
-import { Mail, MessageCircle, MessageSquare } from 'lucide-react'
+import { Mail, MessageCircle, MessageSquare, Loader2 } from 'lucide-react'
+import { useAuth } from '../../contexts/AuthContext'
+import { updateNotificationSettings } from '../../services/userService'
+import { toast } from 'react-toastify'
 
-const NotificationsSection = () => {
+const NotificationsSection = ({ userData }) => {
+    const { user, customer } = useAuth()
+    const [isUpdating, setIsUpdating] = useState(false)
     const [notifications, setNotifications] = useState([
         {
             id: 1,
             type: 'Email',
             label: 'Email Notifications',
             icon: Mail,
-            enabled: true,
-            description: 'Get updates via email'
+            enabled: false,
+            description: 'Get updates via email',
+            metafieldKey: 'enable_email_notification'
         },
         {
             id: 2,
@@ -19,7 +25,8 @@ const NotificationsSection = () => {
             label: 'SMS',
             icon: MessageSquare,
             enabled: false,
-            description: 'Get updates via text message'
+            description: 'Get updates via text message',
+            metafieldKey: 'enable_sms_notification'
         },
         {
             id: 3,
@@ -27,22 +34,85 @@ const NotificationsSection = () => {
             label: 'WhatsApp',
             icon: MessageCircle,
             enabled: false,
-            description: 'Get updates via WhatsApp'
-        },
-        {
-            id: 4,
-            type: 'WhatsApp Business',
-            label: 'WhatsApp',
-            icon: MessageCircle,
-            enabled: false,
-            description: 'Get updates via WhatsApp Business'
+            description: 'Get updates via WhatsApp',
+            metafieldKey: 'enable_whatsapp_notification'
         }
     ])
 
-    const toggleNotification = (id) => {
-        setNotifications(notifications.map(notif =>
-            notif.id === id ? { ...notif, enabled: !notif.enabled } : notif
-        ))
+    // Load notification settings from user data
+    useEffect(() => {
+        if (userData?.metafields?.custom) {
+            const metafields = userData.metafields.custom
+            
+            setNotifications(prev => prev.map(notif => {
+                const metafieldData = metafields[notif.metafieldKey]
+                return {
+                    ...notif,
+                    enabled: metafieldData?.value === true || metafieldData?.value === 'true'
+                }
+            }))
+        }
+    }, [userData])
+
+    const toggleNotification = async (id) => {
+        // Get user ID from userData prop, customer, or user
+        const userId = userData?.id || customer?.id || user?.id
+        
+        if (!userId) {
+            toast.error('Please log in to update notification settings')
+            return
+        }
+
+        const notification = notifications.find(n => n.id === id)
+        const newEnabledState = !notification.enabled
+
+        // Optimistically update UI
+        setNotifications(prev =>
+            prev.map(notif =>
+                notif.id === id ? { ...notif, enabled: newEnabledState } : notif
+            )
+        )
+
+        setIsUpdating(true)
+
+        try {
+            // Prepare update payload
+            const updatePayload = {}
+            
+            if (notification.metafieldKey === 'enable_email_notification') {
+                updatePayload.enableEmailNotification = newEnabledState
+            } else if (notification.metafieldKey === 'enable_sms_notification') {
+                updatePayload.enableSmsNotification = newEnabledState
+            } else if (notification.metafieldKey === 'enable_whatsapp_notification') {
+                updatePayload.enableWhatsappNotification = newEnabledState
+            }
+
+            console.log('Updating notification settings for userId:', userId, 'payload:', updatePayload)
+            const response = await updateNotificationSettings(userId, updatePayload)
+
+            if (response.success) {
+                toast.success(`${notification.label} ${newEnabledState ? 'enabled' : 'disabled'}`)
+            } else {
+                // Revert on failure
+                setNotifications(prev =>
+                    prev.map(notif =>
+                        notif.id === id ? { ...notif, enabled: !newEnabledState } : notif
+                    )
+                )
+                toast.error(response.message || 'Failed to update notification settings')
+            }
+        } catch (error) {
+            console.error('Error updating notification:', error)
+            // Revert on error
+            setNotifications(prev =>
+                prev.map(notif =>
+                    notif.id === id ? { ...notif, enabled: !newEnabledState } : notif
+                )
+            )
+            toast.error('Something went wrong. Please try again.')
+        } finally {
+            setIsUpdating(false)
+        }
     }
 
     return (
@@ -73,6 +143,7 @@ const NotificationsSection = () => {
                                     className="notification-toggle"
                                     checked={notif.enabled}
                                     onChange={() => toggleNotification(notif.id)}
+                                    disabled={isUpdating}
                                 />
                                 <label htmlFor={`toggle-${notif.id}`} className="toggle-slider"></label>
                             </div>
