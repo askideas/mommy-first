@@ -54,6 +54,31 @@
   line-height: 1.4;
 }
 
+.blog-card-excerpt {
+  font: 400 13px var(--font);
+  color: var(--gray);
+  margin: 0 0 12px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blog-card-date {
+  font: 500 11px var(--font);
+  color: var(--primary-pink);
+  margin: 0 0 6px;
+}
+
+.blog-card-author {
+  font: 400 11px var(--font);
+  color: var(--gray);
+  margin: 0 0 16px;
+  font-style: italic;
+}
+
 .blog-card-subtitle {
   font: 400 12px var(--font);
   color: var(--gray);

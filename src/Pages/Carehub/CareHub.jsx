@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './CareHub.css'
 import MainImage from '../../assets/carehub/human.png'
@@ -23,19 +23,59 @@ import Boy from '../../assets/carehub/boy.svg'
 import Girl from '../../assets/carehub/girl.svg'
 import Email from '../../assets/carehub/email.svg'
 import CareGuideImage from '../../assets/carehub/care-guide-img.png'
+import { getLiveSessions, getJournals } from '../../services/blogService'
 
 const CareHub = () => {
   const navigate = useNavigate()
   const [visibleBlogs, setVisibleBlogs] = useState(3)
   const [visibleEvents, setVisibleEvents] = useState(3)
+  const [liveSessionsData, setLiveSessionsData] = useState([])
+  const [journalsData, setJournalsData] = useState([])
+  const [isLoadingSessions, setIsLoadingSessions] = useState(true)
+  const [isLoadingJournals, setIsLoadingJournals] = useState(true)
+
+  useEffect(() => {
+    fetchLiveSessions()
+    fetchJournals()
+  }, [])
+
+  const fetchLiveSessions = async () => {
+    setIsLoadingSessions(true)
+    try {
+      const response = await getLiveSessions()
+      console.log('Live sessions response:', response)
+      if (response.success && response.data?.articles?.edges) {
+        setLiveSessionsData(response.data.articles.edges)
+      }
+    } catch (error) {
+      console.error('Failed to fetch live sessions:', error)
+    } finally {
+      setIsLoadingSessions(false)
+    }
+  }
+
+  const fetchJournals = async () => {
+    setIsLoadingJournals(true)
+    try {
+      const response = await getJournals()
+      console.log('Journals response:', response)
+      if (response.success && response.data?.articles?.edges) {
+        setJournalsData(response.data.articles.edges)
+      }
+    } catch (error) {
+      console.error('Failed to fetch journals:', error)
+    } finally {
+      setIsLoadingJournals(false)
+    }
+  }
 
   const journalHeading = {
     subtitle: "From the Care Journal",
     description: "Short, supportive reads on pregnancy, postpartum recovery, and<br/>product-use education—written to feel calm and practical."
   }
 
-  const displayedBlogs = blogsData.slice(0, visibleBlogs)
-  const displayedEvents = eventsData.slice(0, visibleEvents)
+  const displayedBlogs = journalsData.slice(0, visibleBlogs)
+  const displayedEvents = liveSessionsData.slice(0, visibleEvents)
 
   const handleViewAllBlogs = () => {
     navigate('/blogs')
@@ -219,17 +259,23 @@ const CareHub = () => {
             <Heading data={journalHeading} />
             
             <div className="carehub-journal-grid">
-                {displayedBlogs.map((blog) => (
-                    <BlogCard key={blog.id} blog={blog} />
-                ))}
+                {isLoadingJournals ? (
+                    <p className="loading-text">Loading journals...</p>
+                ) : displayedBlogs.length > 0 ? (
+                    displayedBlogs.map((blog) => (
+                        <BlogCard key={blog.node.id} blog={blog.node} />
+                    ))
+                ) : (
+                    <p className="no-blogs-text">No journals available at the moment.</p>
+                )}
             </div>
 
             <div className="d-flex flex-column justify-content-center align-items-center mt-5">
-                <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+                <p className='progress-bar-text'>You've seen {displayedBlogs.length} out of {journalsData.length} articles</p>
                 <div className="progress-bar-con">
                     <span></span>
                 </div>
-                <button className='button-label' onClick={()=> navigate('/events')}>View all</button>
+                <button className='button-label' onClick={()=> navigate('/blogs')}>View all</button>
             </div>
         </div>
 
@@ -272,13 +318,19 @@ const CareHub = () => {
             </div>
 
             <div className="carehub-events-grid">
-                {displayedEvents.map((event) => (
-                    <EventCard key={event.id} event={event} />
-                ))}
+                {isLoadingSessions ? (
+                    <p className="loading-text">Loading sessions...</p>
+                ) : displayedEvents.length > 0 ? (
+                    displayedEvents.map((event) => (
+                        <EventCard key={event.node.id} event={event.node} />
+                    ))
+                ) : (
+                    <p className="no-events-text">No live sessions available at the moment.</p>
+                )}
             </div>
 
             <div className="d-flex flex-column justify-content-center align-items-center mt-5">
-                <p className='progress-bar-text'>You’ve seen 3 out of 12 activities</p>
+                <p className='progress-bar-text'>You've seen {displayedEvents.length} out of {liveSessionsData.length} activities</p>
                 <div className="progress-bar-con">
                     <span></span>
                 </div>

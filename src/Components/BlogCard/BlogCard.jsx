@@ -5,38 +5,56 @@ import './BlogCard.css'
 const BlogCard = ({ blog }) => {
   const navigate = useNavigate()
 
+  // Default placeholder image for blogs without images
+  const defaultImage = 'https://via.placeholder.com/400x300/FD8CBB/FFFFFF?text=Mommy+First'
+
+  // Helper function to get metafield value
+  const getMetafieldValue = (key) => {
+    const metafield = blog.metafields?.find(m => m.key === key)
+    return metafield?.value || null
+  }
+
   const handleCardClick = () => {
-    navigate(`/blogs/${blog.id}`)
+    navigate(`/blogs/${blog.handle || blog.id}`)
   }
 
   const handleButtonClick = (e) => {
     e.stopPropagation()
-    navigate(`/blogs/${blog.id}`)
+    navigate(`/blogs/${blog.handle || blog.id}`)
   }
+
+  const buttonLabel = getMetafieldValue('button_label')
+
+  // Format published date if available
+  const formattedDate = blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }) : ''
 
   return (
     <div className="blog-card-wrapper" onClick={handleCardClick}>
       <div className="blog-card-image-container">
         <img 
-          src={blog.image} 
+          src={blog.image.url || defaultImage} 
           alt={blog.title} 
           className="blog-card-image"
         />
-        {blog.isLive && (
-          <span className="blog-card-live-badge">LIVE</span>
-        )}
       </div>
       
       <div className="blog-card-content">
         <h3 className="blog-card-title">{blog.title}</h3>
-        <p className="blog-card-subtitle">{blog.subtitle}</p>
-        <p className="blog-card-description">{blog.description}</p>
-        
-        {blog.type === 'reserve' ? (
-          <button className="button-pink-border" onClick={handleButtonClick}>Reserve</button>
-        ) : (
-          <button className="button-pink-border" onClick={handleButtonClick}>Read article</button>
+        {blog.excerpt && (
+          <p className="blog-card-excerpt">{blog.excerpt}</p>
         )}
+        {formattedDate && (
+          <p className="blog-card-date">{formattedDate}</p>
+        )}
+        {blog.author?.name && (
+          <p className="blog-card-author">By {blog.author.name}</p>
+        )}
+        
+        <button className="button-pink-border" onClick={handleButtonClick}>{buttonLabel ? buttonLabel : 'Reacd Article'}</button>
       </div>
     </div>
   )
