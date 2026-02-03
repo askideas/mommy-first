@@ -64,7 +64,7 @@
     width: 450px;
     background: var(--white);
     border-radius: 16px;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 42.86px 85.71px 0px #DC5F9299;
     overflow: hidden;
     animation: slideUp 0.3s ease;
 }
