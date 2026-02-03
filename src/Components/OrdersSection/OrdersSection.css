@@ -92,6 +92,7 @@
                 font: 500 14px var(--font);
                 color: var(--primary-dark);
                 text-decoration: underline;
+                cursor: pointer;
             }
         }
 
