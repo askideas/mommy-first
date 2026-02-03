@@ -26,7 +26,7 @@
     border-radius: 24px;
     background: var(--white);
     box-shadow: 0px 34px 43px 0px #DC5F9233;
-    margin: 60px auto 26px auto;
+    margin: 60px auto 10px auto;
 
     h1 {
         font: 400 20px var(--font);
@@ -37,5 +37,31 @@
         font: 400 14px var(--font);
         color: var(--primary-dark);
         line-height: 20px;
+    }
+}
+
+.contact-section {
+    width: 856px;
+    height: fit-content;
+    padding: 48px;
+    border-radius: 24px;
+    background: var(--white);
+    box-shadow: 0px 34px 43px 0px #DC5F9233;
+    margin: 14px auto 26px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        font: 400 26px var(--font);
+        color: var(--primary-dark);
+        margin-bottom: 32px;
+    }
+
+    button {
+        width: fit-content;
+        height: 40px;
+        box-shadow: 0px 12px 32px 0px #FF006A40;
     }
 }

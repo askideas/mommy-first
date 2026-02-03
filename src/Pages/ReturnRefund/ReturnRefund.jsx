@@ -1,8 +1,10 @@
 import React from 'react'
 import './ReturnRefund.css'
 import { Calendar } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const ReturnRefund = () => {
+    const navigate = useNavigate();
   return (
     <div className="container">
         <div className="retun-refund-container">
@@ -44,6 +46,10 @@ const ReturnRefund = () => {
                 <p>📧 Email us at: customercare@neomedusa.com</p>
                 <p>📞 Call us at: (845) 300-9289</p>
                 <p>⏰ Customer Service Hours: Monday - Saturday, 9 AM - 5 PM (EST)</p>
+            </div>
+            <div className="contact-section">
+                <h1>Still have questions? We’re happy to help 🙂</h1>
+                <button className='button-pink-center' onClick={()=>navigate("/contact")}>CONTACT US</button>
             </div>
         </div>
     </div>
