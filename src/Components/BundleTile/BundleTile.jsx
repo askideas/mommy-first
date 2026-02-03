@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './BundleTile.css'
 import BundleTileImg from '../../assets/BundleRecom/bundle-item-1.png'
 import HightLightImg from '../../assets/BundlesHome/badge.png'
+import { Loader2, Check } from 'lucide-react'
+import { useCart } from '../../contexts/CartContext'
+import { toast } from 'react-toastify'
 
 const BundleTile = (props) => {
     const data = props.data;
+    const { addToCart } = useCart()
+    const [isAdding, setIsAdding] = useState(false)
+    const [isAdded, setIsAdded] = useState(false)
+    const [error, setError] = useState('')
 
     // Extract price from API response
     const price = data.priceRange?.minVariantPrice?.amount || data.variants?.[0]?.price?.amount || '0';
@@ -26,6 +33,58 @@ const BundleTile = (props) => {
         "FREE shipping",
         "Hassle free return policy"
     ];
+
+    const handleAddToCart = async (e) => {
+        e.stopPropagation() // Prevent any parent click handlers
+        
+        if (isAdding || isAdded) return
+        
+        setIsAdding(true)
+        setError('')
+
+        try {
+            // Get the first variant ID from the bundle/product
+            const variantId = data.variants?.[0]?.id || `gid://shopify/ProductVariant/${data.id}`
+            
+            const items = [{
+                variantId: variantId,
+                quantity: 1
+            }]
+
+            console.log('Adding bundle to cart:', items)
+            const response = await addToCart(items)
+            console.log('Add to cart response:', response)
+
+            if (response.success) {
+                setIsAdded(true)
+                toast.success('Bundle added to cart!', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                })
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    setIsAdded(false)
+                }, 2000)
+            } else {
+                setError(response.message || 'Failed to add')
+                toast.error(response.message || 'Failed to add bundle', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                })
+                setTimeout(() => setError(''), 3000)
+            }
+        } catch (err) {
+            console.error('Add to cart error:', err)
+            setError('Something went wrong')
+            toast.error('Something went wrong', {
+                autoClose: 1500,
+                hideProgressBar: true
+            })
+            setTimeout(() => setError(''), 3000)
+        } finally {
+            setIsAdding(false)
+        }
+    }
     
     return (
         <div className={`bundles-best-value-section-tile ${isBestValue.value ? 'activeTile' : ''}`}>
@@ -74,7 +133,21 @@ const BundleTile = (props) => {
                 <span className="price-label">Retail value ${data.retailValue || parseFloat(price).toFixed(2)} | Save ${data.savings || '0.00'}</span>
             </p>
 
-            <button className="button-pink-center">ADD TO BAG</button>
+            <button 
+                className={`button-pink-center ${isAdded ? 'added' : ''} ${error ? 'error' : ''}`}
+                onClick={handleAddToCart}
+                disabled={isAdding}
+            >
+                {isAdding ? (
+                    <><Loader2 className="spinner" size={16} /> Adding...</>
+                ) : isAdded ? (
+                    <><Check size={16} /> Added!</>
+                ) : error ? (
+                    error
+                ) : (
+                    'ADD TO BAG'
+                )}
+            </button>
 
             <div className="feature-of-bundle">
                 {
