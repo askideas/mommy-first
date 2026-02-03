@@ -52,6 +52,48 @@ export const AuthProvider = ({ children }) => {
     return () => clearInterval(interval)
   }, [])
 
+  // Auto logout after 10 minutes of inactivity
+  useEffect(() => {
+    if (!isAuthenticated) return
+
+    let inactivityTimer
+    const INACTIVITY_TIMEOUT = 10 * 60 * 1000 // 10 minutes in ms
+
+    const resetTimer = () => {
+      // Clear existing timer
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer)
+      }
+
+      // Set new timer
+      inactivityTimer = setTimeout(() => {
+        logout()
+        alert('You have been logged out due to inactivity.')
+      }, INACTIVITY_TIMEOUT)
+    }
+
+    // Events that reset the inactivity timer
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click']
+
+    // Add event listeners
+    events.forEach(event => {
+      document.addEventListener(event, resetTimer, true)
+    })
+
+    // Initialize timer
+    resetTimer()
+
+    // Cleanup
+    return () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer)
+      }
+      events.forEach(event => {
+        document.removeEventListener(event, resetTimer, true)
+      })
+    }
+  }, [isAuthenticated])
+
   const checkAuthStatus = async () => {
     try {
       const sessionToken = localStorage.getItem('sessionToken')
