@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { mergeCartsOnLogin, clearGuestCartId } from '../services/cartService'
+import { getWishlist } from '../services/userService'
 
 const AuthContext = createContext()
 
@@ -17,11 +18,21 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isNewCustomer, setIsNewCustomer] = useState(false)
+  const [wishlistHandles, setWishlistHandles] = useState([])
 
   // Check for existing session on mount
   useEffect(() => {
     checkAuthStatus()
   }, [])
+
+  // Fetch wishlist when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && user?.id) {
+      fetchWishlistHandles()
+    } else {
+      setWishlistHandles([])
+    }
+  }, [isAuthenticated, user])
 
   // Check session expiry every minute
   useEffect(() => {
@@ -270,12 +281,46 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  // Fetch wishlist handles
+  const fetchWishlistHandles = async () => {
+    try {
+      const userId = user?.id
+      if (!userId) return
+
+      const response = await getWishlist(userId)
+      if (response.success && response.data) {
+        const handles = response.data.map(item => item.handle)
+        setWishlistHandles(handles)
+      }
+    } catch (error) {
+      console.error('Failed to fetch wishlist:', error)
+    }
+  }
+
+  // Check if product is in wishlist
+  const isInWishlist = (productHandle) => {
+    return wishlistHandles.includes(productHandle)
+  }
+
+  // Add product to wishlist handles
+  const addToWishlistHandles = (productHandle) => {
+    if (!wishlistHandles.includes(productHandle)) {
+      setWishlistHandles(prev => [...prev, productHandle])
+    }
+  }
+
+  // Remove product from wishlist handles
+  const removeFromWishlistHandles = (productHandle) => {
+    setWishlistHandles(prev => prev.filter(handle => handle !== productHandle))
+  }
+
   const value = {
     user,
     customer,
     isAuthenticated,
     isLoading,
     isNewCustomer,
+    wishlistHandles,
     login,
     logout,
     refreshSession,
@@ -287,7 +332,11 @@ export const AuthProvider = ({ children }) => {
     getCustomerMetafield,
     getCustomerMetafields,
     getShopifyCustomerAccessToken,
-    needsProfileCompletion
+    needsProfileCompletion,
+    fetchWishlistHandles,
+    isInWishlist,
+    addToWishlistHandles,
+    removeFromWishlistHandles
   }
 
   return (

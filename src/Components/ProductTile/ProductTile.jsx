@@ -12,21 +12,21 @@ const ProductTile = (props) => {
     const product = props.data;
     const navigate = useNavigate()
     const { addToCart } = useCart()
-    const { user, customer } = useAuth()
+    const { user, customer, isInWishlist: checkIsInWishlist, addToWishlistHandles, removeFromWishlistHandles } = useAuth()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
     const [isWishlisting, setIsWishlisting] = useState(false)
     const [isInWishlist, setIsInWishlist] = useState(false)
 
-    // Check if product is in wishlist
+    // Check if product is in wishlist using AuthContext
     useEffect(() => {
-        if (customer?.metafields?.custom?.wishlist_items?.value) {
-            const wishlist = customer.metafields.custom.wishlist_items.value
-            const productHandle = product.handle
-            setIsInWishlist(wishlist.includes(productHandle))
+        if (user && product?.handle) {
+            setIsInWishlist(checkIsInWishlist(product.handle))
+        } else {
+            setIsInWishlist(false)
         }
-    }, [customer, product])
+    }, [user, product, checkIsInWishlist])
 
     const handleAddToCart = async (e) => {
         e.stopPropagation() // Prevent navigation to product details
@@ -100,6 +100,14 @@ const ProductTile = (props) => {
 
             if (response.success) {
                 setIsInWishlist(!isInWishlist)
+                
+                // Update wishlist handles in AuthContext
+                if (isInWishlist) {
+                    removeFromWishlistHandles(productHandle)
+                } else {
+                    addToWishlistHandles(productHandle)
+                }
+                
                 toast.success(!isInWishlist ? 'Added to wishlist!' : 'Removed from wishlist', {
                     autoClose: 1500,
                     hideProgressBar: true

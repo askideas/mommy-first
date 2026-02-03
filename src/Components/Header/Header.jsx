@@ -12,7 +12,7 @@ import { useCart } from '../../contexts/CartContext'
 
 const Header = () => {
     const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, wishlistHandles } = useAuth();
     const { totalQuantity } = useCart();
 
     // Add scroll event to toggle 'active' class
@@ -62,7 +62,12 @@ const Header = () => {
                     data-bs-target={isAuthenticated ? undefined : "#AuthenticationModal"} 
                     style={{cursor: 'pointer'}} 
                 />
-                <Heart className="icon" onClick={()=>navigate('/wishlist')} />
+                <div className="wishlist-icon-wrapper" onClick={()=>navigate('/wishlist')} style={{cursor: 'pointer'}}>
+                    <Heart className="icon" />
+                    {wishlistHandles.length > 0 && (
+                        <span className="wishlist-count-badge">{wishlistHandles.length > 99 ? '99+' : wishlistHandles.length}</span>
+                    )}
+                </div>
                 <div className="cart-icon-wrapper" data-bs-toggle="offcanvas" data-bs-target="#MiniCartModal" style={{cursor: 'pointer'}}>
                     <img src={CartIcon} alt="" />
                     {totalQuantity > 0 && (
