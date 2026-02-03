@@ -144,3 +144,101 @@
         }
     }
 }
+
+.order-details-section-container {
+    padding: 32px;
+    width: 100%;
+    height: fit-content;
+
+    .heading-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .delivery-date {
+            font: 500 14px var(--font);
+            color: var(--primary-dark);
+        }
+
+        .view-order-details {
+            font: 500 14px var(--font);
+            color: var(--primary-dark);
+
+            span {
+                color: var(--gray);
+                font: 400 12px var(--font);
+            }
+        }
+    }
+
+    .order-summary-section {
+        padding: 24px;
+        border-radius: 16px;
+        background: var(--pink-shade-bg);
+        width: 100%;
+        height: fit-content;
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .shipping-section {
+            width: 213px;
+
+            .label {
+                font: 400 12px var(--font);
+                color: var(--gray);
+            }
+
+            .item {
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+                margin-bottom: 6px;
+            }
+        }
+
+        .payment-method {
+            width: 213px;
+
+            .label {
+                font: 400 12px var(--font);
+                color: var(--gray);
+            }
+
+            .item {
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+                margin-bottom: 6px;
+            }
+        }
+
+        .summary-details {
+            width: fit-content;
+            min-width: 282px;
+            padding: 12px;
+            border-radius: 24px;
+            background: var(--white);
+
+            .label {
+                font: 400 12px var(--font);
+                color: var(--gray);
+            }
+
+            .item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font: 500 12px var(--font);
+                color: var(--primary-dark);
+                margin-bottom: 6px;
+
+                &.grand-total {
+                    padding: 8px 0;
+                    font: 500 14px var(--font);
+                    border-top: 1px solid var(--pink-border);
+                    margin-top: 16px;
+                }
+            }
+        }
+    }
+}
