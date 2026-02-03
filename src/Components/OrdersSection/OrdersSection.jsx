@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import './OrdersSection.css'
 import Box from '../../assets/profile/cube.svg'
 import { useAuth } from '../../contexts/AuthContext'
-import { Loader2 } from 'lucide-react'
+import { ChevronRight, Loader2 } from 'lucide-react'
 import DefaultImg from '../../assets/default.png'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
@@ -11,14 +11,8 @@ const OrdersSection = () => {
   const { customer } = useAuth()
   const [isLoading, setIsLoading] = useState(false);
   const [orders, setOrders] = useState(null);
-  const [stage, setStage] = useState('details');
+  const [stage, setStage] = useState('list');
   const [detailsIndex, setDetailsIndex] = useState(0)
-
-  useEffect(() => {
-    if (customer?.id) {
-      fetchOrders()
-    }
-  }, [customer?.id])
 
   const fetchAuthToken = async () => {
     try {
@@ -49,7 +43,7 @@ const OrdersSection = () => {
     }
   }
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     if (!customer?.id) {
       console.log('No customer ID available')
       return
@@ -57,7 +51,6 @@ const OrdersSection = () => {
 
     setIsLoading(true)
     try {
-      // Get auth token
       const token = await fetchAuthToken()
       if (!token) {
         console.error('Failed to get auth token')
@@ -66,7 +59,6 @@ const OrdersSection = () => {
 
       console.log('Fetching orders for customer ID:', customer.id)
       
-      // Fetch orders
       const response = await fetch(`${API_BASE_URL}/orders/customer/${customer.id}`, {
         method: 'GET',
         headers: {
@@ -76,23 +68,50 @@ const OrdersSection = () => {
       })
 
       const data = await response.json()
-      setOrders(data.data);
       console.log('Orders API Response:', data)
 
+      if (data.success && data.data) {
+        setOrders(data.data)
+      }
     } catch (error) {
       console.error('Error fetching orders:', error)
     } finally {
       setIsLoading(false)
     }
+  }, [customer?.id])
+
+  useEffect(() => {
+    if (customer?.id) {
+      fetchOrders()
+    }
+  }, [customer?.id, fetchOrders])
+
+  function handleViewDetails (index, stage) {
+    setDetailsIndex(index)
+    setStage(stage)
   }
   
   return (
     <div className="orders-section-container">
         <div className="orders-section-header">
-            <p className='heading'>
-                <img src={Box} alt="" />
-                <span>My Orders</span>
-            </p>
+          {
+            stage == 'list' && (
+              <p className='heading'>
+                  <img src={Box} alt="" />
+                  <span>My Orders</span>
+              </p>
+            )
+          }
+
+          {
+            stage == 'details' && (
+              <p className='heading'>
+                  <span onClick={() => handleViewDetails(0, 'list')} style={{cursor: 'pointer'}}>My Orders</span>
+                  <ChevronRight />
+                  <span>Order details</span>
+              </p>
+            )
+          }
         </div>
 
         {isLoading && (
@@ -111,7 +130,7 @@ const OrdersSection = () => {
                     <div className="order-details-card-section" key={index}>
                       <div className="heading-section">
                         <span className='delivery-date'>Delivery date here</span>
-                        <span className='view-order-details'>View order details</span>
+                        <span className='view-order-details' onClick={() => handleViewDetails(index, 'details')}>View order details</span>
                       </div>
 
                       <div className="line-items-container">
