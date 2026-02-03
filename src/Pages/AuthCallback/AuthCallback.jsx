@@ -69,7 +69,8 @@ const AuthCallback = () => {
           response.refreshToken, 
           response.user,
           response.customer,
-          response.isNewCustomer
+          response.isNewCustomer,
+          response.shopifyCustomerAccessToken
         )
         
         // Check if profile needs completion
