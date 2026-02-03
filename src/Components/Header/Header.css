@@ -1,5 +1,5 @@
 .header {
-    background: var(--white);
+    background: #ffffffcc;
     backdrop-filter: blur(50px);
     box-shadow: 0px 15px 50px 0px #FF509940;
     width: 100% !important;
@@ -14,7 +14,7 @@
 
 
     &.active {
-        background: var(--white);
+        background: #ffffffcc;
         backdrop-filter: blur(50px);
         box-shadow: 0px 15px 50px 0px #FF509940;
         width: 96% !important;
@@ -152,12 +152,14 @@
                 position: absolute;
                 top: -8px;
                 right: -8px;
-                min-width: 18px;
-                height: 18px;
+                min-width: 19px;
+                height: 15px;
                 padding: 0 5px;
-                background: linear-gradient(135deg, #FD8CBB 0%, #DC5F92 100%);
-                color: white;
-                font: 600 10px var(--font);
+                background: linear-gradient(90deg, #FFA800 0%, #FFC554 100%);
+                box-shadow: 0px 4px 4px 0px #FFA80030;
+                border: 1.81px solid var(--white);
+                color: var(--primary-dark);
+                font: 600 9px var(--font);
                 border-radius: 50px;
                 display: flex;
                 align-items: center;
