@@ -12,6 +12,7 @@ import { goToCheckout, getCheckoutUrlForAuthenticatedCustomer } from '../../serv
 import { useAuth } from '../../contexts/AuthContext'
 import EmptyCartImg from '../../assets/empty-cart.svg'
 import ConfirmationModal from '../../Components/ConfirmationModal/ConfirmationModal'
+import CartItemSkeleton from '../Modals/MiniCartModal/CartItemSkeleton'
 
 const Cart = () => {
     const {
@@ -129,9 +130,26 @@ const Cart = () => {
     if (isLoading) {
         return (
             <div className="container mt-5">
-                <div className="cart-loading">
-                    <Loader2 className="spinner" size={40} />
-                    <p>Loading your cart...</p>
+                <div className="breadcrumbs-cart-section">
+                    <NavLink to="/">Home</NavLink>
+                    <ChevronRight />
+                    <span>Cart</span>
+                </div>
+                <h1 className="cart-heading">Review your cart</h1>
+                <div className="cart-items-summary-main-container">
+                    <div className="cart-items-container">
+                        <div className="cart-items-header">
+                            <p className="product">Product</p>
+                            <p className="price">Price</p>
+                            <p className="quantity">Quantity</p>
+                            <p className="amount">Total</p>
+                        </div>
+                        <div className="cart-items-section">
+                            {[...Array(3)].map((_, index) => (
+                                <CartItemSkeleton key={index} />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         )

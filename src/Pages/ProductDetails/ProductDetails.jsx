@@ -5,6 +5,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { getProductDetails } from '../../services/productService'
 import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
+import ProductDetailsSkeleton from './ProductDetailsSkeleton'
 import Star from '../../assets/star.svg'
 import WayToPay from '../../assets/ways-to-pay.png'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
@@ -103,7 +104,7 @@ const ProductDetails = () => {
         return (
             <div className="productDetailsPageContent">
                 <div className="container">
-                    <ProductsLoader text="Loading product details..." />
+                    <ProductDetailsSkeleton />
                 </div>
             </div>
         );

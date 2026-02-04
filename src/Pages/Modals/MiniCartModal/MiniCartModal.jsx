@@ -8,6 +8,7 @@ import DefaultImg from '../../../assets/default.png'
 import { useAuth } from '../../../contexts/AuthContext'
 import EmptyCartImg from '../../../assets/empty-cart.svg'
 import ConfirmationModal from '../../../Components/ConfirmationModal/ConfirmationModal'
+import CartItemSkeleton from './CartItemSkeleton'
 
 const MiniCartModal = () => {
   const navigate = useNavigate();
@@ -110,9 +111,10 @@ const MiniCartModal = () => {
 
       <div className="mini-cart-modal-body">
         {isLoading ? (
-          <div className="minicart-loading">
-            <Loader2 className="spinner" size={32} />
-            <p>Loading cart...</p>
+          <div className="cart-items-list">
+            {[...Array(3)].map((_, index) => (
+              <CartItemSkeleton key={index} />
+            ))}
           </div>
         ) : items.length === 0 ? (
           <div className="minicart-empty">
