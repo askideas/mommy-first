@@ -142,3 +142,86 @@
     font: 600 14px var(--font);
   }
 }
+
+/* Calendar Styles */
+.session-booking-calender .available-date {
+  background-color: #d4edda !important;
+  border-radius: 50%;
+  color: #155724 !important;
+  font-weight: 600;
+}
+
+.session-booking-calender .available-date:hover {
+  background-color: #c3e6cb !important;
+}
+
+.session-booking-calender .react-datepicker__day--disabled {
+  color: #ccc !important;
+  cursor: not-allowed !important;
+}
+
+.session-booking-calender .react-datepicker__day--selected.available-date {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+/* Time Slots Styles */
+.time-slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.time-slot {
+  padding: 12px 20px;
+  border: 2px solid var(--primary-pink);
+  background: white;
+  border-radius: 8px;
+  font: 500 14px var(--font);
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.time-slot:hover:not(:disabled) {
+  background: var(--primary-pink);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.time-slot.selected {
+  background: var(--primary-pink);
+  color: white;
+}
+
+.time-slot.full {
+  border-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.time-slot.full:hover {
+  background: white;
+  color: #999;
+  transform: none;
+}
+
+.slot-capacity {
+  font-size: 11px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+.no-slots-message {
+  font: 400 14px var(--font);
+  color: var(--gray);
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}

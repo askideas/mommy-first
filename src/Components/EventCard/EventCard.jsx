@@ -12,6 +12,9 @@ const EventCard = ({ event }) => {
   const navigate = useNavigate()
   const [selectedDate, setSelectedDate] = useState(null)
   const [sessionData, setSessionData] = useState(null)
+  const [availableDates, setAvailableDates] = useState([])
+  const [selectedTimeSlots, setSelectedTimeSlots] = useState([])
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
 
   // Helper function to get metafield value
   const getMetafieldValue = (key) => {
@@ -45,7 +48,16 @@ const EventCard = ({ event }) => {
           const data = sessionDoc.data();
           const formattedData = formatSessionData(data);
           setSessionData(formattedData);
+          
+          // Extract all available dates (normalize to local timezone)
+          const dates = data.dates?.map(dateEntry => {
+            const [year, month, day] = dateEntry.date.split('-');
+            return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+          }) || [];
+          setAvailableDates(dates);
+          
           console.log('Formatted Session Data:', formattedData);
+          console.log('Available Dates:', dates);
         } else {
           console.log('No session document found');
         }
@@ -63,17 +75,17 @@ const EventCard = ({ event }) => {
 
     // Process dates array
     data.dates?.forEach((dateEntry) => {
-      const date = new Date(dateEntry.date);
-      const year = date.getFullYear();
-      const month = date.getMonth(); // 0-11 (Jan=0, Dec=11)
-
+      // Parse date in local timezone to avoid UTC offset issues
+      const [year, month, day] = dateEntry.date.split('-');
+      const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+      
       // Initialize year if not exists
       if (!yearMonthData[year]) {
         yearMonthData[year] = Array(12).fill(null).map(() => []);
       }
 
       // Add date and time slots to appropriate month
-      yearMonthData[year][month].push({
+      yearMonthData[year][month - 1].push({
         date: dateEntry.date,
         timeSlots: dateEntry.timeSlots || []
       });
@@ -85,6 +97,60 @@ const EventCard = ({ event }) => {
       createdAt: data.createdAt,
       yearMonthData: yearMonthData
     };
+  };
+
+  // Check if a date is available
+  const isDateAvailable = (date) => {
+    const normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const result = availableDates.some(availableDate => {
+      const normalizedAvailable = new Date(availableDate.getFullYear(), availableDate.getMonth(), availableDate.getDate());
+      const match = normalizedDate.getTime() === normalizedAvailable.getTime();
+      if (match) {
+        console.log('Match found:', normalizedDate, normalizedAvailable);
+      }
+      return match;
+    });
+    console.log('Checking date:', date.toDateString(), 'Available:', result, 'Total available dates:', availableDates.length);
+    return result;
+  };
+
+  // Handle date selection
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setSelectedTimeSlot(null);
+    
+    if (date && sessionData) {
+      // Format date to match Firestore format (YYYY-MM-DD)
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      
+      const monthData = sessionData.yearMonthData[year]?.[month] || [];
+      const selectedDateData = monthData.find(d => d.date === dateString);
+      
+      setSelectedTimeSlots(selectedDateData?.timeSlots || []);
+      console.log('Date String:', dateString);
+      console.log('Month Data:', monthData);
+      console.log('Selected Date Data:', selectedDateData);
+      console.log('Selected Date Time Slots:', selectedDateData?.timeSlots);
+    } else {
+      setSelectedTimeSlots([]);
+    }
+  };
+
+  // Format time to 12-hour format
+  const formatTime = (time) => {
+    const [hours, minutes] = time.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes} ${ampm}`;
+  };
+
+  // Handle time slot selection
+  const handleTimeSlotClick = (timeSlot) => {
+    setSelectedTimeSlot(timeSlot);
   };
 
   const handleCardClick = (e) => {
@@ -146,21 +212,42 @@ const EventCard = ({ event }) => {
             <div className="session-booking-calender">
                 <DatePicker
                   selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
+                  onChange={handleDateChange}
                   inline
                   minDate={new Date()}
                   dateFormat="MMMM d, yyyy"
                   calendarClassName="session-calendar"
+                  filterDate={isDateAvailable}
+                  dayClassName={(date) => 
+                    isDateAvailable(date) ? 'available-date' : undefined
+                  }
                 />
             </div>
             <h1 className="selected-date">Select time slot</h1>
-            <h2 className="desc">Available slots are below</h2>
+            <h2 className="desc">
+              {selectedDate 
+                ? `Available slots for ${selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`
+                : 'Please select a date first'
+              }
+            </h2>
             <div className="time-slots-container">
-                <button className="time-slot">10:00 AM</button>
-                <button className="time-slot">10:00 AM</button>
-                <button className="time-slot">10:00 AM</button>
-                <button className="time-slot">10:00 AM</button>
-                <button className="time-slot">10:00 AM</button>
+              {selectedTimeSlots.length > 0 ? (
+                selectedTimeSlots.map((slot, index) => (
+                  <button 
+                    key={index}
+                    className={`time-slot ${selectedTimeSlot === slot ? 'selected' : ''} ${slot.booked >= slot.capacity ? 'full' : ''}`}
+                    onClick={() => handleTimeSlotClick(slot)}
+                    disabled={slot.booked >= slot.capacity}
+                  >
+                    {formatTime(slot.time)}
+                    <span className="slot-capacity"> ({slot.capacity - slot.booked} left)</span>
+                  </button>
+                ))
+              ) : (
+                <p className="no-slots-message">
+                  {selectedDate ? 'No slots available for this date' : 'Select a date to view available time slots'}
+                </p>
+              )}
             </div>
         </div>
         <div className="session-modal-footer">
