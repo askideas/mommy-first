@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import ProfileImg from '../../assets/profile/pf-def.png'
-import { CircleQuestionMark, Info, Loader2 } from 'lucide-react'
+import { CircleQuestionMark, Info, Loader2, Play } from 'lucide-react'
 import UserIcon from '../../assets/profile/user-square.svg'
 import Smile from '../../assets/profile/smile.svg'
 import Map from '../../assets/profile/map.svg'
@@ -24,6 +24,7 @@ import NewUserModal from '../../Components/NewUserModal/NewUserModal'
 import { useAuth } from '../../contexts/AuthContext'
 import HelpSection from '../../Components/HelpSection/HelpSection'
 import OrdersSection from '../../Components/OrdersSection/OrdersSection'
+import SessionsSection from '../../Components/SessionsSection/SessionsSection'
 
 const Profile = () => {
     const location = useLocation();
@@ -108,6 +109,11 @@ const Profile = () => {
                     title : 'Wishlist',
                     icon : Heart,
                     hash : '#wishlist'
+                },
+                {
+                    title : 'Sessions',
+                    icon : Tag,
+                    hash : '#sessions'
                 }
             ]
         },
@@ -190,6 +196,7 @@ const Profile = () => {
                         {activeSection === "#address" && <AddressSection />}
                         {activeSection === "#orders" && <OrdersSection />}
                         {activeSection === "#wishlist" && <WishlistSection />}
+                        {activeSection === "#sessions" && <SessionsSection />}
                         {activeSection === "#help" && <HelpSection />}
                         {activeSection === "#notifications" && <NotificationsSection userData={customerData} />}
                     </div>
