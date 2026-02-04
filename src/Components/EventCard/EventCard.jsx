@@ -7,9 +7,11 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { db } from '../../firebase/config'
 import { doc, getDoc } from 'firebase/firestore'
+import { useAuth } from '../../contexts/AuthContext'
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth();
   const [selectedDate, setSelectedDate] = useState(null)
   const [sessionData, setSessionData] = useState(null)
   const [availableDates, setAvailableDates] = useState([])
@@ -207,14 +209,27 @@ const EventCard = ({ event }) => {
             <p className="event-card-author">By {event.author.name}</p>
           )}
           
-          <button 
-            className="button-pink-border" 
-            data-bs-toggle="offcanvas" 
-            data-bs-target={`#sessionBookingModal${sessionId}`}
-            onClick={handleButtonClick}
-          >
-            {buttonLabel ? buttonLabel : 'Reserve Slot'}
-          </button>
+          {
+            isAuthenticated ? (
+              <button 
+                className="button-pink-border" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target={`#sessionBookingModal${sessionId}`}
+                onClick={handleButtonClick}
+              >
+                {buttonLabel ? buttonLabel : 'Reserve Slot'}
+              </button>
+            ) : (
+              <button 
+                className="button-pink-border" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target={`#AuthenticationModal`}
+              >
+                {buttonLabel ? buttonLabel : 'Reserve Slot'}
+              </button>
+            )
+          }
+          
         </div>
       </div>
 
