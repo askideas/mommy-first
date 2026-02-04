@@ -16,6 +16,11 @@ const EventCard = ({ event }) => {
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([])
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
   const [isLoadingSlots, setIsLoadingSlots] = useState(false)
+  const [bookingForm, setBookingForm] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  })
 
   // Helper function to get metafield value
   const getMetafieldValue = (key) => {
@@ -160,6 +165,11 @@ const EventCard = ({ event }) => {
     setSelectedTimeSlot(timeSlot);
   };
 
+  // Handle booking form input change
+  const handleBookingInputChange = (field, value) => {
+    setBookingForm(prev => ({ ...prev, [field]: value }));
+  };
+
   const handleCardClick = (e) => {
     e.preventDefault();
   }
@@ -214,6 +224,41 @@ const EventCard = ({ event }) => {
             <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
         </div>
         <div className="session-modal-body">
+            <div className="booking-form-section">
+              <h1 className="section-heading">Your Details</h1>
+              <div className="booking-form-row">
+                <div className="booking-input-group">
+                  <label>Name *</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter your full name"
+                    value={bookingForm.name}
+                    onChange={(e) => handleBookingInputChange('name', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="booking-form-row">
+                <div className="booking-input-group">
+                  <label>Email *</label>
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email"
+                    value={bookingForm.email}
+                    onChange={(e) => handleBookingInputChange('email', e.target.value)}
+                  />
+                </div>
+                <div className="booking-input-group">
+                  <label>Phone Number *</label>
+                  <input 
+                    type="tel" 
+                    placeholder="Enter your phone number"
+                    value={bookingForm.phone}
+                    onChange={(e) => handleBookingInputChange('phone', e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            
             <h1 className="selected-date">Select date</h1>
             <h2 className="desc">Available dates are below</h2>
             <div className="session-booking-calender">
