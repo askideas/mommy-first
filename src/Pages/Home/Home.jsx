@@ -11,6 +11,7 @@ import BundlesHome from '../../Components/BundlesHome/BundlesHome'
 import HeroSection from '../../Components/HeroSection/HeroSection'
 import HeroTextSection from '../../Components/HeroTextSection/HeroTextSection'
 import Snowfall from '../../Components/Snowfall/Snowfall'
+import PageLoader from '../../Components/PageLoader/PageLoader'
 
 import { db } from '../../firebase/config'
 import { doc, getDoc } from 'firebase/firestore'
@@ -83,6 +84,7 @@ const Home = () => {
 
   return (
     <>
+      {loading && <PageLoader />}
       <Snowfall />
 
       <HeroSection data={heroSectionData} loading={loading} />

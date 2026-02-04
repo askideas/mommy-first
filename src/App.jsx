@@ -13,9 +13,6 @@ import ComingSoon from './Components/ComingSoon/ComingSoon'
 import ProductDetails from './Pages/ProductDetails/ProductDetails'
 import ChatBot from './Components/ChatBot/ChatBot'
 import Modals from './Pages/Modals/Modals'
-import PageLoader from './Components/PageLoader/PageLoader'
-import { useLoading } from './contexts/LoadingContext'
-import { usePageLoading } from './hooks/usePageLoading'
 import Stories from './Pages/Stories/Stories'
 import Events from './Pages/Events/Events'
 import EventDetails from './Pages/EventDetails/EventDetails'
@@ -47,11 +44,6 @@ const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
   useGlobalFadeUpAnimations()
   
-  // Handle page loading on route changes
-  usePageLoading()
-  
-  const { isLoading } = useLoading()
-
   const location = useLocation();
 
   useEffect(() => {
@@ -63,7 +55,6 @@ const AppContent = () => {
 
   return (
     <>
-      {isLoading && <PageLoader />}
       <ToastContainer
         position="top-center"
         autoClose={1500}
@@ -75,7 +66,7 @@ const AppContent = () => {
         draggable={false}
         pauseOnHover={false}
       />
-      <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}>
+      <div>
         <ScrollToTop />
         <Header />
         <Routes>
