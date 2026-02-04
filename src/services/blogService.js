@@ -117,3 +117,30 @@ export const getBlogs = async (blogHandle = 'news') => {
     return { success: false, message: 'Failed to fetch blogs. Please try again.' }
   }
 }
+
+/**
+ * Get events
+ * @returns {Promise} - Response with events data
+ */
+export const getEvents = async () => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/blogs/events`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Get Events Error:', error)
+    return { success: false, message: 'Failed to fetch events. Please try again.' }
+  }
+}
