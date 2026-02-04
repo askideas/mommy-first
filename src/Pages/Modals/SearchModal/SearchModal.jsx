@@ -4,6 +4,7 @@ import './SearchModal.css'
 import DefaultImg from '../../../assets/default.png'
 import { useNavigate } from 'react-router-dom'
 import NoResultsImagefrom from '../../../assets/search/no-results-search-icon.svg'
+import SearchResultSkeleton from './SearchResultSkeleton'
 
 const SearchModal = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -189,12 +190,28 @@ const SearchModal = () => {
                 </div>
             )}
 
-            {/* Results Stage */}
-            {!loading && searchQuery.trim() && searchResults.length > 0 && (
-                
+            {/* Loading Stage - Show skeleton loaders */}
+            {loading && searchQuery.trim() && (
                 <div className="search-results-container left">
                     <div className="search-results-filter left">
-                        <p className="results-found">You searched for ’peri bott’</p>
+                        <p className="results-found">Searching for '{searchQuery}'...</p>
+                        <div className="filters-section left">
+                            <button className='active'>Products</button>
+                        </div>
+                    </div>
+                    <div className="results-list">
+                        {[...Array(5)].map((_, index) => (
+                            <SearchResultSkeleton key={index} />
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Results Stage */}
+            {!loading && searchQuery.trim() && searchResults.length > 0 && (
+                <div className="search-results-container left">
+                    <div className="search-results-filter left">
+                        <p className="results-found">You searched for '{searchQuery}'</p>
                         <div className="filters-section left">
                             <button className='active'>Products (4)</button>
                             <button>Events (4)</button>
