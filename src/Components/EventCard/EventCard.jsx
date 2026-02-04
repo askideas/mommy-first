@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './EventCard.css'
 import '../../Pages/Modals/SessionBookingModal/SessionBookingModal.css'
-import { X } from 'lucide-react'
+import { X, Check } from 'lucide-react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { db } from '../../firebase/config'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, getDocs, collection, query, where } from 'firebase/firestore'
 import { useAuth } from '../../contexts/AuthContext'
+import { updateNewUserProfile, getUserDetails } from '../../services/userService'
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate()
@@ -18,11 +19,9 @@ const EventCard = ({ event }) => {
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([])
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
   const [isLoadingSlots, setIsLoadingSlots] = useState(false)
-  const [bookingForm, setBookingForm] = useState({
-    name: '',
-    email: '',
-    phone: ''
-  })
+  const [isBooking, setIsBooking] = useState(false)
+  const [bookingSuccess, setBookingSuccess] = useState(false)
+  const [reservationId, setReservationId] = useState('')
 
   // Helper function to get metafield value
   const getMetafieldValue = (key) => {
@@ -167,9 +166,107 @@ const EventCard = ({ event }) => {
     setSelectedTimeSlot(timeSlot);
   };
 
-  // Handle booking form input change
-  const handleBookingInputChange = (field, value) => {
-    setBookingForm(prev => ({ ...prev, [field]: value }));
+  // Generate unique booking ID
+  const generateBookingId = async () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    const prefix = `MFLS${day}${month}${year}`;
+
+    // Query Firestore to get existing bookings with this prefix
+    const bookingsRef = collection(db, 'sessionBookings');
+    const q = query(bookingsRef, where('__name__', '>=', prefix), where('__name__', '<', prefix + '\uf8ff'));
+    const querySnapshot = await getDocs(q);
+    
+    const nextNumber = querySnapshot.size + 1;
+    return `${prefix}${nextNumber}`;
+  };
+
+  // Handle reserve slot button click
+  const handleReserveSlot = async () => {
+    if (!selectedDate || !selectedTimeSlot) {
+      alert('Please select both date and time slot');
+      return;
+    }
+
+    setIsBooking(true);
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const customer = JSON.parse(localStorage.getItem('customer'));
+      
+      if (!user || !customer) {
+        alert('User not authenticated');
+        return;
+      }
+
+      // Generate unique booking ID
+      const bookingId = await generateBookingId();
+      
+      // Format session date
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const sessionDate = `${year}-${month}-${day}`;
+
+      // Prepare booking data
+      const bookingData = {
+        bookedAt: new Date().toISOString(),
+        email: customer.email || user.email,
+        mobile: customer.phone || '',
+        name: `${customer.firstName || ''} ${customer.lastName || ''}`.trim() || user.displayName,
+        sessionDate: sessionDate,
+        sessionId: sessionId,
+        sessionName: sessionData?.sessionName || event.title,
+        status: 'confirmed',
+        timeSlot: selectedTimeSlot.time
+      };
+
+      // Save to Firestore
+      await setDoc(doc(db, 'sessionBookings', bookingId), bookingData);
+
+      // Update user metafields with session booking
+      const userDetailsResponse = await getUserDetails(customer.id);
+      let existingSessions = [];
+      
+      if (userDetailsResponse.success && userDetailsResponse.data?.metafields?.custom?.sessions?.value) {
+        try {
+          existingSessions = JSON.parse(userDetailsResponse.data.metafields.custom.sessions.value);
+        } catch (e) {
+          existingSessions = [];
+        }
+      }
+
+      existingSessions.push({
+        bookingId: bookingId,
+        sessionId: sessionId,
+        sessionName: bookingData.sessionName,
+        sessionDate: sessionDate,
+        timeSlot: selectedTimeSlot.time,
+        status: 'confirmed',
+        bookedAt: bookingData.bookedAt
+      });
+
+      await updateNewUserProfile(customer.id, {
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        metafields: [{
+          namespace: 'custom',
+          key: 'sessions',
+          value: JSON.stringify(existingSessions),
+          type: 'json'
+        }]
+      });
+
+      // Set success state
+      setReservationId(bookingId);
+      setBookingSuccess(true);
+    } catch (error) {
+      console.error('Booking failed:', error);
+      alert('Failed to reserve slot. Please try again.');
+    } finally {
+      setIsBooking(false);
+    }
   };
 
   const handleCardClick = (e) => {
@@ -239,42 +336,24 @@ const EventCard = ({ event }) => {
             <button className="close-btn" data-bs-dismiss="offcanvas" aria-label="Close"><X /></button>
         </div>
         <div className="session-modal-body">
-            <div className="booking-form-section">
-              <h1 className="section-heading">Your Details</h1>
-              <div className="booking-form-row">
-                <div className="booking-input-group">
-                  <label>Name *</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter your full name"
-                    value={bookingForm.name}
-                    onChange={(e) => handleBookingInputChange('name', e.target.value)}
-                  />
+            {bookingSuccess ? (
+              <div className="booking-success-screen">
+                <div className="success-icon">
+                  <Check size={48} />
+                </div>
+                <h1 className="reservation-id-label">Reservation ID</h1>
+                <h2 className="reservation-id">{reservationId}</h2>
+                <p className="success-message">You're in! See you soon.</p>
+                <p className="success-submessage">Please check your email for the session link. <br /> Join on time to enjoy the full session. Wishing <br /> you a happy motherhood journey. 💛</p>
+                <p className="contact-message">If you have any questions, please contact us with the <br /> reference number to our support team.</p>
+                <div className="success-buttons">
+                  <button className="button-pink-center" onClick={() => navigate('/')}>Home</button>
+                  <button className="button-pink-border" onClick={() => navigate('/contact')}>Contact us</button>
                 </div>
               </div>
-              <div className="booking-form-row">
-                <div className="booking-input-group">
-                  <label>Email *</label>
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email"
-                    value={bookingForm.email}
-                    onChange={(e) => handleBookingInputChange('email', e.target.value)}
-                  />
-                </div>
-                <div className="booking-input-group">
-                  <label>Phone Number *</label>
-                  <input 
-                    type="tel" 
-                    placeholder="Enter your phone number"
-                    value={bookingForm.phone}
-                    onChange={(e) => handleBookingInputChange('phone', e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-            
-            <h1 className="selected-date">Select date</h1>
+            ) : (
+              <>
+                <h1 className="selected-date">Select date</h1>
             <h2 className="desc">Available dates are below</h2>
             <div className="session-booking-calender">
                 <DatePicker
@@ -332,10 +411,20 @@ const EventCard = ({ event }) => {
                 </p>
               )}
             </div>
+              </>
+            )}
         </div>
-        <div className="session-modal-footer">
-            <button className="button-pink-center">Reserve slot</button>
-        </div>
+        {!bookingSuccess && (
+          <div className="session-modal-footer">
+            <button 
+              className="button-pink-center" 
+              onClick={handleReserveSlot}
+              disabled={!selectedDate || !selectedTimeSlot || isBooking}
+            >
+              {isBooking ? 'Reserving...' : 'Reserve slot'}
+            </button>
+          </div>
+        )}
       </div>
     </>
     

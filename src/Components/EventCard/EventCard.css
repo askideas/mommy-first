@@ -114,6 +114,92 @@
   box-shadow: none;
 }
 
+/* Booking Success Screen */
+.booking-success-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  min-height: 400px;
+}
+
+.success-icon {
+  width: 86px;
+  height: 86px;
+  background: #06E775;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 24px;
+  animation: successPop 0.5s ease-out;
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.reservation-id-label {
+  font: 400 10px var(--font);
+  color: var(--primary-light);
+  margin-bottom: 8px;
+  margin-top: 30px;
+}
+
+.reservation-id {
+  font: 500 32px var(--font);
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+.success-message {
+  font: 400 24px var(--font);
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+}
+
+.success-submessage {
+  font: 400 14px var(--font);
+  color: var(--primary-light);
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 50px;
+}
+
+.contact-message {
+  font: 400 10px var(--font);
+  color: var(--primary-light);
+  margin-bottom: 24px;
+}
+
+.success-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+
+  button {
+    height: 40px;
+  }
+}
+
+.success-buttons button {
+  min-width: 140px;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .event-card-image-container {
@@ -126,6 +212,24 @@
 
   .event-card-description {
     font: 400 12px var(--font);
+  }
+
+  .booking-success-screen {
+    padding: 30px 15px;
+    min-height: 350px;
+  }
+
+  .success-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .reservation-id {
+    font: 700 24px var(--font);
+  }
+
+  .success-message {
+    font: 600 18px var(--font);
   }
 }
 
