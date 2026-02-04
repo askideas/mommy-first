@@ -56,7 +56,36 @@ const BlogDetails = () => {
   if (isLoading) {
     return (
       <div className="container mt-5">
-        <p>Loading blog...</p>
+        <div className="blog-details-skeleton">
+          <div className="skeleton-breadcrumbs">
+            <div className="skeleton-breadcrumb-item"></div>
+            <div className="skeleton-breadcrumb-item"></div>
+            <div className="skeleton-breadcrumb-item"></div>
+          </div>
+          
+          <div className="blog-details-main-container">
+            <div className="skeleton-image"></div>
+            
+            <div className="blog-description">
+              <div className="skeleton-category"></div>
+              <div className="skeleton-title"></div>
+              <div className="skeleton-paragraph"></div>
+              <div className="skeleton-paragraph"></div>
+              <div className="skeleton-paragraph short"></div>
+            </div>
+            
+            <div className="blog-author-container">
+              <div className="skeleton-author-label"></div>
+              <div className="skeleton-author-name"></div>
+            </div>
+          </div>
+          
+          <div className="related-blogs-container">
+            <div className="skeleton-blog-card"></div>
+            <div className="skeleton-blog-card"></div>
+            <div className="skeleton-blog-card"></div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -74,8 +103,6 @@ const BlogDetails = () => {
     <div className="container mt-5">
       <div className="breadcrumbs-section">
         <NavLink to="/">Home</NavLink>
-        <ChevronRight />
-        <NavLink to="/care-hub">Journals</NavLink>
         <ChevronRight />
         <NavLink to="/blogs">Journals</NavLink>
         <ChevronRight />
