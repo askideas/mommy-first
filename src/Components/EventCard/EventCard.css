@@ -161,8 +161,8 @@
 }
 
 .session-booking-calender .react-datepicker__day--selected.available-date {
-  background-color: #06E775 !important;
-  color: white !important;
+  background-color: var(--primary-pink) !important;
+  color: var(--white) !important;
 }
 
 /* Time Slots Styles */
