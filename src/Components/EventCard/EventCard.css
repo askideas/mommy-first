@@ -195,8 +195,8 @@
 }
 
 .time-slot.selected {
-  background: var(--primary-pink);
-  color: white;
+  background: var(--primary-pink) !important;
+    color: var(--white) !important;
 }
 
 .time-slot.full {
