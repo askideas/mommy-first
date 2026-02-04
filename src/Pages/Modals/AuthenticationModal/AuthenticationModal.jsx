@@ -169,9 +169,9 @@ const AuthenticationModal = () => {
         if (response.isNewCustomer) {
           navigate('/profile#profile')
         } else {
-          navigate('/')
+          setSuccessScreen(true)
         }
-        setSuccessScreen(true)
+        
         setError('')
       } else {
         setError(response.message || 'Invalid OTP. Please try again.')
