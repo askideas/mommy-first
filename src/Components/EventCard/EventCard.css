@@ -135,19 +135,19 @@
   justify-content: center;
   color: white;
   margin-bottom: 24px;
-  animation: successPop 0.5s ease-out;
+  animation: successPop 0.6s ease-out;
 }
 
 @keyframes successPop {
   0% {
-    transform: scale(0);
+    transform: scale(0) rotate(-180deg);
     opacity: 0;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.2) rotate(10deg);
   }
   100% {
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
     opacity: 1;
   }
 }
@@ -157,6 +157,7 @@
   color: var(--primary-light);
   margin-bottom: 8px;
   margin-top: 30px;
+  animation: slideInUp 0.5s ease-out 0.3s both;
 }
 
 .reservation-id {
@@ -164,12 +165,14 @@
   color: var(--primary-dark);
   margin-bottom: 16px;
   letter-spacing: 2px;
+  animation: slideInUp 0.5s ease-out 0.4s both;
 }
 
 .success-message {
   font: 400 24px var(--font);
   color: var(--primary-dark);
   margin-bottom: 12px;
+  animation: slideInUp 0.5s ease-out 0.5s both;
 }
 
 .success-submessage {
@@ -178,21 +181,35 @@
   max-width: 500px;
   line-height: 1.6;
   margin-bottom: 50px;
+  animation: slideInUp 0.5s ease-out 0.6s both;
 }
 
 .contact-message {
   font: 400 10px var(--font);
   color: var(--primary-light);
   margin-bottom: 24px;
+  animation: slideInUp 0.5s ease-out 0.7s both;
 }
 
 .success-buttons {
   display: flex;
   gap: 12px;
   justify-content: center;
+  animation: slideInUp 0.5s ease-out 0.8s both;
 
   button {
     height: 40px;
+  }
+}
+
+@keyframes slideInUp {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
