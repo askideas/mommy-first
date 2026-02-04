@@ -25,6 +25,7 @@ const Shop = () => {
     const [authToken, setAuthToken] = useState(null);
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
+    const [loadingCollections, setLoadingCollections] = useState(true);
     const [error, setError] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -85,6 +86,7 @@ const Shop = () => {
 
     // Function to fetch collections
     const fetchCollections = async (token) => {
+        setLoadingCollections(true);
         try {
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/collections`, {
                 method: 'GET',
@@ -104,10 +106,20 @@ const Shop = () => {
             console.log('Collections response:', result);
 
             if (result.success && result.data) {
-                setCollections(result.data);
+                // Filter collections that have display_in_shop_page = true
+                const filteredCollections = result.data.filter(collection => {
+                    const displayMetafield = collection.metafields?.find(
+                        m => m.key === 'display_in_shop_page'
+                    );
+                    return displayMetafield?.value === true || displayMetafield?.value === 'true';
+                });
+                console.log('Filtered collections for shop page:', filteredCollections);
+                setCollections(filteredCollections);
             }
         } catch (err) {
             console.error('Error fetching collections:', err);
+        } finally {
+            setLoadingCollections(false);
         }
     };
 
@@ -331,18 +343,38 @@ const Shop = () => {
                     <button 
                         className={`filter-button ${activeFilter === 'ALL' ? 'active' : ''}`}
                         onClick={() => handleQuickFilterClick('ALL')}
+                        disabled={loadingCollections}
                     >
                         ALL
                     </button>
-                    {collections.map((collection) => (
-                        <button 
-                            key={collection.id}
-                            className={`filter-button ${activeFilter === collection.handle ? 'active' : ''}`}
-                            onClick={() => handleQuickFilterClick(collection.handle)}
-                        >
-                            {collection.title.toUpperCase()}
-                        </button>
-                    ))}
+                    {loadingCollections ? (
+                        // Show skeleton loaders while fetching collections
+                        [...Array(4)].map((_, index) => (
+                            <div 
+                                key={index}
+                                className="filter-button skeleton-loader"
+                                style={{
+                                    width: '120px',
+                                    height: '40px',
+                                    background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+                                    backgroundSize: '200% 100%',
+                                    animation: 'shimmer 1.5s infinite',
+                                    borderRadius: '8px',
+                                    cursor: 'not-allowed'
+                                }}
+                            />
+                        ))
+                    ) : (
+                        collections.map((collection) => (
+                            <button 
+                                key={collection.id}
+                                className={`filter-button ${activeFilter === collection.handle ? 'active' : ''}`}
+                                onClick={() => handleQuickFilterClick(collection.handle)}
+                            >
+                                {collection.title.toUpperCase()}
+                            </button>
+                        ))
+                    )}
                 </div>
                 <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
             </div>
