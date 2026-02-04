@@ -1,20 +1,67 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import './BlogDetails.css'
 import { blogsData } from '../../data/blogsData'
 import BlogCard from '../../Components/BlogCard/BlogCard'
 import { ChevronRight } from 'lucide-react'
+import { getArticleByHandle, getJournals } from '../../services/blogService'
 
 const BlogDetails = () => {
   const { id } = useParams()
-  const blog = blogsData.find(b => b.id === parseInt(id))
-  
-  // Get related blogs (exclude current blog, limit to 3)
-  const relatedBlogs = blogsData
-    .filter(b => b.id !== parseInt(id))
-    .slice(0, 3)
+  const [blog, setBlog] = useState(null)
+  const [relatedBlogs, setRelatedBlogs] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  if (!blog) {
+  useEffect(() => {
+    fetchBlogData()
+    fetchRelatedBlogs()
+  }, [id])
+
+  const fetchBlogData = async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await getArticleByHandle(id)
+      console.log('Article response:', response)
+      if (response.success && response.data) {
+        setBlog(response.data)
+      } else {
+        setError('Blog not found')
+      }
+    } catch (error) {
+      console.error('Failed to fetch blog:', error)
+      setError('Failed to load blog')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const fetchRelatedBlogs = async () => {
+    try {
+      const response = await getJournals()
+      if (response.success && response.data?.articles?.edges) {
+        // Get 3 related blogs excluding current one
+        const filtered = response.data.articles.edges
+          .filter(edge => edge.node.handle !== id)
+          .slice(0, 3)
+          .map(edge => edge.node)
+        setRelatedBlogs(filtered)
+      }
+    } catch (error) {
+      console.error('Failed to fetch related blogs:', error)
+    }
+  }
+  
+  if (isLoading) {
+    return (
+      <div className="container mt-5">
+        <p>Loading blog...</p>
+      </div>
+    )
+  }
+
+  if (error || !blog) {
     return (
       <div className="blog-details-not-found">
         <h2>Blog not found</h2>
@@ -39,22 +86,24 @@ const BlogDetails = () => {
 
       <div className="blog-details-main-container">
         <img 
-          src={blog.heroImage || blog.image} 
+          src={blog.image?.url || blog.image} 
           alt={blog.title} 
           className='blog-details-image' 
         />
 
         <div className="blog-description">
-          <span className="blog-details-category">{blog.category}</span>
+          <span className="blog-details-category">{blog.category || 'Journal'}</span>
           <h1>{blog.title}</h1>
-          {blog.content && blog.content.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+          {blog.contentHtml ? (
+            <div dangerouslySetInnerHTML={{ __html: blog.contentHtml }} />
+          ) : blog.excerpt ? (
+            <p>{blog.excerpt}</p>
+          ) : null}
         </div>
 
         <div className="blog-author-container">
           <p>Written by:</p>
-          <h1>{blog.author}</h1>
+          <h1>{blog.author?.name || blog.author || 'Mommy First'}</h1>
         </div>
       </div>
 

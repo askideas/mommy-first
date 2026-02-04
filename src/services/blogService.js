@@ -144,3 +144,31 @@ export const getEvents = async () => {
     return { success: false, message: 'Failed to fetch events. Please try again.' }
   }
 }
+
+/**
+ * Get article by handle
+ * @param {string} handle - The article handle
+ * @returns {Promise} - Response with article data
+ */
+export const getArticleByHandle = async (handle) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/blogs/journals/articles/${handle}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Get Article Error:', error)
+    return { success: false, message: 'Failed to fetch article. Please try again.' }
+  }
+}
