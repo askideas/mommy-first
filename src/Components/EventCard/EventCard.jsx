@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './EventCard.css'
 import '../../Pages/Modals/SessionBookingModal/SessionBookingModal.css'
 import { X } from 'lucide-react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { db } from '../../firebase/config'
+import { doc, getDoc } from 'firebase/firestore'
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate()
   const [selectedDate, setSelectedDate] = useState(null)
+  const [sessionData, setSessionData] = useState(null)
 
   // Helper function to get metafield value
   const getMetafieldValue = (key) => {
@@ -28,6 +31,61 @@ const EventCard = ({ event }) => {
     day: 'numeric',
     year: 'numeric',
   }) : ''
+
+  // Fetch session data from Firestore
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      if (!sessionId) return;
+
+      try {
+        const sessionDocRef = doc(db, 'liveSessions', sessionId);
+        const sessionDoc = await getDoc(sessionDocRef);
+
+        if (sessionDoc.exists()) {
+          const data = sessionDoc.data();
+          const formattedData = formatSessionData(data);
+          setSessionData(formattedData);
+          console.log('Formatted Session Data:', formattedData);
+        } else {
+          console.log('No session document found');
+        }
+      } catch (error) {
+        console.error('Error fetching session data:', error);
+      }
+    };
+
+    fetchSessionData();
+  }, [sessionId]);
+
+  // Format session data by year and month
+  const formatSessionData = (data) => {
+    const yearMonthData = {};
+
+    // Process dates array
+    data.dates?.forEach((dateEntry) => {
+      const date = new Date(dateEntry.date);
+      const year = date.getFullYear();
+      const month = date.getMonth(); // 0-11 (Jan=0, Dec=11)
+
+      // Initialize year if not exists
+      if (!yearMonthData[year]) {
+        yearMonthData[year] = Array(12).fill(null).map(() => []);
+      }
+
+      // Add date and time slots to appropriate month
+      yearMonthData[year][month].push({
+        date: dateEntry.date,
+        timeSlots: dateEntry.timeSlots || []
+      });
+    });
+
+    return {
+      sessionName: data.sessionName,
+      status: data.status,
+      createdAt: data.createdAt,
+      yearMonthData: yearMonthData
+    };
+  };
 
   const handleCardClick = (e) => {
     e.preventDefault();
