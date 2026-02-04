@@ -4,6 +4,7 @@ import HeroImageLabel from '../../Components/HeroImageLabel/HeroImageLabel'
 import HeroImage from '../../assets/hero-label.png'
 import { Settings2 } from 'lucide-react'
 import ProductTile from '../../Components/ProductTile/ProductTile'
+import ProductTileSkeleton from '../../Components/ProductTile/ProductTileSkeleton'
 import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSlider'
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
@@ -347,7 +348,11 @@ const Shop = () => {
             </div>
 
             {loading ? (
-                <ProductsLoader text="Discovering the perfect products for you..." />
+                <div className="products-list-container">
+                    {[...Array(16)].map((_, index) => (
+                        <ProductTileSkeleton key={index} />
+                    ))}
+                </div>
             ) : error ? (
                 <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px'}}>
                     <ErrorComponent data={
