@@ -18,6 +18,7 @@ const ProductTile = (props) => {
     const [error, setError] = useState('')
     const [isWishlisting, setIsWishlisting] = useState(false)
     const [isInWishlist, setIsInWishlist] = useState(false)
+    const { isAuthenticated } = useAuth();
 
     // Check if product is in wishlist using AuthContext
     useEffect(() => {
@@ -171,11 +172,22 @@ const ProductTile = (props) => {
                     {isWishlisting ? (
                         <Loader2 className="wishlist-spinner" size={20} />
                     ) : (
-                        <Heart 
-                            className={`wishlist ${isInWishlist ? 'filled' : ''}`}
-                            onClick={handleWishlist}
-                            fill={isInWishlist ? 'currentColor' : 'none'}
-                        />
+                        <>
+                            <Heart 
+                                className={`wishlist ${isInWishlist ? 'filled' : ''} ${isAuthenticated ? 'd-none' : ''}`}
+                                onClick={handleWishlist}
+                                data-bs-toggle={isAuthenticated ? undefined : "offcanvas"} 
+                                data-bs-target={isAuthenticated ? undefined : "#AuthenticationModal"} 
+                                fill={isInWishlist ? 'currentColor' : 'none'}
+                            />
+
+                            <Heart 
+                                className={`wishlist ${isInWishlist ? 'filled' : ''} ${isAuthenticated ? '' : 'd-none'}`}
+                                onClick={handleWishlist}
+                                fill={isInWishlist ? 'currentColor' : 'none'}
+                            />
+                        </>
+                        
                     )}
                 </div>
             </div>
