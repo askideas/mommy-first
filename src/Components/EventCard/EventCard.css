@@ -145,9 +145,9 @@
 
 /* Calendar Styles */
 .session-booking-calender .available-date {
-  background-color: #d4edda !important;
+  background-color: #06E775 !important;
   border-radius: 50%;
-  color: #155724 !important;
+  color: var(--white) !important;
   font-weight: 600;
 }
 
@@ -161,7 +161,7 @@
 }
 
 .session-booking-calender .react-datepicker__day--selected.available-date {
-  background-color: #28a745 !important;
+  background-color: #06E775 !important;
   color: white !important;
 }
 
@@ -224,4 +224,53 @@
   text-align: center;
   padding: 20px;
   margin: 0;
+}
+
+/* Skeleton Loader for Time Slots */
+.time-slot-skeleton {
+  padding: 12px 20px;
+  border: 2px solid #f0f0f0;
+  background: #f8f8f8;
+  border-radius: 8px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-line {
+  height: 16px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line-small {
+  height: 12px;
+  width: 60%;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+  align-self: center;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }

@@ -15,6 +15,7 @@ const EventCard = ({ event }) => {
   const [availableDates, setAvailableDates] = useState([])
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([])
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false)
 
   // Helper function to get metafield value
   const getMetafieldValue = (key) => {
@@ -118,6 +119,7 @@ const EventCard = ({ event }) => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setSelectedTimeSlot(null);
+    setIsLoadingSlots(true);
     
     if (date && sessionData) {
       // Format date to match Firestore format (YYYY-MM-DD)
@@ -126,16 +128,21 @@ const EventCard = ({ event }) => {
       const day = date.getDate();
       const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       
-      const monthData = sessionData.yearMonthData[year]?.[month] || [];
-      const selectedDateData = monthData.find(d => d.date === dateString);
-      
-      setSelectedTimeSlots(selectedDateData?.timeSlots || []);
-      console.log('Date String:', dateString);
-      console.log('Month Data:', monthData);
-      console.log('Selected Date Data:', selectedDateData);
-      console.log('Selected Date Time Slots:', selectedDateData?.timeSlots);
+      // Simulate loading for better UX
+      setTimeout(() => {
+        const monthData = sessionData.yearMonthData[year]?.[month] || [];
+        const selectedDateData = monthData.find(d => d.date === dateString);
+        
+        setSelectedTimeSlots(selectedDateData?.timeSlots || []);
+        setIsLoadingSlots(false);
+        console.log('Date String:', dateString);
+        console.log('Month Data:', monthData);
+        console.log('Selected Date Data:', selectedDateData);
+        console.log('Selected Date Time Slots:', selectedDateData?.timeSlots);
+      }, 300);
     } else {
       setSelectedTimeSlots([]);
+      setIsLoadingSlots(false);
     }
   };
 
@@ -231,18 +238,34 @@ const EventCard = ({ event }) => {
               }
             </h2>
             <div className="time-slots-container">
-              {selectedTimeSlots.length > 0 ? (
-                selectedTimeSlots.map((slot, index) => (
-                  <button 
-                    key={index}
-                    className={`time-slot ${selectedTimeSlot === slot ? 'selected' : ''} ${slot.booked >= slot.capacity ? 'full' : ''}`}
-                    onClick={() => handleTimeSlotClick(slot)}
-                    disabled={slot.booked >= slot.capacity}
-                  >
-                    {formatTime(slot.time)}
-                    <span className="slot-capacity"> ({slot.capacity - slot.booked} left)</span>
-                  </button>
-                ))
+              {isLoadingSlots ? (
+                // Skeleton loader for time slots
+                <>
+                  {[1, 2, 3, 4].map((item) => (
+                    <div key={item} className="time-slot-skeleton">
+                      <div className="skeleton-line"></div>
+                      <div className="skeleton-line-small"></div>
+                    </div>
+                  ))}
+                </>
+              ) : selectedTimeSlots.length > 0 ? (
+                selectedTimeSlots.map((slot, index) => {
+                  const slotsLeft = slot.capacity - slot.booked;
+                  const isFull = slotsLeft <= 0;
+                  return (
+                    <button 
+                      key={index}
+                      className={`time-slot ${selectedTimeSlot === slot ? 'selected' : ''} ${isFull ? 'full' : ''}`}
+                      onClick={() => handleTimeSlotClick(slot)}
+                      disabled={isFull}
+                    >
+                      {formatTime(slot.time)}
+                      <span className="slot-capacity">
+                        {isFull ? ' (Full)' : ` (${slotsLeft} left)`}
+                      </span>
+                    </button>
+                  );
+                })
               ) : (
                 <p className="no-slots-message">
                   {selectedDate ? 'No slots available for this date' : 'Select a date to view available time slots'}
