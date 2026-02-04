@@ -12,7 +12,7 @@ const Modals = () => {
       <MiniCartModal />
       <MegaMenuModal />
       <AuthenticationModal/>
-      <SessionBookingModal />
+      {/* <SessionBookingModal /> */}
     </>
     
   )

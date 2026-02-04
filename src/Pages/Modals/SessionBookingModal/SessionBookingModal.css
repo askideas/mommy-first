@@ -1,11 +1,11 @@
-#sessionBookingModal {
-    width: 600px;
+.sessionBookingModal {
+    width: 600px !important;
     height: 100vh;
     background: var(--white);
     box-shadow: -16px 0px 16px 0px #3720354D;
     border-radius: 24px 0 0 24px;
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
 
     .mf-off-canvas-header {
         width: 100%;
