@@ -6,6 +6,7 @@ import { getUserDetails, updateNewUserProfile } from '../../services/userService
 import { db } from '../../firebase/config'
 import { doc, deleteDoc } from 'firebase/firestore'
 import { toast } from 'react-toastify'
+import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const SessionsSection = () => {
   const { customer } = useAuth()
@@ -271,20 +272,7 @@ const SessionsSection = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="sessions-section-container">
-        <div className="sessions-section-header">
-          <p className='heading'>
-            <Play />
-            <span>Sessions</span>
-          </p>
-        </div>
-        <div className="sessions-loading">
-          <Loader2 className="spinner" />
-          <p>Loading sessions...</p>
-        </div>
-      </div>
-    )
+    return <ProfileSkeletonLoader type="sessions" />
   }
 
   return (

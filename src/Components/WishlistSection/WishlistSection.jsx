@@ -8,6 +8,7 @@ import WishlistProductTile from '../WishlistProductTile/WishlistProductTile'
 import { toast } from 'react-toastify'
 import WishlistImage from '../../assets/wishlist-heart-image.svg'
 import { useNavigate } from 'react-router-dom'
+import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const WishlistSection = () => {
     const { customer, removeFromWishlistHandles } = useAuth()
@@ -77,13 +78,10 @@ const WishlistSection = () => {
             </div>
 
             {isLoading && (
-                <div className="wishlist-loading">
-                    <Loader2 className="spinner" size={20} />
-                    <span>Loading wishlist...</span>
-                </div>
+                <ProfileSkeletonLoader type="wishlist" />
             )}
 
-            {message.text && (
+            {!isLoading && message.text && (
                 <div className={`wishlist-message ${message.type}`}>
                     {message.text}
                 </div>

@@ -4,6 +4,7 @@ import UserIcon from '../../assets/profile/user-square.svg'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile, getUserDetails } from '../../services/userService'
+import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const ProfileSection = () => {
     const { user, customer, updateCustomer } = useAuth()
@@ -254,12 +255,11 @@ const ProfileSection = () => {
             </div>
 
             {isFetching && (
-                <div className="profile-loading">
-                    <Loader2 className="spinner" size={20} />
-                    <span>Loading profile...</span>
-                </div>
+                <ProfileSkeletonLoader type="profile" />
             )}
 
+            {!isFetching && (
+            <>
             <div className="profile-section-body">
                 {
                     action == 'edit' ? (
@@ -459,6 +459,8 @@ const ProfileSection = () => {
                     )
                 }
             </div>
+            </>
+            )}
         </div>
     )
 }

@@ -4,6 +4,7 @@ import Box from '../../assets/profile/cube.svg'
 import { useAuth } from '../../contexts/AuthContext'
 import { ChevronRight, Loader2 } from 'lucide-react'
 import DefaultImg from '../../assets/default.png'
+import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
 
@@ -115,10 +116,7 @@ const OrdersSection = () => {
         </div>
 
         {isLoading && (
-              <div className="profile-loading">
-                  <Loader2 className="spinner" size={20} />
-                  <span>Loading Orders</span>
-              </div>
+          <ProfileSkeletonLoader type="orders" />
         )}
 
         {

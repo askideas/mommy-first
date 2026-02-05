@@ -169,12 +169,12 @@ const Profile = () => {
                         {
                             Profilemenu.map((item, index)=> {
                                 return (
-                                    <div className='profile-items-con'>
+                                    <div key={index} className='profile-items-con'>
                                         <h1 className="profile-menu-sec-heading">{item.title}</h1>
                                         {
-                                            item.items.map((profileItem, index)=> {
+                                            item.items.map((profileItem, itemIndex)=> {
                                                 return (
-                                                    <button className={`profile-menu-item ${activeSection === profileItem.hash ? "active" : ""}`} onClick={() => (window.location.hash = profileItem.hash.replace("#",""))} ><img src={profileItem.icon} alt="" />{profileItem.title}{profileItem.label && <span className='item-label'>{profileItem.label}</span>}</button>
+                                                    <button key={itemIndex} className={`profile-menu-item ${activeSection === profileItem.hash ? "active" : ""}`} onClick={() => (window.location.hash = profileItem.hash.replace("#",""))} ><img src={profileItem.icon} alt="" />{profileItem.title}{profileItem.label && <span className='item-label'>{profileItem.label}</span>}</button>
                                                 )
                                             })
                                         }

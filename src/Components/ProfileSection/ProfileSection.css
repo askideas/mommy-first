@@ -71,12 +71,14 @@
         flex: 1;
         width: 100%;
         padding: 32px;
+        animation: fadeInUp 0.4s ease-out;
 
         .profile-edit-section {
             .personal-info {
                 border-bottom: 1px solid var(--pink-border);
                 padding-bottom: 24px;
                 margin-bottom: 48px;
+                animation: slideInRight 0.5s ease-out;
             }
 
             .heading {
@@ -202,6 +204,7 @@
                 display: flex;
                 flex-direction: column;
                 margin-bottom: 24px;
+                animation: fadeIn 0.5s ease-out;
 
                 label {
                     font: 400 12px var(--font);
@@ -221,6 +224,7 @@
                 display: flex;
                 flex-direction: column;
                 margin-bottom: 24px;
+                animation: fadeIn 0.5s ease-out;
 
                 label {
                     font: 400 12px var(--font);
@@ -238,6 +242,7 @@
                 margin-top: 32px;
                 padding-top: 24px;
                 border-top: 1px solid var(--pink-border);
+                animation: slideInLeft 0.5s ease-out 0.2s both;
 
                 .heading {
                     font: 400 16px var(--font);
@@ -341,6 +346,48 @@
             }
             to {
                 transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
             }
         }
     }

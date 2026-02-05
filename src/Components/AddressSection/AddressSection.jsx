@@ -11,6 +11,7 @@ import {
     setDefaultAddress 
 } from '../../services/userService'
 import LocationIcon from '../../assets/profile/location.svg'
+import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const AddressSection = () => {
     const { customer, updateCustomer } = useAuth()
@@ -289,12 +290,11 @@ const AddressSection = () => {
             </div>
 
             {isFetching && (
-                <div className="profile-loading">
-                    <Loader2 className="spinner" size={20} />
-                    <span>Loading addresses...</span>
-                </div>
+                <ProfileSkeletonLoader type="address" />
             )}
 
+            {!isFetching && (
+            <>
             <div className="address-section-body">
                 {addresses.length === 0 && !isFetching ? (
                     <div className="no-addresses">
@@ -654,6 +654,8 @@ const AddressSection = () => {
                     {message.text}
                 </p>
             </div>
+            </>
+            )}
         </div>
     )
 }

@@ -6,6 +6,7 @@ import CalenderHeart from '../../assets/profile/calendar-heart.svg'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile, getUserDetails } from '../../services/userService'
 import BabiesIcon from '../../assets/profile/babies.svg'
+import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const BabiesSection = () => {
     const { user, customer, updateCustomer } = useAuth()
@@ -321,12 +322,11 @@ const BabiesSection = () => {
             </div>
 
             {isFetching && (
-                <div className="profile-loading">
-                    <Loader2 className="spinner" size={20} />
-                    <span>Loading babies...</span>
-                </div>
+                <ProfileSkeletonLoader type="babies" />
             )}
 
+            {!isFetching && (
+            <>
             <div className="babies-section-body">
                 {babies.length == 0 && !isFetching  ? (
                     <div className="no-babies-message">
@@ -414,10 +414,10 @@ const BabiesSection = () => {
                         <h2 className="accordion-header">
                             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                 {editingBabyIndex !== null ? 'Edit Baby' : 'Add another Baby'} 
-                                <button className="accordian-icon" type="button">
+                                <span className="accordian-icon">
                                     <Plus className="plus-icon" />
                                     <Minus className="minus-icon"/>
-                                </button>
+                                </span>
                             </button>
                         </h2>
                         <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#addBabyAccordian">
@@ -535,6 +535,8 @@ const BabiesSection = () => {
                     {message.text}
                 </p>
             </div>
+            </>
+            )}
         </div>
     )
 }
