@@ -12,6 +12,7 @@ import HeroSection from '../../Components/HeroSection/HeroSection'
 import HeroTextSection from '../../Components/HeroTextSection/HeroTextSection'
 import Snowfall from '../../Components/Snowfall/Snowfall'
 import PageLoader from '../../Components/PageLoader/PageLoader'
+import WelcomeModal from '../../Components/WelcomeModal/WelcomeModal'
 
 import { db } from '../../firebase/config'
 import { doc, getDoc } from 'firebase/firestore'
@@ -42,6 +43,7 @@ const getSectionData = async (collectionName, documentId) => {
 
 const Home = () => {
   const [loading, setLoading] = useState(true)
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false)
 
   const [heroSectionData, setHeroSectionData] = useState(null)
   const [bundlesHome, setBundlesHome] = useState(null)
@@ -76,15 +78,47 @@ const Home = () => {
       } finally {
         setLoading(false)
         console.log('✅ FETCH COMPLETE')
+        
+        // Check if we should show the welcome modal
+        checkWelcomeModal()
       }
     }
 
     fetchHomePageData()
   }, [])
 
+  // Check if welcome modal should be shown (24-hour logic)
+  const checkWelcomeModal = () => {
+    const MODAL_KEY = 'welcomeModalLastClosed'
+    const lastClosed = localStorage.getItem(MODAL_KEY)
+    
+    if (!lastClosed) {
+      // Never closed before, show modal
+      setShowWelcomeModal(true)
+    } else {
+      const lastClosedTime = parseInt(lastClosed, 10)
+      const currentTime = new Date().getTime()
+      const twentyFourHours = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+      
+      // Check if 24 hours have passed
+      if (currentTime - lastClosedTime >= twentyFourHours) {
+        setShowWelcomeModal(true)
+      }
+    }
+  }
+
+  // Handle modal close
+  const handleWelcomeModalClose = () => {
+    const MODAL_KEY = 'welcomeModalLastClosed'
+    const currentTime = new Date().getTime()
+    localStorage.setItem(MODAL_KEY, currentTime.toString())
+    setShowWelcomeModal(false)
+  }
+
   return (
     <>
       {loading && <PageLoader />}
+      {!loading && <WelcomeModal isOpen={showWelcomeModal} onClose={handleWelcomeModalClose} />}
       <Snowfall />
 
       <HeroSection data={heroSectionData} loading={loading} />
