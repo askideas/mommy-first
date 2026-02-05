@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./AllBundlesSlider.css";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-import Prd1 from "../../assets/BundleRecom/bundle-item-1.png";
-import Prd2 from "../../assets/BundleRecom/bundle-item-2.png";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import BundleTile from "../BundleTile/BundleTile";
 
 export const AllBundlesSlider = () => {
   const headingRef = useRef(null);
@@ -11,85 +10,77 @@ export const AllBundlesSlider = () => {
   const [containerMargin, setContainerMargin] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
+  
+  const [bundlesData, setBundlesData] = useState([]);
+  const [authToken, setAuthToken] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const bundles = [
-    {
-      id: 1,
-      daysOfCare: "5-7 Days of Care",
-      price: "$49.99",
-      title: "The First Week Healing System",
-      items: [
-        "2x Pad Liners",
-        "8 Underwear",
-        "1 Ice Pack",
-        "1 Peri bottle",
-        "8 Cooling Pads",
-        "Witch Hazel Perineal Care Foam",
-      ],
-      image: Prd1,
-      cSectionCompatible: true,
-    },
-    {
-      id: 2,
-      daysOfCare: "5-7 Days of Care",
-      price: "$49.99",
-      title: "Refill Essentials",
-      items: [
-        "2x Pad Liners",
-        "8 Underwear",
-        "1 Ice Pack",
-        "8 Cooling Pads",
-        "Witch Hazel Perineal Care Foam",
-      ],
-      image: Prd2,
-      cSectionCompatible: true,
-    },
-    {
-      id: 3,
-      daysOfCare: "5-7 Days of Care",
-      price: "$49.99",
-      title: "The 2 Weeks Full Recovery Set",
-      items: [
-        "2x Pad Liners",
-        "8 Underwear",
-        "1 Peri bottle",
-        "8 Cooling Pads",
-        "Witch Hazel Perineal Care Foam",
-      ],
-      image: Prd1,
-      cSectionCompatible: true,
-    },
-    {
-      id: 4,
-      daysOfCare: "5-7 Days of Care",
-      price: "$49.99",
-      title: "21 Days Total Postpartum Care System",
-      items: [
-        "2x Pad Liners",
-        "8 Underwear",
-        "8 Cooling Pads",
-        "Witch Hazel Perineal Care Foam",
-      ],
-      image: Prd2,
-      cSectionCompatible: true,
-    },
-    {
-      id: 5,
-      daysOfCare: "5-7 Days of Care",
-      price: "$49.99",
-      title: "The First Week Healing System",
-      items: [
-        "2x Pad Liners",
-        "8 Underwear",
-        "1 Ice Pack",
-        "1 Peri bottle",
-        "8 Cooling Pads",
-        "Witch Hazel Perineal Care Foam",
-      ],
-      image: Prd1,
-      cSectionCompatible: true,
-    },
-  ];
+  // Fetch authentication token
+  const fetchAuthToken = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "clientId": import.meta.env.VITE_API_CLIENT_ID,
+          "clientSecret": import.meta.env.VITE_API_CLIENT_SECRET
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      if (result.success && result.token) {
+        setAuthToken(result.token);
+        return result.token;
+      } else {
+        throw new Error(result.message || 'Failed to get authentication token');
+      }
+    } catch (err) {
+      console.error('Error fetching auth token:', err);
+      setError(`Failed to authenticate: ${err.message}`);
+      return null;
+    }
+  };
+
+  // Fetch bundles from collections
+  const fetchBundles = async (token) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/collections/bundles`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setBundlesData(result.data);
+        setError(null);
+      } else {
+        throw new Error(result.message || 'Failed to fetch bundles');
+      }
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching bundles:', err);
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
   const calculateLayout = () => {
     if (headingRef.current) {
@@ -126,6 +117,14 @@ export const AllBundlesSlider = () => {
   };
 
   useEffect(() => {
+    const initFetch = async () => {
+      const token = await fetchAuthToken();
+      if (token) {
+        await fetchBundles(token);
+      }
+    };
+    initFetch();
+
     calculateLayout();
     updateScrollButtons();
 
@@ -157,14 +156,6 @@ export const AllBundlesSlider = () => {
             <h1>All Bundles, Add more anytime</h1>
             <h2>Choose based on how long you'd like your care to last.</h2>
           </div>
-          <div className="slider-navigation">
-            <button onClick={scrollPrev} disabled={!canScrollPrev}>
-              <ArrowLeft />
-            </button>
-            <button onClick={scrollNext} disabled={!canScrollNext}>
-              <ArrowRight />
-            </button>
-          </div>
         </div>
       </div>
 
@@ -173,67 +164,25 @@ export const AllBundlesSlider = () => {
         ref={sliderContainerRef}
         style={{ marginLeft: `${containerMargin}px` }}
       >
-        <div className="all-bundles-slider" ref={scrollContainerRef}>
-          {bundles.map((bundle) => (
-            <div key={bundle.id} className="bundle-card">
-              <div className="d-flex flex-column h-100">
-                <div style={{ flex: "1" }}>
-                  <div className="bundle-header">
-                    <span className="days-badge">
-                      <span className="badge-icon">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-clock-fill"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
-                        </svg>
-                      </span>
-                      {bundle.daysOfCare}
-                    </span>
-                    <span className="price-badge">{bundle.price}</span>
-                  </div>
-
-                  <h3 className="bundle-title">{bundle.title}</h3>
-
-                  <div className="bundle-items">
-                    {bundle.items.map((item, index) => (
-                      <span key={index} className="item-tag">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <div className="bundle-image-container">
-                    <img
-                      src={bundle.image}
-                      alt={bundle.title}
-                      className="bundle-image"
-                    />
-                  </div>
-
-                  {bundle.cSectionCompatible && (
-                    <div className="c-section-badge">
-                      <Check size={16} />
-                      <span>C-Section compatible</span>
-                    </div>
-                  )}
-
-                  <button
-                    className="button-pink-center"
-                    style={{ boxShadow: "0px 8.1px 14.76px 0px #FF96C14F" }}
-                  >
-                    Add to Bag
-                  </button>
-                </div>
-              </div>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px', width: '100%'}}>
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : error ? (
+          <div className="d-flex justify-content-center align-items-center" style={{minHeight: '400px', width: '100%'}}>
+            <p style={{color: 'red'}}>{error}</p>
+          </div>
+        ) : (
+          <div className="all-bundles-slider" ref={scrollContainerRef}>
+            {bundlesData.map((bundle, index) => (
+              <div key={bundle.id || index} className="bundle-slider-item">
+                <BundleTile data={bundle} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
