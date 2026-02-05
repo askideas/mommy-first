@@ -6,42 +6,30 @@ import { getUserDetails } from '../../services/userService'
 
 const SessionsSection = () => {
   const { customer } = useAuth()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [sessions, setSessions] = useState([])
 
+  // Extract sessions data from customer metafields (like BabiesSection)
   useEffect(() => {
-    fetchSessions()
-  }, [customer])
-
-  const fetchSessions = async () => {
-    if (!customer?.id) {
-      setIsLoading(false)
-      return
-    }
-
-    setIsLoading(true)
-    try {
-      const response = await getUserDetails(customer.id)
-      console.log('User details response:', response)
-      
-      if (response.success && response.data?.metafields?.custom?.sessions?.value) {
-        try {
-          const sessionsData = JSON.parse(response.data.metafields.custom.sessions.value)
+    const extractSessions = () => {
+      try {
+        const sessionsMetafield = customer?.metafields?.custom?.sessions
+        if (sessionsMetafield && sessionsMetafield.value) {
+          const sessionsData = Array.isArray(sessionsMetafield.value)
+            ? sessionsMetafield.value
+            : JSON.parse(sessionsMetafield.value)
           setSessions(sessionsData)
-        } catch (e) {
-          console.error('Error parsing sessions:', e)
+        } else {
           setSessions([])
         }
-      } else {
+      } catch (error) {
+        console.error('Error extracting sessions data:', error)
         setSessions([])
       }
-    } catch (error) {
-      console.error('Error fetching sessions:', error)
-      setSessions([])
-    } finally {
-      setIsLoading(false)
     }
-  }
+    
+    extractSessions()
+  }, [customer])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -60,6 +48,22 @@ const SessionsSection = () => {
     return `${hour12}:${minutes} ${ampm}`
   }
 
+  const getSessionStatus = (sessionDate) => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    
+    const sessionDay = new Date(sessionDate)
+    sessionDay.setHours(0, 0, 0, 0)
+    
+    if (sessionDay.getTime() === today.getTime()) {
+      return 'Today'
+    } else if (sessionDay > today) {
+      return 'Upcoming'
+    } else {
+      return 'Expired'
+    }
+  }
+
   const getStatusBadgeClass = (status) => {
     switch (status?.toLowerCase()) {
       case 'today':
@@ -68,21 +72,24 @@ const SessionsSection = () => {
         return 'status-upcoming'
       case 'expired':
         return 'status-expired'
-      case 'confirmed':
-        return 'status-confirmed'
       default:
-        return 'status-confirmed'
+        return 'status-upcoming'
     }
+  }
+
+  const handleCancelSession = (bookingId) => {
+    // TODO: Implement cancel session functionality
+    console.log('Cancel session:', bookingId)
   }
 
   if (isLoading) {
     return (
       <div className="sessions-section-container">
         <div className="sessions-section-header">
-          <div className="section-title-con">
+          <p className='heading'>
             <Play />
-            <h1>Sessions</h1>
-          </div>
+            <span>Sessions</span>
+          </p>
         </div>
         <div className="sessions-loading">
           <Loader2 className="spinner" />
@@ -95,10 +102,10 @@ const SessionsSection = () => {
   return (
     <div className="sessions-section-container">
       <div className="sessions-section-header">
-        <div className="section-title-con">
+        <p className='heading'>
           <Play />
-          <h1>Sessions</h1>
-        </div>
+          <span>Sessions</span>
+        </p>
       </div>
 
       {sessions.length === 0 ? (
@@ -109,23 +116,32 @@ const SessionsSection = () => {
         </div>
       ) : (
         <div className="sessions-list">
-          {sessions.map((session, index) => (
-            <div key={index} className="session-item">
-              <div className="session-icon">
-                <Play size={20} />
+          {sessions.map((session, index) => {
+            const sessionStatus = getSessionStatus(session.sessionDate)
+            return (
+              <div key={index} className="session-item">
+                <div className="session-icon">
+                  <Play size={20} />
+                </div>
+                <div className="session-details">
+                  <h3 className="session-name">{session.sessionName}</h3>
+                  <p className="session-info">Led by: Certified OB/GYN Nurse</p>
+                </div>
+                <div className="session-meta">
+                  <p className="session-date">{formatDate(session.sessionDate)}</p>
+                  <span className={`session-status ${getStatusBadgeClass(sessionStatus)}`}>
+                    {sessionStatus}
+                  </span>
+                  <button 
+                    className="cancel-session-btn button-pink-border"
+                    onClick={() => handleCancelSession(session.bookingId)}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
-              <div className="session-details">
-                <h3 className="session-name">{session.sessionName}</h3>
-                <p className="session-info">Led by Certified OB/GYN Nurse</p>
-              </div>
-              <div className="session-meta">
-                <p className="session-date">{formatDate(session.sessionDate)}</p>
-                <span className={`session-status ${getStatusBadgeClass(session.status)}`}>
-                  {session.status === 'confirmed' ? 'Confirmed' : session.status}
-                </span>
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>
