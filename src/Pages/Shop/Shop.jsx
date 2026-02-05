@@ -32,16 +32,55 @@ const Shop = () => {
     const [activeFilter, setActiveFilter] = useState('ALL');
     const [selectedCollection, setSelectedCollection] = useState(null);
     const [collections, setCollections] = useState([]);
+    const [sortBy, setSortBy] = useState('featured');
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(100);
+    const [availabilityFilter, setAvailabilityFilter] = useState([]);
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const PRICE_MIN = 0;
+    const PRICE_MAX = 100;
+
+    const handleMinPriceChange = (value) => {
+        const numValue = Number(value);
+        if (numValue <= maxPrice && numValue >= PRICE_MIN) {
+            setMinPrice(numValue);
+        }
+    };
+
+    const handleMaxPriceChange = (value) => {
+        const numValue = Number(value);
+        if (numValue >= minPrice && numValue <= PRICE_MAX) {
+            setMaxPrice(numValue);
+        }
+    };
+
+    const getProgressPercentage = () => {
+        const minPercent = ((minPrice - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
+        const maxPercent = ((maxPrice - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
+        return { minPercent, maxPercent };
+    };
 
     const espotsIndex = [3, 5, 14];
     
     // Espot images data - you can replace these URLs with your actual espot images
     const espotImages = [ MF1, MF2, EsImage1 ]
 
+    const sortOptions = [
+        { id: 'featured', label: 'Featured' },
+        { id: 'best_selling', label: 'Best selling' },
+        { id: 'alphabetically_az', label: 'Alphabetically, A-Z' },
+        { id: 'alphabetically_za', label: 'Alphabetically, Z-A' },
+        { id: 'price_low_high', label: 'Price, low to high' },
+        { id: 'price_high_low', label: 'Price, high to low' },
+        { id: 'date_old_new', label: 'Date, old to new' },
+        { id: 'date_new_old', label: 'Date, new to old' }
+    ];
+
     const filters = [
         {
             id: 'stage',
             label: 'Stage',
+            type: 'checkbox',
             filters: [
             { id: 'new_moms', label: 'New Moms' },
             { id: 'experienced_moms', label: 'Experienced Moms' },
@@ -51,31 +90,32 @@ const Shop = () => {
             ]
         },
         {
-            id: 'price_range',
-            label: 'Price range',
-            filters: [
-            { id: 'low_to_high', label: 'Low to High' },
-            { id: 'high_to_low', label: 'High to Low' }
-            ]
-        },
-        {
-            id: 'sort_by',
-            label: 'Sort by',
-            filters: [
-            { id: 'best_sellers', label: 'Best Sellers' },
-            { id: 'new_arrivals', label: 'New Arrivals' },
-            { id: 'customer_rating', label: 'Customer Rating' }
-            ]
-        },
-        {
             id: 'availability',
             label: 'Availability',
+            type: 'checkbox',
             filters: [
             { id: 'in_stock', label: 'In Stock' },
             { id: 'out_of_stock', label: 'Out of Stock' }
             ]
         }
     ];
+
+    const toggleAvailability = (id) => {
+        setAvailabilityFilter(prev => 
+            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+        );
+    };
+
+    const handleApplyFilter = () => {
+        // Apply filter logic here
+        console.log('Filters applied:', { minPrice, maxPrice, availabilityFilter, sortBy });
+    };
+
+    const handleResetFilter = () => {
+        setMinPrice(0);
+        setMaxPrice(100);
+        setAvailabilityFilter([]);
+    };
 
     const HeroLabel = {
         image: HeroImage,
@@ -376,7 +416,36 @@ const Shop = () => {
                         ))
                     )}
                 </div>
-                <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
+                <div className="d-flex align-items-center" style={{gap: '12px'}}>
+                    <div className="sort-dropdown-container">
+                        <button 
+                            className="sort-dropdown-btn" 
+                            onClick={() => setShowSortDropdown(!showSortDropdown)}
+                        >
+                            Sort by: {sortOptions.find(opt => opt.id === sortBy)?.label}
+                            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" style={{marginLeft: '8px'}}>
+                                <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                        </button>
+                        {showSortDropdown && (
+                            <div className="sort-dropdown-menu">
+                                {sortOptions.map((option) => (
+                                    <button
+                                        key={option.id}
+                                        className={`sort-dropdown-item ${sortBy === option.id ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSortBy(option.id);
+                                            setShowSortDropdown(false);
+                                        }}
+                                    >
+                                        {option.label}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">FILTER <Settings2 /></button>
+                </div>
             </div>
 
             {loading ? (
@@ -446,7 +515,89 @@ const Shop = () => {
                 <div style={{flex: '1'}}>
                     <div className="heading"><Settings2 /> Filter by</div>
                     <div className="filters-items-container">
-                        {
+                        {/* Price Range Filter */}
+                        <div className="filters-item-sec">
+                            <h1 className="fil-heading">Price range</h1>
+                            
+                            {/* Range Slider */}
+                            <div className="price-range-slider-container">
+                                <div className="price-range-slider">
+                                    <div 
+                                        className="price-range-progress"
+                                        style={{
+                                            left: `${getProgressPercentage().minPercent}%`,
+                                            right: `${100 - getProgressPercentage().maxPercent}%`
+                                        }}
+                                    ></div>
+                                    <input
+                                        type="range"
+                                        min={PRICE_MIN}
+                                        max={PRICE_MAX}
+                                        value={minPrice}
+                                        onChange={(e) => handleMinPriceChange(e.target.value)}
+                                        className="price-range-input price-range-min"
+                                    />
+                                    <input
+                                        type="range"
+                                        min={PRICE_MIN}
+                                        max={PRICE_MAX}
+                                        value={maxPrice}
+                                        onChange={(e) => handleMaxPriceChange(e.target.value)}
+                                        className="price-range-input price-range-max"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Price Inputs */}
+                            <div className="price-range-inputs">
+                                <div className="price-input-group">
+                                    <label>Min Price</label>
+                                    <input 
+                                        type="number" 
+                                        placeholder="$0"
+                                        value={minPrice}
+                                        onChange={(e) => handleMinPriceChange(e.target.value)}
+                                        className="price-input"
+                                        min={PRICE_MIN}
+                                        max={maxPrice}
+                                    />
+                                </div>
+                                <div className="price-input-group">
+                                    <label>Max Price</label>
+                                    <input 
+                                        type="number" 
+                                        placeholder="$100"
+                                        value={maxPrice}
+                                        onChange={(e) => handleMaxPriceChange(e.target.value)}
+                                        className="price-input"
+                                        min={minPrice}
+                                        max={PRICE_MAX}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Availability Filter */}
+                        <div className="filters-item-sec">
+                            <h1 className="fil-heading">Availability</h1>
+                            <div className="filter-selection-con">
+                                <button 
+                                    className={`filter-item ${availabilityFilter.includes('in_stock') ? 'active' : ''}`}
+                                    onClick={() => toggleAvailability('in_stock')}
+                                >
+                                    In Stock
+                                </button>
+                                <button 
+                                    className={`filter-item ${availabilityFilter.includes('out_of_stock') ? 'active' : ''}`}
+                                    onClick={() => toggleAvailability('out_of_stock')}
+                                >
+                                    Out of Stock
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Other Filters */}
+                        {/* {
                             filters.map((item, index)=> {
                                 return (
                                     <div className="filters-item-sec" key={index}>
@@ -463,12 +614,12 @@ const Shop = () => {
                                     </div>
                                 )
                             })
-                        }
+                        } */}
                     </div>
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
-                    <button className='button-pink-center' style={{width: '48%', height: '40px', boxShadow: 'none'}}>Apply Filter</button>
-                    <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} data-bs-dismiss="offcanvas" aria-label="Close">Cancel</button>
+                <div className="d-flex justify-content-between align-items-center" style={{gap: '12px'}}>
+                    <button className='button-pink-center' style={{width: '48%', height: '40px', boxShadow: 'none'}} onClick={handleApplyFilter} data-bs-dismiss="offcanvas">Apply Filter</button>
+                    <button className='button-pink-border' style={{width: '48%', height: '40px', boxShadow: 'none'}} onClick={handleResetFilter}>Reset</button>
                 </div>
             </div>
 
