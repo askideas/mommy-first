@@ -9,6 +9,7 @@ import { db } from '../../firebase/config'
 import { doc, getDoc, setDoc, getDocs, collection, query, where } from 'firebase/firestore'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile, getUserDetails } from '../../services/userService'
+import { toast } from 'react-toastify'
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate()
@@ -302,20 +303,32 @@ const EventCard = ({ event }) => {
 
       // Get auth token for email API
       console.log('Fetching auth token for emails...');
-      const tokenResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: import.meta.env.VITE_API_CLIENT_ID,
-          clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
-        })
-      });
+      let emailToken = null;
+      try {
+        const tokenResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clientId: import.meta.env.VITE_API_CLIENT_ID,
+            clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
+          })
+        });
+        
+        const tokenData = await tokenResponse.json();
+        console.log('Token data:', tokenData);
+        
+        if (tokenData.success && tokenData.token) {
+          emailToken = tokenData.token;
+        } else {
+          console.error('Failed to get email auth token:', tokenData);
+          toast.error('Email notification may not be sent');
+        }
+      } catch (tokenError) {
+        console.error('Error fetching email auth token:', tokenError);
+        toast.error('Email notification may not be sent');
+      }
       
-      const tokenData = await tokenResponse.json();
-      console.log('Token data:', tokenData);
-      
-      if (tokenData.success && tokenData.token) {
-        const authToken = tokenData.token;
+      if (emailToken) {
         
         // Format date for email
         const formattedDate = new Date(sessionDate).toLocaleDateString('en-US', {
@@ -374,45 +387,68 @@ const EventCard = ({ event }) => {
         `;
         
         // Send email to customer
-        console.log('Sending customer email...');
+        console.log('Sending customer email to:', bookingData.email);
         try {
           const customerEmailResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/mail/send`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${authToken}`
+              'Authorization': `Bearer ${emailToken}`
             },
             body: JSON.stringify({
-              toEmail: bookingData.email,
-              toName: bookingData.name,
-              subject: `Session Booking Confirmed - ${bookingId}`,
-              html: customerEmailHtml
+              "toEmail": bookingData.email,
+              "toName": bookingData.name,
+              "subject": `Session Booking Confirmed - ${bookingId}`,
+              "text": `Session Booking Confirmed! Reservation ID: ${bookingId}. Session: ${bookingData.sessionName}. Date: ${formattedDate}. Time: ${formatTime(selectedTimeSlot.time)}. See you soon!`,
+              "html": customerEmailHtml
             })
           });
+          
           const customerEmailData = await customerEmailResponse.json();
           console.log('Customer email response:', customerEmailData);
+          
+          if (!customerEmailResponse.ok) {
+            console.error('Customer email API error:', customerEmailResponse.status, customerEmailData);
+            toast.warning('Confirmation email may not have been delivered');
+          } else if (customerEmailData.success) {
+            console.log('✅ Customer email sent successfully');
+          } else {
+            console.error('❌ Customer email failed:', customerEmailData);
+            toast.warning('Confirmation email may not have been delivered');
+          }
         } catch (emailError) {
           console.error('Failed to send customer email:', emailError);
+          toast.warning('Could not send confirmation email');
         }
         
         // Send email to admin
-        console.log('Sending admin email...');
+        console.log('Sending admin email to: connect.clicknova@gmail.com');
         try {
           const adminEmailResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/mail/send`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${authToken}`
+              'Authorization': `Bearer ${emailToken}`
             },
             body: JSON.stringify({
-              toEmail: 'connect.clicknova@gmail.com',
-              toName: 'Mommy First Admin',
-              subject: `New Session Booking - ${bookingId}`,
-              html: adminEmailHtml
+              "toEmail": 'connect.clicknova@gmail.com',
+              "toName": 'Mommy First Admin',
+              "subject": `New Session Booking - ${bookingId}`,
+              "text": `New session booking received. Reservation ID: ${bookingId}. Customer: ${bookingData.name} (${bookingData.email}). Session: ${bookingData.sessionName}. Date: ${formattedDate}. Time: ${formatTime(selectedTimeSlot.time)}.`,
+              "html": adminEmailHtml
             })
           });
+          
           const adminEmailData = await adminEmailResponse.json();
           console.log('Admin email response:', adminEmailData);
+          
+          if (!adminEmailResponse.ok) {
+            console.error('Admin email API error:', adminEmailResponse.status, adminEmailData);
+          } else if (adminEmailData.success) {
+            console.log('✅ Admin email sent successfully');
+          } else {
+            console.error('❌ Admin email failed:', adminEmailData);
+          }
         } catch (emailError) {
           console.error('Failed to send admin email:', emailError);
         }
