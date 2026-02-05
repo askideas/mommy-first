@@ -65,7 +65,7 @@
             .menu-item-con {
                 width: 50%;
                 min-width: 48%;
-                height: fit-content;
+                height: auto;
                 display: flex;
                 flex-direction: column;
                 row-gap: 16px;

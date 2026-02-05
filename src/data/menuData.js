@@ -1,103 +1,15 @@
 export const MegaMenu = [
   {
-    title: "Products",
-    items: [
-      {
-        label: "New & Noteworthy",
-        link: "/products/new-noteworthy",
-        tag: {
-          label: "NEW",
-          bgColor: "#5ED34B",
-          color: "#ffffff",
-        },
-      },
-      {
-        label: "Pregnancy care",
-        link: "/products/pregnancy-care",
-        tag: false,
-      },
-      {
-        label: "Postpartum care",
-        link: "/products/postpartum-care",
-        tag: false,
-      },
-      {
-        label: "Exclusive Bundles",
-        link: "/products/exclusive-bundles",
-        tag: {
-          label: "SALE",
-          bgColor: "#FF1F1F",
-          color: "#FFFFFF",
-        },
-      },
-      {
-        label: "Recovery Essentials",
-        link: "/products/recovery-essentials",
-        tag: false,
-      },
-      {
-        label: "Mega Recovery Kits",
-        link: "/products/mega-recovery-kits",
-        tag: false,
-      },
-      {
-        label: "Breast care",
-        link: "/products/breast-care",
-        tag: false,
-      },
-    ],
-  },
-  {
-    title: "The Journal",
-    items: [
-      {
-        label: "Pregnancy care",
-        link: "/journal/pregnancy-care",
-        tag: false,
-      },
-      {
-        label: "Postpartum care",
-        link: "/journal/postpartum-care",
-        tag: false,
-      },
-      {
-        label: "Breast care",
-        link: "/journal/breast-care",
-        tag: false,
-      },
-      {
-        label: "Baby care",
-        link: "/journal/baby-care",
-        tag: false,
-      },
-      {
-        label: "Mom care",
-        link: "/journal/mom-care",
-        tag: false,
-      },
-      {
-        label: "Milestones",
-        link: "/journal/milestones",
-        tag: false,
-      },
-      {
-        label: "Wellness & Comfort",
-        link: "/journal/wellness-comfort",
-        tag: false,
-      },
-    ],
-  },
-  {
     title: "About",
     items: [
       {
-        label: "Story",
+        label: "Our Story",
         link: "/about",
         tag: false,
       },
       {
-        label: "Contact Us",
-        link: "/contact",
+        label: "Reviews",
+        link: "/stories",
         tag: false,
       },
       {
@@ -106,25 +18,98 @@ export const MegaMenu = [
         tag: false,
       },
       {
-        label: "Reviews",
-        link: "/about/reviews",
-        tag: false,
-      },
-      {
-        label: "Blogs",
+        label: "News Room",
         link: "/blogs",
         tag: false,
       },
       {
-        label: "Affiliate Marketing",
-        link: "/af-marketing",
+        label: "Giving Back",
+        link: "/donation",
         tag: false,
       },
-      // {
-      //   label: "Business Enquiries",
-      //   link: "/about/business-enquiries",
-      //   tag: false,
-      // },
+    ],
+  },
+  {
+    title: "Shop",
+    items: [
+      {
+        label: "Shop All",
+        link: "/shop",
+        tag: false,
+      },
+      {
+        label: "Exclusive Bundles",
+        link: "/bundles",
+        tag: {
+          label: "Sale",
+          bgColor: "#FF1F1F",
+          color: "#ffffff",
+        },
+      },
+      {
+        label: "Pregnancy Care",
+        link: "/collection/pregnancy-care",
+        tag: false,
+      },
+      {
+        label: "Postpartum Care",
+        link: "/collection/postpartum-care",
+        tag: false,
+      },
+      {
+        label: "Breast Care",
+        link: "/collection/breast-care",
+        tag: false,
+      },
+      {
+        label: "Baby Care",
+        link: "/collection/baby-care",
+        tag: false,
+      },
+    ],
+  },
+  {
+    title: "Community",
+    items: [
+      {
+        label: "Care Hub",
+        link: "/care-hub",
+        tag: {
+          label: "New",
+          bgColor: "#5ED34B",
+          color: "#ffffff",
+        },
+      },
+      {
+        label: "Care Guides",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Live Sessions",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Blog",
+        link: "/blogs",
+        tag: false,
+      },
+      {
+        label: "Events",
+        link: "/events",
+        tag: false,
+      },
+      {
+        label: "Education",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Giving Back",
+        link: "/donation",
+        tag: false,
+      },
     ],
   },
   {
@@ -136,28 +121,43 @@ export const MegaMenu = [
         tag: false,
       },
       {
-        label: "Privacy Policy",
-        link: "/help/privacy-policy",
-        tag: false,
-      },
-      {
-        label: "Terms & Conditions",
-        link: "/help/terms-conditions",
-        tag: false,
-      },
-      {
-        label: "Shipping & Delivery",
-        link: "/help/shipping-delivery",
-        tag: false,
-      },
-      {
         label: "Order Tracking",
-        link: "/help/order-tracking",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Returns & Refunds",
+        link: "/returns-refunds",
         tag: false,
       },
       {
         label: "Contact Us",
-        link: "/help/contact-us",
+        link: "/contact",
+        tag: false,
+      },
+    ],
+  },
+  {
+    title: "Work With Us",
+    items: [
+      {
+        label: "Wholesale",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Retail Partners",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Affiliates",
+        link: "#",
+        tag: false,
+      },
+      {
+        label: "Healthcare Providers",
+        link: "#",
         tag: false,
       },
     ],

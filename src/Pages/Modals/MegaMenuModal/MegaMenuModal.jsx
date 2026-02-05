@@ -43,11 +43,6 @@ const MegaMenuModal = () => {
                 }
                 
             </div>
-            <div className="contact-section">
-                <p className="heading">GCC Distribution</p>
-                <p className="contact-number">Call: +974 50330029</p>
-                <button className="button-pink">Send an Email <Mail style={{width: '16px', height: '16px', stroke: '#372035'}} /></button>
-            </div>
         </div>
         <div className="footer-section">
             <p className="follow">Follow us on</p>
@@ -59,7 +54,7 @@ const MegaMenuModal = () => {
                 <NavLink><img src={Youtube} alt="" /></NavLink>
                 <NavLink><img src={Tiktok} alt="" /></NavLink>
             </div>
-            <p className="copy-right">© 2023-2025 MommyFirst.  All rights Reserved. <br/> NeoMedUSA LLC, Where Innovation Meets Healthcare, and the Fun Never Ends!</p>
+            <p className="copy-right">© 2023-{new Date().getFullYear()} MommyFirst.  All rights Reserved. <br/> NeoMedUSA LLC, Where Innovation Meets Healthcare, and the Fun Never Ends!</p>
         </div>
     </div>
   )

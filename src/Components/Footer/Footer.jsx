@@ -90,7 +90,7 @@ const Footer = () => {
                 </div>
 
                 <div className="copy-right-section">
-                    <span>© 2023-2025 MommyFirst.  All rights Reserved.</span>
+                    <span>© 2023-{new Date().getFullYear()} MommyFirst.  All rights Reserved.</span>
                     <span>NeoMedUSA LLC, Where Innovation Meets Healthcare, and the Fun Never Ends!</span>
                 </div>
             </div>
