@@ -448,7 +448,7 @@ const ProductDetails = () => {
             </div>
         </div>
 
-        <BoughtTogether />
+        {/* <BoughtTogether /> */}
 
         <div className="container">
             <div className="product-all-images-container">
