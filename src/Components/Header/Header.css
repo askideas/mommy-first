@@ -8,12 +8,23 @@
     justify-content: flex-start;
     align-items: center;
     position: fixed;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     top: 0;
     z-index: 10;
+    transition: all 0.3s ease;
 
+    &.movedown {
+        transform: translateY(36px) translateX(-50%);
+    }
 
-    &.active {
+    &.decreasewidth {
+        width: 96% !important;
+        border-radius: 200px;
+        /* transform: translateY(36px) translateX(-50%); */
+    }
+
+    /* &.active {
         background: #ffffffcc;
         backdrop-filter: blur(50px);
         box-shadow: 0px 15px 50px 0px #FF509940;
@@ -28,7 +39,7 @@
         top: 36px;
         z-index: 10;
         border-radius: 200px;
-    }
+    } */
 
     .logo-container {
         width: 108px;

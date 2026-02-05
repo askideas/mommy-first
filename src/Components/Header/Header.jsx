@@ -20,9 +20,15 @@ const Header = () => {
         const handleScroll = () => {
             const header = document.querySelector('.header');
             if (window.scrollY > 0) {
-                header?.classList.add('active');
+                header?.classList.add('movedown');
+                setTimeout(() => {
+                    header?.classList.add('decreasewidth');
+                }, 200);
             } else {
-                header?.classList.remove('active');
+                header?.classList.remove('movedown');
+                setTimeout(() => {
+                    header?.classList.remove('decreasewidth');
+                }, 200);
             }
         };
         window.addEventListener('scroll', handleScroll);
