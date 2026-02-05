@@ -3,7 +3,7 @@ import './NewArrivals.css'
 import Heading from '../Heading/Heading'
 import { ChevronDown } from 'lucide-react'
 import ProductTile from '../ProductTile/ProductTile'
-import ProductsLoader from '../ProductsLoader/ProductsLoader'
+import SkeletonLoader from '../SkeletonLoader/SkeletonLoader'
 import P1 from '../../assets/products/prd1.svg'
 import P2 from '../../assets/products/prd2.svg'
 import P3 from '../../assets/products/prd3.svg'
@@ -200,7 +200,9 @@ const NewArrivals = (props) => {
             </div> 
 
             {loading ? (
-                <ProductsLoader text="Loading products..." />
+                <div className="newarrivals-products-container">
+                    <SkeletonLoader count={4} />
+                </div>
             ) : (
                 <>
                     <div className="newarrivals-products-container">
