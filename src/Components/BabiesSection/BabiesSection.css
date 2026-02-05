@@ -387,6 +387,17 @@
     }
 }
 
+.add-baby-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+        width: fit-content;
+    }
+}
+
 .no-babies-message {
     display: flex;
     flex-direction: column;
