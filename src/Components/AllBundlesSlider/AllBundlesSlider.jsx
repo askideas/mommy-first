@@ -82,40 +82,6 @@ export const AllBundlesSlider = () => {
     }
   };
 
-  const calculateLayout = () => {
-    if (headingRef.current) {
-      const headingRect = headingRef.current.getBoundingClientRect();
-      const marginLeft = headingRect.left;
-      setContainerMargin(marginLeft - 50);
-    }
-  };
-
-  const updateScrollButtons = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollPrev(scrollLeft > 0);
-      setCanScrollNext(scrollLeft < scrollWidth - clientWidth - 1);
-    }
-  };
-
-  const scrollNext = () => {
-    if (scrollContainerRef.current) {
-      const cardWidth = 366; // bundle card width
-      const gap = 24;
-      const scrollAmount = cardWidth + gap;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
-  const scrollPrev = () => {
-    if (scrollContainerRef.current) {
-      const cardWidth = 366;
-      const gap = 24;
-      const scrollAmount = cardWidth + gap;
-      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    }
-  };
-
   useEffect(() => {
     const initFetch = async () => {
       const token = await fetchAuthToken();
@@ -124,28 +90,6 @@ export const AllBundlesSlider = () => {
       }
     };
     initFetch();
-
-    calculateLayout();
-    updateScrollButtons();
-
-    const handleResize = () => {
-      calculateLayout();
-      updateScrollButtons();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', updateScrollButtons);
-    }
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', updateScrollButtons);
-      }
-    };
   }, []);
 
   return (
