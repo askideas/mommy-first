@@ -422,9 +422,18 @@ const ProductDetails = () => {
                                     )}
                                 </button>
                                 <button className='button-pink-border buy-now-btn' onClick={handleBuyNow} disabled={isAdding}>
-                                    Buy Now | {selectedVariant?.price?.amount ? `$${selectedVariant.price.amount} ${selectedVariant.price.currencyCode}` : '$0.00'}
-                                    {selectedVariant?.compareAtPrice?.amount && (
-                                        <span className='offer'>SAVE {Math.round(((selectedVariant.compareAtPrice.amount - selectedVariant.price.amount) / selectedVariant.compareAtPrice.amount) * 100)}%</span>
+                                    {isAdding ? (
+                                        <>
+                                            <Loader2 className="spinner" style={{ width: '20px', height: '20px', animation: 'spin 1s linear infinite' }} />
+                                            Processing...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Buy Now | {selectedVariant?.price?.amount ? `$${selectedVariant.price.amount} ${selectedVariant.price.currencyCode}` : '$0.00'}
+                                            {selectedVariant?.compareAtPrice?.amount && (
+                                                <span className='offer'>SAVE {Math.round(((selectedVariant.compareAtPrice.amount - selectedVariant.price.amount) / selectedVariant.compareAtPrice.amount) * 100)}%</span>
+                                            )}
+                                        </>
                                     )}
                                 </button>
                             </div>
