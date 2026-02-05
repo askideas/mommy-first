@@ -37,30 +37,36 @@ const Cart = () => {
         fetchCart()
     }, [])
 
+    // Auto-close message after 1500ms
+    useEffect(() => {
+        if (message.text) {
+            const timer = setTimeout(() => {
+                setMessage({ type: '', text: '' })
+            }, 1500)
+            return () => clearTimeout(timer)
+        }
+    }, [message.text])
+
     const handleQuantityChange = async (lineId, newQuantity) => {
         if (newQuantity < 0) return
+
+        // Show confirmation modal when trying to decrease quantity to 0
+        if (newQuantity === 0) {
+            setItemToRemove(lineId)
+            setShowConfirmModal(true)
+            return
+        }
 
         setUpdatingLineId(lineId)
         setMessage({ type: '', text: '' })
 
         try {
-            let response
-
-            if (newQuantity === 0) {
-                // Remove item
-                response = await removeFromCart([lineId])
-            } else {
-                // Update quantity
-                response = await updateCartItems([{ lineId, quantity: newQuantity }])
-            }
+            // Update quantity
+            const response = await updateCartItems([{ lineId, quantity: newQuantity }])
 
             console.log('Update response:', response)
 
-            if (response.success) {
-                if (newQuantity === 0) {
-                    setMessage({ type: 'success', text: 'Item removed from cart' })
-                }
-            } else {
+            if (!response.success) {
                 setMessage({ type: 'error', text: response.message || 'Failed to update cart' })
             }
         } catch (error) {
@@ -267,7 +273,7 @@ const Cart = () => {
                                         <div className="item-quantity">
                                             <button
                                                 onClick={() => handleQuantityChange(item.lineId, item.quantity - 1)}
-                                                disabled={isUpdating || item.quantity <= 1}
+                                                disabled={isUpdating}
                                             >
                                                 <Minus size={16} />
                                             </button>
