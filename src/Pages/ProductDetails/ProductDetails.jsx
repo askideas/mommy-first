@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './ProductDetails.css'
-import { ChevronDown, ChevronRight, Eye, Heart, Minus, Plus } from 'lucide-react'
-import { NavLink, useParams } from 'react-router-dom'
+import { ChevronDown, ChevronRight, Eye, Heart, Minus, Plus, Loader2 } from 'lucide-react'
+import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { useCart } from '../../contexts/CartContext'
 import { getProductDetails } from '../../services/productService'
 import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
 import ProductDetailsSkeleton from './ProductDetailsSkeleton'
+import { toast } from 'react-toastify'
 import Star from '../../assets/star.svg'
 import WayToPay from '../../assets/ways-to-pay.png'
 import BoughtTogether from '../../Components/BoughtTogether/BoughtTogether'
@@ -26,13 +28,18 @@ import SomeWentWrong from '../../assets/something-went-wrong.svg'
 
 const ProductDetails = () => {
     const { productHandle } = useParams();
+    const navigate = useNavigate();
     const { getSessionToken } = useAuth();
+    const { addToCart } = useCart();
     const [authToken, setAuthToken] = useState(null);
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
     const [isZooming, setIsZooming] = useState(false);
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const contentSectionRef = useRef(null);
+    const [selectedVariant, setSelectedVariant] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [isAdding, setIsAdding] = useState(false);
 
     useEffect(() => {
         const fetchAuthToken = async () => {
@@ -73,14 +80,108 @@ const ProductDetails = () => {
             }
             const res = await getProductDetails(productHandle, token);
             if (res.success) {
-                setProduct(res.data); // Changed from res.product to res.data (new API structure)
+                setProduct(res.data);
+                // Set first variant as default
+                if (res.data?.variants?.length > 0) {
+                    setSelectedVariant(res.data.variants[0]);
+                }
             }
             setLoading(false);
         };
         if (authToken) fetchProduct();
     }, [productHandle, authToken]);
 
-    const productImages = product?.images?.map(img => img.url) || [pdp1, pdp2, pdp3, pdp4]; // Updated to match new API structure
+    const productImages = product?.images?.map(img => img.url) || [pdp1, pdp2, pdp3, pdp4];
+
+    const handleVariantSelect = (variant) => {
+        setSelectedVariant(variant);
+        setQuantity(1); // Reset quantity when variant changes
+    };
+
+    const handleQuantityIncrease = () => {
+        // Allow increase up to a reasonable limit since API doesn't provide quantityAvailable
+        const maxQuantity = 99;
+        if (quantity < maxQuantity) {
+            setQuantity(quantity + 1);
+        } else {
+            toast.error('Max quantity reached', {
+                autoClose: 1500,
+                hideProgressBar: true
+            });
+        }
+    };
+
+    const handleQuantityDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const handleAddToCart = async () => {
+        if (isAdding) return false;
+        
+        if (!selectedVariant) {
+            toast.error('Please select a variant', {
+                autoClose: 1500,
+                hideProgressBar: true
+            });
+            return false;
+        }
+        
+        if (!selectedVariant.availableForSale) {
+            toast.error('This variant is out of stock', {
+                autoClose: 1500,
+                hideProgressBar: true
+            });
+            return false;
+        }
+        
+        setIsAdding(true);
+        
+        try {
+            const items = [{
+                variantId: selectedVariant.id,
+                quantity: quantity
+            }];
+
+            console.log('Adding to cart:', items);
+            const response = await addToCart(items);
+            console.log('Add to cart response:', response);
+
+            if (response.success) {
+                toast.success('Added to cart successfully!', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+                return true;
+            } else {
+                toast.error(response.message || 'Failed to add to cart', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+                return false;
+            }
+        } catch (err) {
+            console.error('Add to cart error:', err);
+            toast.error('Something went wrong', {
+                autoClose: 1500,
+                hideProgressBar: true
+            });
+            return false;
+        } finally {
+            setIsAdding(false);
+        }
+    };
+
+    const handleBuyNow = async () => {
+        const added = await handleAddToCart();
+        if (added) {
+            // Small delay to ensure toast is visible before navigation
+            setTimeout(() => {
+                navigate('/cart');
+            }, 500);
+        }
+    };
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -96,9 +197,6 @@ const ProductDetails = () => {
     const handleMouseLeave = () => {
         setIsZooming(false);
     };
-
-    console.log("sfdlk;gjsd;lfg"+productHandle);
-    
 
     if (loading) {
         return (
@@ -226,13 +324,19 @@ const ProductDetails = () => {
                                 <p className="sale-price">$19.99 USD <span className='offer' >SAVE 55%</span></p>
                             </div> */}
 
-                            {/* Variants rendering (if available) */}
+                            {/* Variants rendering */}
                             {product.variants?.length > 0 && (
                                 <div className="product-variations-container">
                                     <p className="var-heading">Choose Variant</p>
                                     <div className="variations-list">
-                                        {product.variants.map((variant, idx) => (
-                                            <button key={variant.id} className={`variation-item${idx === 0 ? ' active' : ''}`}>{variant.title}</button>
+                                        {product.variants.map((variant) => (
+                                            <button 
+                                                key={variant.id} 
+                                                className={`variation-item${selectedVariant?.id === variant.id ? ' active' : ''}`}
+                                                onClick={() => handleVariantSelect(variant)}
+                                            >
+                                                {variant.title}
+                                            </button>
                                         ))}
                                     </div>
                                 </div>
@@ -241,16 +345,20 @@ const ProductDetails = () => {
                                 <div className="product-quantity-section">
                                     <p className="qty-heading">Select Quantity</p>
                                     <div className="item-quantity">
-                                        <button><Minus /></button>
-                                        <p className="quantity-count">02</p>
-                                        <button><Plus /></button>
+                                        <button onClick={handleQuantityDecrease} disabled={quantity <= 1}><Minus /></button>
+                                        <p className="quantity-count">{String(quantity).padStart(2, '0')}</p>
+                                        <button onClick={handleQuantityIncrease}><Plus /></button>
                                     </div>
                                 </div>
 
                                 <div className="product-price-con">
                                     <span className="heading">Price</span>
-                                    <span className='strike-price'>{product.variants?.[0]?.compareAtPrice?.amount ? `$${product.variants[0].compareAtPrice.amount} ${product.variants[0].compareAtPrice.currencyCode}` : ''}</span>
-                                    <span className="price">{product.variants?.[0]?.price?.amount ? `$${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}` : ''}</span>
+                                    <span className='strike-price'>
+                                        {selectedVariant?.compareAtPrice?.amount ? `$${selectedVariant.compareAtPrice.amount} ${selectedVariant.compareAtPrice.currencyCode}` : ''}
+                                    </span>
+                                    <span className="price">
+                                        {selectedVariant?.price?.amount ? `$${selectedVariant.price.amount} ${selectedVariant.price.currencyCode}` : ''}
+                                    </span>
                                 </div>
                             </div>
                             
@@ -299,8 +407,26 @@ const ProductDetails = () => {
                             </div> */}
 
                             <div className="add-to-cart-func-container">
-                                <button className="button-pink-center add-to-cart">Add to cart</button>
-                                <button className='button-pink-border buy-now-btn'>Buy Now | $19.99 USD <span className='offer' >SAVE 55%</span></button>
+                                <button 
+                                    className="button-pink-center add-to-cart" 
+                                    onClick={handleAddToCart}
+                                    disabled={isAdding}
+                                >
+                                    {isAdding ? (
+                                        <>
+                                            <Loader2 className="spinner" style={{ width: '20px', height: '20px', animation: 'spin 1s linear infinite' }} />
+                                            Adding...
+                                        </>
+                                    ) : (
+                                        'Add to cart'
+                                    )}
+                                </button>
+                                <button className='button-pink-border buy-now-btn' onClick={handleBuyNow} disabled={isAdding}>
+                                    Buy Now | {selectedVariant?.price?.amount ? `$${selectedVariant.price.amount} ${selectedVariant.price.currencyCode}` : '$0.00'}
+                                    {selectedVariant?.compareAtPrice?.amount && (
+                                        <span className='offer'>SAVE {Math.round(((selectedVariant.compareAtPrice.amount - selectedVariant.price.amount) / selectedVariant.compareAtPrice.amount) * 100)}%</span>
+                                    )}
+                                </button>
                             </div>
 
                             {/* <div className="ways-to-pay">
