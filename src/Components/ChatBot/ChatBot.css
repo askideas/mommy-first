@@ -91,6 +91,18 @@
 
 .header-content {
     flex: 1;
+    animation: fadeInDown 0.4s ease 0.1s forwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .chatbot-title {
@@ -119,6 +131,16 @@
     transition: all 0.2s ease;
     color: var(--white);
     padding: 0;
+    animation: fadeIn 0.4s ease 0.2s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .chatbot-close-btn:hover {
@@ -135,6 +157,18 @@
     margin: 0 0 12px 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    animation: fadeInUp 0.4s ease 0.2s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .topics-list {
@@ -155,6 +189,27 @@
     text-align: left;
     cursor: pointer;
     transition: all 0.2s ease;
+    opacity: 0;
+    animation: fadeInLeft 0.4s ease forwards;
+}
+
+.topic-item:nth-child(1) { animation-delay: 0.3s; }
+.topic-item:nth-child(2) { animation-delay: 0.35s; }
+.topic-item:nth-child(3) { animation-delay: 0.4s; }
+.topic-item:nth-child(4) { animation-delay: 0.45s; }
+.topic-item:nth-child(5) { animation-delay: 0.5s; }
+.topic-item:nth-child(6) { animation-delay: 0.55s; }
+.topic-item:nth-child(7) { animation-delay: 0.6s; }
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .topic-item:hover {
@@ -165,6 +220,7 @@
 .chatbot-footer {
     display: flex;
     gap: 8px;
+    animation: fadeInUp 0.4s ease 0.65s forwards;
 }
 
 .btn-help {
