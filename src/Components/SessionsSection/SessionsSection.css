@@ -263,7 +263,30 @@
 
     .cancel-session-btn {
         
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        &:hover:not(:disabled) {
+            background: #FFF9FC;
+            transform: scale(1.05);
+        }
+
+        &:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive Styles */
