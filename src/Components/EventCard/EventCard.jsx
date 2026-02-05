@@ -195,13 +195,18 @@ const EventCard = ({ event }) => {
       const user = JSON.parse(localStorage.getItem('user'));
       const customer = JSON.parse(localStorage.getItem('customer'));
       
+      console.log('User:', user);
+      console.log('Customer:', customer);
+      
       if (!user || !customer) {
         alert('User not authenticated');
+        setIsBooking(false);
         return;
       }
 
       // Generate unique booking ID
       const bookingId = await generateBookingId();
+      console.log('Generated booking ID:', bookingId);
       
       // Format session date
       const year = selectedDate.getFullYear();
@@ -222,22 +227,46 @@ const EventCard = ({ event }) => {
         timeSlot: selectedTimeSlot.time
       };
 
+      console.log('Booking data:', bookingData);
+
       // Save to Firestore
+      console.log('Saving to Firestore...');
       await setDoc(doc(db, 'sessionBookings', bookingId), bookingData);
+      console.log('Saved to Firestore successfully');
 
       // Update user metafields with session booking
+      console.log('Fetching user details...');
       const userDetailsResponse = await getUserDetails(customer.id);
+      console.log('User details response:', userDetailsResponse);
+      
       let existingSessions = [];
       
-      if (userDetailsResponse.success && userDetailsResponse.data?.metafields?.custom?.sessions?.value) {
-        try {
-          existingSessions = JSON.parse(userDetailsResponse.data.metafields.custom.sessions.value);
-        } catch (e) {
-          existingSessions = [];
+      if (userDetailsResponse.success && userDetailsResponse.data) {
+        // Try to get sessions from metafields.custom.sessions first
+        const sessionsMetafield = userDetailsResponse.data.metafields?.custom?.sessions;
+        
+        console.log('Sessions metafield from custom:', sessionsMetafield);
+        
+        if (sessionsMetafield && sessionsMetafield.value) {
+          try {
+            existingSessions = Array.isArray(sessionsMetafield.value)
+              ? sessionsMetafield.value
+              : JSON.parse(sessionsMetafield.value);
+            
+            if (!Array.isArray(existingSessions)) {
+              existingSessions = [];
+            }
+          } catch (e) {
+            console.error('Error parsing existing sessions:', e);
+            existingSessions = [];
+          }
         }
       }
 
-      existingSessions.push({
+      console.log('Existing sessions:', existingSessions);
+
+      // Add new booking to existing sessions
+      const newSession = {
         bookingId: bookingId,
         sessionId: sessionId,
         sessionName: bookingData.sessionName,
@@ -245,9 +274,14 @@ const EventCard = ({ event }) => {
         timeSlot: selectedTimeSlot.time,
         status: 'confirmed',
         bookedAt: bookingData.bookedAt
-      });
+      };
+      
+      existingSessions.push(newSession);
+      console.log('Updated sessions:', existingSessions);
 
-      await updateNewUserProfile(customer.id, {
+      // Update user profile with all sessions
+      console.log('Updating user profile...');
+      const updateResponse = await updateNewUserProfile(customer.id, {
         firstName: customer.firstName,
         lastName: customer.lastName,
         metafields: [{
@@ -257,13 +291,142 @@ const EventCard = ({ event }) => {
           type: 'json'
         }]
       });
+      console.log('Update response:', updateResponse);
+
+      // Re-fetch user details to confirm update
+      if (updateResponse.success || updateResponse.data) {
+        console.log('Re-fetching user details to confirm...');
+        const confirmResponse = await getUserDetails(customer.id);
+        console.log('Confirm response:', confirmResponse);
+      }
+
+      // Get auth token for email API
+      console.log('Fetching auth token for emails...');
+      const tokenResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientId: import.meta.env.VITE_API_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
+        })
+      });
+      
+      const tokenData = await tokenResponse.json();
+      console.log('Token data:', tokenData);
+      
+      if (tokenData.success && tokenData.token) {
+        const authToken = tokenData.token;
+        
+        // Format date for email
+        const formattedDate = new Date(sessionDate).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        // Email content for customer
+        const customerEmailHtml = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+            <h1 style="color: #DC5F92; text-align: center;">Session Booking Confirmed! 🎉</h1>
+            <div style="background: #FFF6F8; padding: 20px; border-radius: 12px; margin: 20px 0;">
+              <h2 style="color: #DC5F92; margin-top: 0;">Reservation Details</h2>
+              <p style="font-size: 16px; line-height: 1.6;">
+                <strong>Reservation ID:</strong> ${bookingId}<br/>
+                <strong>Session Name:</strong> ${bookingData.sessionName}<br/>
+                <strong>Date:</strong> ${formattedDate}<br/>
+                <strong>Time:</strong> ${formatTime(selectedTimeSlot.time)}<br/>
+                <strong>Name:</strong> ${bookingData.name}<br/>
+              </p>
+            </div>
+            <p style="font-size: 14px; line-height: 1.6;">
+              You're in! See you soon. 💛<br/><br/>
+              Please join on time to enjoy the full session. We're excited to have you!<br/><br/>
+              If you have any questions, please contact us with the reference number <strong>${bookingId}</strong>.
+            </p>
+            <div style="text-align: center; margin-top: 30px;">
+              <p style="color: #999; font-size: 12px;">Wishing you a happy motherhood journey!</p>
+              <p style="color: #DC5F92; font-weight: bold;">Mommy First</p>
+            </div>
+          </div>
+        `;
+        
+        // Email content for admin
+        const adminEmailHtml = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+            <h1 style="color: #DC5F92;">New Session Booking</h1>
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0;">Booking Details</h2>
+              <p style="font-size: 14px; line-height: 1.6;">
+                <strong>Reservation ID:</strong> ${bookingId}<br/>
+                <strong>Session Name:</strong> ${bookingData.sessionName}<br/>
+                <strong>Session ID:</strong> ${sessionId}<br/>
+                <strong>Date:</strong> ${formattedDate}<br/>
+                <strong>Time:</strong> ${formatTime(selectedTimeSlot.time)}<br/>
+                <strong>Customer Name:</strong> ${bookingData.name}<br/>
+                <strong>Email:</strong> ${bookingData.email}<br/>
+                <strong>Mobile:</strong> ${bookingData.mobile || 'N/A'}<br/>
+                <strong>Booked At:</strong> ${new Date(bookingData.bookedAt).toLocaleString()}<br/>
+                <strong>Status:</strong> Confirmed
+              </p>
+            </div>
+          </div>
+        `;
+        
+        // Send email to customer
+        console.log('Sending customer email...');
+        try {
+          const customerEmailResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/mail/send`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({
+              toEmail: bookingData.email,
+              toName: bookingData.name,
+              subject: `Session Booking Confirmed - ${bookingId}`,
+              html: customerEmailHtml
+            })
+          });
+          const customerEmailData = await customerEmailResponse.json();
+          console.log('Customer email response:', customerEmailData);
+        } catch (emailError) {
+          console.error('Failed to send customer email:', emailError);
+        }
+        
+        // Send email to admin
+        console.log('Sending admin email...');
+        try {
+          const adminEmailResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/mail/send`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({
+              toEmail: 'connect.clicknova@gmail.com',
+              toName: 'Mommy First Admin',
+              subject: `New Session Booking - ${bookingId}`,
+              html: adminEmailHtml
+            })
+          });
+          const adminEmailData = await adminEmailResponse.json();
+          console.log('Admin email response:', adminEmailData);
+        } catch (emailError) {
+          console.error('Failed to send admin email:', emailError);
+        }
+      }
 
       // Set success state
+      console.log('Setting success state...');
       setReservationId(bookingId);
       setBookingSuccess(true);
+      console.log('Booking completed successfully!');
     } catch (error) {
-      console.error('Booking failed:', error);
-      alert('Failed to reserve slot. Please try again.');
+      console.error('Booking failed - Full error:', error);
+      console.error('Error stack:', error.stack);
+      alert(`Failed to reserve slot. Error: ${error.message || 'Unknown error'}. Please try again.`);
     } finally {
       setIsBooking(false);
     }
