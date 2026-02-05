@@ -1,5 +1,6 @@
 import React from 'react'
 import './WelcomeModal.css'
+import WelcomeImage from '../../assets/onloadpopup.png'
 
 const WelcomeModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null
@@ -7,6 +8,7 @@ const WelcomeModal = ({ isOpen, onClose }) => {
   return (
     <div className="welcome-modal-overlay" onClick={onClose}>
       <div className="welcome-modal-content" onClick={(e) => e.stopPropagation()}>
+        <img src={WelcomeImage} alt="" className='bgimage' />
         <div className="buttons-section">
             <button className='button-pink-center'>SHOP BUNDLES NOW</button>
             <button className='button-pink-border checklater' onClick={onClose}>CHECK LATER</button>
