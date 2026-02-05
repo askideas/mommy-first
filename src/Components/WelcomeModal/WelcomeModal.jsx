@@ -9,7 +9,7 @@ const WelcomeModal = ({ isOpen, onClose }) => {
       <div className="welcome-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="buttons-section">
             <button className='button-pink-center'>SHOP BUNDLES NOW</button>
-            <button className='button-pink-border checklater'>CHECK LATER</button>
+            <button className='button-pink-border checklater' onClick={onClose}>CHECK LATER</button>
         </div>
       </div>
     </div>
