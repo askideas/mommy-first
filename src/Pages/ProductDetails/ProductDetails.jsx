@@ -5,6 +5,7 @@ import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useCart } from '../../contexts/CartContext'
 import { getProductDetails } from '../../services/productService'
+import { addToWishlist, removeFromWishlist } from '../../services/userService'
 import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
 import ProductDetailsSkeleton from './ProductDetailsSkeleton'
 import { toast } from 'react-toastify'
@@ -29,7 +30,7 @@ import SomeWentWrong from '../../assets/something-went-wrong.svg'
 const ProductDetails = () => {
     const { productHandle } = useParams();
     const navigate = useNavigate();
-    const { getSessionToken } = useAuth();
+    const { user, customer, addToWishlistHandles, removeFromWishlistHandles, wishlistHandles, isAuthenticated } = useAuth();
     const { addToCart } = useCart();
     const [authToken, setAuthToken] = useState(null);
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
@@ -40,56 +41,67 @@ const ProductDetails = () => {
     const [selectedVariant, setSelectedVariant] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [isAdding, setIsAdding] = useState(false);
+    const [isWishlisting, setIsWishlisting] = useState(false);
+    const [isInWishlist, setIsInWishlist] = useState(false);
 
     useEffect(() => {
         const fetchAuthToken = async () => {
-            // Try context/localStorage first
-            let token = getSessionToken();
-            if (!token) {
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            clientId: import.meta.env.VITE_API_CLIENT_ID,
-                            clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
-                        })
-                    });
-                    const data = await response.json();
-                    if (data.success && data.token) {
-                        token = data.token;
-                        setAuthToken(token);
-                    }
-                } catch (err) {
-                    console.error('Error fetching auth token:', err);
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        clientId: import.meta.env.VITE_API_CLIENT_ID,
+                        clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
+                    })
+                });
+                const data = await response.json();
+                if (data.success && data.token) {
+                    setAuthToken(data.token);
+                } else {
+                    console.error('Failed to get auth token:', data.message);
                 }
-            } else {
-                setAuthToken(token);
+            } catch (err) {
+                console.error('Error fetching auth token:', err);
             }
         };
         fetchAuthToken();
-    }, [getSessionToken]);
+    }, []);
 
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
             const token = authToken;
             if (!token) {
+                console.log('No auth token available');
                 setLoading(false);
                 return;
             }
             const res = await getProductDetails(productHandle, token);
+            console.log('Product fetch response:', res);
             if (res.success) {
                 setProduct(res.data);
                 // Set first variant as default
                 if (res.data?.variants?.length > 0) {
                     setSelectedVariant(res.data.variants[0]);
                 }
+            } else {
+                console.error('Failed to fetch product:', res.message);
             }
             setLoading(false);
         };
         if (authToken) fetchProduct();
     }, [productHandle, authToken]);
+
+    // Check if product is in wishlist
+    useEffect(() => {
+        if (customer && product?.handle) {
+            const wishlistItems = wishlistHandles;
+            setIsInWishlist(wishlistItems.includes(product.handle));
+        } else {
+            setIsInWishlist(false);
+        }
+    }, [customer, product, wishlistHandles]);
 
     const productImages = product?.images?.map(img => img.url) || [pdp1, pdp2, pdp3, pdp4];
 
@@ -198,6 +210,66 @@ const ProductDetails = () => {
         setIsZooming(false);
     };
 
+    const handleWishlist = async () => {
+        // Check if user is logged in
+        if (!user || !customer) {
+            // Open login modal
+            const loginButton = document.querySelector('[data-bs-target="#AuthenticationModal"]');
+            if (loginButton) {
+                loginButton.click();
+            }
+            return;
+        }
+
+        if (isWishlisting) return;
+
+        setIsWishlisting(true);
+
+        try {
+            const userId = customer.id;
+            const handle = product.handle;
+
+            let response;
+            if (isInWishlist) {
+                // Remove from wishlist
+                response = await removeFromWishlist(userId, handle);
+            } else {
+                // Add to wishlist
+                response = await addToWishlist(userId, handle);
+            }
+
+            if (response.success) {
+                setIsInWishlist(!isInWishlist);
+                
+                // Update wishlist handles in AuthContext
+                if (isInWishlist) {
+                    removeFromWishlistHandles(handle);
+                } else {
+                    addToWishlistHandles(handle);
+                }
+                
+                toast.success(!isInWishlist ? 'Added to wishlist!' : 'Removed from wishlist', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+            } else {
+                console.error('Wishlist error:', response.message);
+                toast.error(response.message || 'Failed to update wishlist', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+            }
+        } catch (err) {
+            console.error('Wishlist error:', err);
+            toast.error('Something went wrong', {
+                autoClose: 1500,
+                hideProgressBar: true
+            });
+        } finally {
+            setIsWishlisting(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="productDetailsPageContent">
@@ -296,7 +368,20 @@ const ProductDetails = () => {
                                         <path d="M12.5279 6.6802C12.6906 6.5407 12.772 6.47096 12.8018 6.38796C12.828 6.31511 12.828 6.23542 12.8018 6.16257C12.772 6.07957 12.6906 6.00983 12.5279 5.87033L6.88075 1.02991C6.60059 0.789782 6.46052 0.669716 6.34192 0.666774C6.23886 0.664218 6.14041 0.709499 6.07527 0.789417C6.00033 0.881375 6.00033 1.06587 6.00033 1.43485V4.29835C4.57721 4.54732 3.27472 5.26844 2.3068 6.35118C1.25154 7.53161 0.667815 9.05923 0.666992 10.6426V11.0506C1.36655 10.2078 2.24 9.52627 3.2275 9.05255C4.09812 8.63488 5.03927 8.38748 6.00033 8.32228V11.1157C6.00033 11.4847 6.00033 11.6692 6.07527 11.7611C6.14041 11.841 6.23886 11.8863 6.34192 11.8838C6.46052 11.8808 6.60059 11.7607 6.88075 11.5206L12.5279 6.6802Z" stroke="#DC5F92" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
-                                <button className="wishlist"><Heart /></button>
+                                {isWishlisting ? (
+                                    <button className="wishlist" disabled>
+                                        <Loader2 className="spinner" size={20} style={{ animation: 'spin 1s linear infinite' }} />
+                                    </button>
+                                ) : (
+                                    <button 
+                                        className={`wishlist ${isInWishlist ? 'active' : ''}`}
+                                        onClick={handleWishlist}
+                                        data-bs-toggle={isAuthenticated ? undefined : "offcanvas"}
+                                        data-bs-target={isAuthenticated ? undefined : "#AuthenticationModal"}
+                                    >
+                                        <Heart fill={isInWishlist ? 'currentColor' : 'none'} />
+                                    </button>
+                                )}
                             </div>
 
                             <div className="product name-section">

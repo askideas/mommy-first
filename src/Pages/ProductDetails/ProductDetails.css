@@ -214,6 +214,8 @@
                     justify-content: center;
                     align-items: center;
                     margin-left: auto;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
 
                     svg {
                         width: 24px;
@@ -221,6 +223,22 @@
                         min-width: 24px;
                         min-height: 24px;
                         stroke: var(--pink-dark);
+                        transition: all 0.3s ease;
+                    }
+
+                    &:hover svg {
+                        stroke: var(--primary-pink);
+                        transform: scale(1.1);
+                    }
+
+                    &.active svg {
+                        fill: var(--primary-pink);
+                        stroke: var(--primary-pink);
+                    }
+
+                    &:disabled {
+                        cursor: not-allowed;
+                        opacity: 0.5;
                     }
                 }
             }
