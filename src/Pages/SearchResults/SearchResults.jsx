@@ -318,7 +318,7 @@ const SearchResults = () => {
                         </div>
                         <div className="results-found-container">
                             <p>{getActiveResults().length} Results found</p>
-                            <button className="srp-filter-btn-modal">FILTER <Settings2 /></button>
+                            {/* <button className="srp-filter-btn-modal">FILTER <Settings2 /></button> */}
                         </div>
                         <div className="search-products-grid">
                             {/* Products */}
