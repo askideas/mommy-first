@@ -253,6 +253,8 @@
         align-items: center;
         column-gap: 10px;
         margin: 0;
+        flex-wrap: wrap;
+        row-gap: 10px;
 
         button {
             width: fit-content;
@@ -266,11 +268,68 @@
             outline: none;
             border-radius: 100px;
             border: 1px solid var(--primary-pink);
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: var(--pink-light);
+                color: var(--white);
+            }
 
             &.active {
                 background: var(--pink-dark);
                 color: var(--white);
             }
+        }
+    }
+}
+
+/* Search Result Card for Events, Blogs, Care Hub */
+.search-result-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .search-result-image {
+        width: 100%;
+        aspect-ratio: 16/10;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .search-result-content {
+        padding: 16px;
+
+        h3 {
+            font: 600 14px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        p {
+            font: 400 12px var(--font);
+            color: var(--gray);
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     }
 }

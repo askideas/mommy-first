@@ -232,26 +232,17 @@ const Shop = () => {
     };
 
     // Function to fetch products from Shopify with pagination
-    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionHandle = null) => {
+    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionHandle = 'all') => {
         try {
-            console.log(`Fetching products page ${page} with token${collectionHandle ? ` for collection: ${collectionHandle}` : ''}...`);
+            console.log(`Fetching products page ${page} with token for collection: ${collectionHandle}...`);
             if (isLoadMore) {
                 setLoadingMore(true);
             } else {
                 setLoading(true);
             }
             
-            let url;
-            
-            // If collection handle is provided, use collections endpoint
-            if (collectionHandle) {
-                url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
-            } else {
-                // Otherwise use products endpoint
-                url = page === 1 
-                    ? `${import.meta.env.VITE_API_BASE_URL}/products`
-                    : `${import.meta.env.VITE_API_BASE_URL}/products/pg-${page}`;
-            }
+            // Always use collections endpoint with 'all' as default
+            const url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -316,7 +307,7 @@ const Shop = () => {
             const token = await fetchAuthToken();
             if (token) {
                 await fetchCollections(token);
-                await fetchProducts(token);
+                await fetchProducts(token, 1, false, 'all');
             } else {
                 setLoading(false);
             }
@@ -329,7 +320,7 @@ const Shop = () => {
     const handleLoadMore = async () => {
         const nextPage = currentPage + 1;
         setCurrentPage(nextPage);
-        await fetchProducts(authToken, nextPage, true, selectedCollection);
+        await fetchProducts(authToken, nextPage, true, selectedCollection || 'all');
     };
 
     // Handle quick filter click
@@ -338,7 +329,7 @@ const Shop = () => {
         setSelectedCollection(handle === 'ALL' ? null : handle);
         setCurrentPage(1);
         setDisplayedProducts([]);
-        await fetchProducts(authToken, 1, false, handle === 'ALL' ? null : handle);
+        await fetchProducts(authToken, 1, false, handle === 'ALL' ? 'all' : handle);
     };
 
     // Calculate current count and progress percentage

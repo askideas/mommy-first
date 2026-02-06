@@ -14,7 +14,13 @@ const SearchResults = () => {
     const urlQuery = searchParams.get('q') || pathQuery || '';
     const [searchQuery, setSearchQuery] = useState(urlQuery);
 
-    const [products, setProducts] = useState([]);
+    const [searchResults, setSearchResults] = useState({
+        products: [],
+        events: [],
+        journals: [],
+        liveSessions: []
+    });
+    const [activeFilter, setActiveFilter] = useState('products');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [authToken, setAuthToken] = useState(null);
@@ -81,7 +87,12 @@ const SearchResults = () => {
     // Function to search products
     const searchProducts = async (query, token) => {
         if (!query.trim()) {
-            setProducts([]);
+            setSearchResults({
+                products: [],
+                events: [],
+                journals: [],
+                liveSessions: []
+            });
             setLoading(false);
             return;
         }
@@ -107,16 +118,49 @@ const SearchResults = () => {
             const data = await response.json();
             console.log('Search response data:', data);
             
-            if (data.success && data.data) {
-                const transformedProducts = data.data.map(transformProduct);
-                setProducts(transformedProducts);
+            const predictiveSearch = data.data?.predictiveSearch;
+            
+            if (predictiveSearch) {
+                const products = predictiveSearch.products || [];
+                const articles = predictiveSearch.articles || {};
+                const events = articles.events || [];
+                const journals = articles.journals || [];
+                const liveSessions = articles['live-sessions'] || [];
+                
+                setSearchResults({
+                    products,
+                    events,
+                    journals,
+                    liveSessions
+                });
+                
+                // Set active filter to first available category with results
+                if (products.length > 0) {
+                    setActiveFilter('products');
+                } else if (events.length > 0) {
+                    setActiveFilter('events');
+                } else if (journals.length > 0) {
+                    setActiveFilter('journals');
+                } else if (liveSessions.length > 0) {
+                    setActiveFilter('liveSessions');
+                }
             } else {
-                setProducts([]);
+                setSearchResults({
+                    products: [],
+                    events: [],
+                    journals: [],
+                    liveSessions: []
+                });
             }
         } catch (err) {
             console.error('Error searching products:', err);
             setError(`Failed to load search results: ${err.message}`);
-            setProducts([]);
+            setSearchResults({
+                products: [],
+                events: [],
+                journals: [],
+                liveSessions: []
+            });
         } finally {
             setLoading(false);
         }
@@ -139,7 +183,12 @@ const SearchResults = () => {
     useEffect(() => {
         const timer = setTimeout(async () => {
             if (!searchQuery.trim()) {
-                setProducts([]);
+                setSearchResults({
+                    products: [],
+                    events: [],
+                    journals: [],
+                    liveSessions: []
+                });
                 setLoading(false);
                 setError(null);
                 // Don't update URL when input is empty, keep the existing URL
@@ -165,6 +214,20 @@ const SearchResults = () => {
         return () => clearTimeout(timer);
     }, [searchQuery]);
 
+    const getTotalResults = () => {
+        return (searchResults?.products?.length || 0) + (searchResults?.events?.length || 0) + (searchResults?.journals?.length || 0) + (searchResults?.liveSessions?.length || 0);
+    };
+
+    const getActiveResults = () => {
+        switch(activeFilter) {
+            case 'products': return searchResults.products;
+            case 'events': return searchResults.events;
+            case 'journals': return searchResults.journals;
+            case 'liveSessions': return searchResults.liveSessions;
+            default: return [];
+        }
+    };
+
     return (
         <div className="search-results-page">
             <div className="container">
@@ -177,7 +240,7 @@ const SearchResults = () => {
                             Back to Shop
                         </button>
                     </div>
-                ) : products.length > 0 ? (
+                ) : getTotalResults() > 0 ? (
                     <>
                         <div className="breadcrumbs-search-results-section">
                             <NavLink to="/">Home</NavLink>
@@ -203,21 +266,120 @@ const SearchResults = () => {
                             </div>
                         </div>
                         <div className="search-results-filter">
-                            <p className="results-found">You searched for ’peri bott’</p>
+                            <p className="results-found">You searched for '{searchQuery}'</p>
                             <div className="filters-section">
-                                <button className='active'>Products (4)</button>
-                                <button>Events (4)</button>
-                                <button>Blog (4)</button>
-                                <button>Care Hub (4)</button>
+                                {searchResults.products.length > 0 && (
+                                    <button 
+                                        className={activeFilter === 'products' ? 'active' : ''}
+                                        onClick={() => setActiveFilter('products')}
+                                    >
+                                        Products ({searchResults.products.length})
+                                    </button>
+                                )}
+                                {searchResults.events.length > 0 && (
+                                    <button 
+                                        className={activeFilter === 'events' ? 'active' : ''}
+                                        onClick={() => setActiveFilter('events')}
+                                    >
+                                        Events ({searchResults.events.length})
+                                    </button>
+                                )}
+                                {searchResults.journals.length > 0 && (
+                                    <button 
+                                        className={activeFilter === 'journals' ? 'active' : ''}
+                                        onClick={() => setActiveFilter('journals')}
+                                    >
+                                        Blog ({searchResults.journals.length})
+                                    </button>
+                                )}
+                                {searchResults.liveSessions.length > 0 && (
+                                    <button 
+                                        className={activeFilter === 'liveSessions' ? 'active' : ''}
+                                        onClick={() => setActiveFilter('liveSessions')}
+                                    >
+                                        Care Hub ({searchResults.liveSessions.length})
+                                    </button>
+                                )}
                             </div>
                         </div>
                         <div className="results-found-container">
-                            <p>{products.length} Results found</p>
+                            <p>{getActiveResults().length} Results found</p>
                             <button className="srp-filter-btn-modal">FILTER <Settings2 /></button>
                         </div>
                         <div className="search-products-grid">
-                            {products.map((product, index) => (
-                                <ProductTile data={product} key={product.id + '-' + index} />
+                            {/* Products */}
+                            {activeFilter === 'products' && searchResults.products.map((product, index) => (
+                                <div 
+                                    key={product.id + '-' + index}
+                                    onClick={() => navigate(`/shop/${product.handle}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <ProductTile 
+                                        data={{
+                                            id: product.id,
+                                            name: product.title,
+                                            title: product.title,
+                                            handle: product.handle,
+                                            vendor: product.vendor,
+                                            productType: product.productType,
+                                            price: parseFloat(product.priceRange?.minVariantPrice?.amount || '0').toFixed(2),
+                                            currencyCode: product.priceRange?.minVariantPrice?.currencyCode || 'USD',
+                                            image: product.images?.nodes?.[0]?.url || '',
+                                            priceRange: product.priceRange
+                                        }} 
+                                    />
+                                </div>
+                            ))}
+                            {/* Events */}
+                            {activeFilter === 'events' && searchResults.events.map((event, index) => (
+                                <div 
+                                    className="search-result-card" 
+                                    key={event.id + '-' + index}
+                                    onClick={() => navigate(`/events/${event.handle}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="search-result-image">
+                                        <img src={event.image?.url || ''} alt={event.title} />
+                                    </div>
+                                    <div className="search-result-content">
+                                        <h3>{event.title}</h3>
+                                        <p>{event.excerpt}</p>
+                                    </div>
+                                </div>
+                            ))}
+                            {/* Journals/Blogs */}
+                            {activeFilter === 'journals' && searchResults.journals.map((journal, index) => (
+                                <div 
+                                    className="search-result-card" 
+                                    key={journal.id + '-' + index}
+                                    onClick={() => navigate(`/blogs/${journal.handle}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="search-result-image">
+                                        <img src={journal.image?.url || ''} alt={journal.title} />
+                                    </div>
+                                    <div className="search-result-content">
+                                        <h3>{journal.title}</h3>
+                                        <p>{journal.excerpt}</p>
+                                    </div>
+                                </div>
+                            ))}
+                            {/* Live Sessions/Care Hub */}
+                            {activeFilter === 'liveSessions' && searchResults.liveSessions.map((session, index) => (
+                                <div 
+                                    className="search-result-card" 
+                                    key={session.id + '-' + index}
+                                    onClick={() => navigate(`/carehub/${session.handle}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="search-result-image">
+                                        <img src={session.image?.url || ''} alt={session.title} />
+                                    </div>
+                                    <div className="search-result-content">
+                                        <h3>{session.title}</h3>
+                                        <p>{session.excerpt}</p>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </>
