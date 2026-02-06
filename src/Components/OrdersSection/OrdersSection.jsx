@@ -17,6 +17,17 @@ const OrdersSection = () => {
   const [trackingItemIndex, setTrackingItemIndex] = useState(null)
   const [selectedReturnItems, setSelectedReturnItems] = useState({})
   const [cancelReason, setCancelReason] = useState('')
+  const [refundData, setRefundData] = useState({
+    status: 'credited',
+    timeline: [
+      { step: 'Initiated', date: 'Jan 02' },
+      { step: 'Picked up', date: 'Jan 03' },
+      { step: 'Received', date: 'Jan 03' },
+      { step: 'Refund Issued', date: 'Jan 04' },
+      { step: 'Refund Credited', date: 'Jan 04' }
+    ],
+    refundAmount: 123.99
+  })
 
   const fetchAuthToken = async () => {
     try {
@@ -120,6 +131,12 @@ const OrdersSection = () => {
     console.log('Return requested for items:', selectedItems)
     console.log('Cancel reason:', cancelReason)
     // Handle return submission here
+    // After successful submission, navigate to refund status
+    setStage('refund-status')
+  }
+
+  function handleRefundStatus () {
+    setStage('refund-status')
   }
   
   return (
@@ -162,6 +179,16 @@ const OrdersSection = () => {
                   <span onClick={() => handleTrackPackage(detailsIndex, 0)} style={{cursor: 'pointer'}}>Track package</span>
                   <ChevronRight />
                   <span>Cancel order</span>
+              </p>
+            )
+          }
+
+          {
+            stage == 'refund-status' && (
+              <p className='heading'>
+                  <span onClick={() => handleViewDetails(0, 'list')} style={{cursor: 'pointer'}}>My Orders</span>
+                  <ChevronRight />
+                  <span>Refund / Return status</span>
               </p>
             )
           }
@@ -437,6 +464,53 @@ const OrdersSection = () => {
 
                 <div className="return-action-section">
                   <button className="button-request-return" onClick={handleRequestReturn}>REQUEST RETURN</button>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          !isLoading && orders && stage == 'refund-status' && (
+            <div className="refund-status-container">
+              {/* Success Message */}
+              <div className="refund-success-message">
+                <h2 className="success-title">Your refund is credited!</h2>
+                <p className="success-subtitle">Amount has been credited to the original payment method.</p>
+              </div>
+
+              {/* Refund Timeline */}
+              <div className="refund-timeline">
+                <div className="timeline-steps">
+                  {refundData.timeline.map((item, index) => (
+                    <div key={index} className="timeline-step-wrapper">
+                      <div className="timeline-step completed">
+                        <div className="step-circle">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.5 4L6 11.5L2.5 8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </div>
+                        <p className="step-title">{item.step}</p>
+                        <p className="step-date">{item.date}</p>
+                      </div>
+                      {index < refundData.timeline.length - 1 && (
+                        <div className="timeline-connector completed"></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Refund Summary */}
+              <div className="refund-summary-section">
+                <h3 className="summary-title">Refund Summary</h3>
+                <div className="summary-item">
+                  <span className="summary-label">Refund subtotal</span>
+                  <span className="summary-value">${refundData.refundAmount.toFixed(2)} USD</span>
+                </div>
+                <div className="summary-item total">
+                  <span className="summary-label">Total Refund</span>
+                  <span className="summary-value">${refundData.refundAmount.toFixed(2)} USD</span>
                 </div>
               </div>
             </div>
