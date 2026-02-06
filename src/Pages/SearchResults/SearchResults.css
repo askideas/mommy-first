@@ -196,6 +196,18 @@
     width: fit-content;
 }
 
+.search-no-results-con {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+
+    button {
+        width: fit-content;
+    }
+}
+
 
 /* Responsive Design */
 @media (max-width: 1200px) {
