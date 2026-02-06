@@ -23,14 +23,13 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
-        animation: cardfromLeft linear both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 100%;
 
-        .sub-heading-span {
-            animation: cardfromRight linear both;
-            animation-timeline: view();
-            animation-range: entry 0% entry 100%;
+        .from-left {
+            background: linear-gradient(0deg, #C6658D, #C6658D);
+            font: 300 80px var(--font);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
         }
 
         span {
