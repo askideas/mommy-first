@@ -18,7 +18,7 @@ import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
 import SomeWentWrong from '../../assets/something-went-wrong.svg'
 
 const Shop = () => {
-    const PRODUCTS_PER_PAGE = 16;
+    const PRODUCTS_PER_PAGE = 24;
     
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,13 +32,15 @@ const Shop = () => {
     const [activeFilter, setActiveFilter] = useState('ALL');
     const [selectedCollection, setSelectedCollection] = useState(null);
     const [collections, setCollections] = useState([]);
-    const [sortBy, setSortBy] = useState('featured');
+    const [sortBy, setSortBy] = useState('TITLE_ASC');
     const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(100);
+    const [maxPrice, setMaxPrice] = useState(1000);
     const [availabilityFilter, setAvailabilityFilter] = useState([]);
     const [showSortDropdown, setShowSortDropdown] = useState(false);
-    const PRICE_MIN = 0;
-    const PRICE_MAX = 100;
+    const [collectionFilters, setCollectionFilters] = useState([]);
+    const [appliedFilters, setAppliedFilters] = useState({});
+    const [PRICE_MIN, setPRICE_MIN] = useState(0);
+    const [PRICE_MAX, setPRICE_MAX] = useState(1000);
 
     const handleMinPriceChange = (value) => {
         const numValue = Number(value);
@@ -66,14 +68,12 @@ const Shop = () => {
     const espotImages = [ MF1, MF2, EsImage1 ]
 
     const sortOptions = [
-        { id: 'featured', label: 'Featured' },
-        { id: 'best_selling', label: 'Best selling' },
-        { id: 'alphabetically_az', label: 'Alphabetically, A-Z' },
-        { id: 'alphabetically_za', label: 'Alphabetically, Z-A' },
-        { id: 'price_low_high', label: 'Price, low to high' },
-        { id: 'price_high_low', label: 'Price, high to low' },
-        { id: 'date_old_new', label: 'Date, old to new' },
-        { id: 'date_new_old', label: 'Date, new to old' }
+        { id: 'TITLE_ASC', label: 'Alphabetically, A-Z' },
+        { id: 'TITLE_DESC', label: 'Alphabetically, Z-A' },
+        { id: 'PRICE_ASC', label: 'Price, low to high' },
+        { id: 'PRICE_DESC', label: 'Price, high to low' },
+        { id: 'DATE_ASC', label: 'Date, old to new' },
+        { id: 'DATE_DESC', label: 'Date, new to old' }
     ];
 
     const filters = [
@@ -106,28 +106,126 @@ const Shop = () => {
         );
     };
 
-    const handleApplyFilter = () => {
-        // Apply filter logic here
-        console.log('Filters applied:', { minPrice, maxPrice, availabilityFilter, sortBy });
+    const handleApplyFilter = async () => {
+        // Build filters object and fetch products with filters
+        setCurrentPage(1);
+        setDisplayedProducts([]);
+        await fetchProducts(authToken, 1, false, selectedCollection || 'all');
     };
 
-    const handleResetFilter = () => {
+    const handleResetFilter = async () => {
         setMinPrice(0);
-        setMaxPrice(100);
+        setMaxPrice(1000);
         setAvailabilityFilter([]);
+        setSortBy('TITLE_ASC');
+        setCurrentPage(1);
+        setDisplayedProducts([]);
+        await fetchProducts(authToken, 1, false, selectedCollection || 'all', true);
+    };
+
+    // Build query string for API request
+    const buildQueryString = (resetFilters = false, overrideSortBy = null) => {
+        // On reset, return empty string to get default API behavior
+        if (resetFilters) {
+            return '';
+        }
+        const params = new URLSearchParams();
+        // Add price filters
+        if (minPrice > PRICE_MIN) {
+            params.append('price_min', minPrice);
+        }
+        if (maxPrice < PRICE_MAX) {
+            params.append('price_max', maxPrice);
+        }
+        // Add availability filter
+        if (availabilityFilter.length === 1) {
+            if (availabilityFilter.includes('in_stock')) {
+                params.append('available', 'true');
+            } else if (availabilityFilter.includes('out_of_stock')) {
+                params.append('available', 'false');
+            }
+        }
+        // Add sort (use override if provided, otherwise use state)
+        const sortValue = overrideSortBy || sortBy;
+        if (sortValue) {
+            params.append('sort', sortValue);
+        }
+        return params.toString();
+    };
+
+    // Handle sort change
+    const handleSortChange = async (newSortId) => {
+        setSortBy(newSortId);
+        setShowSortDropdown(false);
+        setCurrentPage(1);
+        setDisplayedProducts([]);
+        // Build query string with new sort value
+        const queryString = buildQueryString(false, newSortId);
+        const collectionHandle = selectedCollection || 'all';
+        let url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
+        if (queryString) url += `?${queryString}`;
+        try {
+            setLoading(true);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'omit'
+            });
+            if (response.ok) {
+                const responseData = await response.json();
+                const collection = responseData.data?.collection || responseData.collection;
+                const pagination = responseData.pagination;
+                const productEdges = Array.isArray(collection?.products)
+                    ? collection.products
+                    : (collection?.products?.edges || []);
+                if (collection?.filters) {
+                    const priceFilter = collection.filters.find(f => f.id === 'filter.v.price');
+                    if (priceFilter && priceFilter.values?.[0]?.input) {
+                        try {
+                            const priceInput = JSON.parse(priceFilter.values[0].input);
+                            if (typeof priceInput.price?.min === 'number' && typeof priceInput.price?.max === 'number') {
+                                setPRICE_MIN(priceInput.price.min);
+                                setPRICE_MAX(priceInput.price.max);
+                                setMinPrice(priceInput.price.min);
+                                setMaxPrice(priceInput.price.max);
+                            }
+                        } catch (e) {
+                            console.error('Error parsing price filter:', e);
+                        }
+                    }
+                }
+                if (productEdges.length > 0) {
+                    const transformedProducts = productEdges.map(
+                        edge => edge.node ? transformProduct(edge) : transformProduct({ node: edge })
+                    );
+                    setDisplayedProducts(transformedProducts);
+                    setTotalProducts(pagination?.totalProducts || transformedProducts.length);
+                    setHasMore(pagination?.hasNextPage || false);
+                } else {
+                    setDisplayedProducts([]);
+                }
+            }
+        } catch (err) {
+            console.error('Error sorting products:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const HeroLabel = {
         image: HeroImage,
         text: 'Designed to Maximize Comfort for Expecting Moms',
         height: 280,
-        pwidth: 487
+        pwidth: 487,
     };
-
     // Function to fetch collections
     const fetchCollections = async (token) => {
-        setLoadingCollections(true);
         try {
+            setLoadingCollections(true);
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/collections`, {
                 method: 'GET',
                 headers: {
@@ -137,22 +235,21 @@ const Shop = () => {
                 mode: 'cors',
                 credentials: 'omit'
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
             const result = await response.json();
             console.log('Collections response:', result);
 
-            if (result.success && result.data) {
-                // Filter collections that have display_in_shop_page = true
-                const filteredCollections = result.data.filter(collection => {
-                    const displayMetafield = collection.metafields?.find(
-                        m => m.key === 'display_in_shop_page'
-                    );
-                    return displayMetafield?.value === true || displayMetafield?.value === 'true';
-                });
+            const collectionEdges = result.data?.collections?.edges || [];
+            
+            if (collectionEdges.length > 0) {
+                // Transform and filter collections that have display_in_shop_page = true
+                const filteredCollections = collectionEdges
+                    .map(edge => edge.node)
+                    .filter(collection => {
+                        const displayMetafield = collection.metafields?.find(
+                            m => m.key === 'display_in_shop_page'
+                        );
+                        return displayMetafield?.value === true || displayMetafield?.value === 'true';
+                    });
                 console.log('Filtered collections for shop page:', filteredCollections);
                 setCollections(filteredCollections);
             }
@@ -161,7 +258,7 @@ const Shop = () => {
         } finally {
             setLoadingCollections(false);
         }
-    };
+    }
 
     // Function to fetch authentication token
     const fetchAuthToken = async () => {
@@ -204,10 +301,10 @@ const Shop = () => {
     };
 
     // Function to transform new API product data to match the expected format
-    const transformProduct = (product) => {
-        // New API already returns the data in a flat structure
-        const firstVariant = product.variants?.[0];
-        const firstImage = product.images?.[0];
+    const transformProduct = (edge) => {
+        const product = edge.node;
+        const firstVariant = product.variants?.nodes?.[0];
+        const firstImage = product.images?.nodes?.[0];
         
         return {
             id: product.id,
@@ -221,18 +318,18 @@ const Shop = () => {
             label: product.tags?.[0] || '',
             price: parseFloat(firstVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount || '0').toFixed(2),
             currencyCode: firstVariant?.price?.currencyCode || product.priceRange?.minVariantPrice?.currencyCode || 'USD',
-            compareAtPrice: firstVariant?.compareAtPrice?.amount || null,
+            compareAtPrice: firstVariant?.compareAtPrice?.amount || product.compareAtPriceRange?.minVariantPrice?.amount || null,
             availableForSale: product.availableForSale,
             image: firstImage?.url || '',
-            images: product.images || [],
-            variants: product.variants || [],
+            images: product.images?.nodes || [],
+            variants: product.variants?.nodes || [],
             priceRange: product.priceRange,
             bundleComponents: product.bundleComponents || null
         };
     };
 
     // Function to fetch products from Shopify with pagination
-    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionHandle = 'all') => {
+    const fetchProducts = async (token, page = 1, isLoadMore = false, collectionHandle = 'all', resetFilters = false) => {
         try {
             console.log(`Fetching products page ${page} with token for collection: ${collectionHandle}...`);
             if (isLoadMore) {
@@ -241,8 +338,20 @@ const Shop = () => {
                 setLoading(true);
             }
             
-            // Always use collections endpoint with 'all' as default
-            const url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
+            // Build query string with filters (skip on initial load or reset)
+            const queryString = resetFilters ? '' : buildQueryString(false);
+            
+            // Always use collections endpoint with 'all' as default, add page index for pagination
+            let url = page === 1 
+                ? `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`
+                : `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}/pg-${page}`;
+            
+            // Append query string if exists
+            if (queryString) {
+                url += `?${queryString}`;
+            }
+            
+            console.log('Fetching URL:', url);
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -255,7 +364,6 @@ const Shop = () => {
             });
 
             console.log('Products response status:', response.status);
-            console.log('Response headers:', [...response.headers.entries()]);
             
             if (!response.ok) {
                 const errorText = await response.text();
@@ -263,11 +371,48 @@ const Shop = () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            console.log('Products response:', data);
+            const responseData = await response.json();
+            console.log('Products response:', responseData);
+            console.log('Response data structure:', JSON.stringify(responseData, null, 2).substring(0, 500));
             
-            if (data.success && data.data) {
-                const transformedProducts = data.data.map(transformProduct);
+            const collection = responseData.data?.collection || responseData.collection;
+            const pagination = responseData.pagination;
+            console.log('Collection:', collection);
+            console.log('Collection products:', collection?.products);
+            
+            // Fix product parsing: products is an array, not edges
+            const productEdges = Array.isArray(collection?.products)
+                ? collection.products
+                : (collection?.products?.edges || []);
+            
+            // Store collection filters for filter modal
+            if (collection?.filters) {
+                setCollectionFilters(collection.filters);
+                // Update price range from API if available
+                const priceFilter = collection.filters.find(f => f.id === 'filter.v.price');
+                if (priceFilter && priceFilter.values?.[0]?.input) {
+                    try {
+                        const priceInput = JSON.parse(priceFilter.values[0].input);
+                        if (typeof priceInput.price?.min === 'number' && typeof priceInput.price?.max === 'number') {
+                            setMinPrice(priceInput.price.min);
+                            setMaxPrice(priceInput.price.max);
+                        }
+                    } catch (e) {
+                        console.error('Error parsing price filter:', e);
+                    }
+                }
+            }
+            
+            // Store applied filters
+            if (responseData.appliedFilters) {
+                setAppliedFilters(responseData.appliedFilters);
+            }
+            
+            if (productEdges.length > 0) {
+                // Support both edge.node and direct product objects
+                const transformedProducts = productEdges.map(
+                    edge => edge.node ? transformProduct(edge) : transformProduct({ node: edge })
+                );
                 console.log('Transformed products:', transformedProducts);
                 
                 if (isLoadMore) {
@@ -278,17 +423,21 @@ const Shop = () => {
                     setDisplayedProducts(transformedProducts);
                 }
                 
-                // Update total products count if available
-                if (data.totalProducts) {
-                    setTotalProducts(data.totalProducts);
+                // Update total products count from pagination
+                if (pagination?.totalProducts) {
+                    setTotalProducts(pagination.totalProducts);
                 }
                 
-                // Check if there are more products to load using hasNextPage from API
-                setHasMore(data.hasNextPage || false);
+                // Check if there are more products to load using pagination info
+                setHasMore(pagination?.hasNextPage || false);
                 
                 setError(null);
             } else {
-                throw new Error('Failed to fetch products');
+                if (!isLoadMore) {
+                    setDisplayedProducts([]);
+                    setTotalProducts(0);
+                }
+                setHasMore(false);
             }
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -424,10 +573,7 @@ const Shop = () => {
                                     <button
                                         key={option.id}
                                         className={`sort-dropdown-item ${sortBy === option.id ? 'active' : ''}`}
-                                        onClick={() => {
-                                            setSortBy(option.id);
-                                            setShowSortDropdown(false);
-                                        }}
+                                        onClick={() => handleSortChange(option.id)}
                                     >
                                         {option.label}
                                     </button>
@@ -623,4 +769,4 @@ const Shop = () => {
   )
 }
 
-export default Shop
+export default Shop;
