@@ -135,9 +135,9 @@ const AuthCallback = () => {
           <div className="success-icon">✓</div>
         )}
         
-        {status === 'error' && (
+        {/* {status === 'error' && (
           <div className="error-icon">✕</div>
-        )}
+        )} */}
         
         <p className={`status-message ${status}`}>{message}</p>
       </div>
