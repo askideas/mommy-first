@@ -14,6 +14,7 @@ const OrdersSection = () => {
   const [orders, setOrders] = useState(null);
   const [stage, setStage] = useState('list');
   const [detailsIndex, setDetailsIndex] = useState(0)
+  const [trackingItemIndex, setTrackingItemIndex] = useState(null)
 
   const fetchAuthToken = async () => {
     try {
@@ -91,6 +92,12 @@ const OrdersSection = () => {
     setDetailsIndex(index)
     setStage(stage)
   }
+
+  function handleTrackPackage (orderIndex, itemIndex) {
+    setDetailsIndex(orderIndex)
+    setTrackingItemIndex(itemIndex)
+    setStage('tracking')
+  }
   
   return (
     <div className="orders-section-container">
@@ -110,6 +117,16 @@ const OrdersSection = () => {
                   <span onClick={() => handleViewDetails(0, 'list')} style={{cursor: 'pointer'}}>My Orders</span>
                   <ChevronRight />
                   <span>Order details</span>
+              </p>
+            )
+          }
+
+          {
+            stage == 'tracking' && (
+              <p className='heading'>
+                  <span onClick={() => handleViewDetails(0, 'list')} style={{cursor: 'pointer'}}>My Orders</span>
+                  <ChevronRight />
+                  <span>Track package</span>
               </p>
             )
           }
@@ -141,7 +158,7 @@ const OrdersSection = () => {
                                   <p className="name">{item.title}</p>
                                 </div>
                                 <div className="button-section">
-                                  <button className="button-pink-border">TRACK PACKAGE</button>
+                                  <button className="button-pink-border" onClick={() => handleViewDetails(index, 'tracking')}>TRACK PACKAGE</button>
                                 </div>
                               </div>
                             )
@@ -218,13 +235,118 @@ const OrdersSection = () => {
                             <p className="name">{item.title}</p>
                           </div>
                           <div className="button-section">
-                            <button className="button-pink-border">RETURN</button>
+                            <button className="button-pink-border" onClick={() => handleTrackPackage(index, itemIndex)}>TRACK PACKAGE</button>
                           </div>
                         </div>
                       )
                       
                     })
                   }
+                </div>
+            </div>
+          )
+        }
+
+        {
+          !isLoading && orders && stage == 'tracking' && ( 
+            <div className="tracking-section-container">
+                {/* Progress Tracker */}
+                <div className="tracking-progress-section">
+                  <div className="progress-steps">
+                    <div className="step completed">
+                      <div className="step-circle">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                          <path d="M8 13.5L4.5 10M4.5 10L2 12.5M8 13.5L18 2" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <p className="step-label">Ordered</p>
+                    </div>
+
+                    <div className="step-line completed"></div>
+
+                    <div className="step active">
+                      <div className="step-circle"></div>
+                      <p className="step-label">Shipped</p>
+                    </div>
+
+                    <div className="step-line"></div>
+
+                    <div className="step">
+                      <div className="step-circle"></div>
+                      <p className="step-label">Out for delivery</p>
+                    </div>
+
+                    <div className="step-line"></div>
+
+                    <div className="step">
+                      <div className="step-circle"></div>
+                      <p className="step-label">Delivered</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Delivery Status */}
+                <div className="delivery-status-box">
+                  <p className="status-message">Arriving tomorrow</p>
+                  
+                  <div className="tracking-items-container">
+                    {
+                      orders[detailsIndex].line_items.map((item, index) => {
+                        return (
+                          <div className="tracking-item" key={index}>
+                            <img src={item.image ? item.image.src : DefaultImg} alt="" onError={(e) => e.target.src = DefaultImg} />
+                            <div className="item-details">
+                              <p className="item-title">{item.title}</p>
+                            </div>
+                            <button className="button-pink-border">Return</button>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+
+                {/* Order Information */}
+                <div className="tracking-order-info">
+                  <div className="order-date-section">
+                    <p>Ordered placed on <strong>{new Date(orders[detailsIndex].created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong></p>
+                    <p className="order-id">Order ID <strong>#{orders[detailsIndex].id}</strong></p>
+                  </div>
+
+                  <div className="order-details-grid">
+                    <div className="shipping-section">
+                      <p className="label">Shipping address</p>
+                      <p className="item">{orders[detailsIndex].shipping_address.first_name} {orders[detailsIndex].shipping_address.last_name}</p>
+                      <p className="item">{orders[detailsIndex].shipping_address.address1}</p>
+                      {orders[detailsIndex].shipping_address.address2 && <p className="item">{orders[detailsIndex].shipping_address.address2}</p>}
+                      <p className="item">{orders[detailsIndex].shipping_address.city}, {orders[detailsIndex].shipping_address.province} {orders[detailsIndex].shipping_address.zip}</p>
+                    </div>
+
+                    <div className="payment-method">
+                      <p className="label">Payment Method</p>
+                      <p className="item">Pay Over Time with Tabby 4 payments at 0% Interest</p>
+                    </div>
+
+                    <div className="summary-details">
+                      <p className="label">Order Summary</p>
+                      <p className="item">
+                        <span>Item(s) total</span>
+                        <span>${orders[detailsIndex].subtotal_price}</span>
+                      </p>
+                      <p className="item">
+                        <span>Shipping & Handling</span>
+                        <span>${orders[detailsIndex].total_shipping}</span>
+                      </p>
+                      <p className="item grand-total">
+                        <span>Total</span>
+                        <span>${orders[detailsIndex].total_price}</span>
+                      </p>
+                      <p className="item grand-total-label">
+                        <span>Grand Total</span>
+                        <span>${orders[detailsIndex].total_price}</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
             </div>
           )
