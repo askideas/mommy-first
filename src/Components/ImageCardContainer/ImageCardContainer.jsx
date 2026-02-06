@@ -1,12 +1,17 @@
 import React from 'react'
 import './ImageCardContainer.css'
 import ImageCard from '../ImageCard/ImageCard'
+import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
 import Cat1 from '../../assets/shopbycategory/cat1.svg'
 import Cat2 from '../../assets/shopbycategory/cat2.svg'
 import Cat3 from '../../assets/shopbycategory/cat3.svg'
 
 const ImageCardContainer = (props) => {
     const data = props.data;
+    
+    // Animation ref
+    const [containerRef, containerVisible] = useFadeUpAnimation(0.2)
+    
     const Items = [
         {
             'id': 1,
@@ -40,14 +45,16 @@ const ImageCardContainer = (props) => {
     
   return (
     <div className="container">
-        <div className="image-card-container">
-            {
-                Items.map((item, index)=> {
-                    return (
-                        <ImageCard key={index} data={item} />
-                    )
-                })
-            }
+        <div ref={containerRef} className={getFadeUpClass('fade-up-animation', containerVisible)}>
+            <div className="image-card-container">
+                {
+                    Items.map((item, index)=> {
+                        return (
+                            <ImageCard key={index} data={item} />
+                        )
+                    })
+                }
+            </div>
         </div>
     </div>
   )

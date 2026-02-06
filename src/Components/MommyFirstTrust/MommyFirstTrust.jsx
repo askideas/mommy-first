@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Heading from '../Heading/Heading'
+import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
 import './MommyFirstTrust.css'
 import Loom from '../../assets/trust/loom.svg'
 import Trust22 from '../../assets/trust/trust22.svg'
@@ -13,6 +14,10 @@ import Star from '../../assets/Reviews/star.svg'
 const MommyFirstTrust = () => {
     const [isVisible, setIsVisible] = useState(false)
     const containerRef = useRef(null)
+    
+    // Animation refs
+    const [headingRef, headingVisible] = useFadeUpAnimation(0.2)
+    const [trustedRef, trustedVisible] = useFadeUpAnimation(0.2)
 
     // Intersection Observer to detect when component is in viewport
     useEffect(() => {
@@ -93,10 +98,13 @@ const MommyFirstTrust = () => {
     }
 
   return (
-    <div className="container" ref={containerRef}>
-        <Heading data={headingData} />
+    <div className="container" style={{marginBottom: '154px'}} ref={containerRef}>
+        <div ref={headingRef} className={getFadeUpClass('fade-up-animation', headingVisible)}>
+            <Heading data={headingData} />
+        </div>
         <div className="d-flex justify-content-center align-items-center">
-            <div className="mommy-first-trust-container">
+            <div ref={trustedRef} className={getFadeUpClass('fade-up-animation', trustedVisible)}>
+                <div className="mommy-first-trust-container">
                 <div className="first-grid">
                     <div className="tile-one">
                         <img src={Trust11} alt="" className='image' />
@@ -144,6 +152,7 @@ const MommyFirstTrust = () => {
                         <h1>Heal Naturally</h1>
                         <p>(Witch Hazel + Probiotics)</p>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

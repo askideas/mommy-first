@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react'
 import './NewArrivals.css'
 import Heading from '../Heading/Heading'
+import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
 import { ChevronDown } from 'lucide-react'
 import ProductTile from '../ProductTile/ProductTile'
 import SkeletonLoader from '../SkeletonLoader/SkeletonLoader'
@@ -18,6 +19,12 @@ const NewArrivals = (props) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [activeCollection, setActiveCollection] = useState('new-arrivals')
+
+    // Animation refs
+    const [headingRef, headingVisible] = useFadeUpAnimation(0.2)
+    const [filterRef, filterVisible] = useFadeUpAnimation(0.2)
+    const [productsRef, productsVisible] = useFadeUpAnimation(0.2)
+    const [progressRef, progressVisible] = useFadeUpAnimation(0.2)
 
     const headingData = {
         'title': "NEW ARRIVALS",
@@ -164,40 +171,44 @@ const NewArrivals = (props) => {
 
   return (
     <div style={{marginBottom: '154px'}}>
-        <Heading data={headingData} />
+        <div ref={headingRef} className={getFadeUpClass('fade-up-animation', headingVisible)}>
+            <Heading data={headingData} />
+        </div>
         <div className="container">
-            <div className="new-arrivals-filter-section">
-                <div className="filters-section my-4 justify-content-start flex-fill">
-                    <button 
-                        className={`filter-button ${activeCollection === 'new-arrivals' ? 'active' : ''}`} 
-                        data-collection="new-arrivals"
-                        onClick={() => handleFilterClick('new-arrivals')}
-                    >
-                        ALL
-                    </button>
-                    <button 
-                        className={`filter-button ${activeCollection === 'maternity' ? 'active' : ''}`} 
-                        data-collection="maternity"
-                        onClick={() => handleFilterClick('maternity')}
-                    >
-                        MATERNITY
-                    </button>
-                    <button 
-                        className={`filter-button ${activeCollection === 'postpartum' ? 'active' : ''}`} 
-                        data-collection="postpartum"
-                        onClick={() => handleFilterClick('postpartum')}
-                    >
-                        POSTPARTUM
-                    </button>
-                    <button 
-                        className={`filter-button ${activeCollection === 'wellness-comfort' ? 'active' : ''}`} 
-                        data-collection="wellness-comfort"
-                        onClick={() => handleFilterClick('wellness-comfort')}
-                    >
-                        WELLNESS & COMFORT
-                    </button>
+            <div ref={filterRef} className={getFadeUpClass('fade-up-animation', filterVisible)}>
+                <div className="new-arrivals-filter-section">
+                    <div className="filters-section my-4 justify-content-start flex-fill">
+                        <button 
+                            className={`filter-button ${activeCollection === 'new-arrivals' ? 'active' : ''}`} 
+                            data-collection="new-arrivals"
+                            onClick={() => handleFilterClick('new-arrivals')}
+                        >
+                            ALL
+                        </button>
+                        <button 
+                            className={`filter-button ${activeCollection === 'maternity' ? 'active' : ''}`} 
+                            data-collection="maternity"
+                            onClick={() => handleFilterClick('maternity')}
+                        >
+                            MATERNITY
+                        </button>
+                        <button 
+                            className={`filter-button ${activeCollection === 'postpartum' ? 'active' : ''}`} 
+                            data-collection="postpartum"
+                            onClick={() => handleFilterClick('postpartum')}
+                        >
+                            POSTPARTUM
+                        </button>
+                        <button 
+                            className={`filter-button ${activeCollection === 'wellness-comfort' ? 'active' : ''}`} 
+                            data-collection="wellness-comfort"
+                            onClick={() => handleFilterClick('wellness-comfort')}
+                        >
+                            WELLNESS & COMFORT
+                        </button>
+                    </div>
                 </div>
-            </div> 
+            </div>
 
             {loading ? (
                 <div className="newarrivals-products-container">
@@ -205,22 +216,26 @@ const NewArrivals = (props) => {
                 </div>
             ) : (
                 <>
-                    <div className="newarrivals-products-container">
-                        {
-                            displayProducts.map((item, index)=> {
-                                return(
-                                    <ProductTile data={item} key={index} />
-                                )
-                            })
-                        }
+                    <div ref={productsRef} className={getFadeUpClass('fade-up-animation', productsVisible)}>
+                        <div className="newarrivals-products-container">
+                            {
+                                displayProducts.map((item, index)=> {
+                                    return(
+                                        <ProductTile data={item} key={index} />
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                     
-                    <div className="d-flex flex-column justify-content-center align-items-center">
-                        <p className='progress-bar-text'>You've seen 4 out of 98 items</p>
-                        <div className="progress-bar-con">
-                            <span></span>
+                    <div ref={progressRef} className={getFadeUpClass('fade-up-animation', progressVisible)}>
+                        <div className="d-flex flex-column justify-content-center align-items-center">
+                            <p className='progress-bar-text'>You've seen 4 out of 98 items</p>
+                            <div className="progress-bar-con">
+                                <span></span>
+                            </div>
+                            <button className='button-label' onClick={()=> navigate('/shop')}>View more</button>
                         </div>
-                        <button className='button-label' onClick={()=> navigate('/shop')}>View more</button>
                     </div>
                 </>
             )}
