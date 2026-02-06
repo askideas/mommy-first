@@ -82,12 +82,12 @@ export const MegaMenu = [
       },
       {
         label: "Care Guides",
-        link: "#",
+        link: "/care-hub#careguides",
         tag: false,
       },
       {
         label: "Live Sessions",
-        link: "#",
+        link: "/live-sessions",
         tag: false,
       },
       {
@@ -102,7 +102,7 @@ export const MegaMenu = [
       },
       {
         label: "Education",
-        link: "#",
+        link: "/care-hub",
         tag: false,
       },
       {
@@ -122,7 +122,7 @@ export const MegaMenu = [
       },
       {
         label: "Order Tracking",
-        link: "#",
+        link: "/profile#orders",
         tag: false,
       },
       {
@@ -152,7 +152,7 @@ export const MegaMenu = [
       },
       {
         label: "Affiliates",
-        link: "#",
+        link: "/af-marketing",
         tag: false,
       },
       {
