@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import './Footer.css'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { Mail } from 'lucide-react'
 import Facebook from '../../assets/Footer/facebook.svg'
 import X from '../../assets/Footer/x.svg'
@@ -14,6 +14,7 @@ import Watermark from '../../assets/Footer/m-water-mark.svg'
 import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const Footer = () => {
+    const navigate = useNavigate();
   const menuRef = useRef(null)
   const socialRef = useRef(null)
   const copyrightRef = useRef(null)
@@ -96,8 +97,8 @@ const Footer = () => {
 
                     <div className="download-section">
                         <p className="download-heading">Available soon</p>
-                        <img src={AppleStore} alt="" style={{marginRight: '10px'}}/>
-                        <img src={PlayStore} alt="" />
+                        <img src={AppleStore} onClick={navigate('/download-app')} alt="" style={{marginRight: '10px', cursor: 'pointer'}}/>
+                        <img src={PlayStore} onClick={navigate('/download-app')} alt="" style={{cursor: 'pointer'}} />
                     </div>
                 </div>
 
