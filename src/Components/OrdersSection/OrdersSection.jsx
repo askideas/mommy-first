@@ -15,6 +15,8 @@ const OrdersSection = () => {
   const [stage, setStage] = useState('list');
   const [detailsIndex, setDetailsIndex] = useState(0)
   const [trackingItemIndex, setTrackingItemIndex] = useState(null)
+  const [selectedReturnItems, setSelectedReturnItems] = useState({})
+  const [cancelReason, setCancelReason] = useState('')
 
   const fetchAuthToken = async () => {
     try {
@@ -98,6 +100,27 @@ const OrdersSection = () => {
     setTrackingItemIndex(itemIndex)
     setStage('tracking')
   }
+
+  function handleReturnClick (orderIndex) {
+    setDetailsIndex(orderIndex)
+    setSelectedReturnItems({})
+    setCancelReason('')
+    setStage('return')
+  }
+
+  function handleReturnItemToggle (itemIndex) {
+    setSelectedReturnItems(prev => ({
+      ...prev,
+      [itemIndex]: !prev[itemIndex]
+    }))
+  }
+
+  function handleRequestReturn () {
+    const selectedItems = Object.keys(selectedReturnItems).filter(key => selectedReturnItems[key])
+    console.log('Return requested for items:', selectedItems)
+    console.log('Cancel reason:', cancelReason)
+    // Handle return submission here
+  }
   
   return (
     <div className="orders-section-container">
@@ -127,6 +150,18 @@ const OrdersSection = () => {
                   <span onClick={() => handleViewDetails(0, 'list')} style={{cursor: 'pointer'}}>My Orders</span>
                   <ChevronRight />
                   <span>Track package</span>
+              </p>
+            )
+          }
+
+          {
+            stage == 'return' && (
+              <p className='heading'>
+                  <span onClick={() => handleViewDetails(0, 'list')} style={{cursor: 'pointer'}}>My Orders</span>
+                  <ChevronRight />
+                  <span onClick={() => handleTrackPackage(detailsIndex, 0)} style={{cursor: 'pointer'}}>Track package</span>
+                  <ChevronRight />
+                  <span>Cancel order</span>
               </p>
             )
           }
@@ -235,7 +270,7 @@ const OrdersSection = () => {
                             <p className="name">{item.title}</p>
                           </div>
                           <div className="button-section">
-                            <button className="button-pink-border" onClick={() => handleTrackPackage(index, itemIndex)}>TRACK PACKAGE</button>
+                            <button className="button-pink-border" onClick={() => handleTrackPackage(detailsIndex, 'tracking')}>TRACK PACKAGE</button>
                           </div>
                         </div>
                       )
@@ -298,7 +333,7 @@ const OrdersSection = () => {
                             <div className="item-details">
                               <p className="item-title">{item.title}</p>
                             </div>
-                            <button className="button-pink-border">Return</button>
+                            <button className="button-pink-border" onClick={() => handleViewDetails(detailsIndex, 'return')}>Return</button>
                           </div>
                         )
                       })
@@ -348,6 +383,62 @@ const OrdersSection = () => {
                     </div>
                   </div>
                 </div>
+            </div>
+          )
+        }
+
+        {
+          !isLoading && orders && stage == 'return' && (
+            <div className="return-section-wrapper">
+              <div className="return-section-container">
+                <div className="order-info-section">
+                  <p>Ordered placed on <strong>{new Date(orders[detailsIndex].created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong></p>
+                  <p className="order-id">Order ID <strong>#{orders[detailsIndex].id}</strong></p>
+                </div>
+
+                <div className="return-items-section">
+                  <div className="return-items-list">
+                    {
+                      orders[detailsIndex].line_items.map((item, index) => (
+                        <div className="return-item-row" key={index}>
+                          <div className="checkbox-wrapper">
+                            <input 
+                              type="checkbox" 
+                              id={`item-${index}`}
+                              checked={selectedReturnItems[index] || false}
+                              onChange={() => handleReturnItemToggle(index)}
+                            />
+                          </div>
+                          <img src={item.image ? item.image.src : DefaultImg} alt="" onError={(e) => e.target.src = DefaultImg} />
+                          <p className="item-name">{item.title}</p>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+
+                <div className="return-reason-section">
+                  <div className="reason-header">
+                    <p className="reason-label">Cancel reason</p>
+                    <span className="optional-badge">OPTIONAL</span>
+                  </div>
+                  <textarea 
+                    className="reason-textarea"
+                    placeholder="Write here"
+                    value={cancelReason}
+                    onChange={(e) => setCancelReason(e.target.value)}
+                  />
+                </div>
+
+                <div className="return-warning-box">
+                  <p className="warning-text">Your order is being prepared for shipment. We'll try to cancel selected items, but it's not guaranteed.</p>
+                  <button className="warning-close" onClick={() => {}}>×</button>
+                </div>
+
+                <div className="return-action-section">
+                  <button className="button-request-return" onClick={handleRequestReturn}>REQUEST RETURN</button>
+                </div>
+              </div>
             </div>
           )
         }
