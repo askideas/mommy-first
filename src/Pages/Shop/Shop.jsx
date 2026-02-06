@@ -40,6 +40,33 @@ const Shop = () => {
     const PRICE_MIN = 0;
     const PRICE_MAX = 100;
 
+    /**
+     *  "handle": "maternity",
+        "first": 12,
+        "after": null,
+        "sortKey": "PRICE",
+        "reverse": false,
+        "filters": [
+            {
+            "price": { "min": 10, "max": 100 }
+            },
+            {
+            "productType": "Shoes"
+            },
+            {
+            "available": false
+            }
+        ]
+     */
+    const [plpQuery, setPlpQuery] = useState({
+        handle: "maternity",
+        first: PRODUCTS_PER_PAGE,
+        after: null,
+        sortKey: "PRICE",
+        reverse: false,
+        filters: []
+    })
+
     const handleMinPriceChange = (value) => {
         const numValue = Number(value);
         if (numValue <= maxPrice && numValue >= PRICE_MIN) {
@@ -65,16 +92,16 @@ const Shop = () => {
     // Espot images data - you can replace these URLs with your actual espot images
     const espotImages = [ MF1, MF2, EsImage1 ]
 
-    const sortOptions = [
-        { id: 'featured', label: 'Featured' },
-        { id: 'best_selling', label: 'Best selling' },
-        { id: 'alphabetically_az', label: 'Alphabetically, A-Z' },
-        { id: 'alphabetically_za', label: 'Alphabetically, Z-A' },
-        { id: 'price_low_high', label: 'Price, low to high' },
-        { id: 'price_high_low', label: 'Price, high to low' },
-        { id: 'date_old_new', label: 'Date, old to new' },
-        { id: 'date_new_old', label: 'Date, new to old' }
+    const SORT_OPTIONS = [
+        { label: "Featured", key: "COLLECTION_DEFAULT", reverse: false, id: 'featured' },
+        { label: "Best Selling", key: "BEST_SELLING", reverse: false, id: 'best_selling' },
+        { label: "Newest", key: "CREATED", reverse: true, id: 'newest' },
+        { label: "Price: Low → High", key: "PRICE", reverse: false, id: 'price_low_high' },
+        { label: "Price: High → Low", key: "PRICE", reverse: true, id: 'price_high_low' },
+        { label: "Alphabetical A-Z", key: "TITLE", reverse: false, id: 'alphabetical_a_z' },
+        { label: "Alphabetical Z-A", key: "TITLE", reverse: true, id: 'alphabetical_z_a' }
     ];
+
 
     const filters = [
         {
@@ -422,14 +449,14 @@ const Shop = () => {
                             className="sort-dropdown-btn" 
                             onClick={() => setShowSortDropdown(!showSortDropdown)}
                         >
-                            Sort by: {sortOptions.find(opt => opt.id === sortBy)?.label}
+                            Sort by: {SORT_OPTIONS.find(opt => opt.id === sortBy)?.label}
                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none" style={{marginLeft: '8px'}}>
                                 <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </button>
                         {showSortDropdown && (
                             <div className="sort-dropdown-menu">
-                                {sortOptions.map((option) => (
+                                {SORT_OPTIONS.map((option) => (
                                     <button
                                         key={option.id}
                                         className={`sort-dropdown-item ${sortBy === option.id ? 'active' : ''}`}
