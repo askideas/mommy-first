@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import './Footer.css'
 import { NavLink } from 'react-router-dom'
 import { Mail } from 'lucide-react'
@@ -11,16 +11,28 @@ import Tiktok from '../../assets/Footer/tiktok.svg'
 import AppleStore from '../../assets/Footer/apple-store.svg'
 import PlayStore from '../../assets/Footer/play-store.svg'
 import Watermark from '../../assets/Footer/m-water-mark.svg'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const Footer = () => {
+  const menuRef = useRef(null)
+  const socialRef = useRef(null)
+  const copyrightRef = useRef(null)
+
+  const [menuRefElement, menuVisible] = useFadeUpAnimation()
+  const [socialRefElement, socialVisible] = useFadeUpAnimation()
+  const [copyrightRefElement, copyrightVisible] = useFadeUpAnimation()
+
+  const getFadeUpClass = (baseClass, isVisible) => {
+    return isVisible ? `${baseClass} visible` : baseClass
+  }
   return (
     <div className='footer-main-container'>
         <img src={Watermark} alt="" className='footer-watermark' />
         <div className="container">
             <div className="footer">
                 
-                <div className="menu-items-section">
-                    <div className="menu-item-section">
+                <div ref={menuRefElement} className={getFadeUpClass('fade-up-animation menu-items-section', menuVisible)}>
+                    <div className="menu-item-section" style={{animationDelay: '0.1s'}}>
                         <p className='menu-heading'>About</p>
                         <NavLink to="/about" >Our Story</NavLink>
                         <NavLink to="/stories" >Reviews</NavLink>
@@ -29,7 +41,7 @@ const Footer = () => {
                         <NavLink to="/donation" >Giving Back</NavLink>
                     </div>
 
-                    <div className="menu-item-section">
+                    <div className="menu-item-section" style={{animationDelay: '0.2s'}}>
                         <p className='menu-heading'>Shop</p>
                         <NavLink to="/shop" >Shop All</NavLink>
                         <NavLink tp="/bundles" >Exclusive Bundles <span className='flash-animation' style={{background: '#FF1F1F', color: '#ffffff'}}>Sale</span></NavLink>
@@ -39,7 +51,7 @@ const Footer = () => {
                         <NavLink to="/collection/baby-care" >Baby Care</NavLink>
                     </div>
 
-                    <div className="menu-item-section">
+                    <div className="menu-item-section" style={{animationDelay: '0.3s'}}>
                         <p className='menu-heading'>Community</p>
                         <NavLink to="/care-hub" >Care Hub <span className='flash-animation' style={{background: '#5ED34B', color: '#ffffff'}}>New</span></NavLink>
                         <NavLink>Care Guides</NavLink>
@@ -50,7 +62,7 @@ const Footer = () => {
                         <NavLink to="/donation" >Giving Back</NavLink>
                     </div>
 
-                    <div className="menu-item-section">
+                    <div className="menu-item-section" style={{animationDelay: '0.4s'}}>
                         <p className='menu-heading'>Help</p>
                         <NavLink to="/faqs" >FAQs</NavLink>
                         <NavLink>Order Tracking</NavLink>
@@ -58,7 +70,7 @@ const Footer = () => {
                         <NavLink to="/contact">Contact Us</NavLink>
                     </div>
 
-                    <div className="menu-item-section">
+                    <div className="menu-item-section" style={{animationDelay: '0.5s'}}>
                         <p className='menu-heading'>Work With Us</p>
                         <NavLink>Wholesale</NavLink>
                         <NavLink>Retail Partners</NavLink>
@@ -69,7 +81,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="footer-social-section">
+                <div ref={socialRefElement} className={getFadeUpClass('fade-up-animation footer-social-section', socialVisible)}>
                     <div className="social-con">
                         <p className="social-heading">Follow us on</p>
                         <div className="icons-section">
@@ -89,7 +101,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="copy-right-section">
+                <div ref={copyrightRefElement} className={getFadeUpClass('fade-up-animation copy-right-section', copyrightVisible)}>
                     <span>© 2023-{new Date().getFullYear()} MommyFirst.  All rights Reserved.</span>
                     <span>NeoMedUSA LLC, Where Innovation Meets Healthcare, and the Fun Never Ends!</span>
                 </div>
