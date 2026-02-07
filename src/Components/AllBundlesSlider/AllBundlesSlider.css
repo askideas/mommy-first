@@ -1,3 +1,26 @@
+/* Animations */
+@keyframes absFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes absFadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .all-bundles-slider-section {
     margin-bottom: 74px;
     margin-top: 152px;
@@ -10,6 +33,20 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 32px;
+}
+
+.all-bundles-section-heading.animate-in {
+    animation: absFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.all-bundles-section-heading.animate-in .head-ing h1 {
+    animation: absFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+.all-bundles-section-heading.animate-in .head-ing h2 {
+    animation: absFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
 }
 
 .all-bundles-section-heading .head-ing {
@@ -81,6 +118,36 @@
 .all-bundles-slider-container {
     margin-top: 0;
     overflow: hidden;
+}
+
+.all-bundles-slider-container.animate-in {
+    animation: absFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.all-bundles-slider-container.animate-in .bundle-slider-item:nth-child(1) {
+    animation: absFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+.all-bundles-slider-container.animate-in .bundle-slider-item:nth-child(2) {
+    animation: absFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+.all-bundles-slider-container.animate-in .bundle-slider-item:nth-child(3) {
+    animation: absFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.5s;
+}
+
+.all-bundles-slider-container.animate-in .bundle-slider-item:nth-child(4) {
+    animation: absFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.6s;
+}
+
+.all-bundles-slider-container.animate-in .bundle-slider-item:nth-child(5) {
+    animation: absFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.7s;
 }
 
 .all-bundles-slider {

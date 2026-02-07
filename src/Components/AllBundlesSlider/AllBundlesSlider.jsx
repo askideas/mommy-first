@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./AllBundlesSlider.css";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import BundleTile from "../BundleTile/BundleTile";
+import { useFadeUpAnimation } from "../../hooks/useFadeUpAnimation";
 
 export const AllBundlesSlider = () => {
   const headingRef = useRef(null);
@@ -15,6 +16,10 @@ export const AllBundlesSlider = () => {
   const [authToken, setAuthToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Animation refs
+  const [headingAnimRef, headingVisible] = useFadeUpAnimation(0.1, true);
+  const [sliderAnimRef, sliderVisible] = useFadeUpAnimation(0.1, true);
 
   // Fetch authentication token
   const fetchAuthToken = async () => {
@@ -137,7 +142,7 @@ export const AllBundlesSlider = () => {
   return (
     <div className="all-bundles-slider-section">
       <div className="container">
-        <div className="all-bundles-section-heading" ref={headingRef}>
+        <div ref={headingAnimRef} className={`all-bundles-section-heading ${headingVisible ? 'animate-in' : ''}`}>
           <div className="head-ing">
             <h1>All Bundles, Add more anytime</h1>
             <h2>Choose based on how long you'd like your care to last.</h2>
@@ -146,8 +151,8 @@ export const AllBundlesSlider = () => {
       </div>
 
       <div
-        className="all-bundles-slider-container"
-        ref={sliderContainerRef}
+        ref={sliderAnimRef}
+        className={`all-bundles-slider-container ${sliderVisible ? 'animate-in' : ''}`}
         style={{ marginLeft: `${containerMargin}px` }}
       >
         {loading ? (
