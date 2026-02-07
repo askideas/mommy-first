@@ -24,6 +24,7 @@ import Girl from '../../assets/carehub/girl.svg'
 import Email from '../../assets/carehub/email.svg'
 import CareGuideImage from '../../assets/carehub/care-guide-img.png'
 import { getLiveSessions, getJournals } from '../../services/blogService'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const CareHub = () => {
   const navigate = useNavigate()
@@ -34,6 +35,14 @@ const CareHub = () => {
   const [journalsData, setJournalsData] = useState([])
   const [isLoadingSessions, setIsLoadingSessions] = useState(true)
   const [isLoadingJournals, setIsLoadingJournals] = useState(true)
+
+  // Animation refs
+  const [heroRef, heroVisible] = useFadeUpAnimation(0.1, true)
+  const [labelsRef, labelsVisible] = useFadeUpAnimation(0.1, true)
+  const [careGuideRef, careGuideVisible] = useFadeUpAnimation(0.1, true)
+  const [journalRef, journalVisible] = useFadeUpAnimation(0.1, true)
+  const [liveRef, liveVisible] = useFadeUpAnimation(0.1, true)
+  const [newsletterRef, newsletterVisible] = useFadeUpAnimation(0.1, true)
 
   useEffect(() => {
     fetchLiveSessions()
@@ -49,8 +58,32 @@ const CareHub = () => {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
       }, 100)
+    } else if (location.hash === '#journal') {
+      setTimeout(() => {
+        const element = document.querySelector('.carehub-journal-section')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    } else if (location.hash === '#live-sessions') {
+      setTimeout(() => {
+        const element = document.querySelector('.carehub-live-section')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
     }
   }, [location.hash])
+
+  const scrollToSection = (sectionClass, hash) => {
+    navigate(`/care-hub${hash}`)
+    setTimeout(() => {
+      const element = document.querySelector(sectionClass)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
 
   const fetchLiveSessions = async () => {
     setIsLoadingSessions(true)
@@ -100,7 +133,7 @@ const CareHub = () => {
 
   return (
     <div className="container">
-        <div className="carehub-hero-section">
+        <div ref={heroRef} className={`carehub-hero-section ${heroVisible ? 'animate-in' : ''}`}>
             <h1 className="heading">CARE HUB</h1>
             <h2 className="subheading">Support for every stage <br /> of motherhood.</h2>
             <div className="hero-section-image-round">
@@ -159,7 +192,7 @@ const CareHub = () => {
                 </div>
             </div>
 
-            <div className="labels-sec-con">
+            <div ref={labelsRef} className={`labels-sec-con ${labelsVisible ? 'animate-in' : ''}`}>
                 <div className="label-item-sec">
                     <img src={Calendar} alt="" className="image" />
                     <p className="text-con-sec">
@@ -188,14 +221,14 @@ const CareHub = () => {
             <p className="care-hero-desc">Thoughtfully created care guides, expert-led education, and <br /> gentle movement—hosted by Mommy First.</p>
 
             <div className="care-hub-hero-btn-sec">
-                <button className='button-pink-center care-btn'>Care Guides</button>
-                <button className='button-pink-border jour-btn'>The Journal</button>
-                <button className='button-pink-center live-btn'>LIVE Sessions</button>
+                <button className='button-pink-center care-btn' onClick={() => scrollToSection('.care-hub-section-container', '#careguides')}>Care Guides</button>
+                <button className='button-pink-border jour-btn' onClick={() => scrollToSection('.carehub-journal-section', '#journal')}>The Journal</button>
+                <button className='button-pink-center live-btn' onClick={() => scrollToSection('.carehub-live-section', '#live-sessions')}>LIVE Sessions</button>
             </div>
         </div>
 
         {/* Care Hub Section */}
-        <div className="care-hub-section-container">
+        <div ref={careGuideRef} className={`care-hub-section-container ${careGuideVisible ? 'animate-in' : ''}`}>
             <h1 className="care-guide-head">Care Guides</h1>
             <h2 className="care-guide-subhead">Saveable guides designed to reduce overwhelm and answer the <br /> questions moms don’t always know to ask.</h2>
             <div className="care-guide-content-con">
@@ -268,7 +301,7 @@ const CareHub = () => {
         </div>
 
         {/* From the Care Journal Section */}
-        <div className="carehub-journal-section">
+        <div ref={journalRef} className={`carehub-journal-section ${journalVisible ? 'animate-in' : ''}`}>
             <Heading data={journalHeading} />
             
             <div className="carehub-journal-grid">
@@ -293,7 +326,7 @@ const CareHub = () => {
         </div>
 
         {/* LIVE Sessions Section */}
-        <div className="carehub-live-section">
+        <div ref={liveRef} className={`carehub-live-section ${liveVisible ? 'animate-in' : ''}`}>
             <h2 className="carehub-live-title">LIVE Sessions</h2>
             <p className="carehub-live-description">
                 Classes led by certified OB/GYN nurses and instructors—created<br/>
@@ -352,7 +385,7 @@ const CareHub = () => {
         </div>
 
         {/* Newsletter Section */}
-        <div className="carehub-newsletter-section">
+        <div ref={newsletterRef} className={`carehub-newsletter-section ${newsletterVisible ? 'animate-in' : ''}`}>
             <img src={Carehubnewsletterimage} alt="" className='care-hub-bg-image' />
             <div className="carehub-newsletter-content">
                 <h2 className="carehub-newsletter-title">Want guidance<br/>before you need it?</h2>
