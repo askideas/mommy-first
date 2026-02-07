@@ -4,12 +4,14 @@ import Image from '../../assets/free-guide.svg'
 import FreeTag from '../../assets/free-guide/free-tag.svg'
 import Divider from '../../assets/free-guide/divider.svg'
 import { ArrowRight, Clock } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const FreeGuide = (props) => {
     const data = props.data;
+    const navigate = useNavigate()
   return (
     <div className="container">
-        <div className="free-guide-container">
+        <div className="free-guide-container" onClick={()=>navigate('/care-hub')}>
             <div className="content-container-sec">
                 <img src={Image} alt="" className='section-image'/>
                 <div className="contents-sec">

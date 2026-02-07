@@ -7,7 +7,7 @@ import Badge from '../../assets/BundlesHome/badge.png'
 import ClockImg from '../../assets/BundlesHome/clock.png'
 import Bleed from '../../assets/BundlesHome/bleed.png'
 import FeelStore from '../../assets/BundlesHome/feel-store.png'
-import WebExc from '../../assets/BundlesHome/wb-ex.png'
+import WebExc from '../../assets/BundlesHome/web-exc.png'
 import Calendar from '../../assets/BundlesHome/calendar.svg'
 import Shield from '../../assets/BundlesHome/shield-tick.svg'
 import Certificate from '../../assets/BundlesHome/certificate.svg'
@@ -63,7 +63,7 @@ const BundlesHome = (props) => {
           <Heading data={headingData} />
         </div>
 
-        <div ref={containerRef} className={getFadeUpClass('fade-up-animation', containerVisible)}>
+        <div ref={containerRef} onClick={()=>navigate('/bundles')} className={getFadeUpClass('fade-up-animation', containerVisible)} style={{cursor: 'pointer'}}>
           <div className="bundles-home-container">
             <img src={data && data.image && data.image.image ? data && data.image && data.image.image : BG} alt="" className='bg-image' />
             <img src={WebExc} alt="" className='website-exclusive' />
