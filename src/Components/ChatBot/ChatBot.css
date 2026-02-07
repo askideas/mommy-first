@@ -256,3 +256,9 @@
     background: #F8F8F8;
     border-color: #D0D0D0;
 }
+
+@media (max-width: 1023px) {
+    .chatbot-main-container {
+        bottom: 84px;
+    }
+}

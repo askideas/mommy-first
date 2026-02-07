@@ -209,3 +209,71 @@
 .footer-social-section .icons-section a:hover {
     transform: translateY(-3px) scale(1.1);
 }
+
+@media (max-width: 1023px) {
+    .footer .menu-items-section {
+        grid-template-columns: 1fr;
+    }
+
+    .footer .menu-items-section .menu-item-section {
+        align-items: center;
+        margin-bottom: 32px;
+    }
+
+    .footer .footer-social-section {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 32px;
+
+        .social-con {
+            margin-right: 0;
+            margin-bottom: 24px;
+
+            .social-heading {
+                text-align: center;
+            }
+        }
+
+        .download-section {
+            .download-heading {
+                text-align: center;
+            }
+        }
+    }
+
+    .footer .copy-right-section {
+        width: 100%;
+        align-items: center;
+    }
+
+    .contact-banner-container {
+        flex-direction: column;
+        align-items: center;
+        row-gap: 18px;
+
+        img {
+            width: 88px;
+            height: 88px;
+        }
+
+        p {
+            text-align: center;
+
+            span {
+                &:first-child {
+                    margin-bottom: 18px;
+                }
+            }
+        }
+    }
+
+    .footer-main-container {
+        padding-bottom: 104px;
+    }
+
+    .footer-watermark {
+        bottom: -66px;
+        width: 222px;
+        height: 222px;
+    }
+}
