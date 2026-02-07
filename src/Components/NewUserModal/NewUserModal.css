@@ -275,26 +275,179 @@
 }
 
 /* Responsive styles */
-@media (max-width: 576px) {
+@media (max-width: 991px) {
     .new-user-modal-container {
-        padding: 32px 20px 24px;
+        width: 86%;
+        max-width: 420px;
+        padding: 36px 28px 28px;
+    }
+
+    .new-user-modal-profile-image {
+        top: -40px;
+        right: -30px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .new-user-modal-title {
+        font-size: 22px;
+    }
+
+    .new-user-modal-subtitle {
+        font: 400 13px var(--font);
+    }
+
+    .new-user-form-group label {
+        font: 400 11px var(--font);
+    }
+
+    .new-user-form-group input,
+    .new-user-dropdown-toggle {
+        height: 40px;
+        font: 400 13px var(--font);
+    }
+
+    .new-user-submit-btn {
+        height: 44px;
+        font: 600 13px var(--font);
+    }
+}
+
+@media (max-width: 768px) {
+    .new-user-modal-overlay {
+        padding: 16px;
+    }
+
+    .new-user-modal-container {
+        width: 86%;
         max-width: 100%;
-        margin: 0 16px;
+        padding: 32px 24px 24px;
+        border-radius: 20px;
     }
 
     .new-user-modal-profile-image {
         top: -35px;
-        right: -15px;
+        right: -20px;
         width: 70px;
         height: 70px;
+        border-width: 3px;
+    }
+
+    .new-user-modal-header {
+        margin-bottom: 20px;
     }
 
     .new-user-modal-title {
         font-size: 20px;
+        gap: 6px;
+    }
+
+    .new-user-modal-title span {
+        font-size: 16px;
+    }
+
+    .new-user-modal-subtitle {
+        font: 400 12px var(--font);
+    }
+
+    .new-user-modal-form {
+        gap: 14px;
+    }
+
+    .new-user-form-group {
+        gap: 5px;
+    }
+
+    .new-user-form-group label {
+        font: 400 11px var(--font);
+    }
+
+    .optional-badge {
+        font: 600 7px var(--font);
+        padding: 2px 5px;
+    }
+
+    .new-user-form-group input,
+    .new-user-dropdown-toggle {
+        height: 38px;
+        padding: 0 12px;
+        font: 400 12px var(--font);
+        border-radius: 6px;
     }
 
     .new-user-form-row {
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
+    }
+
+    .new-user-dropdown-menu {
+        border-radius: 6px;
+    }
+
+    .new-user-dropdown-item {
+        padding: 8px 12px;
+        font: 400 12px var(--font);
+    }
+
+    .new-user-submit-btn {
+        height: 42px;
+        font: 600 12px var(--font);
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .new-user-modal-overlay {
+        padding: 12px;
+    }
+
+    .new-user-modal-container {
+        width: 86%;
+        padding: 28px 18px 20px;
+        border-radius: 16px;
+    }
+
+    .new-user-modal-profile-image {
+        top: -30px;
+        right: -12px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .new-user-modal-header {
+        margin-bottom: 16px;
+    }
+
+    .new-user-modal-title {
+        font-size: 18px;
+    }
+
+    .new-user-modal-title span {
+        font-size: 14px;
+    }
+
+    .new-user-modal-subtitle {
+        font: 400 11px var(--font);
+    }
+
+    .new-user-modal-form {
+        gap: 12px;
+    }
+
+    .new-user-form-group input,
+    .new-user-dropdown-toggle {
+        height: 36px;
+        padding: 0 10px;
+        font: 400 11px var(--font);
+    }
+
+    .new-user-submit-btn {
+        height: 40px;
+        font: 600 11px var(--font);
+        margin-top: 4px;
+    }
+
+    .new-user-error-message {
+        font: 400 10px var(--font);
     }
 }

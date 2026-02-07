@@ -418,3 +418,344 @@
         cursor: not-allowed;
     }
 }
+
+/* ============================================
+   RESPONSIVE STYLES - Tablet & Mobile
+   ============================================ */
+
+/* Tablet Responsive */
+@media screen and (max-width: 991px) {
+    #AuthenticationModal {
+        width: 86%;
+        max-height: 100vh;
+        border-radius: 20px 0 0 20px;
+
+        .mf-off-canvas-header {
+            padding: 24px;
+
+            .head-ing {
+                font: 500 20px var(--font);
+            }
+
+            .close-btn {
+                width: 36px;
+                height: 36px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    min-width: 20px;
+                    min-height: 20px;
+                }
+            }
+        }
+
+        .login-modal-body-con {
+            padding: 24px;
+
+            .email-login-main-container,
+            .mobile-login-main-container {
+                margin-top: 32px;
+            }
+
+            .login-otp-section-container {
+                .otp-heading {
+                    font: 500 18px var(--font);
+                }
+
+                .otp-contact {
+                    font: 400 18px var(--font);
+                    margin-bottom: 24px;
+                }
+
+                .otp-inputs-container {
+                    gap: 10px;
+                    margin-bottom: 20px;
+
+                    .otp-input {
+                        width: 36px;
+                        height: 36px;
+                        font: 600 18px var(--font);
+                    }
+                }
+            }
+        }
+
+        .login-modal-footer {
+            padding: 24px;
+
+            .login-alternate-button-section {
+                row-gap: 12px;
+
+                button {
+                    height: 40px;
+                    font: 400 13px var(--font);
+                }
+            }
+        }
+    }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    #AuthenticationModal {
+        width: 86% !important;
+        border-radius: 20px 0 0 20px;
+        max-height: 100vh;
+
+        .mf-off-canvas-header {
+            padding: 20px;
+
+            .head-ing {
+                font: 500 18px var(--font);
+            }
+
+            .close-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                    min-width: 18px;
+                    min-height: 18px;
+                }
+            }
+        }
+
+        .login-modal-body-con {
+            padding: 20px;
+            overflow-y: auto;
+
+            .tab-switching-container {
+                height: 36px;
+
+                button {
+                    font: 500 12px var(--font);
+                }
+            }
+
+            .email-login-main-container,
+            .mobile-login-main-container {
+                margin-top: 28px;
+            }
+
+            .login-otp-section-container {
+                .otp-heading {
+                    font: 500 16px var(--font);
+                }
+
+                .otp-contact {
+                    font: 400 16px var(--font);
+                    margin-bottom: 20px;
+                }
+
+                .otp-inputs-container {
+                    gap: 8px;
+                    margin-bottom: 16px;
+
+                    .otp-input {
+                        width: 38px;
+                        height: 38px;
+                        font: 600 16px var(--font);
+                        border-radius: 6px;
+                    }
+                }
+
+                .otp-resend-text {
+                    font: 400 12px var(--font);
+                    margin-bottom: 24px;
+                }
+            }
+        }
+
+        .login-modal-footer {
+            padding: 20px;
+
+            .login-alternate-button-section {
+                row-gap: 10px;
+
+                button {
+                    height: 38px;
+                    font: 400 12px var(--font);
+                    column-gap: 10px;
+                    border-radius: 6px;
+
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            }
+        }
+
+        .login-sucess-screen-container {
+            img {
+                width: 180px;
+                height: 144px;
+            }
+
+            .text {
+                font: 500 16px var(--font);
+            }
+        }
+
+        .user-welcome-section {
+            .user-avatar {
+                width: 64px;
+                height: 64px;
+
+                .avatar-placeholder {
+                    font: 600 24px var(--font);
+                }
+            }
+
+            .user-name {
+                font: 600 20px var(--font);
+            }
+
+            .user-email {
+                font: 400 12px var(--font);
+            }
+        }
+
+        .country-dropdown {
+            width: 220px;
+            max-height: 200px;
+
+            .country-option {
+                padding: 8px 10px;
+
+                .flag {
+                    font-size: 18px;
+                }
+
+                .name {
+                    font: 400 12px var(--font);
+                }
+
+                .code {
+                    font: 500 12px var(--font);
+                }
+            }
+        }
+    }
+}
+
+/* Small Mobile Responsive */
+@media screen and (max-width: 576px) {
+    #AuthenticationModal {
+        width: 86% !important;
+        max-height: 100vh;
+
+        .mf-off-canvas-header {
+            padding: 16px;
+
+            .head-ing {
+                font: 500 16px var(--font);
+            }
+
+            .close-btn {
+                width: 28px;
+                height: 28px;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    min-width: 16px;
+                    min-height: 16px;
+                }
+            }
+        }
+
+        .login-modal-body-con {
+            padding: 16px;
+
+            .tab-switching-container {
+                height: 34px;
+
+                button {
+                    font: 500 11px var(--font);
+                }
+            }
+
+            .email-login-main-container,
+            .mobile-login-main-container {
+                margin-top: 24px;
+            }
+
+            .login-otp-section-container {
+                .otp-heading {
+                    font: 500 14px var(--font);
+                }
+
+                .otp-contact {
+                    font: 400 14px var(--font);
+                    margin-bottom: 16px;
+                }
+
+                .otp-inputs-container {
+                    gap: 6px;
+
+                    .otp-input {
+                        width: 34px;
+                        height: 34px;
+                        font: 600 14px var(--font);
+                        padding: 6px 8px;
+                    }
+                }
+
+                .otp-resend-text {
+                    font: 400 11px var(--font);
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+        .login-modal-footer {
+            padding: 16px;
+
+            .login-alternate-button-section {
+                row-gap: 8px;
+
+                button {
+                    height: 36px;
+                    font: 400 11px var(--font);
+                    column-gap: 8px;
+
+                    img {
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+            }
+        }
+
+        .login-sucess-screen-container {
+            img {
+                width: 150px;
+                height: 120px;
+            }
+
+            .text {
+                font: 500 14px var(--font);
+            }
+
+            a {
+                height: 36px;
+                font: 500 12px var(--font);
+            }
+        }
+
+        .error-message {
+            padding: 10px 12px;
+            font: 400 12px var(--font);
+            border-radius: 6px;
+        }
+
+        .back-btn {
+            font: 500 12px var(--font);
+        }
+    }
+}

@@ -312,3 +312,290 @@
         }
     }
 }
+
+/* ============================================
+   RESPONSIVE STYLES - Tablet & Mobile
+   ============================================ */
+
+/* Tablet Responsive */
+@media screen and (max-width: 991px) {
+    .sessionBookingModal {
+        width: 86% !important;
+        max-height: 100vh;
+        border-radius: 20px 0 0 20px;
+
+        .mf-off-canvas-header {
+            padding: 24px;
+
+            .head-ing {
+                font: 500 20px var(--font);
+            }
+
+            .close-btn {
+                width: 36px;
+                height: 36px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    min-width: 20px;
+                    min-height: 20px;
+                }
+            }
+        }
+
+        .session-modal-body {
+            padding: 24px;
+
+            .session-booking-calender {
+                margin-bottom: 24px;
+            }
+
+            .selected-date {
+                font: 500 18px var(--font);
+            }
+
+            .desc {
+                font: 500 13px var(--font);
+                margin-bottom: 20px;
+            }
+
+            .time-slots-container button {
+                padding: 8px 9px;
+                font: 400 13px var(--font);
+            }
+        }
+
+        .session-modal-footer {
+            padding: 24px 36px;
+        }
+    }
+
+    .session-booking-calender .react-datepicker__day {
+        width: 2.2rem;
+        height: 2.2rem;
+        line-height: 2.2rem;
+        margin: 0.25rem;
+        font: 400 13px var(--font);
+    }
+
+    .session-booking-calender .react-datepicker__day-names .react-datepicker__day-name {
+        width: 35px;
+        height: 35px;
+    }
+
+    .session-booking-calender .react-datepicker__day-names .react-datepicker__day-name span {
+        font: 400 12px var(--font);
+    }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    .sessionBookingModal {
+        width: 86% !important;
+        border-radius: 24px 24px 0 0;
+        max-height: 100vh;
+
+        .mf-off-canvas-header {
+            padding: 20px;
+
+            .head-ing {
+                font: 500 18px var(--font);
+
+                .cart-items-count {
+                    font: 600 12px var(--font);
+                    padding: 2px 5px;
+                    border-radius: 6px;
+                }
+            }
+
+            .close-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                    min-width: 18px;
+                    min-height: 18px;
+                }
+            }
+        }
+
+        .session-modal-body {
+            padding: 20px;
+            overflow-y: auto;
+
+            .session-booking-calender {
+                margin-bottom: 20px;
+            }
+
+            .selected-date {
+                font: 500 16px var(--font);
+            }
+
+            .desc {
+                font: 500 12px var(--font);
+                margin-bottom: 16px;
+            }
+
+            .time-slots-container {
+                gap: 8px;
+
+                button {
+                    padding: 8px;
+                    font: 400 12px var(--font);
+                    border-radius: 6px;
+                }
+            }
+        }
+
+        .session-modal-footer {
+            padding: 20px;
+
+            button {
+                height: 38px;
+                font: 500 13px var(--font);
+            }
+        }
+    }
+
+    .session-booking-calender .react-datepicker {
+        border-width: 2px;
+    }
+
+    .session-booking-calender .react-datepicker__header {
+        padding: 12px 0;
+    }
+
+    .session-booking-calender .react-datepicker__header h2 {
+        font: 400 16px var(--font);
+    }
+
+    .session-booking-calender .react-datepicker__day {
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        margin: 0.2rem;
+        font: 400 12px var(--font);
+        border-radius: 6px;
+    }
+
+    .session-booking-calender .react-datepicker__day-names {
+        padding: 0 10px;
+    }
+
+    .session-booking-calender .react-datepicker__day-names .react-datepicker__day-name {
+        width: 32px;
+        height: 32px;
+    }
+
+    .session-booking-calender .react-datepicker__day-names .react-datepicker__day-name span {
+        font: 400 11px var(--font);
+    }
+
+    .session-booking-calender .react-datepicker__month {
+        padding: 8px;
+        padding-top: 0;
+    }
+
+    .session-booking-calender .react-datepicker__navigation {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+}
+
+/* Small Mobile Responsive */
+@media screen and (max-width: 576px) {
+    .sessionBookingModal {
+        width: 86% !important;
+        max-height: 100vh;
+
+        .mf-off-canvas-header {
+            padding: 16px;
+
+            .head-ing {
+                font: 500 16px var(--font);
+            }
+
+            .close-btn {
+                width: 28px;
+                height: 28px;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    min-width: 16px;
+                    min-height: 16px;
+                }
+            }
+        }
+
+        .session-modal-body {
+            padding: 16px;
+
+            .session-booking-calender {
+                margin-bottom: 16px;
+            }
+
+            .selected-date {
+                font: 500 14px var(--font);
+            }
+
+            .desc {
+                font: 500 11px var(--font);
+                margin-bottom: 12px;
+            }
+
+            .time-slots-container {
+                gap: 6px;
+
+                button {
+                    padding: 6px 8px;
+                    font: 400 11px var(--font);
+                }
+            }
+        }
+
+        .session-modal-footer {
+            padding: 16px;
+
+            button {
+                height: 36px;
+                font: 500 12px var(--font);
+            }
+        }
+    }
+
+    .session-booking-calender .react-datepicker__header h2 {
+        font: 400 14px var(--font);
+    }
+
+    .session-booking-calender .react-datepicker__day {
+        width: 1.8rem;
+        height: 1.8rem;
+        line-height: 1.8rem;
+        margin: 0.15rem;
+        font: 400 11px var(--font);
+    }
+
+    .session-booking-calender .react-datepicker__day-names {
+        padding: 0 8px;
+    }
+
+    .session-booking-calender .react-datepicker__day-names .react-datepicker__day-name {
+        width: 28px;
+        height: 28px;
+    }
+
+    .session-booking-calender .react-datepicker__day-names .react-datepicker__day-name span {
+        font: 400 10px var(--font);
+    }
+
+    .session-booking-calender .react-datepicker__navigation {
+        width: 28px;
+        height: 28px;
+    }
+}

@@ -71,9 +71,47 @@
     }
 }
 
+@media (max-width: 991px) {
+    .welcome-modal-content {
+        width: 86%;
+        max-width: 480px;
+        height: 600px;
+
+        .buttons-section {
+            bottom: 28px;
+            column-gap: 20px;
+            
+            button {
+                height: 34px;
+                font: 500 13px var(--font);
+            }
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .welcome-modal-content {
-        padding: 1.5rem;
+        width: 86%;
+        max-width: 400px;
+        height: 520px;
+        padding: 2px;
+        border-radius: 14px;
+
+        .bgimage {
+            border-radius: 14px;
+        }
+
+        .buttons-section {
+            bottom: 24px;
+            column-gap: 16px;
+            width: 88%;
+            
+            button {
+                height: 32px;
+                font: 500 12px var(--font);
+                padding: 8px 14px;
+            }
+        }
     }
 
     .welcome-modal-body h2 {
@@ -82,5 +120,44 @@
 
     .welcome-modal-body p {
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-modal-overlay {
+        padding: 16px;
+    }
+
+    .welcome-modal-content {
+        width: 86%;
+        max-width: 100%;
+        height: 480px;
+        border-radius: 12px;
+
+        .bgimage {
+            border-radius: 12px;
+        }
+
+        .buttons-section {
+            bottom: 20px;
+            column-gap: 12px;
+            width: 86%;
+            flex-direction: column;
+            row-gap: 10px;
+            
+            button {
+                width: 100%;
+                height: 36px;
+                font: 500 12px var(--font);
+            }
+        }
+    }
+
+    .welcome-modal-body h2 {
+        font-size: 1.25rem;
+    }
+
+    .welcome-modal-body p {
+        font-size: 0.875rem;
     }
 }

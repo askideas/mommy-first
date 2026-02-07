@@ -102,16 +102,79 @@
     cursor: not-allowed;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+    .confirmation-modal-backdrop {
+        padding: 16px;
+    }
+
     .confirmation-modal-container {
+        width: 86%;
         padding: 32px 24px;
+        border-radius: 14px;
+    }
+
+    .confirmation-modal-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+    }
+
+    .confirmation-modal-title {
+        font: 600 20px var(--font);
+        margin-bottom: 10px;
+    }
+
+    .confirmation-modal-message {
+        font: 400 13px var(--font);
+        margin-bottom: 24px;
+    }
+
+    .confirmation-modal-actions {
+        gap: 10px;
+    }
+
+    .confirmation-btn {
+        height: 38px !important;
+        font: 500 13px var(--font);
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-modal-backdrop {
+        padding: 12px;
+    }
+
+    .confirmation-modal-container {
+        width: 86%;
+        padding: 28px 20px;
+        border-radius: 12px;
+    }
+
+    .confirmation-modal-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 16px;
+        border-radius: 10px;
+    }
+
+    .confirmation-modal-title {
+        font: 600 18px var(--font);
+    }
+
+    .confirmation-modal-message {
+        font: 400 12px var(--font);
+        margin-bottom: 20px;
     }
 
     .confirmation-modal-actions {
         flex-direction: column-reverse;
+        gap: 8px;
     }
 
     .confirmation-btn {
-        width: 100%;
+        width: 100% !important;
+        height: 36px !important;
+        font: 500 12px var(--font);
     }
 }

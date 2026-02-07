@@ -123,3 +123,219 @@
         }
     }
 }
+
+/* ============================================
+   RESPONSIVE STYLES - Tablet & Mobile
+   ============================================ */
+
+/* Tablet Responsive */
+@media screen and (max-width: 991px) {
+    #bundlesuggestionsmodal {
+        width: 86%;
+        max-height: 100vh;
+        padding: 36px;
+        border-radius: 20px 0 0 20px;
+
+        .heading-section-container {
+            margin-bottom: 28px;
+
+            .heading-txt {
+                font: 500 32px var(--font);
+            }
+
+            .sub-heading-txt {
+                font: 400 11px var(--font);
+            }
+
+            .label-skip-con {
+                margin-bottom: 12px;
+
+                .label-sec {
+                    font: 600 9px var(--font);
+
+                    svg {
+                        width: 14px;
+                        height: 14px;
+                    }
+                }
+
+                .skip {
+                    font: 400 12px var(--font);
+                }
+            }
+        }
+
+        .filter-section-container .filter-label-section {
+            margin-top: 24px;
+
+            .filter-label {
+                font: 400 14px var(--font);
+                margin-bottom: 8px;
+            }
+
+            .label-con .filter-label-item {
+                font: 400 12px var(--font);
+                padding: 4px 7px;
+            }
+        }
+
+        .footer-section {
+            .info-txt {
+                font: 400 11px var(--font);
+                margin-bottom: 12px;
+            }
+
+            .buttons-con {
+                column-gap: 14px;
+            }
+        }
+    }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    #bundlesuggestionsmodal {
+        width: 86% !important;
+        padding: 28px 24px;
+        border-radius: 24px 24px 0 0;
+        max-height: 100vh;
+        overflow-y: auto;
+
+        .heading-section-container {
+            margin-bottom: 24px;
+
+            .heading-txt {
+                font: 500 26px var(--font);
+            }
+
+            .sub-heading-txt {
+                font: 400 10px var(--font);
+            }
+
+            .label-skip-con {
+                margin-bottom: 10px;
+
+                .label-sec {
+                    font: 600 8px var(--font);
+                    padding: 3px 6px;
+                    border-radius: 5px;
+
+                    svg {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+
+                .skip {
+                    font: 400 11px var(--font);
+                }
+            }
+        }
+
+        .filter-section-container .filter-label-section {
+            margin-top: 20px;
+
+            .filter-label {
+                font: 400 13px var(--font);
+                margin-bottom: 8px;
+            }
+
+            .label-con {
+                gap: 8px;
+
+                .filter-label-item {
+                    font: 400 11px var(--font);
+                    padding: 4px 6px;
+                    border-radius: 6px;
+                }
+            }
+        }
+
+        .footer-section {
+            .info-txt {
+                font: 400 10px var(--font);
+                margin-bottom: 10px;
+            }
+
+            .buttons-con {
+                column-gap: 12px;
+                flex-wrap: wrap;
+                row-gap: 10px;
+            }
+        }
+    }
+}
+
+/* Small Mobile Responsive */
+@media screen and (max-width: 576px) {
+    #bundlesuggestionsmodal {
+        width: 86% !important;
+        padding: 24px 20px;
+        max-height: 100vh;
+
+        .heading-section-container {
+            margin-bottom: 20px;
+
+            .heading-txt {
+                font: 500 22px var(--font);
+            }
+
+            .sub-heading-txt {
+                font: 400 9px var(--font);
+            }
+
+            .label-skip-con {
+                .label-sec {
+                    font: 600 7px var(--font);
+                    padding: 2px 5px;
+
+                    svg {
+                        width: 10px;
+                        height: 10px;
+                    }
+                }
+
+                .skip {
+                    font: 400 10px var(--font);
+                }
+            }
+        }
+
+        .filter-section-container .filter-label-section {
+            margin-top: 16px;
+
+            .filter-label {
+                font: 400 12px var(--font);
+                margin-bottom: 6px;
+            }
+
+            .label-con {
+                gap: 6px;
+
+                .filter-label-item {
+                    font: 400 10px var(--font);
+                    padding: 3px 5px;
+                }
+            }
+        }
+
+        .footer-section {
+            .info-txt {
+                font: 400 9px var(--font);
+                margin-bottom: 8px;
+                column-gap: 4px;
+            }
+
+            .buttons-con {
+                flex-direction: column;
+                column-gap: 0;
+                row-gap: 8px;
+                width: 100%;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

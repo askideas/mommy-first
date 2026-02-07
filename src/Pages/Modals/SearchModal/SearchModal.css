@@ -352,3 +352,365 @@
         }
     }
 }
+
+/* ============================================
+   RESPONSIVE STYLES - Tablet & Mobile
+   ============================================ */
+
+/* Tablet Responsive */
+@media screen and (max-width: 991px) {
+    #SearchModal {
+        width: 86%;
+        max-height: 100vh;
+        border-radius: 20px 0 0 20px;
+
+        .mf-off-canvas-header {
+            padding: 24px;
+
+            .head-ing {
+                font: 500 20px var(--font);
+            }
+
+            .close-btn {
+                width: 36px;
+                height: 36px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    min-width: 20px;
+                    min-height: 20px;
+                }
+            }
+        }
+
+        .search-modal-body-container {
+            padding: 24px;
+
+            .search-bar-container {
+                height: 38px;
+                margin-bottom: 24px;
+
+                input {
+                    font: 400 13px var(--font);
+                }
+            }
+
+            .search-results-container {
+                .results-list .reults-item {
+                    .prd-img {
+                        width: 64px;
+                        height: 64px;
+                    }
+
+                    .content-details {
+                        .prd-name {
+                            font: 400 14px var(--font);
+                        }
+
+                        .prd-price {
+                            font: 600 14px var(--font);
+                        }
+                    }
+                }
+            }
+
+            .search-no-results-con {
+                img {
+                    width: 120px;
+                    height: 120px;
+                }
+
+                h1 {
+                    font: 600 20px var(--font);
+                }
+
+                p {
+                    font: 400 12px var(--font);
+                }
+            }
+        }
+    }
+
+    .search-results-filter {
+        .filters-section button {
+            padding: 6px 10px;
+            font: 400 11px var(--font);
+        }
+    }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    #SearchModal {
+        width: 86% !important;
+        border-radius: 20px 0 0 20px;
+        max-height: 100vh;
+
+        .mf-off-canvas-header {
+            padding: 20px;
+
+            .head-ing {
+                font: 500 18px var(--font);
+            }
+
+            .close-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                    min-width: 18px;
+                    min-height: 18px;
+                }
+            }
+        }
+
+        .search-modal-body-container {
+            padding: 20px;
+
+            .search-bar-container {
+                height: 36px;
+                margin-bottom: 20px;
+                border-radius: 6px;
+                padding: 6px;
+
+                input {
+                    font: 400 12px var(--font);
+                }
+
+                .clear-btn {
+                    font: 400 10px var(--font);
+                    padding: 2px 6px;
+                }
+            }
+
+            .search-initial-state {
+                .quick-search-terms-con {
+                    .quick-search-heading {
+                        font: 400 11px var(--font);
+                        margin-bottom: 12px;
+                    }
+
+                    .quick-search-btn-con {
+                        gap: 10px;
+
+                        button {
+                            font: 400 12px var(--font);
+                            padding: 6px 10px;
+                            border-radius: 6px;
+                        }
+                    }
+                }
+            }
+
+            .search-results-container {
+                .results-count {
+                    font: 400 10px var(--font);
+                    margin-bottom: 10px;
+                }
+
+                .results-list {
+                    padding-right: 4px;
+
+                    .reults-item {
+                        margin-top: 10px;
+                        column-gap: 8px;
+
+                        .prd-img {
+                            width: 56px;
+                            height: 56px;
+                            border-radius: 8px;
+
+                            img {
+                                border-radius: 8px;
+                            }
+                        }
+
+                        .content-details {
+                            row-gap: 8px;
+
+                            .prd-name {
+                                font: 400 13px var(--font);
+                            }
+
+                            .prd-price {
+                                font: 600 13px var(--font);
+                            }
+
+                            .prd-excerpt {
+                                font: 400 10px var(--font);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .search-no-results-con {
+                row-gap: 8px;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                h1 {
+                    font: 600 18px var(--font);
+                }
+
+                p {
+                    font: 400 12px var(--font);
+                }
+            }
+
+            .search-modal-footer {
+                padding-top: 20px;
+
+                button {
+                    height: 36px;
+                    font: 500 12px var(--font);
+                }
+            }
+        }
+    }
+
+    .search-results-filter {
+        padding-bottom: 14px;
+        margin-bottom: 14px;
+
+        .results-found {
+            font: 400 10px var(--font);
+        }
+
+        .filters-section {
+            column-gap: 8px;
+            row-gap: 8px;
+
+            button {
+                padding: 6px 10px;
+                font: 400 10px var(--font);
+            }
+        }
+    }
+}
+
+/* Small Mobile Responsive */
+@media screen and (max-width: 576px) {
+    #SearchModal {
+        width: 86% !important;
+        max-height: 100vh;
+
+        .mf-off-canvas-header {
+            padding: 16px;
+
+            .head-ing {
+                font: 500 16px var(--font);
+            }
+
+            .close-btn {
+                width: 28px;
+                height: 28px;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    min-width: 16px;
+                    min-height: 16px;
+                }
+            }
+        }
+
+        .search-modal-body-container {
+            padding: 16px;
+
+            .search-bar-container {
+                height: 34px;
+                margin-bottom: 16px;
+
+                input {
+                    font: 400 11px var(--font);
+                }
+
+                .clear-btn {
+                    font: 400 9px var(--font);
+                    padding: 2px 5px;
+                }
+            }
+
+            .search-initial-state {
+                .quick-search-terms-con {
+                    .quick-search-heading {
+                        font: 400 10px var(--font);
+                        margin-bottom: 10px;
+                    }
+
+                    .quick-search-btn-con {
+                        gap: 8px;
+
+                        button {
+                            font: 400 11px var(--font);
+                            padding: 5px 8px;
+                        }
+                    }
+                }
+            }
+
+            .search-results-container {
+                .results-list .reults-item {
+                    .prd-img {
+                        width: 48px;
+                        height: 48px;
+                    }
+
+                    .content-details {
+                        row-gap: 6px;
+
+                        .prd-name {
+                            font: 400 12px var(--font);
+                        }
+
+                        .prd-price {
+                            font: 600 12px var(--font);
+                        }
+
+                        .prd-excerpt {
+                            font: 400 9px var(--font);
+                        }
+                    }
+                }
+            }
+
+            .search-no-results-con {
+                img {
+                    width: 80px;
+                    height: 80px;
+                }
+
+                h1 {
+                    font: 600 16px var(--font);
+                }
+
+                p {
+                    font: 400 11px var(--font);
+                }
+            }
+
+            .search-modal-footer button {
+                height: 34px;
+                font: 500 11px var(--font);
+            }
+        }
+    }
+
+    .search-results-filter {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+
+        .filters-section button {
+            padding: 5px 8px;
+            font: 400 9px var(--font);
+        }
+    }
+}
