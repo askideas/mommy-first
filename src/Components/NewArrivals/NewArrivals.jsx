@@ -16,7 +16,8 @@ const NewArrivals = (props) => {
     const [authToken, setAuthToken] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [activeCollection, setActiveCollection] = useState('new-arrivals')
+    const [activeCollection, setActiveCollection] = useState('all')
+    const [totalProducts, setTotalProducts] = useState(0)
 
     // Animation refs
     const [headingRef, headingVisible] = useFadeUpAnimation(0.2)
@@ -94,7 +95,7 @@ const NewArrivals = (props) => {
     };
 
     // Fetch products from collection
-    const fetchProductsFromCollection = async (token, collectionHandle = 'new-arrivals') => {
+    const fetchProductsFromCollection = async (token, collectionHandle = 'all') => {
         try {
             setLoading(true);
             const url = `${import.meta.env.VITE_API_BASE_URL}/collections/${collectionHandle}`;
@@ -117,6 +118,7 @@ const NewArrivals = (props) => {
 
             const responseData = await response.json();
             const collection = responseData.data?.collection || responseData.collection;
+            const pagination = responseData.pagination;
             const productEdges = Array.isArray(collection?.products)
                 ? collection.products
                 : (collection?.products?.edges || []);
@@ -126,9 +128,11 @@ const NewArrivals = (props) => {
                     .map(edge => edge.node ? transformProduct(edge) : transformProduct({ node: edge }))
                     .slice(0, 4);
                 setProductsData(transformedProducts);
+                setTotalProducts(pagination?.totalProducts || productEdges.length);
                 setError(null);
             } else {
                 setProductsData([]);
+                setTotalProducts(0);
             }
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -192,6 +196,12 @@ const NewArrivals = (props) => {
     ]
 
     const displayProducts = productsData.length > 0 ? productsData : fallbackProducts
+    const seenCount = displayProducts.length
+    const normalizedTotal = totalProducts > 0 ? totalProducts : seenCount
+    const progressPercentage = normalizedTotal > 0 ? (seenCount / normalizedTotal) * 100 : 0
+    const viewMorePath = activeCollection === 'all'
+        ? '/shop'
+        : `/collection/${activeCollection}`
 
   return (
     <div style={{marginBottom: '154px'}}>
@@ -203,9 +213,9 @@ const NewArrivals = (props) => {
                 <div className="new-arrivals-filter-section">
                     <div className="filters-section my-4 justify-content-start flex-fill">
                         <button 
-                            className={`filter-button ${activeCollection === 'new-arrivals' ? 'active' : ''}`} 
-                            data-collection="new-arrivals"
-                            onClick={() => handleFilterClick('new-arrivals')}
+                            className={`filter-button ${activeCollection === 'all' ? 'active' : ''}`} 
+                            data-collection="all"
+                            onClick={() => handleFilterClick('all')}
                         >
                             ALL
                         </button>
@@ -254,11 +264,11 @@ const NewArrivals = (props) => {
                     
                     <div ref={progressRef} className={getFadeUpClass('fade-up-animation', progressVisible)}>
                         <div className="d-flex flex-column justify-content-center align-items-center">
-                            <p className='progress-bar-text'>You've seen 4 out of 98 items</p>
+                            <p className='progress-bar-text'>You've seen {seenCount} out of {normalizedTotal} items</p>
                             <div className="progress-bar-con">
-                                <span></span>
+                                <span style={{ width: `${progressPercentage}%` }}></span>
                             </div>
-                            <button className='button-label' onClick={()=> navigate('/shop')}>View more</button>
+                            <button className='button-label' onClick={()=> navigate(viewMorePath)}>View more</button>
                         </div>
                     </div>
                 </>
