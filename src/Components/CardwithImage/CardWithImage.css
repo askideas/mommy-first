@@ -45,3 +45,48 @@
         }
     }
 }
+
+
+@media (max-width: 1023px) {
+    .card-with-image-con {
+        width: 82%;
+        min-width: 82%;
+
+        .label {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: var(--white);
+            font: 400 10px var(--font);
+            border-radius: 4px;
+            padding: 4px 8px;
+        }
+
+        img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        
+        .content-con {
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            flex: 1;
+
+            h1 {
+                font: 600 20px var(--font);
+                color: var(--primary-light);
+                margin-bottom: 20px;
+            }
+
+            p {
+                font: 300 14px var(--font);
+                color: var(--primary-dark);
+                margin-bottom: 20px;
+                flex: 1;
+            }
+        }
+    }
+}

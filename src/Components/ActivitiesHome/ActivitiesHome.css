@@ -6,3 +6,17 @@
     gap: 36px;
     margin-bottom: 60px;
 }
+
+@media (max-width: 1023px) {
+    .activities-home-container {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+        padding-bottom: 72px;
+        margin-bottom: 0;
+
+        &::-webkit-scrollbar {
+            display: none !important;
+        }
+    }
+}

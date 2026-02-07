@@ -29,3 +29,20 @@
         text-align: center;
     }
 }
+
+@media (max-width: 1023px) {
+    .heading-container {
+
+        h1 {
+            font: 400 32px var(--font);
+        }
+
+        h2 {
+            font: 400 10px var(--font);
+        }
+
+        .description {
+            font: 400 14px var(--font);
+        }
+    }
+}
