@@ -2,18 +2,41 @@ import React, { useState } from 'react'
 import './ChatBot.css'
 import Icon from '../../assets/Chatbot/icon.svg'
 import { X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const ChatBot = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const topics = [
-    'New Bundles and Offers',
-    'Returns & Exchanges',
-    'Speak to any support agent?',
-    'Contact Customer Support',
-    'Suggestions & Complaints',
-    'Business Enquiries',
-    'Affiliations'
+    {
+      'label': 'New Bundles and Offers',
+      'link': '/bundles'
+    },
+    {
+      'label': 'Returns & Exchanges',
+      'link': '/profile#orders'
+    },
+    {
+      'label': 'Speak to any support agent?',
+      'link': '/contact'
+    },
+    {
+      'label': 'Contact Customer Support',
+      'link': '/contact'
+    },
+    {
+      'label': 'Suggestions & Complaints',
+      'link': '/enquiries'
+    },
+    {
+      'label': 'Business Enquiries',
+      'link': '/enquiries'
+    },
+    {
+      'label': 'Affiliations',
+      'link': '/af-marketing'
+    }
   ]
 
   const toggleChatbot = () => {
@@ -38,15 +61,15 @@ const ChatBot = () => {
               <h3 className="topics-heading">Topics</h3>
               <div className="topics-list">
                 {topics.map((topic, index) => (
-                  <button key={index} className="topic-item">
-                    {topic}
+                  <button key={index} className="topic-item" onClick={()=>navigate(topic.link)}>
+                    {topic.label}
                   </button>
                 ))}
               </div>
               
               <div className="chatbot-footer">
-                <button className="btn-help">Still need help?</button>
-                <button className="btn-faq">FAQ</button>
+                <button className="btn-help" onClick={()=>navigate('/contact')}>Still need help?</button>
+                <button className="btn-faq" onClick={()=>navigate('/faqs')}>FAQ</button>
               </div>
             </div>
           </div>

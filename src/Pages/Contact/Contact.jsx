@@ -1,8 +1,12 @@
 import React from 'react'
 import './Contact.css'
 import { Clock, Mail, Smartphone } from 'lucide-react'
+import { useAuth } from '../../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Contact = () => {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
   return (
     <>
         <div className="container">
@@ -15,7 +19,7 @@ const Contact = () => {
             <div className="faqs-section">
                 <h1>Have a question?</h1>
                 <h2>You might find your answer in our <br /> FAQ before getting in touch.</h2>
-                <button className='button-pink-center'>FREQUENTLY ASKED QUESTIONS</button>
+                <button className='button-pink-center' onClick={()=>navigate('/faqs')}>FREQUENTLY ASKED QUESTIONS</button>
             </div>
 
             <div className="contact-details-section">
@@ -62,7 +66,7 @@ const Contact = () => {
                     <div className="col-4 contact-det-sec">
                         <h1>Global Infrastructure. <br /> Local Care.</h1>
                         <h2>Partner with the leader in premium postpartum solutions.</h2>
-                        <button className='button-pink-center' >BUSINESS ENQUIRIES</button>
+                        <button className='button-pink-center' onClick={()=>navigate('/enquiries')} >BUSINESS ENQUIRIES</button>
                     </div>
                 </div>
             </div>
@@ -70,7 +74,15 @@ const Contact = () => {
             <div className='contact-return-text-changes'>
                 <h1>Returns & Exchanges</h1>
                 <h2>The Perfect Fit Promise Wrong size? Damaged box? Don't stress. We prfioritize <br /> exchanges and replacements to get you the right care, fast.</h2>
-                <button className="button-pink-center">LOGIN TO YOUR ACCOUNT</button>
+                {
+                    isAuthenticated ? (
+                        <button className="button-pink-center" onClick={()=>navigate('/profile/#orders')}>Returns & Exchanges</button>
+                    ) : (
+                        <button className="button-pink-center" data-bs-toggle="offcanvas"
+                        data-bs-target="#AuthenticationModal" >LOGIN TO YOUR ACCOUNT</button>
+                    )
+                }
+                
             </div>
         </div>
     </>

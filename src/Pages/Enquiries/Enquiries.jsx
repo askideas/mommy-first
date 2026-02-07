@@ -6,8 +6,10 @@ import Percentage from '../../assets/Enquiries/percent.svg'
 import Heart from '../../assets/Enquiries/heart.svg'
 import Microscope from '../../assets/Enquiries/microscope.svg'
 import { ChevronDown, Clock } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const Enquiries = () => {
+    const navigate = useNavigate();
     const headingData = {
         'title': "ENQUIRIES",
         'subtitle': "Global Infrastructure. Local Care.",
@@ -118,7 +120,7 @@ const Enquiries = () => {
 
                 <div className="enquiries-contact-section">
                     <p>Still have questions? We’re happy to help 🙂</p>
-                    <button className='button-pink-center'>CONTACT US</button>
+                    <button className='button-pink-center' onClick={()=>navigate('/contact')}>CONTACT US</button>
                 </div>
             </div>
         </div>

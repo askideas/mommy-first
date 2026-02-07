@@ -247,7 +247,7 @@ const CareHub = () => {
 
                     <div className="buttons-section">
                         <p className="label">Free with Email · $19 Value ✨</p>
-                        <button className='button-pink-center'>Shop to Unlock</button>
+                        <button className='button-pink-center' onClick={()=>navigate('/shop')}>Shop to Unlock</button>
                     </div>
                 </div>
 
@@ -380,7 +380,7 @@ const CareHub = () => {
                 <div className="progress-bar-con">
                     <span></span>
                 </div>
-                <button className='button-label' onClick={()=> navigate('/events')}>View all</button>
+                <button className='button-label' onClick={()=> navigate('/live-sessions')}>View all</button>
             </div>
         </div>
 
