@@ -6,9 +6,16 @@ import S3 from '../../assets/s-3.svg'
 import Default from '../../assets/default.png'
 import Heading from '../../Components/Heading/Heading'
 import CardWithImage from '../../Components/CardwithImage/CardWithImage'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const Events = () => {
     const [displayedItems, setDisplayedItems] = useState(9);
+    
+    // Animation refs
+    const [headingRef, headingVisible] = useFadeUpAnimation(0.1, true)
+    const [filtersRef, filtersVisible] = useFadeUpAnimation(0.1, true)
+    const [gridRef, gridVisible] = useFadeUpAnimation(0.1, true)
+    const [progressRef, progressVisible] = useFadeUpAnimation(0.1, true)
     const ITEMS_PER_PAGE = 9;
 
     const headingData = {
@@ -191,13 +198,15 @@ const Events = () => {
 
     return (
         <div className='container' style={{marginBottom: '154px', marginTop: '90px'}}>
-        <Heading data={headingData}/>
-        <div className="filters-section">
+        <div ref={headingRef} className={`events-heading-section ${headingVisible ? 'animate-in' : ''}`}>
+            <Heading data={headingData}/>
+        </div>
+        <div ref={filtersRef} className={`filters-section ${filtersVisible ? 'animate-in' : ''}`}>
             <button className='filter-button active'>Latest</button>
             <button className='filter-button'>2024</button>
             <button className='filter-button'>2023</button>
         </div>
-        <div className="activities-home-container">
+        <div ref={gridRef} className={`activities-home-container ${gridVisible ? 'animate-in' : ''}`}>
             {
             visibleItems.map((item,index)=> {
                 return (
@@ -206,7 +215,7 @@ const Events = () => {
             })
             }
         </div>
-        <div className="d-flex flex-column justify-content-center align-items-center">
+        <div ref={progressRef} className={`d-flex flex-column justify-content-center align-items-center ${progressVisible ? 'animate-in' : ''}`}>
             <p className='progress-bar-text'>You've seen {visibleItems.length} out of {Items.length} activities</p>
             <div className="progress-bar-con">
                 <span style={{ width: `${(visibleItems.length / Items.length) * 100}%` }}></span>

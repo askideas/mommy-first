@@ -6,6 +6,7 @@ import { getLiveSessions } from '../../services/blogService'
 import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader'
 import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
 import SomeWentWrong from '../../assets/something-went-wrong.svg'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const LiveSessions = () => {
   const [liveSessionsData, setLiveSessionsData] = useState([])
@@ -13,6 +14,11 @@ const LiveSessions = () => {
   const [error, setError] = useState(null)
   const [displayedItems, setDisplayedItems] = useState(9)
   const ITEMS_PER_PAGE = 9
+
+  // Animation refs
+  const [headingRef, headingVisible] = useFadeUpAnimation(0.1, true)
+  const [gridRef, gridVisible] = useFadeUpAnimation(0.1, true)
+  const [progressRef, progressVisible] = useFadeUpAnimation(0.1, true)
 
   const headingData = {
     title: "Live Sessions",
@@ -67,7 +73,9 @@ const LiveSessions = () => {
 
   return (
     <div className='container' style={{ marginBottom: '154px', marginTop: '90px' }}>
-      <Heading data={headingData} />
+      <div ref={headingRef} className={`live-sessions-heading ${headingVisible ? 'animate-in' : ''}`}>
+        <Heading data={headingData} />
+      </div>
       
       {isLoading ? (
         <div className="live-sessions-grid mt-5">
@@ -91,13 +99,13 @@ const LiveSessions = () => {
         </div>
       ) : (
         <>
-          <div className="live-sessions-grid mt-5">
+          <div ref={gridRef} className={`live-sessions-grid mt-5 ${gridVisible ? 'animate-in' : ''}`}>
             {visibleItems.map((session, index) => (
               <EventCard key={session.node?.id || index} event={session.node} />
             ))}
           </div>
           
-          <div className="d-flex flex-column justify-content-center align-items-center">
+          <div ref={progressRef} className={`live-sessions-progress d-flex flex-column justify-content-center align-items-center ${progressVisible ? 'animate-in' : ''}`}>
             <p className='progress-bar-text'>
               You've seen {visibleItems.length} out of {totalItems} sessions
             </p>

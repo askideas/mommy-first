@@ -5,12 +5,18 @@ import BlogCard from '../../Components/BlogCard/BlogCard'
 import BlogCardSkeleton from '../../Components/BlogCard/BlogCardSkeleton'
 import { blogHeadingData } from '../../data/blogsData'
 import { getJournals } from '../../services/blogService'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const Blogs = () => {
   const [visibleCount, setVisibleCount] = useState(6)
   const [isExpanded, setIsExpanded] = useState(false)
   const [blogsData, setBlogsData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+
+  // Animation refs
+  const [headingRef, headingVisible] = useFadeUpAnimation(0.1, true)
+  const [gridRef, gridVisible] = useFadeUpAnimation(0.1, true)
+  const [buttonRef, buttonVisible] = useFadeUpAnimation(0.1, true)
 
   useEffect(() => {
     fetchBlogs()
@@ -45,10 +51,12 @@ const Blogs = () => {
 
   return (
     <div className="blogs-page-container">
-      <Heading data={blogHeadingData} />
+      <div ref={headingRef} className={`blogs-heading-section ${headingVisible ? 'animate-in' : ''}`}>
+        <Heading data={blogHeadingData} />
+      </div>
       
       <div className="blogs-grid-wrapper">
-        <div className="blogs-grid-container">
+        <div ref={gridRef} className={`blogs-grid-container ${gridVisible ? 'animate-in' : ''}`}>
           {isLoading ? (
             // Show 6 skeleton loaders while fetching
             Array(6).fill(0).map((_, index) => (
@@ -63,7 +71,7 @@ const Blogs = () => {
       </div>
 
       {!isLoading && blogsData.length > 6 && (
-        <div className="blogs-expand-wrapper">
+        <div ref={buttonRef} className={`blogs-expand-wrapper ${buttonVisible ? 'animate-in' : ''}`}>
           <button 
             className="button-pink-border"
             onClick={handleExpandToggle}

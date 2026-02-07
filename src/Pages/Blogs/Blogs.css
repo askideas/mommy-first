@@ -1,8 +1,36 @@
+/* Blogs Page Animations */
+@keyframes blogsFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blogsFadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .blogs-page-container {
   width: 100%;
   min-height: 100vh;
   background-color: var(--pink-shade-bg);
   padding: 60px 0;
+}
+
+/* Heading animation */
+.blogs-heading-section.animate-in {
+    animation: blogsFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .blogs-grid-wrapper {
@@ -15,6 +43,27 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+}
+
+/* Grid animation */
+.blogs-grid-container.animate-in {
+    animation: blogsFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.15s;
+}
+
+/* Blog cards staggered animation */
+.blogs-grid-container.animate-in .blog-card:nth-child(1) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.2s; }
+.blogs-grid-container.animate-in .blog-card:nth-child(2) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.25s; }
+.blogs-grid-container.animate-in .blog-card:nth-child(3) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.3s; }
+.blogs-grid-container.animate-in .blog-card:nth-child(4) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.35s; }
+.blogs-grid-container.animate-in .blog-card:nth-child(5) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.4s; }
+.blogs-grid-container.animate-in .blog-card:nth-child(6) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.45s; }
+.blogs-grid-container.animate-in .blog-card:nth-child(n+7) { animation: blogsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.1s; }
+
+/* Expand button animation */
+.blogs-expand-wrapper.animate-in {
+    animation: blogsFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s;
 }
 
 .blogs-expand-wrapper {
