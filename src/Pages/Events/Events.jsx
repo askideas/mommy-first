@@ -1,200 +1,69 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Events.css'
-import S1 from '../../assets/s-1.svg'
-import S2 from '../../assets/s-2.svg'
-import S3 from '../../assets/s-3.svg'
-import Default from '../../assets/default.png'
 import Heading from '../../Components/Heading/Heading'
-import CardWithImage from '../../Components/CardwithImage/CardWithImage'
+import EventsCard from '../../Components/EventsCard/EventsCard'
+import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader'
 import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
+import { getEvents } from '../../services/blogService'
 
 const Events = () => {
-    const [displayedItems, setDisplayedItems] = useState(9);
+    const [eventsData, setEventsData] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [displayedItems, setDisplayedItems] = useState(9)
+    const ITEMS_PER_PAGE = 9
     
     // Animation refs
     const [headingRef, headingVisible] = useFadeUpAnimation(0.1, true)
     const [filtersRef, filtersVisible] = useFadeUpAnimation(0.1, true)
     const [gridRef, gridVisible] = useFadeUpAnimation(0.1, true)
     const [progressRef, progressVisible] = useFadeUpAnimation(0.1, true)
-    const ITEMS_PER_PAGE = 9;
 
     const headingData = {
-        'title': "What’s On",
+        'title': "What's On",
         'subtitle': "Our Activities & Engagements",
         'description': false
     }
-    
-    const Items = [
-      {
-        id: 1,
-        image: S1,
-        title: "Trusted by Moms Around the World",
-        description: ["5th November - 09th November 2025"],
-        buttonlabel: "Learn more",
-        labelonimage: false,
-        link: "/events/1",
-      },
-      {
-        id: 2,
-        image: S2,
-        title: "Baby EXPO - DUBAI 2026",
-        description: ["5th August - 09th August 2026"],
-        buttonlabel: "Book your slot",
-        labelonimage: false,
-        link: "/events/2",
-      },
-      {
-        id: 3,
-        image: S3,
-        title: "Mother’s Day Greetings!",
-        description: ["Saturday March 21st, 2026"],
-        buttonlabel: "Join Us",
-        labelonimage: false,
-        link: "/events/3",
-      },
-      {
-        id: 4,
-        image: Default,
-        title: "Baby EXPO - DUBAI 2026",
-        description: ["5th August - 09th August 2026"],
-        buttonlabel: "Book your slot",
-        labelonimage: false,
-        link: "/events/4",
-      },
-      {
-        id: 5,
-        image: S1,
-        title: "Trusted by Moms Around the World",
-        description: ["5th November - 09th November 2025"],
-        buttonlabel: "Learn more",
-        labelonimage: false,
-        link: "/events/5",
-      },
-      {
-        id: 6,
-        image: S2,
-        title: "Mother’s Day Greetings!",
-        description: ["Saturday March 21st, 2026"],
-        buttonlabel: "Join Us",
-        labelonimage: false,
-        link: "/events/6",
-      },
-      {
-        id: 7,
-        image: S3,
-        title: "Mother’s Day Greetings!",
-        description: ["Saturday March 21st, 2026"],
-        buttonlabel: "Join Us",
-        labelonimage: false,
-        link: "/events/7",
-      },
-      {
-        id: 8,
-        image: Default,
-        title: "Trusted by Moms Around the World",
-        description: ["5th November - 09th November 2025"],
-        buttonlabel: "Learn more",
-        labelonimage: false,
-        link: "/events/8",
-      },
-      {
-        id: 9,
-        image: S1,
-        title: "Baby EXPO - DUBAI 2026",
-        description: ["5th August - 09th August 2026"],
-        buttonlabel: "Book your slot",
-        labelonimage: false,
-        link: "/events/9",
-      },
-      {
-        id: 10,
-        image: S1,
-        title: "Trusted by Moms Around the World",
-        description: ["5th November - 09th November 2025"],
-        buttonlabel: "Learn more",
-        labelonimage: false,
-        link: "/events/10",
-      },
-      {
-        id: 11,
-        image: S2,
-        title: "Baby EXPO - DUBAI 2026",
-        description: ["5th August - 09th August 2026"],
-        buttonlabel: "Book your slot",
-        labelonimage: false,
-        link: "/events/11",
-      },
-      {
-        id: 12,
-        image: S3,
-        title: "Mother’s Day Greetings!",
-        description: ["Saturday March 21st, 2026"],
-        buttonlabel: "Join Us",
-        labelonimage: false,
-        link: "/events/12",
-      },
-      {
-        id: 13,
-        image: Default,
-        title: "Baby EXPO - DUBAI 2026",
-        description: ["5th August - 09th August 2026"],
-        buttonlabel: "Book your slot",
-        labelonimage: false,
-        link: "/events/13",
-      },
-      {
-        id: 14,
-        image: S1,
-        title: "Trusted by Moms Around the World",
-        description: ["5th November - 09th November 2025"],
-        buttonlabel: "Learn more",
-        labelonimage: false,
-        link: "/events/14",
-      },
-      {
-        id: 15,
-        image: S2,
-        title: "Mother’s Day Greetings!",
-        description: ["Saturday March 21st, 2026"],
-        buttonlabel: "Join Us",
-        labelonimage: false,
-        link: "/events/15",
-      },
-      {
-        id: 16,
-        image: S3,
-        title: "Mother’s Day Greetings!",
-        description: ["Saturday March 21st, 2026"],
-        buttonlabel: "Join Us",
-        labelonimage: false,
-        link: "/events/16",
-      },
-      {
-        id: 17,
-        image: Default,
-        title: "Trusted by Moms Around the World",
-        description: ["5th November - 09th November 2025"],
-        buttonlabel: "Learn more",
-        labelonimage: false,
-        link: "/events/17",
-      },
-      {
-        id: 18,
-        image: S1,
-        title: "Baby EXPO - DUBAI 2026",
-        description: ["5th August - 09th August 2026"],
-        buttonlabel: "Book your slot",
-        labelonimage: false,
-        link: "/events/18",
-      },
-    ];
 
-    const visibleItems = Items.slice(0, displayedItems);
-    const hasMore = displayedItems < Items.length;
+    useEffect(() => {
+        fetchEvents()
+    }, [])
+
+    const fetchEvents = async () => {
+        setIsLoading(true)
+        try {
+            const response = await getEvents()
+            console.log('Events response:', response)
+            if (response.success && response.data?.articles?.edges) {
+                setEventsData(response.data.articles.edges)
+            }
+        } catch (error) {
+            console.error('Failed to fetch events:', error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const visibleItems = eventsData.slice(0, displayedItems)
+    const hasMore = displayedItems < eventsData.length
+    const totalItems = eventsData.length
 
     const handleLoadMore = () => {
-        setDisplayedItems(prev => Math.min(prev + ITEMS_PER_PAGE, Items.length));
-    };
+        setDisplayedItems(prev => Math.min(prev + ITEMS_PER_PAGE, eventsData.length))
+    }
+
+    // Skeleton loader for loading state
+    const renderSkeletons = () => {
+        return [...Array(6)].map((_, index) => (
+            <div key={index} className="event-skeleton-card">
+                <SkeletonLoader height="100%" style={{ aspectRatio: '1/1' }} borderRadius="16px" />
+                <div style={{ padding: '24px' }}>
+                    <SkeletonLoader height="24px" width="80%" style={{ marginBottom: '20px' }} />
+                    <SkeletonLoader height="16px" width="60%" style={{ marginBottom: '20px' }} />
+                    <SkeletonLoader height="40px" width="100%" />
+                </div>
+            </div>
+        ))
+    }
 
     return (
         <div className='container' style={{marginBottom: '154px', marginTop: '90px'}}>
@@ -206,24 +75,33 @@ const Events = () => {
             <button className='filter-button'>2024</button>
             <button className='filter-button'>2023</button>
         </div>
-        <div ref={gridRef} className={`activities-home-container ${gridVisible ? 'animate-in' : ''}`}>
-            {
-            visibleItems.map((item,index)=> {
-                return (
-                <CardWithImage key={index} item={item} />
-                )
-            })
-            }
-        </div>
-        <div ref={progressRef} className={`d-flex flex-column justify-content-center align-items-center ${progressVisible ? 'animate-in' : ''}`}>
-            <p className='progress-bar-text'>You've seen {visibleItems.length} out of {Items.length} activities</p>
-            <div className="progress-bar-con">
-                <span style={{ width: `${(visibleItems.length / Items.length) * 100}%` }}></span>
+        
+        {isLoading ? (
+            <div className="activities-home-container">
+                {renderSkeletons()}
             </div>
-            {hasMore && (
-                <button className='button-label' onClick={handleLoadMore}>Load more</button>
-            )}
-        </div>
+        ) : eventsData.length === 0 ? (
+            <div className="no-events-message">
+                <p>No events available at the moment. Check back soon!</p>
+            </div>
+        ) : (
+            <>
+                <div ref={gridRef} className={`activities-home-container ${gridVisible ? 'animate-in' : ''}`}>
+                    {visibleItems.map((item, index) => (
+                        <EventsCard key={item.node?.id || index} event={item.node} />
+                    ))}
+                </div>
+                <div ref={progressRef} className={`d-flex flex-column justify-content-center align-items-center ${progressVisible ? 'animate-in' : ''}`}>
+                    <p className='progress-bar-text'>You have seen {visibleItems.length} out of {totalItems} activities</p>
+                    <div className="progress-bar-con">
+                        <span style={{ width: `${(visibleItems.length / totalItems) * 100}%` }}></span>
+                    </div>
+                    {hasMore && (
+                        <button className='button-label' onClick={handleLoadMore}>Load more</button>
+                    )}
+                </div>
+            </>
+        )}
         </div>
     )
 }

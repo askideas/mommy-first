@@ -63,19 +63,42 @@
 }
 
 /* Card animations with staggered delays */
-.activities-home-container.animate-in .card-with-image:nth-child(1) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.25s; }
-.activities-home-container.animate-in .card-with-image:nth-child(2) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.3s; }
-.activities-home-container.animate-in .card-with-image:nth-child(3) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.35s; }
-.activities-home-container.animate-in .card-with-image:nth-child(4) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.4s; }
-.activities-home-container.animate-in .card-with-image:nth-child(5) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.45s; }
-.activities-home-container.animate-in .card-with-image:nth-child(6) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.5s; }
-.activities-home-container.animate-in .card-with-image:nth-child(7) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.55s; }
-.activities-home-container.animate-in .card-with-image:nth-child(8) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.6s; }
-.activities-home-container.animate-in .card-with-image:nth-child(9) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.65s; }
-.activities-home-container.animate-in .card-with-image:nth-child(n+10) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.1s; }
+.activities-home-container.animate-in .events-card:nth-child(1) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.25s; }
+.activities-home-container.animate-in .events-card:nth-child(2) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.3s; }
+.activities-home-container.animate-in .events-card:nth-child(3) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.35s; }
+.activities-home-container.animate-in .events-card:nth-child(4) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.4s; }
+.activities-home-container.animate-in .events-card:nth-child(5) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.45s; }
+.activities-home-container.animate-in .events-card:nth-child(6) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.5s; }
+.activities-home-container.animate-in .events-card:nth-child(7) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.55s; }
+.activities-home-container.animate-in .events-card:nth-child(8) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.6s; }
+.activities-home-container.animate-in .events-card:nth-child(9) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.65s; }
+.activities-home-container.animate-in .events-card:nth-child(n+10) { animation: eventsFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.1s; }
 
 /* Progress section animation */
 .d-flex.animate-in {
     animation: eventsFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     animation-delay: 0.3s;
+}
+
+/* Skeleton card styles */
+.event-skeleton-card {
+    width: 100%;
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0px 15px 50px 0px #FF509940;
+}
+
+/* No events message */
+.no-events-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.no-events-message p {
+    font: 400 18px var(--font);
+    color: var(--gray);
+    text-align: center;
 }
