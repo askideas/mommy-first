@@ -119,7 +119,7 @@ const Home = () => {
     <>
       {loading && <PageLoader />}
       {!loading && <WelcomeModal isOpen={showWelcomeModal} onClose={handleWelcomeModalClose} />}
-      <Snowfall />
+      {/* <Snowfall /> */}
 
       <HeroSection data={heroSectionData} loading={loading} />
       <HeroTextSection />

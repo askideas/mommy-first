@@ -2,7 +2,6 @@
 import './NewArrivals.css'
 import Heading from '../Heading/Heading'
 import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
-import { ChevronDown } from 'lucide-react'
 import ProductTile from '../ProductTile/ProductTile'
 import SkeletonLoader from '../SkeletonLoader/SkeletonLoader'
 import P1 from '../../assets/products/prd1.svg'
@@ -12,7 +11,6 @@ import P4 from '../../assets/products/prd4.svg'
 import { useNavigate } from 'react-router-dom'
 
 const NewArrivals = (props) => {
-    const data = props.data
     const navigate = useNavigate()
     const [productsData, setProductsData] = useState([])
     const [authToken, setAuthToken] = useState(null)
@@ -35,27 +33,31 @@ const NewArrivals = (props) => {
     // Fetch authentication token
     const fetchAuthToken = async () => {
         try {
+            console.log('Fetching auth token...');
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "clientId": import.meta.env.VITE_API_CLIENT_ID,
-                    "clientSecret": import.meta.env.VITE_API_CLIENT_SECRET
+                    clientId: import.meta.env.VITE_API_CLIENT_ID,
+                    clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
                 })
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Auth error response:', errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const result = await response.json();
-            if (result.success && result.token) {
-                setAuthToken(result.token);
-                return result.token;
+            const data = await response.json();
+            if (data.success && data.token) {
+                setAuthToken(data.token);
+                console.log('Token received successfully');
+                return data.token;
             } else {
-                throw new Error(result.message || 'Failed to get authentication token');
+                throw new Error(data.message || 'Failed to get authentication token');
             }
         } catch (err) {
             console.error('Error fetching auth token:', err);
@@ -65,19 +67,29 @@ const NewArrivals = (props) => {
     };
 
     // Transform product data to match expected format
-    const transformProduct = (product) => {
-        // New API already returns the data in a flat structure
-        const firstVariant = product.variants?.[0];
-        const firstImage = product.images?.[0];
+    const transformProduct = (productEdge) => {
+        const product = productEdge?.node || productEdge || {};
+        const firstVariant = product.variants?.nodes?.[0] || product.variants?.[0];
+        const firstImage = product.images?.nodes?.[0] || product.images?.[0];
         
         return {
             id: product.id,
             name: product.title,
             title: product.title,
+            description: product.description,
+            handle: product.handle,
+            productType: product.productType,
+            vendor: product.vendor,
+            tags: product.tags,
             image: firstImage?.url || '',
             price: parseFloat(firstVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount || '0').toFixed(2),
-            label: product.tags?.[0] || '10K+ bought in past month',
-            ...product
+            currencyCode: firstVariant?.price?.currencyCode || product.priceRange?.minVariantPrice?.currencyCode || 'USD',
+            compareAtPrice: firstVariant?.compareAtPrice?.amount || product.compareAtPriceRange?.minVariantPrice?.amount || null,
+            availableForSale: product.availableForSale,
+            images: product.images?.nodes || product.images || [],
+            variants: product.variants?.nodes || product.variants || [],
+            priceRange: product.priceRange,
+            label: product.tags?.[0] || '10K+ bought in past month'
         };
     };
 
@@ -98,23 +110,30 @@ const NewArrivals = (props) => {
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const result = await response.json();
-            console.log(`Products from ${collectionHandle}:`, result);
+            const responseData = await response.json();
+            const collection = responseData.data?.collection || responseData.collection;
+            const productEdges = Array.isArray(collection?.products)
+                ? collection.products
+                : (collection?.products?.edges || []);
 
-            if (result.success && result.data && result.data.length > 0) {
-                const transformedProducts = result.data.slice(0, 4).map(transformProduct);
-                setProductsData(transformedProducts); // Show only first 4 products
+            if (productEdges.length > 0) {
+                const transformedProducts = productEdges
+                    .map(edge => edge.node ? transformProduct(edge) : transformProduct({ node: edge }))
+                    .slice(0, 4);
+                setProductsData(transformedProducts);
                 setError(null);
             } else {
-                throw new Error(result.message || 'Failed to fetch products');
+                setProductsData([]);
             }
-            setLoading(false);
         } catch (err) {
             console.error('Error fetching products:', err);
             setError(err.message);
+        } finally {
             setLoading(false);
         }
     };
@@ -122,13 +141,18 @@ const NewArrivals = (props) => {
     // Fetch data on component mount
     useEffect(() => {
         const initFetch = async () => {
-            const token = await fetchAuthToken();
+            let token = authToken;
+            if (!token) {
+                token = await fetchAuthToken();
+            }
             if (token) {
                 await fetchProductsFromCollection(token, activeCollection);
+            } else {
+                setLoading(false);
             }
         };
         initFetch();
-    }, [activeCollection]);
+    }, [activeCollection, authToken]);
 
     // Handle filter button click
     const handleFilterClick = (collection) => {

@@ -19,8 +19,10 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 import { ArrowRight } from 'lucide-react'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const HeroSection = (props) => {
+  const navigate = useNavigate()
   const data = props.data;
   const [activeIndex, setActiveIndex] = useState(0)
   const swiperRef = useRef(null)
@@ -70,7 +72,7 @@ const HeroSection = (props) => {
             <div className="hero-section-content-container">
               <p className="label flash-animation">{leftside.label}</p>
               <p className="headinf-sec" dangerouslySetInnerHTML={{ __html: leftside.heading?.replace(/\n/g, '<br />') || 'Witch Hazel Foam + <br /> Liners Combo' }}></p>
-              <button>{leftside.buttonText || 'Shop'} <ArrowRight /></button>
+              <button onClick={()=>navigate('/shop')}>{leftside.buttonText || 'Shop'} <ArrowRight /></button>
             </div>
           </div>
 
@@ -125,7 +127,7 @@ const HeroSection = (props) => {
                 {rightside.heading || 'Exclusive'} <br /> <span>{rightside.subHeading || 'Bundle Deals'}</span>
               </p>
               <img src={rightside.productImage || HeroImage2} alt="" className='img-bg' />
-              <button>{rightside.buttonText || 'Shop All Brands'} <ArrowRight /></button>
+              <button onClick={()=>navigate('/bundles')}>{rightside.buttonText || 'Shop All Brands'} <ArrowRight /></button>
             </div>
           </div>
 

@@ -97,8 +97,18 @@ const Footer = () => {
 
                     <div className="download-section">
                         <p className="download-heading">Available soon</p>
-                        <img src={AppleStore} onClick={navigate('/download-app')} alt="" style={{marginRight: '10px', cursor: 'pointer'}}/>
-                        <img src={PlayStore} onClick={navigate('/download-app')} alt="" style={{cursor: 'pointer'}} />
+                        <img
+                            src={AppleStore}
+                            onClick={() => navigate('/download-app')}
+                            alt=""
+                            style={{marginRight: '10px', cursor: 'pointer'}}
+                        />
+                        <img
+                            src={PlayStore}
+                            onClick={() => navigate('/download-app')}
+                            alt=""
+                            style={{cursor: 'pointer'}}
+                        />
                     </div>
                 </div>
 

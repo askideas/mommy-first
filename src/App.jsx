@@ -98,7 +98,7 @@ const AppContent = () => {
           <Route element={<AuthCallback/>} path='/auth/callback' />
           <Route element={<Donation/>} path='/donation' />
           <Route element={<ReturnRefund/>} path='/returns-refunds' />
-          <Route element={<AppScreen/>} path='/download-app' />
+          {/* <Route element={<AppScreen />} path='/download-app' /> */}
           <Route element={<NotFound/>} path='*' />
         </Routes>
         <ContactBanner />
