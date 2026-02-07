@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Play, Loader2 } from 'lucide-react'
 import { getUserDetails, updateNewUserProfile } from '../../services/userService'
 import { db } from '../../firebase/config'
-import { doc, deleteDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
@@ -99,11 +99,15 @@ const SessionsSection = () => {
 
       console.log('Cancelling session:', bookingId)
 
-      // 1. Delete from Firebase
-      console.log('Deleting from Firebase...')
+      // 1. Update status to 'cancelled' in Firebase (instead of deleting)
+      console.log('Updating status in Firebase...')
       const sessionDocRef = doc(db, 'sessionBookings', bookingId)
-      await deleteDoc(sessionDocRef)
-      console.log('✅ Deleted from Firebase')
+      await updateDoc(sessionDocRef, {
+        status: 'cancelled',
+        cancelledAt: new Date().toISOString(),
+        cancelledBy: customer.email
+      })
+      console.log('✅ Updated status to cancelled in Firebase')
 
       // 2. Remove from user metafields
       console.log('Removing from user metafields...')
