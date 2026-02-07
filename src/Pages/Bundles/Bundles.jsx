@@ -18,7 +18,8 @@ import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSli
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import BundlesRecommendedModal from '../../Components/BundlesRecommendedModal/BundlesRecommendedModal'
 import BundleTile from '../../Components/BundleTile/BundleTile'
-
+import Bleed from '../../assets/BundlesHome/bleed.png'
+import FeelStore from '../../assets/BundlesHome/feel-store.png'
 import Pads from '../../assets/BundlesHome/pad.svg'
 import Coolingpad from '../../assets/BundlesHome/coolingpad.svg'
 import Soft from '../../assets/BundlesHome/soft.svg'
@@ -283,8 +284,8 @@ const Bundles = () => {
                 </p>
                 
                 <div className="d-flex justify-content-center align-items-center">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg className="floating-arrow" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
                 
@@ -321,8 +322,8 @@ const Bundles = () => {
                 </div>
                 <p className="description">You’ll need comfort + soothing + gentle cleansing—not just “pads.” <br /> This system keeps everything consistent and ready.</p>
                 <div className="d-flex justify-content-center align-items-center">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg className="floating-arrow" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
             </div>
@@ -342,7 +343,9 @@ const Bundles = () => {
                                 </svg>
                                 <span>Bleeding</span>
                             </div>
-                            <div className="card-badge bleeding-badge">bleeeed</div>
+                            <div className="card-badge bleeding-badge">
+                                <img src={Bleed} alt="" />
+                            </div>
                         </div>
                         
                         <div className="graph-container">
@@ -400,7 +403,9 @@ const Bundles = () => {
                                 </svg>
                                 <span>Soreness</span>
                             </div>
-                            <div className="card-badge soreness-badge">feel sore</div>
+                            <div className="card-badge soreness-badge">
+                                <img src={FeelStore} alt="" />
+                            </div>
                         </div>
                         
                         <div className="graph-container">
@@ -456,7 +461,7 @@ const Bundles = () => {
                 </p>
 
                 <div className="d-flex justify-content-center align-items-center">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="floating-arrow" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
@@ -496,8 +501,8 @@ const Bundles = () => {
                 </div>
 
                 <div className="d-flex justify-content-center align-items-center">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg className="floating-arrow" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
             </div>

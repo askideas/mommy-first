@@ -3,6 +3,20 @@
     /* background-color: #fff; */
 }
 
+/* Floating Arrow Animation */
+.floating-arrow {
+    animation: floatUpDown 2s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
 /* Heading Section */
 .bundles-heading-section {
     text-align: center;
@@ -502,7 +516,7 @@
 /* Bleeding & Soreness Section */
 .bleeding-soreness-section-container {
     background: #FDF2F6;
-    margin-bottom: 60px;
+    margin-bottom: 152px;
 
     .section-heading {
         font: 600 36px var(--font);
@@ -548,18 +562,24 @@
         }
 
         .card-badge {
-            padding: 6px 12px;
+            padding: 6px 0;
             border-radius: 20px;
             font: 600 12px var(--font);
             color: var(--white);
         }
 
         .card-badge.bleeding-badge {
-            background: linear-gradient(135deg, #E53935 0%, #C62828 100%);
+            img {
+                width: 60px;
+                height: 36px;
+            }
         }
 
         .card-badge.soreness-badge {
-            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            img {
+                width: 82px;
+                height: 24px;
+            }
         }
 
         .graph-container {
