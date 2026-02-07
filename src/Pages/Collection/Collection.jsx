@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import '../Shop/Shop.css'
 import './Collection.css'
 import HeroImageLabel from '../../Components/HeroImageLabel/HeroImageLabel'
 import HeroImage from '../../assets/hero-label.png'
@@ -39,7 +40,7 @@ const Collection = () => {
     // Filter & Sorting State
     const [sortBy, setSortBy] = useState('FEATURED');
     const [showSortDropdown, setShowSortDropdown] = useState(false);
-    const [availabilityFilter, setAvailabilityFilter] = useState('');
+    const [availabilityFilter, setAvailabilityFilter] = useState([]);
 
     // ============ CONSTANTS ============
     const espotsIndex = [3, 5, 14];
@@ -88,7 +89,11 @@ const Collection = () => {
     };
 
     // ============ AVAILABILITY FILTER ============
-    // Removed - using string state instead
+    const toggleAvailability = (id) => {
+        setAvailabilityFilter(prev => 
+            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+        );
+    };
 
     // ============ BUILD QUERY STRING ============
     const buildQueryString = (resetFilters = false, overrideSortBy = null) => {
@@ -105,8 +110,8 @@ const Collection = () => {
         }
         
         // Add availability filter
-        if (availabilityFilter) {
-            params.append('available', availabilityFilter === 'in_stock' ? 'true' : 'false');
+        if (availabilityFilter.length === 1) {
+            params.append('available', availabilityFilter[0] === 'in_stock' ? 'true' : 'false');
         }
         
         // Add sort
@@ -310,7 +315,7 @@ const Collection = () => {
     const handleResetFilter = async () => {
         setMinPrice(PRICE_MIN);
         setMaxPrice(PRICE_MAX);
-        setAvailabilityFilter('');
+        setAvailabilityFilter([]);
         setSortBy('FEATURED');
         setCurrentPage(1);
         setDisplayedProducts([]);
@@ -375,6 +380,13 @@ const Collection = () => {
     useEffect(() => {
         const initializeProducts = async () => {
             setCollectionName(formatCollectionName(collectionHandle));
+            // Reset states when collection changes
+            setDisplayedProducts([]);
+            setCurrentPage(1);
+            setAvailabilityFilter([]);
+            setSortBy('FEATURED');
+            setError(null);
+            
             const token = await fetchAuthToken();
             if (token) {
                 await fetchCollectionProducts(token);
@@ -431,8 +443,11 @@ const Collection = () => {
             <div className="container" style={{marginBottom: '154px'}}>
                 {/* FILTERS SECTION */}
                 <div className="shop-filters-section">
-                    <div className="d-flex align-items-center" style={{gap: '12px', width: '100%'}}>
-                        <h1 className="collection-title" style={{margin: 0, flex: 1}}>{collectionName}</h1>
+                    <div className="quick-filters-section">
+                        <h1 className="collection-title">{collectionName}</h1>
+                    </div>
+                    
+                    <div className="d-flex align-items-center" style={{gap: '12px'}}>
                         <div className="sort-dropdown-container">
                             <button 
                                 className="sort-dropdown-btn" 
@@ -457,7 +472,7 @@ const Collection = () => {
                                 </div>
                             )}
                         </div>
-                        <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#shopFilterModal">
+                        <button className="filter-btn-modal" data-bs-toggle="offcanvas" data-bs-target="#collectionFilterModal">
                             FILTER <Settings2 />
                         </button>
                     </div>
@@ -514,7 +529,7 @@ const Collection = () => {
                 )}
 
                 {/* FILTER MODAL */}
-                <div className="offcanvas offcanvas-end" tabIndex="-1" id="shopFilterModal">
+                <div className="offcanvas offcanvas-end" tabIndex="-1" id="collectionFilterModal">
                     <div style={{flex: '1'}}>
                         <div className="heading"><Settings2 /> Filter by</div>
                         <div className="filters-items-container">
@@ -583,14 +598,14 @@ const Collection = () => {
                                 <h1 className="fil-heading">Availability</h1>
                                 <div className="filter-selection-con">
                                     <button 
-                                        className={`filter-item ${availabilityFilter === 'in_stock' ? 'active' : ''}`}
-                                        onClick={() => setAvailabilityFilter(availabilityFilter === 'in_stock' ? '' : 'in_stock')}
+                                        className={`filter-item ${availabilityFilter.includes('in_stock') ? 'active' : ''}`}
+                                        onClick={() => toggleAvailability('in_stock')}
                                     >
                                         In Stock
                                     </button>
                                     <button 
-                                        className={`filter-item ${availabilityFilter === 'out_of_stock' ? 'active' : ''}`}
-                                        onClick={() => setAvailabilityFilter(availabilityFilter === 'out_of_stock' ? '' : 'out_of_stock')}
+                                        className={`filter-item ${availabilityFilter.includes('out_of_stock') ? 'active' : ''}`}
+                                        onClick={() => toggleAvailability('out_of_stock')}
                                     >
                                         Out of Stock
                                     </button>
