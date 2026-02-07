@@ -3,7 +3,6 @@ import './EventDetails.css'
 import { NavLink, useParams } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import EventsCard from '../../Components/EventsCard/EventsCard'
-import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader'
 import { getEventByHandle, getEvents } from '../../services/blogService'
 
 const EventDetails = () => {
@@ -84,22 +83,45 @@ const EventDetails = () => {
             <div className="container mt-5">
                 <div className="event-details-skeleton">
                     <div className="skeleton-breadcrumbs">
-                        <SkeletonLoader width="60px" height="20px" />
-                        <SkeletonLoader width="60px" height="20px" />
-                        <SkeletonLoader width="80px" height="20px" />
+                        <div className="skeleton-breadcrumb-item"></div>
+                        <div className="skeleton-breadcrumb-item"></div>
+                        <div className="skeleton-breadcrumb-item"></div>
                     </div>
-                    <SkeletonLoader width="60%" height="40px" style={{ marginBottom: '24px' }} />
+                    
+                    <div className="skeleton-title-main"></div>
+                    
                     <div className="event-details-main-container">
-                        <SkeletonLoader height="360px" borderRadius="16px" style={{ marginBottom: '30px' }} />
-                        <SkeletonLoader width="40%" height="30px" style={{ marginBottom: '16px' }} />
-                        <SkeletonLoader height="100px" style={{ marginBottom: '24px' }} />
-                        <SkeletonLoader height="100px" style={{ marginBottom: '24px' }} />
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
-                            <SkeletonLoader height="60px" />
-                            <SkeletonLoader height="60px" />
-                            <SkeletonLoader height="60px" />
+                        <div className="skeleton-image"></div>
+                        
+                        <div className="event-description">
+                            <div className="skeleton-title"></div>
+                            <div className="skeleton-paragraph"></div>
+                            <div className="skeleton-paragraph"></div>
+                            <div className="skeleton-paragraph short"></div>
                         </div>
-                        <SkeletonLoader width="150px" height="48px" />
+                        
+                        <div className="event-schedule-container">
+                            <div className="schedule-item">
+                                <div className="skeleton-label"></div>
+                                <div className="skeleton-value"></div>
+                            </div>
+                            <div className="schedule-item">
+                                <div className="skeleton-label"></div>
+                                <div className="skeleton-value"></div>
+                            </div>
+                            <div className="schedule-item">
+                                <div className="skeleton-label"></div>
+                                <div className="skeleton-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div className="skeleton-button"></div>
+                    </div>
+                    
+                    <div className="related-events-container">
+                        <div className="skeleton-card"></div>
+                        <div className="skeleton-card"></div>
+                        <div className="skeleton-card"></div>
                     </div>
                 </div>
             </div>

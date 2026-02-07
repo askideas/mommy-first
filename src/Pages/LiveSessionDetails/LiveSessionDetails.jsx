@@ -3,7 +3,6 @@ import './LiveSessionDetails.css'
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { ChevronRight, X, Check } from 'lucide-react'
 import EventCard from '../../Components/EventCard/EventCard'
-import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader'
 import { getLiveSessionByHandle, getLiveSessions } from '../../services/blogService'
 import { db } from '../../firebase/config'
 import { doc, getDoc, setDoc, getDocs, collection, query, where } from 'firebase/firestore'
@@ -435,22 +434,45 @@ const LiveSessionDetails = () => {
             <div className="container mt-5">
                 <div className="live-session-details-skeleton">
                     <div className="skeleton-breadcrumbs">
-                        <SkeletonLoader width="60px" height="20px" />
-                        <SkeletonLoader width="80px" height="20px" />
-                        <SkeletonLoader width="80px" height="20px" />
+                        <div className="skeleton-breadcrumb-item"></div>
+                        <div className="skeleton-breadcrumb-item"></div>
+                        <div className="skeleton-breadcrumb-item"></div>
                     </div>
-                    <SkeletonLoader width="60%" height="40px" style={{ marginBottom: '24px' }} />
+                    
+                    <div className="skeleton-title-main"></div>
+                    
                     <div className="live-session-details-main-container">
-                        <SkeletonLoader height="360px" borderRadius="16px" style={{ marginBottom: '30px' }} />
-                        <SkeletonLoader width="40%" height="30px" style={{ marginBottom: '16px' }} />
-                        <SkeletonLoader height="100px" style={{ marginBottom: '24px' }} />
-                        <SkeletonLoader height="100px" style={{ marginBottom: '24px' }} />
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
-                            <SkeletonLoader height="60px" />
-                            <SkeletonLoader height="60px" />
-                            <SkeletonLoader height="60px" />
+                        <div className="skeleton-image"></div>
+                        
+                        <div className="live-session-description">
+                            <div className="skeleton-title"></div>
+                            <div className="skeleton-paragraph"></div>
+                            <div className="skeleton-paragraph"></div>
+                            <div className="skeleton-paragraph short"></div>
                         </div>
-                        <SkeletonLoader width="150px" height="48px" />
+                        
+                        <div className="live-session-schedule-container">
+                            <div className="schedule-item">
+                                <div className="skeleton-label"></div>
+                                <div className="skeleton-value"></div>
+                            </div>
+                            <div className="schedule-item">
+                                <div className="skeleton-label"></div>
+                                <div className="skeleton-value"></div>
+                            </div>
+                            <div className="schedule-item">
+                                <div className="skeleton-label"></div>
+                                <div className="skeleton-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div className="skeleton-button"></div>
+                    </div>
+                    
+                    <div className="related-sessions-container">
+                        <div className="skeleton-card"></div>
+                        <div className="skeleton-card"></div>
+                        <div className="skeleton-card"></div>
                     </div>
                 </div>
             </div>
