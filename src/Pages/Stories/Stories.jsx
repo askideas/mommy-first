@@ -16,9 +16,14 @@ import M12 from '../../assets/Reviews/m12.svg'
 import M13 from '../../assets/Reviews/m13.svg'
 import Shade from '../../assets/Reviews/shade.svg'
 import AllStories from '../../Components/AllStories/AllStories'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const Stories = () => {
     const INTERVAL = 2500;
+
+    // Animation ref
+    const [galleryRef, galleryVisible] = useFadeUpAnimation(0.1, true)
+
     const SlideStack = ({ images = [], start = 0, interval = 2500 }) => {
         const [index, setIndex] = useState(start % images.length)
 
@@ -59,7 +64,7 @@ const Stories = () => {
                     </div>
                 </div>
                 
-                <div className="gallery-container">
+                <div ref={galleryRef} className={`gallery-container ${galleryVisible ? 'animate-in' : ''}`}>
                     {/* keep same gallery-item structure; each item has a shade then a slide stack */}
                     <div className="gallery-item one">
                         <div className="shade"></div>

@@ -1,3 +1,26 @@
+/* StoriesHome Animations */
+@keyframes storiesFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes storiesFadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .stories-home-container {
     margin-bottom: 454px;
     position: relative;
@@ -217,4 +240,91 @@
 /* Ensure shade stays above the slide if needed */
 .gallery-container .gallery-item .shade {
     pointer-events: none;
+}
+
+/* Star section animations */
+.star-section.animate-in {
+    animation: storiesFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.star-section.animate-in img:nth-child(1) {
+    animation: storiesFadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+.star-section.animate-in img:nth-child(2) {
+    animation: storiesFadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.15s;
+}
+
+.star-section.animate-in img:nth-child(3) {
+    animation: storiesFadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.star-section.animate-in img:nth-child(4) {
+    animation: storiesFadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.25s;
+}
+
+.star-section.animate-in img:nth-child(5) {
+    animation: storiesFadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+/* Star heading animation */
+.star-heading.animate-in {
+    animation: storiesFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.35s;
+}
+
+/* Gallery container animations */
+.gallery-container.animate-in {
+    animation: storiesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(1) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.5s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(2) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.55s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(3) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.6s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(4) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.65s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(5) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.7s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(6) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.75s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(7) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.8s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(8) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.85s;
+}
+
+.gallery-container.animate-in .gallery-item:nth-child(9) {
+    animation: storiesFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.9s;
 }

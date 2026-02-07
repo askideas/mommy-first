@@ -16,6 +16,7 @@ import M12 from '../../assets/Reviews/m12.svg'
 import M13 from '../../assets/Reviews/m13.svg'
 import Shade from '../../assets/Reviews/shade.svg'
 import { useNavigate } from 'react-router-dom'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const StoriesHome = (props) => {
     const data = props.data
@@ -23,6 +24,11 @@ const StoriesHome = (props) => {
     const INTERVAL_MEDIUM = 2500;
     const INTERVAL_SLOW = 3000;
     const navigate = useNavigate();
+
+    // Animation refs
+    const [starsRef, starsVisible] = useFadeUpAnimation(0.1, true)
+    const [galleryRef, galleryVisible] = useFadeUpAnimation(0.1, true)
+
     const SlideStack = ({ images = [], start = 0, interval = 2500 }) => {
         const [index, setIndex] = useState(start % images.length)
 
@@ -63,15 +69,15 @@ const StoriesHome = (props) => {
   return (
     <div className="container">
         <div className="stories-home-container">
-            <div className="star-section">
+            <div ref={starsRef} className={`star-section ${starsVisible ? 'animate-in' : ''}`}>
                 <img src={Star} alt="" />
                 <img src={Star} alt="" />
                 <img src={Star} alt="" />
                 <img src={Star} alt="" />
                 <img src={Star} alt="" />
             </div>
-            <h1 className="star-heading" dangerouslySetInnerHTML={{ __html: rHeading }}></h1>
-            <div className="gallery-container">
+            <h1 className={`star-heading ${starsVisible ? 'animate-in' : ''}`} dangerouslySetInnerHTML={{ __html: rHeading }}></h1>
+            <div ref={galleryRef} className={`gallery-container ${galleryVisible ? 'animate-in' : ''}`}>
                 {/* keep same gallery-item structure; each item has a shade then a slide stack */}
                 <div className="gallery-item one">
                     <div className="shade"></div>

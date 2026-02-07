@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import './AllStories.css'
 import Star from '../../assets/Reviews/star.svg'
 import M1 from '../../assets/Reviews/m1.svg'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const AllStories = () => {
     const [displayedItems, setDisplayedItems] = useState(12);
     const ITEMS_PER_PAGE = 12;
+
+    // Animation refs
+    const [filtersRef, filtersVisible] = useFadeUpAnimation(0.1, true)
+    const [reviewsRef, reviewsVisible] = useFadeUpAnimation(0.1, true)
 
     const Stories = [
       {
@@ -276,13 +281,13 @@ const AllStories = () => {
   return (
     <div className="container">
         <div className="all-stories-container">
-            <div className="filters-section my-5">
+            <div ref={filtersRef} className={`filters-section my-5 ${filtersVisible ? 'animate-in' : ''}`}>
                 <button className='filter-button filter-pad active'>ALL </button>
                 <button className='filter-button filter-pad'>Recent</button>
                 <button className='filter-button filter-pad'>2025</button>
             </div>
 
-            <div className="reviews-list">
+            <div ref={reviewsRef} className={`reviews-list ${reviewsVisible ? 'animate-in' : ''}`}>
                 {visibleStories.map((story, index) => {
                     const paragraphs = story.reviewText.split('|');
                     return (
