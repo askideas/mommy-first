@@ -229,16 +229,16 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     .products-list-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         column-gap: 20px;
-        row-gap: 32px;
+        row-gap: 36px;
     }
 
     .shop-filters-section {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 16px;
     }
 
@@ -246,22 +246,315 @@
         width: 100%;
         overflow-x: auto;
         padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .shop-filters-section .quick-filters-section::-webkit-scrollbar {
+        display: none;
+    }
+
+    .shop-filters-section .quick-filters-section .filter-button {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .shop-filters-section > .d-flex {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .espot-container {
+        height: 380px;
+        min-height: 360px;
+    }
+
+    .espot-container .espot-image {
+        min-height: 360px;
+    }
+
+    #shopFilterModal {
+        width: 86%;
+        padding: 24px;
+        max-height: 100vh;
+    }
+
+    #shopFilterModal .heading {
+        font: 500 20px var(--font);
+        padding: 18px 0;
+        column-gap: 12px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec {
+        padding: 18px 0;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .fil-heading {
+        font: 500 13px var(--font);
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .filter-selection-con .filter-item {
+        font: 400 13px var(--font);
+        padding: 6px 10px;
+    }
+
+    #shopFilterModal .price-input-group .price-input {
+        padding: 10px 12px;
+        font: 400 13px var(--font);
+    }
+}
+
+@media (max-width: 768px) {
+    .products-list-container {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 16px;
+        row-gap: 32px;
+        margin-bottom: 48px;
     }
 
     .progress-bar-con {
         width: 250px;
     }
+
+    .sort-dropdown-btn {
+        font: 400 12px var(--font);
+        padding: 6px 10px;
+    }
+
+    .filter-btn-modal {
+        font: 400 12px var(--font);
+        padding: 6px 10px;
+    }
+
+    .espot-container {
+        height: 320px;
+        min-height: 300px;
+    }
+
+    .espot-container .espot-image {
+        min-height: 300px;
+    }
+
+    /* Filter Modal - Bottom Sheet Style for Mobile */
+    #shopFilterModal {
+        width: 86% !important;
+        max-height: 100vh;
+        border-radius: 24px 24px 0 0;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    #shopFilterModal .heading {
+        font: 500 18px var(--font);
+        padding: 14px 0;
+        column-gap: 10px;
+        position: sticky;
+        top: -20px;
+        background: var(--white);
+        z-index: 10;
+        margin: -20px -20px 0 -20px;
+        padding: 16px 20px;
+        border-radius: 24px 24px 0 0;
+    }
+
+    #shopFilterModal .heading svg {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        min-height: 22px;
+    }
+
+    #shopFilterModal .filters-items-container {
+        padding-bottom: 20px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec {
+        padding: 16px 0;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .fil-heading {
+        font: 500 14px var(--font);
+        margin-bottom: 12px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .filter-selection-con {
+        gap: 8px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .filter-selection-con .filter-item {
+        font: 400 13px var(--font);
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+
+    #shopFilterModal .price-range-slider-container {
+        padding: 8px 0;
+    }
+
+    #shopFilterModal .price-range-inputs {
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    #shopFilterModal .price-input-group {
+        flex: 1;
+    }
+
+    #shopFilterModal .price-input-group label {
+        font: 400 11px var(--font);
+    }
+
+    #shopFilterModal .price-input-group .price-input {
+        padding: 10px 12px;
+        font: 400 13px var(--font);
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
+    .shop-filters-section {
+        margin-bottom: 24px;
+    }
+
+    .shop-filters-section .quick-filters-section {
+        column-gap: 12px;
+    }
+
+    .shop-filters-section .quick-filters-section .filter-button {
+        font: 400 12px var(--font);
+        padding: 4px 10px;
+    }
+
+    .shop-filters-section > .d-flex {
+        gap: 8px !important;
+    }
+
+    .sort-dropdown-btn {
+        font: 400 11px var(--font);
+        padding: 5px 8px;
+    }
+
+    .sort-dropdown-menu {
+        min-width: 180px;
+        left: 0;
+    }
+
+    .sort-dropdown-item {
+        font: 400 12px var(--font);
+        padding: 8px 10px;
+    }
+
+    .filter-btn-modal {
+        font: 400 11px var(--font);
+        padding: 5px 8px;
+    }
+
+    .filter-btn-modal svg {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        min-height: 16px;
+    }
+
     .products-list-container {
-        grid-template-columns: 1fr;
-        column-gap: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 12px;
         row-gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .espot-container {
+        height: 280px;
+        min-height: 260px;
+    }
+
+    .espot-container .espot-image {
+        min-height: 260px;
+    }
+
+    .progress-bar-text {
+        font: 400 12px var(--font);
+        text-align: center;
     }
 
     .progress-bar-con {
         width: 200px;
+    }
+
+    /* Filter Modal - Small Mobile */
+    #shopFilterModal {
+        padding: 16px;
+        max-height: 100vh;
+        width: 86% !important;
+    }
+
+    #shopFilterModal .heading {
+        font: 500 16px var(--font);
+        padding: 12px 16px;
+        column-gap: 8px;
+        margin: -16px -16px 0 -16px;
+        border-radius: 24px 24px 0 0;
+    }
+
+    #shopFilterModal .heading svg {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        min-height: 20px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec {
+        padding: 14px 0;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .fil-heading {
+        font: 500 13px var(--font);
+        margin-bottom: 10px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .filter-selection-con {
+        gap: 6px;
+    }
+
+    #shopFilterModal .filters-items-container .filters-item-sec .filter-selection-con .filter-item {
+        font: 400 12px var(--font);
+        padding: 6px 10px;
+        border-radius: 16px;
+    }
+
+    #shopFilterModal .price-range-slider {
+        margin-bottom: 20px;
+    }
+
+    #shopFilterModal .price-range-input::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
+        margin-top: -8px;
+    }
+
+    #shopFilterModal .price-range-input::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+    }
+
+    #shopFilterModal .price-range-inputs {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #shopFilterModal .price-input-group {
+        width: 100%;
+    }
+
+    #shopFilterModal .price-input-group label {
+        font: 400 11px var(--font);
+        margin-bottom: 4px;
+    }
+
+    #shopFilterModal .price-input-group .price-input {
+        padding: 12px 14px;
+        font: 400 14px var(--font);
+        border-radius: 10px;
     }
 }
 
