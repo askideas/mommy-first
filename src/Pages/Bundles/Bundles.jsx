@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Bundles.css'
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Line, ComposedChart, Tooltip } from 'recharts'
 import BG from '../../assets/BundlesHome/bg-image.png'
 import Badge from '../../assets/BundlesHome/badge.png'
 import WebExc from '../../assets/BundlesHome/web-exc.png'
@@ -156,6 +157,55 @@ const Bundles = () => {
     }, []);
 
     console.log(bundlesData);
+
+    // Chart data for bleeding intensity
+    const bleedingData = [
+        { week: 'Week 1', intensity: 95 },
+        { week: 'Week 2', intensity: 65 },
+        { week: 'Week 3', intensity: 35 },
+        { week: 'Week 4', intensity: 15 },
+    ];
+
+    // Chart data for soreness intensity
+    const sorenessData = [
+        { week: 'Week 1', intensity: 90 },
+        { week: 'Week 2', intensity: 55 },
+        { week: 'Week 3', intensity: 30 },
+        { week: 'Week 4', intensity: 10 },
+    ];
+    // Custom Tooltip component for Bleeding chart
+    const BleedingTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="custom-tooltip bleeding-tooltip">
+                    <div className="tooltip-dot"></div>
+                    <span className="tooltip-label">
+                        {payload[0].value >= 80 ? 'Very high' : 
+                         payload[0].value >= 50 ? 'High' : 
+                         payload[0].value >= 30 ? 'Moderate' : 'Low'}
+                    </span>
+                </div>
+            );
+        }
+        return null;
+    };
+
+    // Custom Tooltip component for Soreness chart
+    const SorenessTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="custom-tooltip soreness-tooltip">
+                    <div className="tooltip-dot"></div>
+                    <span className="tooltip-label">
+                        {payload[0].value >= 80 ? 'Very high' : 
+                         payload[0].value >= 50 ? 'High' : 
+                         payload[0].value >= 30 ? 'Moderate' : 'Low'}
+                    </span>
+                </div>
+            );
+        }
+        return null;
+    };
   
 
   return (
@@ -273,6 +323,141 @@ const Bundles = () => {
                 <div className="d-flex justify-content-center align-items-center">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div className="bleeding-soreness-section-container">
+            <div className="container">
+                <h1 className="section-heading">Understand Recovery <br /> Intensity Before Buying</h1>
+                
+                <div className="intensity-cards-container">
+                    {/* Bleeding Card */}
+                    <div className="intensity-card bleeding-card">
+                        <div className="card-header">
+                            <div className="card-title">
+                                <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 0C10 0 0 10 0 16C0 20.4183 4.47715 24 10 24C15.5228 24 20 20.4183 20 16C20 10 10 0 10 0Z" fill="#E53935"/>
+                                </svg>
+                                <span>Bleeding</span>
+                            </div>
+                            <div className="card-badge bleeding-badge">bleeeed</div>
+                        </div>
+                        
+                        <div className="graph-container">
+                            <div className="chart-wrapper">
+                                <ResponsiveContainer width="100%" height={180}>
+                                    <ComposedChart data={bleedingData} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>
+                                        <defs>
+                                            <linearGradient id="bleedingGradient" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="#FF6B6B" stopOpacity={0.6}/>
+                                                <stop offset="100%" stopColor="#FFE5E5" stopOpacity={0.1}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <XAxis 
+                                            dataKey="week" 
+                                            axisLine={false} 
+                                            tickLine={false} 
+                                            tick={{ fontSize: 11, fill: '#999' }}
+                                            dy={10}
+                                        />
+                                        <YAxis hide domain={[0, 100]} />
+                                        <Tooltip 
+                                            content={<BleedingTooltip />}
+                                            cursor={false}
+                                        />
+                                        <Area 
+                                            type="natural" 
+                                            dataKey="intensity" 
+                                            stroke="none"
+                                            fill="url(#bleedingGradient)"
+                                        />
+                                        <Line 
+                                            type="natural" 
+                                            dataKey="intensity" 
+                                            stroke="#E53935" 
+                                            strokeWidth={2.5}
+                                            dot={{ r: 5, fill: '#E53935', stroke: '#fff', strokeWidth: 2 }}
+                                            activeDot={{ r: 8, fill: '#E53935', stroke: '#fff', strokeWidth: 3 }}
+                                        />
+                                    </ComposedChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                        
+                        <div className="disclaimer-box">
+                            <span>Recovery and Intensity may vary by individual.</span>
+                        </div>
+                    </div>
+
+                    {/* Soreness Card */}
+                    <div className="intensity-card soreness-card">
+                        <div className="card-header">
+                            <div className="card-title">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="10" cy="10" r="10" fill="#FF9800"/>
+                                </svg>
+                                <span>Soreness</span>
+                            </div>
+                            <div className="card-badge soreness-badge">feel sore</div>
+                        </div>
+                        
+                        <div className="graph-container">
+                            <div className="chart-wrapper">
+                                <ResponsiveContainer width="100%" height={180}>
+                                    <ComposedChart data={sorenessData} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>
+                                        <defs>
+                                            <linearGradient id="sorenessGradient" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="#FFB74D" stopOpacity={0.6}/>
+                                                <stop offset="100%" stopColor="#FFF3E0" stopOpacity={0.1}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <XAxis 
+                                            dataKey="week" 
+                                            axisLine={false} 
+                                            tickLine={false} 
+                                            tick={{ fontSize: 11, fill: '#999' }}
+                                            dy={10}
+                                        />
+                                        <YAxis hide domain={[0, 100]} />
+                                        <Tooltip 
+                                            content={<SorenessTooltip />}
+                                            cursor={false}
+                                        />
+                                        <Area 
+                                            type="natural" 
+                                            dataKey="intensity" 
+                                            stroke="none"
+                                            fill="url(#sorenessGradient)"
+                                        />
+                                        <Line 
+                                            type="natural" 
+                                            dataKey="intensity" 
+                                            stroke="#FF9800" 
+                                            strokeWidth={2.5}
+                                            dot={{ r: 5, fill: '#FF9800', stroke: '#fff', strokeWidth: 2 }}
+                                            activeDot={{ r: 8, fill: '#FF9800', stroke: '#fff', strokeWidth: 3 }}
+                                        />
+                                    </ComposedChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                        
+                        <div className="disclaimer-box orange">
+                            <span>Recovery and Intensity may vary by individual.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p className="intensity-description">
+                    You'll need comfort + soothing + gentle cleansing—not just "pads."<br />
+                    This system keeps everything consistent and ready.
+                </p>
+
+                <div className="d-flex justify-content-center align-items-center">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 26L24 36L34 26M14 12L24 22L34 12" stroke="#D87AA1" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
             </div>

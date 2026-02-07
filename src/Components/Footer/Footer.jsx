@@ -55,8 +55,8 @@ const Footer = () => {
                     <div className="menu-item-section" style={{animationDelay: '0.3s'}}>
                         <p className='menu-heading'>Community</p>
                         <NavLink to="/care-hub" >Care Hub <span className='flash-animation' style={{background: '#5ED34B', color: '#ffffff'}}>New</span></NavLink>
-                        <NavLink>Care Guides</NavLink>
-                        <NavLink>Live Sessions</NavLink>
+                        <NavLink to="/care-hub#careguides">Care Guides</NavLink>
+                        <NavLink to="/live-sessions">Live Sessions</NavLink>
                         <NavLink to="/blogs" >Blog</NavLink>
                         <NavLink to="/events" >Events</NavLink>
                         <NavLink>Education</NavLink>
@@ -66,8 +66,8 @@ const Footer = () => {
                     <div className="menu-item-section" style={{animationDelay: '0.4s'}}>
                         <p className='menu-heading'>Help</p>
                         <NavLink to="/faqs" >FAQs</NavLink>
-                        <NavLink>Order Tracking</NavLink>
-                        <NavLink to="/returns-refunds">Returns & Reunds</NavLink>
+                        <NavLink to="/care-hub#orders">Order Tracking</NavLink>
+                        <NavLink to="/returns-refunds">Returns & Refunds</NavLink>
                         <NavLink to="/contact">Contact Us</NavLink>
                     </div>
 
@@ -75,7 +75,7 @@ const Footer = () => {
                         <p className='menu-heading'>Work With Us</p>
                         <NavLink>Wholesale</NavLink>
                         <NavLink>Retail Partners</NavLink>
-                        <NavLink>Affiliates</NavLink>
+                        <NavLink to="/af-marketing">Affiliates</NavLink>
                         <NavLink>Healthcare Providers</NavLink>
                         <NavLink to="tel:+97450330029">Call: +974 50330029</NavLink>
                         <button className='button-pink'>Send an Email <Mail className='icon'/></button>
