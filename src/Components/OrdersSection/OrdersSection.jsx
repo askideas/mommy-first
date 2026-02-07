@@ -199,7 +199,20 @@ const OrdersSection = () => {
         )}
 
         {
-          !isLoading && stage == 'list' && (
+          !isLoading && (!orders || orders.length === 0) && stage === 'list' && (
+            <div className="no-orders-section">
+              <div className="no-orders-content">
+                <img src={Box} alt="No Orders" className="no-orders-icon" />
+                <h2 className="no-orders-title">No orders yet</h2>
+                <p className="no-orders-description">You haven't placed any orders yet. Start shopping to see your orders here!</p>
+                <a href="/shop" className="button-pink-center">Start Shopping</a>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          !isLoading && orders && orders.length > 0 && stage == 'list' && (
             <div className="list-of-orders-container">
               {
                 orders && orders.map((order, index)=> {
