@@ -33,27 +33,31 @@ const Bundles = () => {
     // Fetch authentication token
     const fetchAuthToken = async () => {
         try {
+            console.log('Fetching auth token...');
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "clientId": import.meta.env.VITE_API_CLIENT_ID,
-                    "clientSecret": import.meta.env.VITE_API_CLIENT_SECRET
+                    clientId: import.meta.env.VITE_API_CLIENT_ID,
+                    clientSecret: import.meta.env.VITE_API_CLIENT_SECRET
                 })
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Auth error response:', errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const result = await response.json();
-            if (result.success && result.token) {
-                setAuthToken(result.token);
-                return result.token;
+            const data = await response.json();
+            if (data.success && data.token) {
+                setAuthToken(data.token);
+                console.log('Token received successfully');
+                return data.token;
             } else {
-                throw new Error(result.message || 'Failed to get authentication token');
+                throw new Error(data.message || 'Failed to get authentication token');
             }
         } catch (err) {
             console.error('Error fetching auth token:', err);
@@ -66,7 +70,12 @@ const Bundles = () => {
     const fetchBundles = async (token) => {
         try {
             setLoading(true);
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/collections/bundles`, {
+            const baseUrl = import.meta.env.VITE_API_BASE_URL;
+            const primaryUrl = `${baseUrl}/collections/bundles`;
+            const fallbackUrl = `${baseUrl}/collections/bundles?limit=50`;
+
+            console.log('Fetching bundles from:', primaryUrl);
+            let response = await fetch(primaryUrl, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -76,22 +85,61 @@ const Bundles = () => {
                 credentials: 'omit'
             });
 
+            if (!response.ok && response.status === 404) {
+                console.warn('Primary bundles endpoint returned 404, retrying fallback:', fallbackUrl);
+                response = await fetch(fallbackUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    mode: 'cors',
+                    credentials: 'omit'
+                });
+            }
+
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const result = await response.json();
+            const responseData = await response.json();
+            console.log(responseData);
+            
+            const collection = responseData.data?.collection || responseData.collection;
+            const productEdges = Array.isArray(collection?.products)
+                ? collection.products
+                : (collection?.products?.edges || []);
 
-            if (result.success && result.data) {
-                setBundlesData(result.data);
+            if (productEdges.length > 0) {
+                const getIndexValue = (edge) => {
+                    const product = edge?.node || edge || {};
+                    const indexField = product?.metafields?.find(m => m.key === 'index');
+                    const value = indexField?.value;
+                    return typeof value === 'number' ? value : Number(value);
+                };
+
+                const sortedBundles = productEdges.slice().sort((a, b) => {
+                    const aIndex = getIndexValue(a);
+                    const bIndex = getIndexValue(b);
+                    if (Number.isNaN(aIndex) && Number.isNaN(bIndex)) return 0;
+                    if (Number.isNaN(aIndex)) return 1;
+                    if (Number.isNaN(bIndex)) return -1;
+                    return aIndex - bIndex;
+                });
+
+                setBundlesData(sortedBundles);
+                console.log(bundlesData);
+                
                 setError(null);
             } else {
-                throw new Error(result.message || 'Failed to fetch bundles');
+                setBundlesData([]);
             }
-            setLoading(false);
         } catch (err) {
             console.error('Error fetching bundles:', err);
             setError(err.message);
+        } finally {
             setLoading(false);
         }
     };
@@ -107,7 +155,7 @@ const Bundles = () => {
         initFetch();
     }, []);
 
-  console.log(bundlesData);
+    console.log(bundlesData);
   
 
   return (

@@ -8,23 +8,42 @@ import { toast } from 'react-toastify'
 
 const BundleTile = (props) => {
     const data = props.data;
+    console.log(data);
+    
+    const product = data?.node || data || {};
     const { addToCart } = useCart()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
 
     // Extract price from API response
-    const price = data.priceRange?.minVariantPrice?.amount || data.variants?.[0]?.price?.amount || '0';
-    const currencyCode = data.priceRange?.minVariantPrice?.currencyCode || 'USD';
+    const price = product.priceRange?.minVariantPrice?.amount
+        || product.variants?.nodes?.[0]?.price?.amount
+        || product.variants?.[0]?.price?.amount
+        || '0';
+    const currencyCode = product.priceRange?.minVariantPrice?.currencyCode || 'USD';
     
     // Extract image from API response
-    const image = data.images?.[0]?.url || BundleTileImg;
+    const image = product.images?.nodes?.[0]?.url
+        || product.images?.[0]?.url
+        || BundleTileImg;
     
     // Parse tags from metafields
-    const tagsMetafield = data.metafields?.find(m => m.key === 'tags');
-    const contents = tagsMetafield ? tagsMetafield.value.split(',') : [];
-    const bundleDuration = data.metafields?.find(m => m.key === 'duration');
-    const isBestValue = data.metafields?.find(m => m.key === 'best_value');
+    const rawMetafields = product.metafields ?? data?.metafields ?? data?.node?.metafields;
+    const metafields = Array.isArray(rawMetafields?.nodes)
+        ? rawMetafields.nodes
+        : Array.isArray(rawMetafields?.edges)
+            ? rawMetafields.edges.map(edge => edge.node)
+            : Array.isArray(rawMetafields)
+                ? rawMetafields
+                : [];
+    const tagsMetafield = metafields.find(m => m.key === 'tags');
+    const contents = tagsMetafield?.value
+        ? String(tagsMetafield.value).split(',').map(item => item.trim()).filter(Boolean)
+        : [];
+    const bundleDuration = metafields.find(m => m.key === 'duration');
+    const isBestValue = metafields.find(m => m.key === 'best_value');
+    const isBestValueActive = isBestValue?.value === true || isBestValue?.value === 'true';
     
     // Default highlights
     const highlights = [
@@ -44,7 +63,9 @@ const BundleTile = (props) => {
 
         try {
             // Get the first variant ID from the bundle/product
-            const variantId = data.variants?.[0]?.id || `gid://shopify/ProductVariant/${data.id}`
+            const variantId = product.variants?.nodes?.[0]?.id
+                || product.variants?.[0]?.id
+                || `gid://shopify/ProductVariant/${product.id}`
             
             const items = [{
                 variantId: variantId,
@@ -87,9 +108,9 @@ const BundleTile = (props) => {
     }
     
     return (
-        <div className={`bundles-best-value-section-tile ${isBestValue.value ? 'activeTile' : ''}`}>
+        <div className={`bundles-best-value-section-tile ${isBestValueActive ? 'activeTile' : ''}`}>
             {
-                isBestValue.value ? (
+            isBestValueActive ? (
                     <div className="image-highlist">
                         <img src={HightLightImg} alt="" />
                         <span>Best Value</span>
@@ -98,13 +119,13 @@ const BundleTile = (props) => {
             }
             
             <p className="heading-label-sec">
-                <span className="bundle-name">{data.title}</span>
-                <span className="days-label">{bundleDuration.value || ''}</span>
+                <span className="bundle-name">{product.title}</span>
+                <span className="days-label">{bundleDuration?.value ? String(bundleDuration.value) : ''}</span>
             </p>
 
-            <p className="bundle-description">{data.description || data.descriptionHtml?.replace(/<[^>]*>/g, '') || ''}</p>
+            <p className="bundle-description">{product.description || product.descriptionHtml?.replace(/<[^>]*>/g, '') || ''}</p>
 
-            <img src={image} alt={data.title} className="bundle-tile-image" />
+            <img src={image} alt={product.title} className="bundle-tile-image" />
 
             <div className="bundle-items">
                 {
@@ -130,7 +151,7 @@ const BundleTile = (props) => {
 
             <p className="bundle-price">
                 <span className="price">${parseFloat(price).toFixed(2)}</span>
-                <span className="price-label">Retail value ${data.retailValue || parseFloat(price).toFixed(2)} | Save ${data.savings || '0.00'}</span>
+                <span className="price-label">Retail value ${product.retailValue || parseFloat(price).toFixed(2)} | Save ${product.savings || '0.00'}</span>
             </p>
 
             <button 

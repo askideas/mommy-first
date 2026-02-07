@@ -13,5 +13,18 @@ export default defineConfig({
         secure: false,
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunk for React and core dependencies
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          // UI libraries
+          ui: ['react-toastify', 'swiper'],
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
   }
 })
