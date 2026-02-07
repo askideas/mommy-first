@@ -1,3 +1,48 @@
+/* About Page Animations */
+@keyframes aboutFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes aboutFadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes aboutSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes aboutSlideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .about-page-heading-container {
     margin-top: 90px;
     position: relative;
@@ -103,6 +148,37 @@
             margin-right: 3px;
         }
     }
+}
+
+/* Heading section animations */
+.about-page-heading-container.animate-in .heading {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+.about-page-heading-container.animate-in .flower {
+    animation: aboutFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.about-page-heading-container.animate-in .sub-heading .from-left {
+    animation: aboutSlideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.about-page-heading-container.animate-in .sub-heading .from-right {
+    animation: aboutSlideInRight 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+.about-page-heading-container.animate-in .description {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+.about-page-heading-container.animate-in .about-desc {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.5s;
 }
 
 .mf-menber-profile {
@@ -556,6 +632,42 @@
     }
 }
 
+/* Infrastructure section animations */
+.about-infrastructure-section.animate-in .head-ing {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+.about-infrastructure-section.animate-in .sub-head-ing {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.about-infrastructure-section.animate-in .infrastructure-details-section {
+    animation: aboutFadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+.about-infrastructure-section.animate-in .section-deatails .sec-det-item:nth-child(1) {
+    animation: aboutSlideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+.about-infrastructure-section.animate-in .section-deatails .sec-det-item:nth-child(2) {
+    animation: aboutSlideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.5s;
+}
+
+.about-infrastructure-section.animate-in .section-deatails .sec-det-item:nth-child(3) {
+    animation: aboutSlideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.6s;
+}
+
+.about-infrastructure-section.animate-in .image-container {
+    animation: aboutSlideInRight 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
+}
+
 .about-drives-us-section {
     margin-bottom: 152px;
     position: relative;
@@ -637,4 +749,25 @@
 
 
     }
+}
+
+/* Drives Us section animations */
+.about-drives-us-section.animate-in h1 {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+.about-drives-us-section.animate-in h2 {
+    animation: aboutFadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.about-drives-us-section.animate-in p {
+    animation: aboutFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+.about-drives-us-section.animate-in h3 {
+    animation: aboutFadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
 }

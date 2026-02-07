@@ -9,12 +9,18 @@ import Certificate from '../../assets/About/certificate.svg'
 import Shield from '../../assets/About/shield.svg'
 import Heart from '../../assets/About/heart.svg'
 import Clock from '../../assets/About/clock.svg'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const About = () => {
+  // Animation refs
+  const [headingRef, headingVisible] = useFadeUpAnimation(0.1, true)
+  const [infrastructureRef, infrastructureVisible] = useFadeUpAnimation(0.1, true)
+  const [drivesRef, drivesVisible] = useFadeUpAnimation(0.1, true)
+
   return (
     <>
         <div className="container">
-            <div className="about-page-heading-container">
+            <div ref={headingRef} className={`about-page-heading-container ${headingVisible ? 'animate-in' : ''}`}>
                 <p className="heading">Who we are!</p>
                 <img src={Flower} alt="" className='flower' />
                 <p className="sub-heading">
@@ -75,7 +81,7 @@ const About = () => {
             </div>
         </div>
 
-        <div className="about-infrastructure-section">
+        <div ref={infrastructureRef} className={`about-infrastructure-section ${infrastructureVisible ? 'animate-in' : ''}`}>
             <img src={FlowerShade} alt="" className='image-shade' />
             <div className="container" style={{position: 'relative'}}>
                 <img src={Flower} alt="" className='flower-img-1' />
@@ -113,7 +119,7 @@ const About = () => {
             
         </div>
 
-        <div className="about-drives-us-section">
+        <div ref={drivesRef} className={`about-drives-us-section ${drivesVisible ? 'animate-in' : ''}`}>
             <img src={FlowerShade} alt="" className='flower-shade-10' />
             <img src={Flower} alt="" className='flower-10' />
             <img src={Flower} alt="" className='flower-11' />
