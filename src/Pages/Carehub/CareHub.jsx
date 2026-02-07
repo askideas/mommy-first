@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './CareHub.css'
 import MainImage from '../../assets/carehub/human.png'
 import Pinkround from '../../assets/carehub/pink-round.png'
@@ -27,6 +27,7 @@ import { getLiveSessions, getJournals } from '../../services/blogService'
 
 const CareHub = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [visibleBlogs, setVisibleBlogs] = useState(3)
   const [visibleEvents, setVisibleEvents] = useState(3)
   const [liveSessionsData, setLiveSessionsData] = useState([])
@@ -38,6 +39,18 @@ const CareHub = () => {
     fetchLiveSessions()
     fetchJournals()
   }, [])
+
+  // Scroll to care guides section if hash is #careguides
+  useEffect(() => {
+    if (location.hash === '#careguides') {
+      setTimeout(() => {
+        const element = document.querySelector('.care-hub-section-container')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
+  }, [location.hash])
 
   const fetchLiveSessions = async () => {
     setIsLoadingSessions(true)

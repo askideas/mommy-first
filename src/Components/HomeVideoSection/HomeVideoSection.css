@@ -13,23 +13,84 @@
     box-shadow: 0px 15px 50px 0px #FF509940;
     position: relative;
     z-index: 1;
+    background: #1a1a1a;
+
+    .video-skeleton {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 5;
+
+        .skeleton-shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 100%
+            );
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-play-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 80, 153, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse 1.5s infinite;
+
+            .icon {
+                width: 50px;
+                height: 50px;
+                color: rgba(255, 255, 255, 0.5);
+                fill: rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.7;
+        }
+        50% {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+    }
 
     .video {
         width: 100%;
         height: 100%;
         position: relative;
         overflow: hidden;
+        transition: opacity 0.3s ease;
 
-        iframe {
+        video {
             width: 100%;
             height: 100%;
-            border-radius: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
             object-fit: cover;
         }
 
@@ -89,6 +150,16 @@
         width: 60px;
         height: 60px;
     }
+
+    .video-container .video-skeleton .skeleton-play-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .video-container .video-skeleton .skeleton-play-icon .icon {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -104,5 +175,15 @@
     .video-container .video .play-pause-overlay .icon {
         width: 48px;
         height: 48px;
+    }
+
+    .video-container .video-skeleton .skeleton-play-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .video-container .video-skeleton .skeleton-play-icon .icon {
+        width: 30px;
+        height: 30px;
     }
 }

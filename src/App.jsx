@@ -42,6 +42,7 @@ const AuthCallback = lazy(() => import('./Pages/AuthCallback/AuthCallback'))
 const Donation = lazy(() => import('./Pages/Donation/Donation'))
 const ReturnRefund = lazy(() => import('./Pages/ReturnRefund/ReturnRefund'))
 const NotFound = lazy(() => import('./Pages/NotFound/NotFound'))
+const LiveSessions = lazy(() => import('./Pages/LiveSessions/LiveSessions'))
 
 const AppContent = () => {
   // Enable global fade-up animations for all elements with fade-up classes
@@ -85,6 +86,7 @@ const AppContent = () => {
             <Route element={<ComingSoon/>} path='/pregnancy-care' />
             <Route element={<ComingSoon/>} path='/postpartum-care' />
             <Route element={<CareHub/>} path='/care-hub' />
+            <Route element={<LiveSessions/>} path='/live-sessions' />
             <Route element={<Stories/>} path='/stories' />
             <Route element={<Wishlist/>} path='/wishlist' />
             <Route element={<Cart/>} path='/cart' />

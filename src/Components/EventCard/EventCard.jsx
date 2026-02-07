@@ -215,17 +215,22 @@ const EventCard = ({ event }) => {
       const day = String(selectedDate.getDate()).padStart(2, '0');
       const sessionDate = `${year}-${month}-${day}`;
 
+      // Build name safely - ensure it's never undefined
+      const customerName = `${customer.firstName || ''} ${customer.lastName || ''}`.trim();
+      const userName = user.displayName || user.name || '';
+      const finalName = customerName || userName || customer.email || user.email || 'Guest';
+
       // Prepare booking data
       const bookingData = {
         bookedAt: new Date().toISOString(),
-        email: customer.email || user.email,
+        email: customer.email || user.email || '',
         mobile: customer.phone || '',
-        name: `${customer.firstName || ''} ${customer.lastName || ''}`.trim() || user.displayName,
+        name: finalName,
         sessionDate: sessionDate,
-        sessionId: sessionId,
-        sessionName: sessionData?.sessionName || event.title,
+        sessionId: sessionId || '',
+        sessionName: sessionData?.sessionName || event?.title || 'Live Session',
         status: 'confirmed',
-        timeSlot: selectedTimeSlot.time
+        timeSlot: selectedTimeSlot.time || ''
       };
 
       console.log('Booking data:', bookingData);

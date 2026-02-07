@@ -5,52 +5,47 @@ import { Play, Pause } from 'lucide-react'
 
 const HomeVideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const playerRef = useRef(null);
-  const iframeRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeVideo, setActiveVideo] = useState(0);
+  const videoRef = useRef(null);
   const containerRef = useRef(null);
   
   // Animation refs
   const [contentRef, contentVisible] = useFadeUpAnimation(0.2)
 
-  // Initialize YouTube Player API
-  useEffect(() => {
-    // Load YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    // Create player when API is ready
-    window.onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player('youtube-player', {
-        events: {
-          onReady: (event) => {
-            event.target.mute();
-          },
-          onStateChange: (event) => {
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              setIsPlaying(true);
-            } else if (event.data === window.YT.PlayerState.PAUSED) {
-              setIsPlaying(false);
-            }
-          }
-        }
-      });
-    };
-  }, []);
+  // Video data
+  const videos = [
+    {
+      id: 0,
+      title: 'Postpartum Recovery Essential Kit',
+      url: 'https://cdn.shopify.com/videos/c/o/v/d29964256f064b178180a224a20d8342.mp4'
+    },
+    {
+      id: 1,
+      title: 'C-Section Recovery Kit',
+      url: 'https://cdn.shopify.com/videos/c/o/v/ad9ffc4140ff4f598d111c3f67382e21.mp4'
+    },
+    {
+      id: 2,
+      title: 'Mega Recovery Kit',
+      url: 'https://cdn.shopify.com/videos/c/o/v/0b635ad1bf6040e892023d27fa903e9e.mp4'
+    }
+  ];
 
   // Intersection Observer for autoplay/pause based on viewport
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (playerRef.current) {
+          if (videoRef.current) {
             if (entry.isIntersecting) {
               // Video is in viewport - autoplay
-              playerRef.current.playVideo();
+              videoRef.current.play().catch(err => console.log('Autoplay prevented:', err));
+              setIsPlaying(true);
             } else {
               // Video is out of viewport - pause
-              playerRef.current.pauseVideo();
+              videoRef.current.pause();
+              setIsPlaying(false);
             }
           }
         });
@@ -69,14 +64,40 @@ const HomeVideoSection = () => {
         observer.unobserve(containerRef.current);
       }
     };
-  }, []);
+  }, [activeVideo]);
+
+  // Handle video loading
+  const handleVideoLoaded = () => {
+    setIsLoading(false);
+    // Autoplay after loading
+    if (videoRef.current) {
+      videoRef.current.play().catch(err => console.log('Autoplay prevented:', err));
+      setIsPlaying(true);
+    }
+  };
+
+  // Handle video change
+  const handleVideoChange = (index) => {
+    if (index === activeVideo) return;
+    
+    setIsLoading(true);
+    setIsPlaying(false);
+    setActiveVideo(index);
+    
+    // Scroll to video section
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   const togglePlayPause = () => {
-    if (playerRef.current) {
+    if (videoRef.current) {
       if (isPlaying) {
-        playerRef.current.pauseVideo();
+        videoRef.current.pause();
+        setIsPlaying(false);
       } else {
-        playerRef.current.playVideo();
+        videoRef.current.play().catch(err => console.log('Play prevented:', err));
+        setIsPlaying(true);
       }
     }
   };
@@ -88,23 +109,39 @@ const HomeVideoSection = () => {
         </div>
         <div ref={contentRef} className={getFadeUpClass('fade-up-animation', contentVisible)} style={{animationDelay: '0.1s'}}>
             <div className="filters-section my-4">
-                <button className='filter-button active'>Postpartum Recovery Essential Kit </button>
-                <button className='filter-button'>C-Section Recovery Kit </button>
-                <button className='filter-button'>Mega Recovery Kit </button>
+                {videos.map((video, index) => (
+                  <button 
+                    key={video.id}
+                    className={`filter-button ${activeVideo === index ? 'active' : ''}`}
+                    onClick={() => handleVideoChange(index)}
+                  >
+                    {video.title}
+                  </button>
+                ))}
             </div>
         </div>
         <div ref={contentRef} className={getFadeUpClass('fade-up-animation', contentVisible)} style={{animationDelay: '0.2s'}}>
             <div className="video-container" ref={containerRef}>
-                <div className="video">
-                  <iframe
-                    id="youtube-player"
-                    ref={iframeRef}
-                    src="https://www.youtube.com/embed/rvShmUW1SBs?autoplay=0&mute=1&controls=0&loop=1&playlist=rvShmUW1SBs&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                {isLoading && (
+                  <div className="video-skeleton">
+                    <div className="skeleton-shimmer"></div>
+                    <div className="skeleton-play-icon">
+                      <Play className='icon' />
+                    </div>
+                  </div>
+                )}
+                <div className="video" style={{ opacity: isLoading ? 0 : 1 }}>
+                  <video
+                    ref={videoRef}
+                    key={videos[activeVideo].url}
+                    src={videos[activeVideo].url}
+                    muted
+                    loop
+                    playsInline
+                    onLoadedData={handleVideoLoaded}
+                    onWaiting={() => setIsLoading(true)}
+                    onPlaying={() => setIsLoading(false)}
+                  />
                   <div className="play-pause-overlay" onClick={togglePlayPause}>
                     {isPlaying ? (
                       <Pause className='icon' />

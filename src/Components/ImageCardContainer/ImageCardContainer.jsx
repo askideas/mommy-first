@@ -20,7 +20,8 @@ const ImageCardContainer = (props) => {
             'title': data && data.category1 ? data.category1.heading :'Pregnancy',
             'subtitle': data && data.category1 ? data.category1.subheading : 'Stay prepared + bump chic',
             'buttonlabel': data && data.category1 ? data.category1.buttonLabel : 'Shop',
-            'class': 'one'
+            'class': 'one',
+            'link': 'collection/pregnancy-care'
         },
         {
             'id': 2,
@@ -29,7 +30,8 @@ const ImageCardContainer = (props) => {
             'title': data && data.category2 ? data.category2.heading : 'Postpartum',
             'subtitle': data && data.category2 ? data.category2.subheading : 'Bounce back with ease',
             'buttonlabel': data && data.category2 ? data.category2.buttonLabel :'Shop',
-            'class': 'two'
+            'class': 'two',
+            'link': 'collection/postpartum-care'
         },
         {
             'id': 3,
@@ -38,7 +40,8 @@ const ImageCardContainer = (props) => {
             'title': data && data.category3 ? data.category3.heading : 'New & Noteworthy',
             'subtitle': data && data.category3 ? data.category3.subheading : 'Fresh finds, just for moms',
             'buttonlabel': data && data.category3 ? data.category3.buttonLabel : 'Shop',
-            'class': 'three'
+            'class': 'three',
+            'link': 'collection/wellness-comfort'
         }
     ]
     console.log(props.data);
