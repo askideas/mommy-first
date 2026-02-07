@@ -17,6 +17,130 @@
     }
 }
 
+/* Page Section Animations */
+@keyframes bundlesFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bundlesFadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Initial hidden state */
+.bundles-hero-container,
+.bundles-stats-container,
+.bundles-description-text,
+.why-bundles-section-con,
+.bleeding-soreness-section-container,
+.bundles-list-container-section,
+.whats-inside-section-container {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* Animated state */
+.bundles-hero-container.animate-in {
+    animation: bundlesFadeInScale 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bundles-stats-container.animate-in {
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.bundles-stats-container.animate-in .bundle-stat-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: bundlesFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bundles-stats-container.animate-in .bundle-stat-item:nth-child(1) { animation-delay: 0.1s; }
+.bundles-stats-container.animate-in .bundle-stat-item:nth-child(2) { animation-delay: 0.2s; }
+.bundles-stats-container.animate-in .bundle-stat-item:nth-child(3) { animation-delay: 0.3s; }
+.bundles-stats-container.animate-in .bundle-stat-item:nth-child(4) { animation-delay: 0.4s; }
+
+.bundles-description-text.animate-in {
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.why-bundles-section-con.animate-in {
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.why-bundles-section-con.animate-in .card-item {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.why-bundles-section-con.animate-in .card-item:nth-child(1) { animation-delay: 0.2s; }
+.why-bundles-section-con.animate-in .card-item:nth-child(2) { animation-delay: 0.35s; }
+.why-bundles-section-con.animate-in .card-item:nth-child(3) { animation-delay: 0.5s; }
+
+.bleeding-soreness-section-container.animate-in {
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bleeding-soreness-section-container.animate-in .intensity-card {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: bundlesFadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bleeding-soreness-section-container.animate-in .intensity-card:nth-child(1) { animation-delay: 0.2s; }
+.bleeding-soreness-section-container.animate-in .intensity-card:nth-child(2) { animation-delay: 0.4s; }
+
+.bundles-list-container-section.animate-in {
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bundles-list-container-section.animate-in .list-of-bundles > * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bundles-list-container-section.animate-in .list-of-bundles > *:nth-child(1) { animation-delay: 0.1s; }
+.bundles-list-container-section.animate-in .list-of-bundles > *:nth-child(2) { animation-delay: 0.25s; }
+.bundles-list-container-section.animate-in .list-of-bundles > *:nth-child(3) { animation-delay: 0.4s; }
+
+.bundles-list-container-section.animate-in .need-help-section {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.5s;
+}
+
+.whats-inside-section-container.animate-in {
+    animation: bundlesFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.whats-inside-section-container.animate-in .whats-inside-item {
+    opacity: 0;
+    transform: translateY(25px);
+    animation: bundlesFadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.whats-inside-section-container.animate-in .whats-inside-item:nth-child(1) { animation-delay: 0.1s; }
+.whats-inside-section-container.animate-in .whats-inside-item:nth-child(2) { animation-delay: 0.2s; }
+.whats-inside-section-container.animate-in .whats-inside-item:nth-child(3) { animation-delay: 0.3s; }
+.whats-inside-section-container.animate-in .whats-inside-item:nth-child(4) { animation-delay: 0.4s; }
+.whats-inside-section-container.animate-in .whats-inside-item:nth-child(5) { animation-delay: 0.5s; }
+
 /* Heading Section */
 .bundles-heading-section {
     text-align: center;

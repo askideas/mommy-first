@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 /**
  * Custom hook to trigger fade-up animation when element enters viewport
  * @param {number} threshold - Percentage of element visibility to trigger (0-1)
+ * @param {boolean} repeatAnimation - Whether to repeat animation on re-entry (default: false)
  * @returns {[ref, isVisible]} - Reference to attach to element and visibility state
  */
-export const useFadeUpAnimation = (threshold = 0.2) => {
+export const useFadeUpAnimation = (threshold = 0.2, repeatAnimation = false) => {
     const [isVisible, setIsVisible] = useState(false)
     const elementRef = useRef(null)
 
@@ -14,6 +15,9 @@ export const useFadeUpAnimation = (threshold = 0.2) => {
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true)
+                } else if (repeatAnimation) {
+                    // Reset visibility when element leaves viewport (for repeat animations)
+                    setIsVisible(false)
                 }
             },
             {
@@ -33,7 +37,7 @@ export const useFadeUpAnimation = (threshold = 0.2) => {
                 observer.unobserve(currentElement)
             }
         }
-    }, [threshold])
+    }, [threshold, repeatAnimation])
 
     return [elementRef, isVisible]
 }

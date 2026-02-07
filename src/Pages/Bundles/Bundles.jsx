@@ -25,12 +25,22 @@ import Coolingpad from '../../assets/BundlesHome/coolingpad.svg'
 import Soft from '../../assets/BundlesHome/soft.svg'
 import PeriBottle from '../../assets/BundlesHome/peribottle.svg'
 import Underwear from '../../assets/BundlesHome/underwear.svg'
+import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const Bundles = () => {
     const [bundlesData, setBundlesData] = useState([])
     const [authToken, setAuthToken] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+
+    // Animation refs
+    const [heroRef, heroVisible] = useFadeUpAnimation(0.1, true)
+    const [statsRef, statsVisible] = useFadeUpAnimation(0.1, true)
+    const [descRef, descVisible] = useFadeUpAnimation(0.1, true)
+    const [whyBundlesRef, whyBundlesVisible] = useFadeUpAnimation(0.1, true)
+    const [intensityRef, intensityVisible] = useFadeUpAnimation(0.1, true)
+    const [bundlesListRef, bundlesListVisible] = useFadeUpAnimation(0.1, true)
+    const [whatsInsideRef, whatsInsideVisible] = useFadeUpAnimation(0.1, true)
 
     // Fetch authentication token
     const fetchAuthToken = async () => {
@@ -223,7 +233,7 @@ const Bundles = () => {
                 </div> */}
 
                 {/* Hero Banner Section */}
-                <div className="bundles-hero-container">
+                <div ref={heroRef} className={`bundles-hero-container ${heroVisible ? 'animate-in' : ''}`}>
                 <img src={BG} alt="" className='bg-image' />
                 <img src={WebExc} alt="Website Exclusive" className='website-exclusive' />
                 <div className="badge-con">
@@ -243,7 +253,7 @@ const Bundles = () => {
                 </div>
 
                 {/* Stats/Features Section */}
-                <div className="bundles-stats-container">
+                <div ref={statsRef} className={`bundles-stats-container ${statsVisible ? 'animate-in' : ''}`}>
                     <div className="bundle-stat-item">
                         <img src={Calendar} alt="Calendar" />
                         <div className="stat-text-container">
@@ -278,7 +288,7 @@ const Bundles = () => {
                 </div>
 
                 {/* Description Text */}
-                <p className="bundles-description-text">
+                <p ref={descRef} className={`bundles-description-text ${descVisible ? 'animate-in' : ''}`}>
                 Postpartum bleeding can last up to 6 weeks. Soreness often lingers 2–3 weeks.<br />
                 Our systems remove the guesswork with 2–21 days of care in one box.
                 </p>
@@ -299,7 +309,7 @@ const Bundles = () => {
         </div>
 
         <div className="container">
-            <div className="why-bundles-section-con">
+            <div ref={whyBundlesRef} className={`why-bundles-section-con ${whyBundlesVisible ? 'animate-in' : ''}`}>
                 <h1 className="heading">Why bundles (vs. piecing it together)?</h1>
                 <div className="why-bundles-cards-section">
                     <div className="card-item">
@@ -329,7 +339,7 @@ const Bundles = () => {
             </div>
         </div>
 
-        <div className="bleeding-soreness-section-container">
+        <div ref={intensityRef} className={`bleeding-soreness-section-container ${intensityVisible ? 'animate-in' : ''}`}>
             <div className="container">
                 <h1 className="section-heading">Understand Recovery <br /> Intensity Before Buying</h1>
                 
@@ -468,7 +478,7 @@ const Bundles = () => {
             </div>
         </div>
 
-        <div className="bundles-list-container-section">
+        <div ref={bundlesListRef} className={`bundles-list-container-section ${bundlesListVisible ? 'animate-in' : ''}`}>
             <div className="container">
                 <h1 className="head-ing-sec">Now, select a bundle that fits <br /> your recovery timeline.</h1>
                 
@@ -509,7 +519,7 @@ const Bundles = () => {
         </div>
 
         <div className="container">
-            <div className="whats-inside-section-container">
+            <div ref={whatsInsideRef} className={`whats-inside-section-container ${whatsInsideVisible ? 'animate-in' : ''}`}>
                 <h1 className="heading-sec">What’s inside every Mommy <br /> First recovery bundle</h1>
                 <p className="desc-tion">The essentials most moms reach for repeatedly especially during the first days at home.</p>
                 <div className="whats-inside-list">
