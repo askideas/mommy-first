@@ -200,3 +200,31 @@ export const getEventByHandle = async (handle) => {
     return { success: false, message: 'Failed to fetch event. Please try again.' }
   }
 }
+
+/**
+ * Get live session article by handle
+ * @param {string} handle - The live session article handle
+ * @returns {Promise} - Response with live session article data
+ */
+export const getLiveSessionByHandle = async (handle) => {
+  try {
+    const token = await fetchAuthToken()
+    
+    if (!token) {
+      return { success: false, message: 'Failed to authenticate. Please try again.' }
+    }
+
+    const response = await fetch(`${API_BASE_URL}/blogs/live-sesions/articles/${handle}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return response.json()
+  } catch (error) {
+    console.error('Get Live Session Article Error:', error)
+    return { success: false, message: 'Failed to fetch live session. Please try again.' }
+  }
+}

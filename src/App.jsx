@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 import PageLoader from './Components/PageLoader/PageLoader'
+import LiveSessionDetails from './Pages/LiveSessionDetails/LiveSessionDetails'
 
 // Lazy load page components
 const Home = lazy(() => import('./Pages/Home/Home'))
@@ -87,6 +88,7 @@ const AppContent = () => {
             <Route element={<ComingSoon/>} path='/postpartum-care' />
             <Route element={<CareHub/>} path='/care-hub' />
             <Route element={<LiveSessions/>} path='/live-sessions' />
+            <Route element={<LiveSessionDetails />} path='/live-sessions/:handle' />
             <Route element={<Stories/>} path='/stories' />
             <Route element={<Wishlist/>} path='/wishlist' />
             <Route element={<Cart/>} path='/cart' />

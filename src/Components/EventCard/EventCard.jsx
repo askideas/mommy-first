@@ -483,7 +483,7 @@ const EventCard = ({ event }) => {
 
   return (
     <>
-      <div className="event-card-wrapper" onClick={()=> navigate(`/events/${event.handle || event.id}`)}>
+      <div className="event-card-wrapper" onClick={()=> navigate(`/live-sessions/${event.handle || event.id}`)}>
         <div className="event-card-image-container">
           <img 
             src={event.image?.url || event.image} 

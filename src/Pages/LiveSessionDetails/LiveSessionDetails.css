@@ -1,0 +1,470 @@
+/* LiveSessionDetails.css - Matching EventDetails.css exactly */
+
+.breadcrumbs-section {
+    width: fit-content;
+    height: fit-content;
+    background: var(--white);
+    box-shadow: 0px 16px 16px 0px #FF408E1A;
+    border-radius: 6px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+    margin-bottom: 60px;
+
+    svg {
+        width: 12px;
+        height: 12px;
+        stroke: var(--primary-dark);
+    }
+
+    a {
+        font: 400 12px var(--font);
+        color: var(--primary-dark);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    span {
+        font: 400 12px var(--font);
+        color: var(--primary-pink);
+        text-decoration: none;
+    }
+}
+
+.live-session-details-heading {
+    font: 600 36px var(--font);
+    color: var(--primary-dark);
+    margin-bottom: 24px;
+}
+
+.live-session-details-main-container {
+    width: 100%;
+    height: fit-content;
+    padding: 42px;
+    box-shadow: 0px 15px 50px 0px #FF509940;
+    border-radius: 16px;
+    background: var(--white);
+    margin-bottom: 60px;
+
+    .live-session-image {
+        width: 100%;
+        height: 360px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+        object-fit: cover;
+    }
+
+    .live-session-description {
+        border-bottom: 1px solid var(--pink-border);
+        padding-bottom: 24px;
+
+        h1 {
+            font: 600 24px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+
+        p {
+            font: 300 16px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 24px;
+        }
+    }
+
+    .live-session-schedule-container {
+        border-bottom: 1px solid var(--pink-border);
+        padding: 24px 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+
+        .schedule-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            h1 {
+                font: 600 18px var(--font);
+                color: var(--primary-dark);
+                margin: 0;
+            }
+
+            p {
+                font: 400 16px var(--font);
+                color: var(--primary-light);
+                margin: 0;
+            }
+        }
+    }
+
+    .book-slot-btn {
+        box-shadow: none;
+        height: 40px;
+    }
+}
+
+.related-sessions-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 90px;
+}
+
+/* Skeleton styles */
+.live-session-details-skeleton {
+    width: 100%;
+}
+
+.skeleton-breadcrumbs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 60px;
+}
+
+/* Not Found styles */
+.live-session-details-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 20px;
+}
+
+.live-session-details-not-found h2 {
+    font: 600 24px var(--font);
+    color: var(--primary-dark);
+}
+
+.live-session-details-not-found a {
+    font: 500 14px var(--font);
+    color: var(--primary-pink);
+    text-decoration: none;
+}
+
+.live-session-details-not-found a:hover {
+    text-decoration: underline;
+}
+
+/* Booking Modal */
+.sessionBookingModal {
+    width: 600px !important;
+}
+
+.mf-off-canvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.mf-off-canvas-header .head-ing {
+    font: 600 14px var(--font);
+    color: var(--primary-pink);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.mf-off-canvas-header .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-dark);
+}
+
+.session-modal-body {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.session-modal-body .selected-date {
+    font: 600 20px var(--font);
+    color: var(--primary-dark);
+    margin: 0 0 8px 0;
+}
+
+.session-modal-body .desc {
+    font: 400 14px var(--font);
+    color: var(--primary-light);
+    margin: 0 0 16px 0;
+}
+
+/* Calendar Styles */
+.session-booking-calender {
+    margin-bottom: 24px;
+}
+
+.session-calendar {
+    width: 100%;
+    border: none;
+    font-family: var(--font);
+}
+
+.session-calendar .react-datepicker__header {
+    background: white;
+    border-bottom: none;
+    padding-bottom: 10px;
+}
+
+.session-calendar .react-datepicker__current-month {
+    font: 600 18px var(--font);
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+.session-calendar .react-datepicker__day-names {
+    display: flex;
+    justify-content: space-around;
+}
+
+.session-calendar .react-datepicker__day-name {
+    font: 600 12px var(--font);
+    color: var(--primary-light);
+    width: 40px;
+    text-transform: uppercase;
+}
+
+.session-calendar .react-datepicker__month {
+    margin: 0;
+}
+
+.session-calendar .react-datepicker__week {
+    display: flex;
+    justify-content: space-around;
+}
+
+.session-calendar .react-datepicker__day {
+    font: 500 14px var(--font);
+    color: var(--primary-dark);
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    margin: 2px 0;
+}
+
+.session-calendar .react-datepicker__day:hover {
+    background: var(--pink-light-bg);
+}
+
+.session-calendar .react-datepicker__day--selected {
+    background: var(--primary-pink) !important;
+    color: white !important;
+}
+
+.session-calendar .react-datepicker__day--disabled {
+    color: #ccc !important;
+}
+
+.session-calendar .react-datepicker__day.available-date {
+    background: var(--pink-light-bg);
+    color: var(--primary-pink);
+    font-weight: 600;
+}
+
+.session-calendar .react-datepicker__day.available-date:hover {
+    background: var(--primary-pink);
+    color: white;
+}
+
+.session-calendar .react-datepicker__navigation {
+    top: 10px;
+}
+
+.session-calendar .react-datepicker__navigation-icon::before {
+    border-color: var(--primary-pink);
+}
+
+/* Time Slots */
+.time-slots-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.time-slot {
+    padding: 16px;
+    background: var(--pink-light-bg);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font: 600 14px var(--font);
+    color: var(--primary-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.time-slot:hover:not(.full) {
+    border-color: var(--primary-pink);
+}
+
+.time-slot.selected {
+    background: var(--primary-pink);
+    color: white;
+    border-color: var(--primary-pink);
+}
+
+.time-slot.full {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.time-slot .slot-capacity {
+    display: block;
+    font: 400 12px var(--font);
+    margin-top: 4px;
+}
+
+.time-slot-skeleton {
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 12px;
+}
+
+.skeleton-line {
+    height: 14px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeleton-line-small {
+    height: 10px;
+    width: 60%;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+.no-slots-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    font: 400 14px var(--font);
+    color: var(--primary-light);
+    padding: 20px;
+}
+
+/* Modal Footer */
+.session-modal-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #eee;
+}
+
+.session-modal-footer button {
+    width: 100%;
+}
+
+.session-modal-footer button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Booking Success Screen */
+.booking-success-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 200px);
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-pink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.reservation-id-label {
+    font: 500 14px var(--font);
+    color: var(--primary-light);
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reservation-id {
+    font: 600 28px var(--font);
+    color: var(--primary-pink);
+    margin: 0 0 24px 0;
+}
+
+.success-message {
+    font: 600 24px var(--font);
+    color: var(--primary-dark);
+    margin: 0 0 16px 0;
+}
+
+.success-submessage {
+    font: 400 14px var(--font);
+    color: var(--primary-light);
+    margin: 0 0 24px 0;
+    line-height: 1.6;
+}
+
+.contact-message {
+    font: 400 13px var(--font);
+    color: var(--primary-light);
+    margin: 0 0 32px 0;
+    line-height: 1.5;
+}
+
+.success-buttons {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.success-buttons button {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .related-sessions-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .live-session-details-main-container {
+        padding: 24px;
+    }
+
+    .live-session-details-main-container .live-session-schedule-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .related-sessions-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sessionBookingModal {
+        width: 100% !important;
+    }
+
+    .time-slots-container {
+        grid-template-columns: 1fr;
+    }
+
+    .success-buttons {
+        flex-direction: column;
+    }
+}
