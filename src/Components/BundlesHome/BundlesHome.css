@@ -3,7 +3,7 @@
     width: 862px;
     height: 338px;
     border-radius: 22px;
-    background: var(--primary-pink);
+    /* background: var(--primary-pink); */
     position: relative;
     box-shadow: 0px 16px 16px 0px #FF408E33;
 

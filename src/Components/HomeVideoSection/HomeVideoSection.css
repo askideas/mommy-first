@@ -1,5 +1,5 @@
 .video-section-heading {
-    font: 800 36px var(--font);
+    font: 600 36px var(--font);
     color: var(--primary-dark);
     text-align: center;
 }
@@ -14,6 +14,7 @@
     position: relative;
     z-index: 1;
     background: #1a1a1a;
+    border: 8px solid var(--primary-light);
 
     .video-skeleton {
         position: absolute;

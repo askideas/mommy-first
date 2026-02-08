@@ -74,7 +74,7 @@ const BundlesHome = (props) => {
             <img src={WebExc} alt="" className='website-exclusive' />
             <div className="badge-con">
               <img src={Badge} alt="" />
-              <span className="badge-text">5 Bundles</span>
+              <span className="badge-text">3 Bundles</span>
             </div>
             <div className="badge-content-section">
               <p>Curated postpartum bundles that match</p>

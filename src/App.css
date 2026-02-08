@@ -81,7 +81,7 @@ body {
     background: var(--white);
     transition: all 0.3s ease;
     cursor: pointer;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     .icon {
         width: 20px;
@@ -120,7 +120,7 @@ body {
     padding: 8px 12px;
     transition: all 0.3s ease;
     cursor: pointer;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     .icon {
         width: 15px;
@@ -159,7 +159,7 @@ body {
     color: var(--primary-pink);
     transition: all 0.3s ease;
     cursor: pointer;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     &:hover {
         background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
@@ -195,7 +195,7 @@ body {
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     .icon {
         width: 20px;
@@ -246,7 +246,7 @@ body {
     outline: none;
     transition: all 0.3s ease;
     cursor: pointer;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     &:hover {
         background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
@@ -330,7 +330,7 @@ body {
     .filter-button {
         width: fit-content;
         height: fit-content;
-        padding: 4px 12px;
+        padding: 8px 12px;
         border-radius: 8px;
         background: none;
         border: none;
@@ -522,7 +522,7 @@ body {
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     &::before {
         content: '';
@@ -570,7 +570,7 @@ body {
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     &::before {
         content: '';
@@ -611,7 +611,7 @@ body {
     outline: none;
     transition: all 0.3s ease;
     cursor: pointer;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 
     &:hover {
         background: linear-gradient(218.44deg, #FD8CBB 4.36%, #DC5F92 86.2%);
