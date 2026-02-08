@@ -81,7 +81,7 @@ const ActivitiesHome = () => {
           <div className="progress-bar-con">
               <span></span>
           </div>
-          <button className='button-label' onClick={()=> navigate('/events')}>View all</button>
+          <button className='button-label' onClick={()=> navigate('/events')}>View all Events</button>
         </div>
       </div>
     </div>

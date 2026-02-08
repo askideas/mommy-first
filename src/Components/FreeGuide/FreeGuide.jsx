@@ -27,7 +27,7 @@ const FreeGuide = (props) => {
                         <img src={Divider} alt="" />
                         <h1 className='second'>{data && data.guideData && data.guideData.headingTwo ? data.guideData.headingTwo : 'New Moms'}</h1>
                         <p dangerouslySetInnerHTML={{ __html:  data && data.guideData && data.guideData.description ? data.guideData.description : 'Get our doctor-approved “6-Week<br/> Recovery Playbook” when you sign up.'}}></p>
-                        <button className='button-white'>{data && data.guideData && data.guideData.buttonLabel ? data.guideData.buttonLabel : 'Get My Free Guide'} <ArrowRight /></button>
+                        <button className='button-white mt-3'>{data && data.guideData && data.guideData.buttonLabel ? data.guideData.buttonLabel : 'Get My Free Guide'} <ArrowRight /></button>
                     </div>
                     <div className="label-con flash-animation">
                         <div className="text"><Clock className='icon' />{data && data.guideData && data.guideData.flashLabelText ? data.guideData.flashLabelText : 'Limited deal'} </div>

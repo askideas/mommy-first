@@ -131,7 +131,7 @@ const BundlesHome = (props) => {
 
           <div ref={buttonRef} className="w-100 d-flex justify-content-center align-items-center" style={{ animationDelay: '0.5s' }}>
             <div className={getFadeUpClass('fade-up-animation', buttonVisible)}>
-              <button className="button-pink-full" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
+              <button className="button-pink-full floating-animation-sec" data-bs-toggle="offcanvas" data-bs-target="#bundlesuggestionsmodal">Shop Postpartum Bundles <ArrowRight style={{width: '20px', height: '20px'}} /></button>
             </div>
           </div>
         </div>

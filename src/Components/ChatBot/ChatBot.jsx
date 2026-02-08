@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './ChatBot.css'
 import Icon from '../../assets/Chatbot/icon.svg'
 import { X } from 'lucide-react'
@@ -7,6 +7,21 @@ import { useNavigate } from 'react-router-dom'
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const flyoutRef = useRef(null);
+
+  // Close flyout when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && flyoutRef.current && !flyoutRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const topics = [
     {
@@ -44,10 +59,11 @@ const ChatBot = () => {
   }
 
   return (
-    <div className="chatbot-main-container">
+    <div className="chatbot-main-container" ref={flyoutRef}>
         {isOpen && (
           <div className="chatbot-flyout">
             <div className="chatbot-header">
+              <div className="blur-ness"></div>
               <div className="header-content">
                 <h1 className="chatbot-title">Hello ✨</h1>
                 <p className="chatbot-subtitle">How can I help you?</p>
@@ -68,8 +84,8 @@ const ChatBot = () => {
               </div>
               
               <div className="chatbot-footer">
-                <button className="btn-help" onClick={()=>navigate('/contact')}>Still need help?</button>
-                <button className="btn-faq" onClick={()=>navigate('/faqs')}>FAQ</button>
+                <button className="btn-help button-pink-center" onClick={()=>navigate('/contact')}>Still need help?</button>
+                <button className="btn-faq button-pink-border" onClick={()=>navigate('/faqs')}>FAQ</button>
               </div>
             </div>
           </div>
