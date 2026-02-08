@@ -231,6 +231,117 @@
     text-align: center;
 }
 
+/* Mobile number input styles */
+.new-user-mobile-input {
+    display: flex;
+    gap: 0;
+    width: 100%;
+}
+
+.new-user-country-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    height: 44px;
+    background: var(--white);
+    border: 1.5px solid var(--pink-border);
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.new-user-country-selector:hover {
+    border-color: var(--primary-pink);
+}
+
+.new-user-country-selector .country-flag {
+    width: 24px;
+    height: 18px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.new-user-country-selector .country-code {
+    font: 500 14px var(--font);
+    color: var(--primary-dark);
+    min-width: 40px;
+}
+
+.new-user-country-selector svg {
+    color: var(--gray);
+}
+
+.new-user-country-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 260px;
+    max-height: 220px;
+    overflow-y: auto;
+    background: var(--white);
+    border: 1.5px solid var(--pink-border);
+    border-radius: 8px;
+    margin-top: 4px;
+    padding: 4px 0;
+    z-index: 100;
+    box-shadow: 0px 8px 24px rgba(55, 32, 53, 0.15);
+}
+
+.new-user-country-dropdown .country-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.new-user-country-dropdown .country-option:hover {
+    background: var(--pink-shade);
+}
+
+.new-user-country-dropdown .country-flag {
+    width: 24px;
+    height: 18px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.new-user-country-dropdown .country-name {
+    flex: 1;
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+}
+
+.new-user-country-dropdown .country-code {
+    font: 500 14px var(--font);
+    color: var(--gray-dark);
+}
+
+.new-user-mobile-input input {
+    flex: 1;
+    height: 44px;
+    border: 1.5px solid var(--pink-border);
+    border-radius: 0 8px 8px 0;
+    padding: 0 14px;
+    font: 400 14px var(--font);
+    color: var(--primary-dark);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.new-user-mobile-input input:focus {
+    border-color: var(--primary-pink);
+}
+
+.new-user-mobile-input input::placeholder {
+    color: var(--gray);
+}
+
 /* Submit button */
 .new-user-submit-btn {
     width: 100%;
@@ -307,6 +418,30 @@
         font: 400 13px var(--font);
     }
 
+    .new-user-country-selector {
+        height: 40px;
+        padding: 0 10px;
+    }
+
+    .new-user-country-selector .country-code {
+        font: 500 13px var(--font);
+    }
+
+    .new-user-mobile-input input {
+        height: 40px;
+        font: 400 13px var(--font);
+    }
+
+    .new-user-country-dropdown {
+        width: 240px;
+        max-height: 200px;
+    }
+
+    .new-user-country-dropdown .country-name,
+    .new-user-country-dropdown .country-code {
+        font: 400 13px var(--font);
+    }
+
     .new-user-submit-btn {
         height: 44px;
         font: 600 13px var(--font);
@@ -375,6 +510,53 @@
         border-radius: 6px;
     }
 
+    .new-user-country-selector {
+        height: 38px;
+        padding: 0 8px;
+        border-radius: 6px 0 0 6px;
+    }
+
+    .new-user-country-selector .country-flag {
+        width: 20px;
+        height: 15px;
+    }
+
+    .new-user-country-selector .country-code {
+        font: 500 12px var(--font);
+        min-width: 36px;
+    }
+
+    .new-user-country-selector svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .new-user-mobile-input input {
+        height: 38px;
+        font: 400 12px var(--font);
+        border-radius: 0 6px 6px 0;
+    }
+
+    .new-user-country-dropdown {
+        width: 220px;
+        max-height: 180px;
+    }
+
+    .new-user-country-dropdown .country-option {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .new-user-country-dropdown .country-flag {
+        width: 20px;
+        height: 15px;
+    }
+
+    .new-user-country-dropdown .country-name,
+    .new-user-country-dropdown .country-code {
+        font: 400 12px var(--font);
+    }
+
     .new-user-form-row {
         flex-direction: column;
         gap: 14px;
@@ -438,6 +620,52 @@
     .new-user-dropdown-toggle {
         height: 36px;
         padding: 0 10px;
+        font: 400 11px var(--font);
+    }
+
+    .new-user-country-selector {
+        height: 36px;
+        padding: 0 6px;
+        gap: 4px;
+    }
+
+    .new-user-country-selector .country-flag {
+        width: 18px;
+        height: 14px;
+    }
+
+    .new-user-country-selector .country-code {
+        font: 500 11px var(--font);
+        min-width: 32px;
+    }
+
+    .new-user-country-selector svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .new-user-mobile-input input {
+        height: 36px;
+        font: 400 11px var(--font);
+    }
+
+    .new-user-country-dropdown {
+        width: 200px;
+        max-height: 160px;
+    }
+
+    .new-user-country-dropdown .country-option {
+        padding: 6px 8px;
+        gap: 6px;
+    }
+
+    .new-user-country-dropdown .country-flag {
+        width: 18px;
+        height: 14px;
+    }
+
+    .new-user-country-dropdown .country-name,
+    .new-user-country-dropdown .country-code {
         font: 400 11px var(--font);
     }
 

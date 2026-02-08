@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 import PageLoader from './Components/PageLoader/PageLoader'
 import LiveSessionDetails from './Pages/LiveSessionDetails/LiveSessionDetails'
+import GlobalNewUserModal from './Components/GlobalNewUserModal/GlobalNewUserModal'
 
 // Lazy load page components
 const Home = lazy(() => import('./Pages/Home/Home'))
@@ -71,6 +72,7 @@ const AppContent = () => {
         draggable={false}
         pauseOnHover={false}
       />
+      <GlobalNewUserModal />
       <div>
         <ScrollToTop />
         <Header />

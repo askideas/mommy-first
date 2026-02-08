@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
 
 const WishlistSection = () => {
-    const { customer, removeFromWishlistHandles } = useAuth()
+    const { user, customer, removeFromWishlistHandles } = useAuth()
     const [wishlistItems, setWishlistItems] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
@@ -22,7 +22,7 @@ const WishlistSection = () => {
     }, [customer?.id])
 
     const fetchWishlist = async () => {
-        const userId = customer?.id
+        const userId = customer?.id || user?.userId
         if (!userId) return
 
         setIsLoading(true)
@@ -44,7 +44,7 @@ const WishlistSection = () => {
     }
 
     const handleRemoveFromWishlist = async (productHandle) => {
-        const userId = customer?.id
+        const userId = customer?.id || user?.userId
         if (!userId) {
             toast.error('Please log in to manage your wishlist')
             return

@@ -5,23 +5,20 @@ import { ChevronDown, Loader2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile, getUserDetails } from '../../services/userService'
 import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
+import { toast } from 'react-toastify'
 
 const ProfileSection = () => {
     const { user, customer, updateCustomer } = useAuth()
     const [action, setAction] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isFetching, setIsFetching] = useState(false)
-    const [message, setMessage] = useState({ type: '', text: '' })
     const [customerData, setCustomerData] = useState(customer)
     
     // Helper function to extract metafield values from API response structure
     const extractMetafields = (data) => {
         const metafields = data?.metafields?.custom || {}
         return {
-            nationality: metafields.nationality?.value || '',
-            gender: metafields.gender?.value || '',
-            dateOfBirth: metafields.date_of_birth?.value || '',
-            dueDate: metafields.due_date?.value || ''
+            gender: metafields.gender?.value || ''
         }
     }
     
@@ -32,16 +29,13 @@ const ProfileSection = () => {
     const [formData, setFormData] = useState({
         firstName: customer?.firstName || '',
         lastName: customer?.lastName || '',
-        nationality: customerMetafields?.nationality || '',
-        gender: customerMetafields?.gender || '',
-        birthday: customerMetafields?.dateOfBirth || '',
-        dueDate: customerMetafields?.dueDate || ''
+        gender: customerMetafields?.gender || ''
     })
 
     // Fetch user details on mount
     useEffect(() => {
         const fetchUserDetails = async () => {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
             if (userId) {
                 setIsFetching(true)
                 try {
@@ -52,10 +46,7 @@ const ProfileSection = () => {
                         setFormData({
                             firstName: response.data.firstName || '',
                             lastName: response.data.lastName || '',
-                            nationality: metafields.nationality || '',
-                            gender: metafields.gender || '',
-                            birthday: metafields.dateOfBirth || '',
-                            dueDate: metafields.dueDate || ''
+                            gender: metafields.gender || ''
                         })
                         updateCustomer(response.data)
                     }
@@ -79,34 +70,29 @@ const ProfileSection = () => {
                 ...prev,
                 firstName: customer.firstName || prev.firstName,
                 lastName: customer.lastName || prev.lastName,
-                nationality: metafields?.nationality || prev.nationality,
-                gender: metafields?.gender || prev.gender,
-                birthday: metafields?.dateOfBirth || prev.birthday,
-                dueDate: metafields?.dueDate || prev.dueDate
+                gender: metafields?.gender || prev.gender
             }))
         }
     }, [customer])
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }))
-        setMessage({ type: '', text: '' })
     }
 
     const handleUpdate = async () => {
         // Validate required fields
         if (!formData.firstName.trim()) {
-            setMessage({ type: 'error', text: 'First name is required' })
+            toast.error('First name is required')
             return
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id || customerData?.id
+            const userId = customer?.id || customerData?.id || user?.userId
 
             if (!userId) {
-                setMessage({ type: 'error', text: 'User ID not found. Please try logging in again.' })
+                toast.error('User ID not found. Please try logging in again.')
                 setIsLoading(false)
                 return
             }
@@ -125,33 +111,6 @@ const ProfileSection = () => {
                     namespace: 'custom',
                     key: 'gender',
                     value: formData.gender,
-                    type: 'single_line_text_field'
-                })
-            }
-
-            if (formData.birthday) {
-                metafieldsArray.push({
-                    namespace: 'custom',
-                    key: 'date_of_birth',
-                    value: formData.birthday,
-                    type: 'date'
-                })
-            }
-
-            if (formData.dueDate) {
-                metafieldsArray.push({
-                    namespace: 'custom',
-                    key: 'due_date',
-                    value: formData.dueDate,
-                    type: 'date'
-                })
-            }
-
-            if (formData.nationality) {
-                metafieldsArray.push({
-                    namespace: 'custom',
-                    key: 'nationality',
-                    value: formData.nationality,
                     type: 'single_line_text_field'
                 })
             }
@@ -185,26 +144,22 @@ const ProfileSection = () => {
                     setFormData({
                         firstName: updatedCustomer.firstName || '',
                         lastName: updatedCustomer.lastName || '',
-                        nationality: metafields.nationality || '',
-                        gender: metafields.gender || '',
-                        birthday: metafields.dateOfBirth || '',
-                        dueDate: metafields.dueDate || ''
+                        gender: metafields.gender || ''
                     })
                 }
 
-                setMessage({ type: 'success', text: 'Profile updated successfully!' })
+                toast.success('Profile updated successfully!')
                 
                 // Switch back to view mode after a short delay
                 setTimeout(() => {
                     setAction('')
-                    setMessage({ type: '', text: '' })
-                }, 1500)
+                }, 500)
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to update profile. Please try again.' })
+                toast.error(response.message || 'Failed to update profile. Please try again.')
             }
         } catch (err) {
             console.error('Profile update error:', err)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -216,12 +171,8 @@ const ProfileSection = () => {
         setFormData({
             firstName: customerData?.firstName || customer?.firstName || '',
             lastName: customerData?.lastName || customer?.lastName || '',
-            nationality: metafields?.nationality || '',
-            gender: metafields?.gender || '',
-            birthday: metafields?.dateOfBirth || '',
-            dueDate: metafields?.dueDate || ''
+            gender: metafields?.gender || ''
         })
-        setMessage({ type: '', text: '' })
         setAction('edit')
     }
 
@@ -230,10 +181,7 @@ const ProfileSection = () => {
         const fields = [
             customerData?.firstName || customer?.firstName,
             customerData?.lastName || customer?.lastName,
-            customerMetafields?.nationality,
-            customerMetafields?.gender,
-            customerMetafields?.dateOfBirth,
-            customerMetafields?.dueDate
+            customerMetafields?.gender
         ]
         const filledFields = fields.filter(field => field && String(field).trim() !== '').length
         return Math.round((filledFields / fields.length) * 100)
@@ -241,7 +189,6 @@ const ProfileSection = () => {
 
     const handleCancelEdit = () => {
         setAction('')
-        setMessage({ type: '', text: '' })
     }
 
     return (
@@ -291,23 +238,6 @@ const ProfileSection = () => {
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-drop-down">
-                                            <label>Nationality</label>
-                                            <div className="dropdown">
-                                                <a className="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    {formData.nationality || 'Select Nationality'} <ChevronDown />
-                                                </a>
-
-                                                <ul className="dropdown-menu">
-                                                    <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'India') }}>India</a></li>
-                                                    <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'USA') }}>USA</a></li>
-                                                    <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'UK') }}>UK</a></li>
-                                                    <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'UAE') }}>UAE</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-4" style={{paddingLeft: 0}}>
-                                        <div className="profile-drop-down">
                                             <label>Gender</label>
                                             <div className="dropdown">
                                                 <a className="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -320,35 +250,6 @@ const ProfileSection = () => {
                                                     <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('gender', 'Other') }}>Other</a></li>
                                                 </ul>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-4">
-                                        <div className="profile-input-group">
-                                            <label>Birthday</label>
-                                            <input 
-                                                type="date" 
-                                                placeholder='DD/MM/YYYY' 
-                                                value={formData.birthday}
-                                                onChange={(e) => handleInputChange('birthday', e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="Pregnancy-info">
-                                <h1 className="heading">Pregnancy Information <span>OPTIONAL</span> </h1>
-                                <div className="row w-100 m-0">
-                                    <div className="col-4" style={{paddingLeft: 0}}>
-                                        <div className="profile-input-group">
-                                            <label>Due date</label>
-                                            <input 
-                                                type="date" 
-                                                placeholder='DD/MM/YYYY' 
-                                                value={formData.dueDate}
-                                                onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -373,32 +274,8 @@ const ProfileSection = () => {
                                     </div>
                                     <div className="col-4">
                                         <div className="profile-input-group">
-                                            <label>Nationality</label>
-                                            <p className="profile-value">{customerMetafields?.nationality || 'Not set'}</p>
-                                        </div>
-                                    </div>
-                                    <div className="col-4" style={{paddingLeft: 0}}>
-                                        <div className="profile-input-group">
                                             <label>Gender</label>
                                             <p className="profile-value">{customerMetafields?.gender || 'Not set'}</p>
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <div className="profile-input-group">
-                                            <label>Date of Birth</label>
-                                            <p className="profile-value">{customerMetafields?.dateOfBirth || 'Not set'}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="Pregnancy-info">
-                                <h1 className="heading">Pregnancy Information </h1>
-                                <div className="row w-100 m-0">
-                                    <div className="col-4" style={{paddingLeft: 0}}>
-                                        <div className="profile-input-group">
-                                            <label>Due date</label>
-                                            <p className="profile-value">{customerMetafields?.dueDate || 'Not set'}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -434,9 +311,6 @@ const ProfileSection = () => {
             </div>
 
             <div className="profile-section-footer">
-                <p className={`notification-message ${message.type}`}>
-                    {message.text}
-                </p>
                 {
                     action == 'edit' ? (
                         <div className="footer-buttons">

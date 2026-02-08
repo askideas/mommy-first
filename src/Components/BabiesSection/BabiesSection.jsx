@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import './BabiesSection.css'
 import Smile from '../../assets/profile/smile.svg'
 import { ChevronDown, Minus, Plus, Loader2 } from 'lucide-react'
-import CalenderHeart from '../../assets/profile/calendar-heart.svg'
 import { useAuth } from '../../contexts/AuthContext'
 import { updateNewUserProfile, getUserDetails } from '../../services/userService'
 import BabiesIcon from '../../assets/profile/babies.svg'
 import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
+import { toast } from 'react-toastify'
 
 const BabiesSection = () => {
     const { user, customer, updateCustomer } = useAuth()
@@ -14,16 +14,13 @@ const BabiesSection = () => {
     const [babies, setBabies] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isFetching, setIsFetching] = useState(false)
-    const [message, setMessage] = useState({ type: '', text: '' })
     const [editingBabyIndex, setEditingBabyIndex] = useState(null)
     
     // Form state for adding/editing baby
     const [babyForm, setBabyForm] = useState({
         firstName: '',
         lastName: '',
-        gender: '',
-        nationality: '',
-        dateOfBirth: ''
+        gender: ''
     })
 
     // Extract babies data from customer metafields
@@ -51,7 +48,7 @@ const BabiesSection = () => {
     // Fetch latest user details
     useEffect(() => {
         const fetchUserDetails = async () => {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
             if (userId) {
                 setIsFetching(true)
                 try {
@@ -72,7 +69,6 @@ const BabiesSection = () => {
 
     const handleInputChange = (field, value) => {
         setBabyForm(prev => ({ ...prev, [field]: value }))
-        setMessage({ type: '', text: '' })
     }
 
     const getAvatarColor = (gender) => {
@@ -83,19 +79,11 @@ const BabiesSection = () => {
         return firstName?.charAt(0)?.toUpperCase() || 'B'
     }
 
-    const formatDate = (dateString) => {
-        if (!dateString) return 'Not set'
-        const date = new Date(dateString)
-        return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
-    }
-
     const resetBabyForm = () => {
         setBabyForm({
             firstName: '',
             lastName: '',
-            gender: '',
-            nationality: '',
-            dateOfBirth: ''
+            gender: ''
         })
         setEditingBabyIndex(null)
     }
@@ -103,18 +91,17 @@ const BabiesSection = () => {
     const handleAddBaby = async () => {
         // Validate form
         if (!babyForm.firstName.trim()) {
-            setMessage({ type: 'error', text: 'Baby first name is required' })
+            toast.error('Baby first name is required')
             return
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
 
             if (!userId) {
-                setMessage({ type: 'error', text: 'User ID not found. Please try logging in again.' })
+                toast.error('User ID not found. Please try logging in again.')
                 setIsLoading(false)
                 return
             }
@@ -123,9 +110,7 @@ const BabiesSection = () => {
             const newBaby = {
                 first_name: babyForm.firstName.trim(),
                 last_name: babyForm.lastName.trim(),
-                gender: babyForm.gender.toLowerCase(),
-                nationality: babyForm.nationality,
-                date_of_birth: babyForm.dateOfBirth
+                gender: babyForm.gender.toLowerCase()
             }
 
             const updatedBabies = [...babies, newBaby]
@@ -149,20 +134,19 @@ const BabiesSection = () => {
                     updateCustomer(userDetailsResponse.data)
                 }
 
-                setMessage({ type: 'success', text: 'Baby added successfully!' })
+                toast.success('Baby added successfully!')
                 resetBabyForm()
                 
                 // Close the accordion after a short delay
                 setTimeout(() => {
-                    setMessage({ type: '', text: '' })
                     document.querySelector('#flush-collapseOne')?.classList.remove('show')
-                }, 1500)
+                }, 500)
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to add baby. Please try again.' })
+                toast.error(response.message || 'Failed to add baby. Please try again.')
             }
         } catch (err) {
             console.error('Add baby error:', err)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -173,9 +157,7 @@ const BabiesSection = () => {
         setBabyForm({
             firstName: baby.first_name || '',
             lastName: baby.last_name || '',
-            gender: baby.gender?.charAt(0)?.toUpperCase() + baby.gender?.slice(1) || '',
-            nationality: baby.nationality || '',
-            dateOfBirth: baby.date_of_birth || ''
+            gender: baby.gender?.charAt(0)?.toUpperCase() + baby.gender?.slice(1) || ''
         })
         setEditingBabyIndex(index)
         
@@ -188,18 +170,17 @@ const BabiesSection = () => {
 
     const handleUpdateBaby = async () => {
         if (!babyForm.firstName.trim()) {
-            setMessage({ type: 'error', text: 'Baby first name is required' })
+            toast.error('Baby first name is required')
             return
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
 
             if (!userId) {
-                setMessage({ type: 'error', text: 'User ID not found. Please try logging in again.' })
+                toast.error('User ID not found. Please try logging in again.')
                 setIsLoading(false)
                 return
             }
@@ -209,9 +190,7 @@ const BabiesSection = () => {
             updatedBabies[editingBabyIndex] = {
                 first_name: babyForm.firstName.trim(),
                 last_name: babyForm.lastName.trim(),
-                gender: babyForm.gender.toLowerCase(),
-                nationality: babyForm.nationality,
-                date_of_birth: babyForm.dateOfBirth
+                gender: babyForm.gender.toLowerCase()
             }
 
             // Update metafields with updated babies data
@@ -233,19 +212,18 @@ const BabiesSection = () => {
                     updateCustomer(userDetailsResponse.data)
                 }
 
-                setMessage({ type: 'success', text: 'Baby updated successfully!' })
+                toast.success('Baby updated successfully!')
                 resetBabyForm()
                 
                 setTimeout(() => {
-                    setMessage({ type: '', text: '' })
                     document.querySelector('#flush-collapseOne')?.classList.remove('show')
-                }, 1500)
+                }, 500)
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to update baby. Please try again.' })
+                toast.error(response.message || 'Failed to update baby. Please try again.')
             }
         } catch (err) {
             console.error('Update baby error:', err)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -257,13 +235,12 @@ const BabiesSection = () => {
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
 
             if (!userId) {
-                setMessage({ type: 'error', text: 'User ID not found. Please try logging in again.' })
+                toast.error('User ID not found. Please try logging in again.')
                 setIsLoading(false)
                 return
             }
@@ -290,17 +267,13 @@ const BabiesSection = () => {
                     updateCustomer(userDetailsResponse.data)
                 }
 
-                setMessage({ type: 'success', text: 'Baby deleted successfully!' })
-                
-                setTimeout(() => {
-                    setMessage({ type: '', text: '' })
-                }, 1500)
+                toast.success('Baby deleted successfully!')
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to delete baby. Please try again.' })
+                toast.error(response.message || 'Failed to delete baby. Please try again.')
             }
         } catch (err) {
             console.error('Delete baby error:', err)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -350,11 +323,6 @@ const BabiesSection = () => {
                                                 <span>{fullName || 'Baby'}</span>
                                             </p>
 
-                                            <p className="baby-date-of-birth">
-                                                <img src={CalenderHeart} alt="" />
-                                                <span>Birthday on {formatDate(baby.date_of_birth)}</span>
-                                            </p>
-
                                             <button className='accordian-icon' type="button">
                                                 <ChevronDown />
                                             </button>
@@ -376,11 +344,6 @@ const BabiesSection = () => {
                                                 <div className="baby-detail-item">
                                                     <span className='label'>Gender</span>
                                                     <span className="value">{baby.gender ? baby.gender.charAt(0).toUpperCase() + baby.gender.slice(1) : 'Not set'}</span>
-                                                </div>
-
-                                                <div className="baby-detail-item">
-                                                    <span className='label'>Nationality</span>
-                                                    <span className="value">{baby.nationality || 'Not set'}</span>
                                                 </div>
                                             </div>
                                             <div className="action-btns">
@@ -424,7 +387,7 @@ const BabiesSection = () => {
                             <div className="accordion-body">
                                 <div className="add-baby-inputs-container">
                                     <div className="input-group-con">
-                                        <span className="label">Baby Name</span>
+                                        <span className="label">First Name</span>
                                         <input 
                                             type="text" 
                                             placeholder='Enter baby name' 
@@ -444,21 +407,6 @@ const BabiesSection = () => {
                                     </div>
 
                                     <div className="input-group-con">
-                                        <span className="label">Nationality</span>
-                                        <div className="dropdown">
-                                            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                {babyForm.nationality || 'Select Nationality'} <ChevronDown />
-                                            </button>
-                                            <ul className="dropdown-menu">
-                                                <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'Indian') }}>Indian</a></li>
-                                                <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'American') }}>American</a></li>
-                                                <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'British') }}>British</a></li>
-                                                <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('nationality', 'Canadian') }}>Canadian</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div className="input-group-con">
                                         <span className="label">Gender</span>
                                         <div className="dropdown">
                                             <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -469,16 +417,6 @@ const BabiesSection = () => {
                                                 <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleInputChange('gender', 'Female') }}>Female</a></li>
                                             </ul>
                                         </div>
-                                    </div>
-
-                                    <div className="input-group-con">
-                                        <span className="label">Birthday</span>
-                                        <input 
-                                            type="date" 
-                                            placeholder='Enter birthday' 
-                                            value={babyForm.dateOfBirth}
-                                            onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                                        />
                                     </div>
                                 </div>
                                 
@@ -528,12 +466,6 @@ const BabiesSection = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="babies-section-footer">
-                <p className={`notification-message ${message.type}`}>
-                    {message.text}
-                </p>
             </div>
             </>
             )}

@@ -20,7 +20,6 @@ import BabiesSection from '../../Components/BabiesSection/BabiesSection'
 import AddressSection from '../../Components/AddressSection/AddressSection'
 import NotificationsSection from '../../Components/NotificationsSection/NotificationsSection'
 import WishlistSection from '../../Components/WishlistSection/WishlistSection'
-import NewUserModal from '../../Components/NewUserModal/NewUserModal'
 import { useAuth } from '../../contexts/AuthContext'
 import HelpSection from '../../Components/HelpSection/HelpSection'
 import OrdersSection from '../../Components/OrdersSection/OrdersSection'
@@ -29,10 +28,9 @@ import SessionsSection from '../../Components/SessionsSection/SessionsSection'
 const Profile = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { user, customer, logout, isNewCustomer, needsProfileCompletion } = useAuth();
+    const { user, customer, logout } = useAuth();
     const [activeSection, setActiveSection] = useState("#profile");
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    const [showNewUserModal, setShowNewUserModal] = useState(false);
     const [customerData, setCustomerData] = useState(customer);
 
     useEffect(() => {
@@ -40,27 +38,10 @@ const Profile = () => {
         setActiveSection(hash || "profile");
     }, [location.hash]);
 
-    // Check if profile needs completion and show modal
-    useEffect(() => {
-        if (isNewCustomer) {
-            setShowNewUserModal(true)
-        }
-    }, [isNewCustomer, customer, user]);
-
     // Update customer data when customer changes
     useEffect(() => {
         setCustomerData(customer)
     }, [customer]);
-
-    const handleNewUserModalClose = () => {
-        // Don't allow closing for new users - they must complete the form
-        // Modal will close itself after successful submission
-    }
-
-    const handleNewUserModalSuccess = (updatedCustomer) => {
-        setCustomerData(updatedCustomer)
-        setShowNewUserModal(false)
-    }
 
     // Handle logout
     const handleLogout = async () => {
@@ -136,13 +117,6 @@ const Profile = () => {
 
     return (
         <div className="profile-main-container">
-            {/* New User Modal */}
-            <NewUserModal 
-                isOpen={showNewUserModal} 
-                onClose={handleNewUserModalClose}
-                onSuccess={handleNewUserModalSuccess}
-            />
-            
             <img src={Flower} alt="" className="flowerone" />
             <img src={Flower} alt="" className="flowertwo" />
             <img src={Flower} alt="" className="flowerthree" />

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './NewUserModal.css'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { updateNewUserProfile } from '../../services/userService'
+import { updateNewUserProfile, getUserDetails } from '../../services/userService'
+import { countryCodes } from '../../services/authService'
 import ProfileImg from '../../assets/profile/pf-def.png'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,12 +22,30 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
         lastName: customer?.lastName || user?.familyName || '',
         gender: existingMetafields?.gender || '',
         dateOfBirth: existingMetafields?.dateOfBirth || '',
-        dueDate: existingMetafields?.dueDate || ''
+        dueDate: existingMetafields?.dueDate || '',
+        mobile: ''
     })
     
     const [showGenderDropdown, setShowGenderDropdown] = useState(false)
+    const [showCountryDropdown, setShowCountryDropdown] = useState(false)
+    const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]) // Default to India
 
     const genderOptions = ['Female', 'Male', 'Other']
+
+    // Update form data when customer/user changes (ensures latest data is shown)
+    useEffect(() => {
+        if (customer || user) {
+            const metafields = customer ? getCustomerMetafields() : {}
+            setFormData({
+                firstName: customer?.firstName || user?.givenName || '',
+                lastName: customer?.lastName || user?.familyName || '',
+                gender: metafields?.gender || '',
+                dateOfBirth: metafields?.dateOfBirth || '',
+                dueDate: metafields?.dueDate || '',
+                mobile: ''
+            })
+        }
+    }, [customer, user])
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }))
@@ -59,37 +78,84 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
                 return
             }
 
-            // Update profile with metafields
-            const response = await updateNewUserProfile(userId, {
+            // Build the payload with metafields in array format (like ProfileSection)
+            const updatePayload = {
                 firstName: formData.firstName.trim(),
-                lastName: formData.lastName.trim(),
-                email: user?.email || customer?.email,
-                phone: user?.phone || customer?.phone,
-                gender: formData.gender,
-                dateOfBirth: formData.dateOfBirth,
-                dueDate: formData.dueDate
-            })
+                lastName: formData.lastName.trim()
+            }
 
-            if (response.success) {
-                // Update customer in context with new data including metafields
-                const updatedCustomer = {
-                    ...(customer || {}),
-                    ...response.data,
-                    id: userId,
-                    firstName: formData.firstName.trim(),
-                    lastName: formData.lastName.trim(),
-                    fullName: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
-                    email: user?.email || customer?.email,
-                    phone: user?.phone || customer?.phone,
-                    metafields: response.data?.metafields || {
-                        custom: {
-                            gender: { value: formData.gender, type: 'single_line_text_field' },
-                            date_of_birth: { value: formData.dateOfBirth, type: 'date' },
-                            due_date: { value: formData.dueDate, type: 'date' }
-                        }
+            // Add phone with country code if mobile is provided
+            if (formData.mobile) {
+                updatePayload.phone = `${selectedCountry.code}${formData.mobile}`
+            }
+
+            // Build metafields as an array with namespace, key, value, type
+            const metafieldsArray = []
+
+            if (formData.gender) {
+                metafieldsArray.push({
+                    namespace: 'custom',
+                    key: 'gender',
+                    value: formData.gender,
+                    type: 'single_line_text_field'
+                })
+            }
+
+            if (formData.dateOfBirth) {
+                metafieldsArray.push({
+                    namespace: 'custom',
+                    key: 'date_of_birth',
+                    value: formData.dateOfBirth,
+                    type: 'date'
+                })
+            }
+
+            if (formData.dueDate) {
+                metafieldsArray.push({
+                    namespace: 'custom',
+                    key: 'due_date',
+                    value: formData.dueDate,
+                    type: 'date'
+                })
+            }
+
+            // Add metafields array to payload if any exist
+            if (metafieldsArray.length > 0) {
+                updatePayload.metafields = metafieldsArray
+            }
+
+            console.log('Updating new user profile payload:', JSON.stringify(updatePayload, null, 2))
+
+            // Update profile with metafields
+            const response = await updateNewUserProfile(userId, updatePayload)
+
+            console.log('Update response:', response)
+
+            // Check if update was successful (handle different response formats)
+            if (response.success || response.data) {
+                // Re-fetch user details to get the latest data (like ProfileSection does)
+                const userDetailsResponse = await getUserDetails(userId)
+                console.log('Re-fetched user details:', userDetailsResponse)
+
+                let updatedCustomer = null
+
+                if (userDetailsResponse.success && userDetailsResponse.data) {
+                    updatedCustomer = userDetailsResponse.data
+                    updateCustomer(updatedCustomer)
+                } else {
+                    // Fallback: construct customer object if re-fetch fails
+                    updatedCustomer = {
+                        ...(customer || {}),
+                        ...response.data,
+                        id: userId,
+                        firstName: formData.firstName.trim(),
+                        lastName: formData.lastName.trim(),
+                        fullName: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+                        email: user?.email || customer?.email,
+                        phone: updatePayload.phone || user?.phone || customer?.phone
                     }
+                    updateCustomer(updatedCustomer)
                 }
-                updateCustomer(updatedCustomer)
                 
                 // Clear new customer flag (this also sets profileCompleted)
                 clearNewCustomerFlag()
@@ -210,6 +276,58 @@ const NewUserModal = ({ isOpen, onClose, onSuccess }) => {
                                 value={formData.dueDate}
                                 onChange={(e) => handleInputChange('dueDate', e.target.value)}
                             />
+                        </div>
+
+                        {/* Mobile Number */}
+                        <div className="new-user-form-group full-width">
+                            <label>
+                                Mobile Number 
+                                <span className="optional-badge">OPTIONAL</span>
+                            </label>
+                            <div className="new-user-mobile-input">
+                                <div 
+                                    className="new-user-country-selector"
+                                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                                >
+                                    <img 
+                                        src={`https://flagcdn.com/24x18/${selectedCountry.iso.toLowerCase()}.png`}
+                                        alt={selectedCountry.country}
+                                        className="country-flag"
+                                    />
+                                    <span className="country-code">{selectedCountry.code}</span>
+                                    <ChevronDown size={16} />
+                                    
+                                    {showCountryDropdown && (
+                                        <div className="new-user-country-dropdown">
+                                            {countryCodes.map((country, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="country-option"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        setSelectedCountry(country)
+                                                        setShowCountryDropdown(false)
+                                                    }}
+                                                >
+                                                    <img 
+                                                        src={`https://flagcdn.com/24x18/${country.iso.toLowerCase()}.png`}
+                                                        alt={country.country}
+                                                        className="country-flag"
+                                                    />
+                                                    <span className="country-name">{country.country}</span>
+                                                    <span className="country-code">{country.code}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <input
+                                    type="tel"
+                                    placeholder="1234567890"
+                                    value={formData.mobile}
+                                    onChange={(e) => handleInputChange('mobile', e.target.value.replace(/\D/g, ''))}
+                                />
+                            </div>
                         </div>
 
                         {/* Error Message */}

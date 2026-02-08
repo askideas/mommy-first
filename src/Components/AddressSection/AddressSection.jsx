@@ -12,13 +12,13 @@ import {
 } from '../../services/userService'
 import LocationIcon from '../../assets/profile/location.svg'
 import ProfileSkeletonLoader from '../ProfileSkeletonLoader/ProfileSkeletonLoader'
+import { toast } from 'react-toastify'
 
 const AddressSection = () => {
-    const { customer, updateCustomer } = useAuth()
+    const { user, customer, updateCustomer } = useAuth()
     const [addresses, setAddresses] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isFetching, setIsFetching] = useState(false)
-    const [message, setMessage] = useState({ type: '', text: '' })
     const [editingAddressId, setEditingAddressId] = useState(null)
     const [showAddForm, setShowAddForm] = useState(false)
     
@@ -41,7 +41,7 @@ const AddressSection = () => {
     }, [customer?.id])
 
     const fetchAddresses = async () => {
-        const userId = customer?.id
+        const userId = customer?.id || user?.userId
         if (!userId) return
 
         setIsFetching(true)
@@ -53,7 +53,7 @@ const AddressSection = () => {
             }
         } catch (error) {
             console.error('Error fetching addresses:', error)
-            setMessage({ type: 'error', text: 'Failed to load addresses' })
+            toast.error('Failed to load addresses')
         } finally {
             setIsFetching(false)
         }
@@ -75,22 +75,20 @@ const AddressSection = () => {
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }))
-        setMessage({ type: '', text: '' })
     }
 
     const handleAddAddress = async () => {
         if (!formData.address1.trim() || !formData.city.trim() || !formData.province.trim() || !formData.zip.trim()) {
-            setMessage({ type: 'error', text: 'Please fill in all required fields' })
+            toast.error('Please fill in all required fields')
             return
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
             if (!userId) {
-                setMessage({ type: 'error', text: 'User not found. Please try logging in again.' })
+                toast.error('User not found. Please try logging in again.')
                 return
             }
 
@@ -112,16 +110,16 @@ const AddressSection = () => {
             console.log('Create response:', response)
 
             if (response.success) {
-                setMessage({ type: 'success', text: 'Address added successfully!' })
+                toast.success('Address added successfully!')
                 resetForm()
                 setShowAddForm(false)
                 await fetchAddresses()
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to add address' })
+                toast.error(response.message || 'Failed to add address')
             }
         } catch (error) {
             console.error('Add address error:', error)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -145,17 +143,16 @@ const AddressSection = () => {
 
     const handleUpdateAddress = async () => {
         if (!formData.address1.trim() || !formData.city.trim() || !formData.province.trim() || !formData.zip.trim()) {
-            setMessage({ type: 'error', text: 'Please fill in all required fields' })
+            toast.error('Please fill in all required fields')
             return
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
             if (!userId || !editingAddressId) {
-                setMessage({ type: 'error', text: 'Unable to update address. Please try again.' })
+                toast.error('Unable to update address. Please try again.')
                 return
             }
 
@@ -176,16 +173,16 @@ const AddressSection = () => {
             console.log('Update response:', response)
 
             if (response.success) {
-                setMessage({ type: 'success', text: 'Address updated successfully!' })
+                toast.success('Address updated successfully!')
                 setEditingAddressId(null)
                 resetForm()
                 await fetchAddresses()
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to update address' })
+                toast.error(response.message || 'Failed to update address')
             }
         } catch (error) {
             console.error('Update address error:', error)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -197,12 +194,11 @@ const AddressSection = () => {
         }
 
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
             if (!userId) {
-                setMessage({ type: 'error', text: 'User not found. Please try again.' })
+                toast.error('User not found. Please try again.')
                 return
             }
 
@@ -211,14 +207,14 @@ const AddressSection = () => {
             console.log('Delete response:', response)
 
             if (response.success) {
-                setMessage({ type: 'success', text: 'Address deleted successfully!' })
+                toast.success('Address deleted successfully!')
                 await fetchAddresses()
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to delete address' })
+                toast.error(response.message || 'Failed to delete address')
             }
         } catch (error) {
             console.error('Delete address error:', error)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -226,12 +222,11 @@ const AddressSection = () => {
 
     const handleSetDefault = async (addressId) => {
         setIsLoading(true)
-        setMessage({ type: '', text: '' })
 
         try {
-            const userId = customer?.id
+            const userId = customer?.id || user?.userId
             if (!userId) {
-                setMessage({ type: 'error', text: 'User not found. Please try again.' })
+                toast.error('User not found. Please try again.')
                 return
             }
 
@@ -240,14 +235,14 @@ const AddressSection = () => {
             console.log('Set default response:', response)
 
             if (response.success) {
-                setMessage({ type: 'success', text: 'Default address updated!' })
+                toast.success('Default address updated!')
                 await fetchAddresses()
             } else {
-                setMessage({ type: 'error', text: response.message || 'Failed to set default address' })
+                toast.error(response.message || 'Failed to set default address')
             }
         } catch (error) {
             console.error('Set default error:', error)
-            setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setIsLoading(false)
         }
@@ -256,7 +251,6 @@ const AddressSection = () => {
     const handleCancelEdit = () => {
         setEditingAddressId(null)
         resetForm()
-        setMessage({ type: '', text: '' })
     }
 
     const handleShowAddForm = () => {
@@ -647,12 +641,6 @@ const AddressSection = () => {
                         )}
                     </div>
                 </div>
-            </div>
-
-            <div className="address-section-footer">
-                <p className={`notification-message ${message.type}`}>
-                    {message.text}
-                </p>
             </div>
             </>
             )}

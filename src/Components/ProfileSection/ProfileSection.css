@@ -239,9 +239,7 @@
             }
 
             .account-info {
-                margin-top: 32px;
                 padding-top: 24px;
-                border-top: 1px solid var(--pink-border);
                 animation: slideInLeft 0.5s ease-out 0.2s both;
 
                 .heading {
@@ -279,7 +277,7 @@
         padding: 24px 32px;
         border-top: 1px solid var(--pink-border);
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         column-gap: 16px;
         margin-bottom: 30px;

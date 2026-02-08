@@ -411,7 +411,11 @@ const AuthenticationModal = () => {
                   className="country-sec"
                   onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                 >
-                  <span className='flag'>{selectedCountry.flag}</span>
+                  <img 
+                    src={`https://flagcdn.com/24x18/${selectedCountry.iso.toLowerCase()}.png`}
+                    alt={selectedCountry.country}
+                    className="flag"
+                  />
                   <span className="country-code">{selectedCountry.code}</span>
                   <ChevronDown />
 
@@ -427,7 +431,11 @@ const AuthenticationModal = () => {
                             setShowCountryDropdown(false)
                           }}
                         >
-                          <span className="flag">{country.flag}</span>
+                          <img 
+                            src={`https://flagcdn.com/24x18/${country.iso.toLowerCase()}.png`}
+                            alt={country.country}
+                            className="flag"
+                          />
                           <span className="name">{country.country}</span>
                           <span className="code">{country.code}</span>
                         </div>
