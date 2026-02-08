@@ -360,7 +360,9 @@ const ProductDetails = () => {
                     <div className="details-content-container">
                         <div className="details-header-section">
                             <div className="stock-details-container">
-                                <p className="stock-details">In Stock</p>
+                                <p className={`stock-details ${selectedVariant && !selectedVariant.availableForSale ? 'out-of-stock' : ''}`}>
+                                    {selectedVariant && !selectedVariant.availableForSale ? 'Out of Stock' : 'In Stock'}
+                                </p>
                                 <p className="views-text"><Eye/> 79 People are viewing this right now</p>
                                 <button className="share">
                                     Share
@@ -417,10 +419,11 @@ const ProductDetails = () => {
                                         {product.variants.map((variant) => (
                                             <button 
                                                 key={variant.id} 
-                                                className={`variation-item${selectedVariant?.id === variant.id ? ' active' : ''}`}
+                                                className={`variation-item${selectedVariant?.id === variant.id ? ' active' : ''}${!variant.availableForSale ? ' out-of-stock' : ''}`}
                                                 onClick={() => handleVariantSelect(variant)}
                                             >
                                                 {variant.title}
+                                                {!variant.availableForSale && <span className="oos-label">Out of Stock</span>}
                                             </button>
                                         ))}
                                     </div>
@@ -493,25 +496,33 @@ const ProductDetails = () => {
 
                             <div className="add-to-cart-func-container">
                                 <button 
-                                    className="button-pink-center add-to-cart" 
+                                    className={`button-pink-center add-to-cart ${selectedVariant && !selectedVariant.availableForSale ? 'disabled' : ''}`}
                                     onClick={handleAddToCart}
-                                    disabled={isAdding}
+                                    disabled={isAdding || (selectedVariant && !selectedVariant.availableForSale)}
                                 >
                                     {isAdding ? (
                                         <>
                                             <Loader2 className="spinner" style={{ width: '20px', height: '20px', animation: 'spin 1s linear infinite' }} />
                                             Adding...
                                         </>
+                                    ) : selectedVariant && !selectedVariant.availableForSale ? (
+                                        'Out of Stock'
                                     ) : (
                                         'Add to cart'
                                     )}
                                 </button>
-                                <button className='button-pink-border buy-now-btn' onClick={handleBuyNow} disabled={isAdding}>
+                                <button 
+                                    className={`button-pink-border buy-now-btn ${selectedVariant && !selectedVariant.availableForSale ? 'disabled' : ''}`}
+                                    onClick={handleBuyNow} 
+                                    disabled={isAdding || (selectedVariant && !selectedVariant.availableForSale)}
+                                >
                                     {isAdding ? (
                                         <>
                                             <Loader2 className="spinner" style={{ width: '20px', height: '20px', animation: 'spin 1s linear infinite' }} />
                                             Processing...
                                         </>
+                                    ) : selectedVariant && !selectedVariant.availableForSale ? (
+                                        'Out of Stock'
                                     ) : (
                                         <>
                                             Buy Now | {selectedVariant?.price?.amount ? `$${selectedVariant.price.amount} ${selectedVariant.price.currencyCode}` : '$0.00'}

@@ -20,6 +20,12 @@ const ProductTile = (props) => {
     const [isInWishlist, setIsInWishlist] = useState(false)
     const { isAuthenticated } = useAuth();
 
+    // Check if product is available for sale
+    const isOutOfStock = product.availableForSale === false || 
+                         product.variants?.[0]?.availableForSale === false ||
+                         product.inventory === 0 ||
+                         product.totalInventory === 0
+
     // Check if product is in wishlist using AuthContext
     useEffect(() => {
         if (customer && product?.handle) {
@@ -35,7 +41,7 @@ const ProductTile = (props) => {
     const handleAddToCart = async (e) => {
         e.stopPropagation() // Prevent navigation to product details
         
-        if (isAdding || isAdded) return
+        if (isAdding || isAdded || isOutOfStock) return
         
         setIsAdding(true)
         setError('')
@@ -147,19 +153,25 @@ const ProductTile = (props) => {
     }
 
     return (
-        <div className={`product-tile-container`} onClick={() => navigate(`/shop/${product.handle}`)}>
+        <div className={`product-tile-container ${isOutOfStock ? 'out-of-stock' : ''}`} onClick={() => navigate(`/shop/${product.handle}`)}>
             <p className={`pt-label ${product.label ? '' : 'd-none'}`}>{product.label}</p>
-            <img src={product.image || DefaultImg} alt="" className='prd-image' onError={(e) => e.target.src = DefaultImg} />
+            {isOutOfStock && <span className="out-of-stock-badge">Out of Stock</span>}
+            <div className="prd-image-wrapper">
+                <img src={product.image || DefaultImg} alt="" className='prd-image' onError={(e) => e.target.src = DefaultImg} />
+                {isOutOfStock && <div className="out-of-stock-overlay"></div>}
+            </div>
             <div className="product-details-con">
                 <p className="prd-name">{product.name || product.title}</p>
                 <p className="prd-price">${product.price}USD</p>
                 <div className='btn-section-con'>
                     <button 
-                        className={`addtobag ${isAdded ? 'added' : ''} ${error ? 'error' : ''}`}
+                        className={`addtobag ${isAdded ? 'added' : ''} ${error ? 'error' : ''} ${isOutOfStock ? 'out-of-stock-btn' : ''}`}
                         onClick={handleAddToCart}
-                        disabled={isAdding}
+                        disabled={isAdding || isOutOfStock}
                     >
-                        {isAdding ? (
+                        {isOutOfStock ? (
+                            'Out of Stock'
+                        ) : isAdding ? (
                             <><Loader2 className="spinner" size={14} /> Adding...</>
                         ) : isAdded ? (
                             <><Check size={14} /> Added!</>
