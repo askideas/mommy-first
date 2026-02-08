@@ -31,6 +31,7 @@ const Cart = () => {
     const [orderNote, setOrderNote] = useState('')
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [itemToRemove, setItemToRemove] = useState(null)
+    const [isCheckoutLoading, setIsCheckoutLoading] = useState(false)
     const { isAuthenticated, getShopifyCustomerAccessToken } = useAuth()
 
     // Recommended products state
@@ -228,13 +229,20 @@ const Cart = () => {
     }
 
     const handleCheckout = async () => {
-        if (cart && isAuthenticated) {
-            const response = await getCheckoutUrlForAuthenticatedCustomer(cart.cartId, getShopifyCustomerAccessToken())
-            if (response.success) {
-                goToCheckout(response.data.checkoutUrl)
+        setIsCheckoutLoading(true)
+        try {
+            if (cart && isAuthenticated) {
+                const response = await getCheckoutUrlForAuthenticatedCustomer(cart.cartId, getShopifyCustomerAccessToken())
+                if (response.success) {
+                    goToCheckout(response.checkoutUrl)
+                }
+            } else {
+                goToCheckout(cart.checkoutUrl)
             }
-        } else {
-            goToCheckout(cart.checkoutUrl)
+        } catch (error) {
+            console.error('Checkout error:', error)
+        } finally {
+            setIsCheckoutLoading(false)
         }
     }
 
@@ -491,12 +499,12 @@ const Cart = () => {
                         <button
                             className='button-pink-center checkout-btn'
                             onClick={handleCheckout}
-                            disabled={isUpdating || items.length === 0}
+                            disabled={isUpdating || isCheckoutLoading || items.length === 0}
                         >
-                            {isUpdating ? (
+                            {(isUpdating || isCheckoutLoading) ? (
                                 <>
                                     <Loader2 className="spinner" size={16} />
-                                    Updating...
+                                    {isCheckoutLoading ? 'Processing...' : 'Updating...'}
                                 </>
                             ) : (
                                 <>
