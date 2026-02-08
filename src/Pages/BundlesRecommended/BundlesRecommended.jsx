@@ -452,7 +452,7 @@ const BundlesRecommended = () => {
                         <p style={{color: 'red'}}>{error}</p>
                     </div>
                 ) : remainingBundles.length > 0 ? (
-                    <div className="bundles-more-section">
+                    <div className="bundles-more-section bundles-recommended-more-bundles">
                         {remainingBundles.map((bundle, index) => (
                             <BundleTile data={bundle} key={bundle?.node?.id || bundle?.id || index} />
                         ))}
