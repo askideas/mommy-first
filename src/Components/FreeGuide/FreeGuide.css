@@ -6,6 +6,7 @@
     border-radius: 24px;
     padding: 12px;
     margin-bottom: 154px;
+    cursor: pointer;
 
     .content-container-sec {
         width: 100%;

@@ -1,0 +1,311 @@
+/* Base shimmer animation */
+.skeleton-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Skeleton Heading */
+.skeleton-heading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 12px;
+}
+
+.skeleton-heading-title {
+    width: 200px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.skeleton-heading-subtitle {
+    width: 300px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.skeleton-heading-description {
+    width: 450px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* Hero Section Skeleton */
+.hero-skeleton-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    min-height: 500px;
+}
+
+.hero-skeleton-left,
+.hero-skeleton-right {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.hero-skeleton-center {
+    flex: 1.2;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.hero-skeleton-image,
+.hero-skeleton-slider {
+    width: 100%;
+    height: 100%;
+    min-height: 460px;
+    border-radius: 20px;
+}
+
+/* Bundles Home Skeleton */
+.bundles-skeleton-container {
+    margin-bottom: 30px;
+}
+
+.bundles-skeleton-main {
+    width: 100%;
+    height: 400px;
+    border-radius: 20px;
+}
+
+.bundles-details-skeleton {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.bundles-detail-item {
+    flex: 1;
+    height: 80px;
+    border-radius: 12px;
+}
+
+/* Image Card Container Skeleton */
+.image-card-skeleton-container {
+    display: flex;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.image-card-skeleton {
+    flex: 1;
+    height: 400px;
+    border-radius: 20px;
+}
+
+.image-card-skeleton:nth-child(2) {
+    height: 450px;
+    margin-top: -25px;
+}
+
+/* Video Section Skeleton */
+.video-skeleton-container {
+    display: flex;
+    gap: 40px;
+    padding: 60px 0;
+    align-items: center;
+}
+
+.video-skeleton-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.video-skeleton-title {
+    width: 80%;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.video-skeleton-desc {
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+}
+
+.video-skeleton-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.video-skeleton-tab {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.video-skeleton-player {
+    flex: 1.5;
+    height: 400px;
+    border-radius: 20px;
+}
+
+/* Stories Home Skeleton */
+.stories-skeleton-container {
+    padding: 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stories-skeleton-stars {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.star-skeleton {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.stories-skeleton-heading {
+    width: 400px;
+    height: 60px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.stories-skeleton-gallery {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery-skeleton-item {
+    border-radius: 20px;
+}
+
+.gallery-skeleton-item.one {
+    width: 180px;
+    height: 350px;
+}
+
+.gallery-skeleton-item.two {
+    width: 180px;
+    height: 320px;
+    margin-top: 30px;
+}
+
+.gallery-skeleton-item.three {
+    width: 200px;
+    height: 380px;
+}
+
+.gallery-skeleton-item.four {
+    width: 180px;
+    height: 320px;
+    margin-top: 30px;
+}
+
+.gallery-skeleton-item.five {
+    width: 180px;
+    height: 350px;
+}
+
+/* Free Guide Skeleton */
+.free-guide-skeleton {
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    margin: 60px 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .hero-skeleton-container {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .hero-skeleton-image,
+    .hero-skeleton-slider {
+        min-height: 300px;
+    }
+
+    .bundles-details-skeleton {
+        flex-wrap: wrap;
+    }
+
+    .bundles-detail-item {
+        flex: 1 1 45%;
+    }
+
+    .image-card-skeleton-container {
+        flex-direction: column;
+    }
+
+    .image-card-skeleton {
+        height: 300px;
+    }
+
+    .image-card-skeleton:nth-child(2) {
+        height: 300px;
+        margin-top: 0;
+    }
+
+    .video-skeleton-container {
+        flex-direction: column;
+    }
+
+    .video-skeleton-player {
+        width: 100%;
+        height: 300px;
+    }
+
+    .stories-skeleton-gallery {
+        gap: 10px;
+    }
+
+    .gallery-skeleton-item {
+        width: 100px !important;
+        height: 200px !important;
+        margin-top: 0 !important;
+    }
+
+    .skeleton-heading-description {
+        width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-skeleton-left,
+    .hero-skeleton-right {
+        display: none;
+    }
+
+    .bundles-detail-item {
+        flex: 1 1 100%;
+    }
+
+    .stories-skeleton-heading {
+        width: 90%;
+        height: 40px;
+    }
+
+    .gallery-skeleton-item.three,
+    .gallery-skeleton-item.four,
+    .gallery-skeleton-item.five {
+        display: none;
+    }
+}

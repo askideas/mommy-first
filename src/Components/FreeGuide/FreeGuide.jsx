@@ -1,5 +1,6 @@
 import React from 'react'
 import './FreeGuide.css'
+import { FreeGuideSkeleton } from '../HomeSkeletonLoader/HomeSkeletonLoader'
 import Image from '../../assets/free-guide.svg'
 import FreeTag from '../../assets/free-guide/free-tag.svg'
 import Divider from '../../assets/free-guide/divider.svg'
@@ -7,11 +8,16 @@ import { ArrowRight, Clock } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const FreeGuide = (props) => {
-    const data = props.data;
+    const { data, loading } = props;
     const navigate = useNavigate()
+
+    if (loading) {
+        return <FreeGuideSkeleton />
+    }
+
   return (
     <div className="container">
-        <div className="free-guide-container" onClick={()=>navigate('/care-hub')}>
+        <div className="free-guide-container" onClick={()=>navigate(data && data.guideData && data.guideData.url)}>
             <div className="content-container-sec">
                 <img src={Image} alt="" className='section-image'/>
                 <div className="contents-sec">

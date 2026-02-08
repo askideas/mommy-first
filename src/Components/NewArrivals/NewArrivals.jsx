@@ -219,27 +219,19 @@ const NewArrivals = (props) => {
                         >
                             ALL
                         </button>
-                        <button 
-                            className={`filter-button ${activeCollection === 'maternity' ? 'active' : ''}`} 
-                            data-collection="maternity"
-                            onClick={() => handleFilterClick('maternity')}
-                        >
-                            MATERNITY
-                        </button>
-                        <button 
-                            className={`filter-button ${activeCollection === 'postpartum' ? 'active' : ''}`} 
-                            data-collection="postpartum"
-                            onClick={() => handleFilterClick('postpartum')}
-                        >
-                            POSTPARTUM
-                        </button>
-                        <button 
-                            className={`filter-button ${activeCollection === 'wellness-comfort' ? 'active' : ''}`} 
-                            data-collection="wellness-comfort"
-                            onClick={() => handleFilterClick('wellness-comfort')}
-                        >
-                            WELLNESS & COMFORT
-                        </button>
+                        {
+                            props.data && props.data.collections.map((coll, index)=> {
+                                return (
+                                    <button key={index}
+                                        className={`filter-button ${activeCollection === coll.collectionId ? 'active' : ''}`} 
+                                        data-collection="maternity"
+                                        onClick={() => handleFilterClick(coll.collectionId)}
+                                    >
+                                        {coll.displayName}
+                                    </button>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>

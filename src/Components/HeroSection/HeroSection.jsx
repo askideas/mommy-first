@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import './HeroSection.css'
 import Heading from '../Heading/Heading'
+import { HeroSectionSkeleton } from '../HomeSkeletonLoader/HomeSkeletonLoader'
 import Hero1 from '../../assets/Hero/hero1.png'
 import Hero2 from '../../assets/Hero/hero2.png'
 import Hero3 from '../../assets/Hero/sd-img2.png'
@@ -23,7 +24,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 const HeroSection = (props) => {
   const navigate = useNavigate()
-  const data = props.data;
+  const { data, loading } = props;
   const [activeIndex, setActiveIndex] = useState(0)
   const swiperRef = useRef(null)
   
@@ -40,15 +41,17 @@ const HeroSection = (props) => {
       label: data && data.leftside && data.leftside.labelText ?  data.leftside.labelText : "FLASH SALE - Ships in 24 Hours",
       heading: data && data.leftside && data.leftside.description ? data.leftside.description : "Witch Hazel Foam + Liners Combo",
       image: data && data.leftside && data.leftside.backgroundImage ? data.leftside.backgroundImage : Hero1,
-      buttonText: data && data.leftside && data.leftside.buttonText ? data.leftside.buttonText : "Shop"
+      buttonText: data && data.leftside && data.leftside.buttonLabel ? data.leftside.buttonLabel : "Shop",
+      link: data && data.leftside && data.leftside.link ? data.leftside.link : "/shop"
   }
   
   const rightside = {
       heading: data && data.rightside && data.rightside.heading ? data.rightside.heading : "Exclusive",
       subHeading: data && data.rightside && data.rightside.subHeading ? data.rightside.subHeading : "Bundle Deals",
-      buttonText: data && data.rightside && data.rightside.buttonText ? data.rightside.buttonText : "Shop All Brands",
+      buttonText: data && data.rightside && data.rightside.buttonLabel ? data.rightside.buttonLabel : "Shop All Brands",
       image: data && data.rightside && data.rightside.backgroundImage ? data.rightside.backgroundImage : Hero2,
-      productImage: data && data.rightside && data.rightside.image ? data.rightside.image : HeroImage2
+      productImage: data && data.rightside && data.rightside.image ? data.rightside.image : HeroImage2,
+      link: data && data.rightside && data.rightside.link ? data.rightside.link : '/bundles'
   }
 
     const handleSlideChange = (swiper) => {
@@ -60,6 +63,16 @@ const HeroSection = (props) => {
             swiperRef.current.swiper.slideToLoop(index)
         }
     }
+
+  if (loading) {
+    return (
+      <div className='mt-5'>
+        <Heading data={headingData} />
+        <HeroSectionSkeleton />
+      </div>
+    )
+  }
+
   return (
     <div className='mt-5'>
       <Heading data={headingData} />
@@ -72,7 +85,7 @@ const HeroSection = (props) => {
             <div className="hero-section-content-container">
               <p className="label flash-animation">{leftside.label}</p>
               <p className="headinf-sec" dangerouslySetInnerHTML={{ __html: leftside.heading?.replace(/\n/g, '<br />') || 'Witch Hazel Foam + <br /> Liners Combo' }}></p>
-              <button onClick={()=>navigate('/shop')}>{leftside.buttonText || 'Shop'} <ArrowRight /></button>
+              <button onClick={()=>navigate(leftside.link)}>{leftside.buttonText || 'Shop'} <ArrowRight /></button>
             </div>
           </div>
 
@@ -96,7 +109,7 @@ const HeroSection = (props) => {
                 HeroSlider.map((item, index)=> {
                   return (
                     <SwiperSlide key={index}>
-                      <img src={item.url} alt="Hero Slide 1" className='hero-slide-image' style={{ width: '100%', height: 'auto' }} />
+                      <img src={item.url} alt="Hero Slide 1" className='hero-slide-image' style={{ width: '100%', height: 'auto', cursor: 'pointer' }} onClick={()=>navigate(item.link)} />
                     </SwiperSlide>
                   )
                 })
@@ -127,7 +140,7 @@ const HeroSection = (props) => {
                 {rightside.heading || 'Exclusive'} <br /> <span>{rightside.subHeading || 'Bundle Deals'}</span>
               </p>
               <img src={rightside.productImage || HeroImage2} alt="" className='img-bg' />
-              <button onClick={()=>navigate('/bundles')}>{rightside.buttonText || 'Shop All Brands'} <ArrowRight /></button>
+              <button onClick={()=>navigate(rightside.link)}>{rightside.buttonText || 'Shop All Brands'} <ArrowRight /></button>
             </div>
           </div>
 

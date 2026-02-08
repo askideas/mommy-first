@@ -2,12 +2,13 @@ import React from 'react'
 import './ImageCardContainer.css'
 import ImageCard from '../ImageCard/ImageCard'
 import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
+import { ImageCardContainerSkeleton } from '../HomeSkeletonLoader/HomeSkeletonLoader'
 import Cat1 from '../../assets/shopbycategory/cat1.svg'
 import Cat2 from '../../assets/shopbycategory/cat2.svg'
 import Cat3 from '../../assets/shopbycategory/cat3.svg'
 
 const ImageCardContainer = (props) => {
-    const data = props.data;
+    const { data, loading } = props;
     
     // Animation ref
     const [containerRef, containerVisible] = useFadeUpAnimation(0.2)
@@ -21,7 +22,7 @@ const ImageCardContainer = (props) => {
             'subtitle': data && data.category1 ? data.category1.subheading : 'Stay prepared + bump chic',
             'buttonlabel': data && data.category1 ? data.category1.buttonLabel : 'Shop',
             'class': 'one',
-            'link': 'collection/pregnancy-care'
+            'link': data && data.category1 ? data.category1.link : '/shop'
         },
         {
             'id': 2,
@@ -31,7 +32,7 @@ const ImageCardContainer = (props) => {
             'subtitle': data && data.category2 ? data.category2.subheading : 'Bounce back with ease',
             'buttonlabel': data && data.category2 ? data.category2.buttonLabel :'Shop',
             'class': 'two',
-            'link': 'collection/postpartum-care'
+            'link': data && data.category1 ? data.category2.link : '/shop'
         },
         {
             'id': 3,
@@ -41,10 +42,14 @@ const ImageCardContainer = (props) => {
             'subtitle': data && data.category3 ? data.category3.subheading : 'Fresh finds, just for moms',
             'buttonlabel': data && data.category3 ? data.category3.buttonLabel : 'Shop',
             'class': 'three',
-            'link': 'collection/wellness-comfort'
+            'link': data && data.category1 ? data.category3.link : '/shop'
         }
     ]
     console.log(props.data);
+
+    if (loading) {
+        return <ImageCardContainerSkeleton />
+    }
     
   return (
     <div className="container">

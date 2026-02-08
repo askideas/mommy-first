@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './StoriesHome.css'
+import { StoriesHomeSkeleton } from '../HomeSkeletonLoader/HomeSkeletonLoader'
 import Star from '../../assets/Reviews/star.svg'
 import M1 from '../../assets/Reviews/m1.svg'
 import M2 from '../../assets/Reviews/m2.svg'
@@ -19,7 +20,7 @@ import { useNavigate } from 'react-router-dom'
 import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
 
 const StoriesHome = (props) => {
-    const data = props.data
+    const { data, loading } = props
     const INTERVAL_FAST = 2000;
     const INTERVAL_MEDIUM = 2500;
     const INTERVAL_SLOW = 3000;
@@ -66,6 +67,11 @@ const StoriesHome = (props) => {
     const rdesc2 = data && data.reviewData && data.reviewData.descriptionTwo ? data.reviewData.descriptionTwo : 'Love from Moms'
     const rbuttonLabel = data && data.reviewData && data.reviewData.buttonLabel ? data.reviewData.buttonLabel : 'Love from Moms'
     const rimages = data && data.reviewData && data.reviewData.images ? fetchImages(data.reviewData.images) : [M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13];
+
+    if (loading) {
+        return <StoriesHomeSkeleton />
+    }
+
   return (
     <div className="container">
         <div className="stories-home-container">
@@ -132,13 +138,13 @@ const StoriesHome = (props) => {
             <div className="reviews-text-container">
                 <img src={Shade} className="shade-con" alt="" />
                 <div className="label">{rLabel}</div>
-                <div className="review-text">{rdesc1}</div>
-                <div className="review-text">{rdesc2}</div>
+                <div className="review-text" dangerouslySetInnerHTML={{ __html: rdesc1 }}></div>
+                <div className="review-text" dangerouslySetInnerHTML={{ __html: rdesc2 }}></div>
                 <div className="reviewr-name">Jessica <br /> <span>Fort Worth, Texas</span></div>
                 <div className="progress-bar">
                     <span></span>
                 </div>
-                <button className='button-label' onClick={()=> navigate('/stories')}>{rbuttonLabel}</button>
+                <button className='button-label' onClick={()=> navigate(data && data.reviewData && data.reviewData.url)}>{rbuttonLabel}</button>
             </div>
         </div>
     </div>

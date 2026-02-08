@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './HomeVideoSection.css'
 import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
+import { VideoSectionSkeleton } from '../HomeSkeletonLoader/HomeSkeletonLoader'
 import { Play, Pause } from 'lucide-react'
 
-const HomeVideoSection = () => {
+const HomeVideoSection = (props) => {
+  const { loading } = props;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeVideo, setActiveVideo] = useState(0);
+  const [activeVideoUrl, setActiveVideoUrl] = useState(props.data && props.data.videos[0].videoUrl);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   
@@ -77,17 +80,18 @@ const HomeVideoSection = () => {
   };
 
   // Handle video change
-  const handleVideoChange = (index) => {
+  const handleVideoChange = (index, url) => {
     if (index === activeVideo) return;
     
     setIsLoading(true);
     setIsPlaying(false);
     setActiveVideo(index);
+    setActiveVideoUrl(url)
     
     // Scroll to video section
-    if (containerRef.current) {
-      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    // if (containerRef.current) {
+    //   containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // }
   };
 
   const togglePlayPause = () => {
@@ -102,20 +106,24 @@ const HomeVideoSection = () => {
     }
   };
 
+  if (loading) {
+    return <VideoSectionSkeleton />
+  }
+
   return (
     <div className="container" style={{marginBottom: '154px'}}>
         <div ref={contentRef} className={getFadeUpClass('fade-up-animation', contentVisible)}>
-            <h1 className="video-section-heading">See How It Works</h1>
+            <h1 className="video-section-heading">{props.data && props.data.heading.heading}</h1>
         </div>
         <div ref={contentRef} className={getFadeUpClass('fade-up-animation', contentVisible)} style={{animationDelay: '0.1s'}}>
             <div className="filters-section my-4">
-                {videos.map((video, index) => (
+                {props.data && props.data.videos.map((video, index) => (
                   <button 
                     key={video.id}
                     className={`filter-button ${activeVideo === index ? 'active' : ''}`}
-                    onClick={() => handleVideoChange(index)}
+                    onClick={() => handleVideoChange(index, video.videoUrl)}
                   >
-                    {video.title}
+                    {video.label}
                   </button>
                 ))}
             </div>
@@ -133,8 +141,8 @@ const HomeVideoSection = () => {
                 <div className="video" style={{ opacity: isLoading ? 0 : 1 }}>
                   <video
                     ref={videoRef}
-                    key={videos[activeVideo].url}
-                    src={videos[activeVideo].url}
+                    key={activeVideoUrl}
+                    src={activeVideoUrl}
                     muted
                     loop
                     playsInline

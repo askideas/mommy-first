@@ -52,6 +52,8 @@ const Home = () => {
   const [seeHowItWorks, setSeeHowItWorks] = useState(null)
   const [homeReviews, setHomeReviews] = useState(null)
   const [freeGuide, setFreeGuide] = useState(null)
+  const [textSectionData, setTextSectionData] = useState(null)
+  const [momsTrustData, setMomsTrustData] = useState(null)
 
   useEffect(() => {
     const fetchHomePageData = async () => {
@@ -65,6 +67,8 @@ const Home = () => {
         const howItWorks = await getSectionData('homepage', 'seehowworks')
         const reviews = await getSectionData('homepage', 'reviews')
         const guide = await getSectionData('homepage', 'freeguide')
+        const textSection = await getSectionData('homepage', 'textsection')
+        const momsTrust = await getSectionData('homepage', 'momstrust')
 
         setHeroSectionData(hero)
         setBundlesHome(bundles)
@@ -73,6 +77,8 @@ const Home = () => {
         setSeeHowItWorks(howItWorks)
         setHomeReviews(reviews)
         setFreeGuide(guide)
+        setTextSectionData(textSection)
+        setMomsTrustData(momsTrust)
       } catch (error) {
         console.error('🔥 HOME PAGE FETCH FAILED:', error)
       } finally {
@@ -121,22 +127,22 @@ const Home = () => {
       {!loading && <WelcomeModal isOpen={showWelcomeModal} onClose={handleWelcomeModalClose} />}
       {/* <Snowfall /> */}
 
-      <HeroSection data={heroSectionData} loading={loading} />
-      <HeroTextSection />
+      {heroSectionData && heroSectionData.isEnabled && <HeroSection data={heroSectionData} loading={loading} />}
+      {textSectionData && <HeroTextSection />}
 
-      <BundlesHome data={bundlesHome} loading={loading} />
-      <NewArrivals data={newArrivals} loading={loading} />
+      {bundlesHome && bundlesHome.isEnabled && <BundlesHome data={bundlesHome} loading={loading} />}
+      {newArrivals && newArrivals.isEnabled && <NewArrivals data={newArrivals} loading={loading} />}
 
-      <ImageCardContainer data={shopByCategory} loading={loading} />
+      {shopByCategory && shopByCategory.isEnabled && <ImageCardContainer data={shopByCategory} loading={loading} />}
 
-      <MommyFirstTrust />
+      {momsTrustData && momsTrustData.isEnabled && <MommyFirstTrust />}
 
-      <HomeVideoSection data={seeHowItWorks} loading={loading} />
-      <StoriesHome data={homeReviews} loading={loading} />
+      {seeHowItWorks && seeHowItWorks.isEnabled && <HomeVideoSection data={seeHowItWorks} loading={loading} />}
+      {homeReviews && homeReviews.isEnabled && <StoriesHome data={homeReviews} loading={loading} />}
 
       <ActivitiesHome />
 
-      <FreeGuide data={freeGuide} loading={loading} />
+      {freeGuide && freeGuide.isEnabled && <FreeGuide data={freeGuide} loading={loading} />}
       <MomsHub />
     </>
   )

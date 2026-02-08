@@ -2,6 +2,7 @@ import React from 'react'
 import './BundlesHome.css'
 import Heading from '../Heading/Heading'
 import { useFadeUpAnimation, getFadeUpClass } from '../../hooks/useFadeUpAnimation'
+import { BundlesHomeSkeleton } from '../HomeSkeletonLoader/HomeSkeletonLoader'
 import BG from '../../assets/BundlesHome/bg-image.png'
 import Badge from '../../assets/BundlesHome/badge.png'
 import ClockImg from '../../assets/BundlesHome/clock.png'
@@ -17,7 +18,7 @@ import { useNavigate } from 'react-router-dom'
 import BundlesRecommendedModal from '../BundlesRecommendedModal/BundlesRecommendedModal'
 
 const BundlesHome = (props) => {
-  const data = props.data;
+  const { data, loading } = props;
   const navigate = useNavigate();
   
   // Animation refs for each element group
@@ -57,13 +58,17 @@ const BundlesHome = (props) => {
     ]
   }
 
+  if (loading) {
+    return <BundlesHomeSkeleton />
+  }
+
   return (
     <div className="container" style={{marginBottom: '154px'}}>
         <div ref={headingRef} className={getFadeUpClass('fade-up-animation', headingVisible)}>
           <Heading data={headingData} />
         </div>
 
-        <div ref={containerRef} onClick={()=>navigate('/bundles')} className={getFadeUpClass('fade-up-animation', containerVisible)} style={{cursor: 'pointer'}}>
+        <div ref={containerRef} onClick={()=>navigate(data && data.image && data.image.link)} className={getFadeUpClass('fade-up-animation', containerVisible)} style={{cursor: 'pointer'}}>
           <div className="bundles-home-container">
             <img src={data && data.image && data.image.image ? data && data.image && data.image.image : BG} alt="" className='bg-image' />
             <img src={WebExc} alt="" className='website-exclusive' />
