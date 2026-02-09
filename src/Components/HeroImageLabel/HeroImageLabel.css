@@ -4,6 +4,7 @@
     border-radius: 16px;
     position: relative;
     margin: 80px 0;
+    box-shadow: 0px 15px 50px 0px #FF509940;
 
     img {
         width: 100%;
@@ -13,7 +14,7 @@
     }
 
     p {
-        font: 600 40px var(--font);
+        font: 300 40px var(--font);
         color: var(--white);
         margin: 0;
         position: absolute;

@@ -93,8 +93,9 @@
                 }
 
                 &.added {
-                    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-                    color: white;
+                    background: var(--green);
+                    color: var(--white);
+                    border: 0;
                 }
 
                 &.error {
@@ -387,15 +388,12 @@
 }
 
 .addtobag.out-of-stock-btn {
-    background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%) !important;
-    color: white !important;
+    background: #E7E7E7 !important;
+    color: #B3B3B3 !important;
     cursor: not-allowed !important;
     opacity: 1 !important;
-
-    &:hover {
-        background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%) !important;
-        transform: none;
-    }
+    border: 0;
+    box-shadow: none;
 }
 
 /* Responsive Out of Stock */

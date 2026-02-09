@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './Shop.css'
 import HeroImageLabel from '../../Components/HeroImageLabel/HeroImageLabel'
 import HeroImage from '../../assets/hero-label.png'
@@ -46,6 +46,24 @@ const Shop = () => {
     const [sortBy, setSortBy] = useState('FEATURED');
     const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [availabilityFilter, setAvailabilityFilter] = useState([]);
+    const sortDropdownRef = useRef(null);
+
+    // ============ CLICK OUTSIDE HANDLER FOR SORT DROPDOWN ============
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target)) {
+                setShowSortDropdown(false);
+            }
+        };
+
+        if (showSortDropdown) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showSortDropdown]);
 
     // ============ CONSTANTS ============
     const espotsIndex = [3, 5, 14];
@@ -499,7 +517,7 @@ const Shop = () => {
                             onClick={() => handleQuickFilterClick('ALL')}
                             disabled={loadingCollections}
                         >
-                            ALL
+                            Featured
                         </button>
                         {loadingCollections ? (
                             [...Array(4)].map((_, index) => (
@@ -531,7 +549,7 @@ const Shop = () => {
                     </div>
                     
                     <div className="d-flex align-items-center" style={{gap: '12px'}}>
-                        <div className="sort-dropdown-container">
+                        <div className="sort-dropdown-container" ref={sortDropdownRef}>
                             <button 
                                 className="sort-dropdown-btn" 
                                 onClick={() => setShowSortDropdown(!showSortDropdown)}

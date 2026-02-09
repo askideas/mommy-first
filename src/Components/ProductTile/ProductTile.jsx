@@ -155,10 +155,10 @@ const ProductTile = (props) => {
     return (
         <div className={`product-tile-container ${isOutOfStock ? 'out-of-stock' : ''}`} onClick={() => navigate(`/shop/${product.handle}`)}>
             <p className={`pt-label ${product.label ? '' : 'd-none'}`}>{product.label}</p>
-            {isOutOfStock && <span className="out-of-stock-badge">Out of Stock</span>}
+            {/* {isOutOfStock && <span className="out-of-stock-badge">Out of Stock</span>} */}
             <div className="prd-image-wrapper">
                 <img src={product.image || DefaultImg} alt="" className='prd-image' onError={(e) => e.target.src = DefaultImg} />
-                {isOutOfStock && <div className="out-of-stock-overlay"></div>}
+                {/* {isOutOfStock && <div className="out-of-stock-overlay"></div>} */}
             </div>
             <div className="product-details-con">
                 <p className="prd-name">{product.name || product.title}</p>
@@ -174,7 +174,12 @@ const ProductTile = (props) => {
                         ) : isAdding ? (
                             <><Loader2 className="spinner" size={14} /> Adding...</>
                         ) : isAdded ? (
-                            <><Check size={14} /> Added!</>
+                            <>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.0013 18.3337C14.6037 18.3337 18.3346 14.6027 18.3346 10.0003C18.3346 5.39795 14.6037 1.66699 10.0013 1.66699C5.39893 1.66699 1.66797 5.39795 1.66797 10.0003C1.66797 14.6027 5.39893 18.3337 10.0013 18.3337Z" fill="white"/>
+                                <path d="M5.90625 10L8.40625 12.5L13.4062 7.5" stroke="#5ED34B" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Added</>
                         ) : error ? (
                             error
                         ) : (
@@ -185,19 +190,19 @@ const ProductTile = (props) => {
                         <Loader2 className="wishlist-spinner" size={20} />
                     ) : (
                         <>
-                            <Heart 
+                            {!isOutOfStock && <Heart 
                                 className={`wishlist ${isInWishlist ? 'filled' : ''} ${isAuthenticated ? 'd-none' : ''}`}
                                 onClick={handleWishlist}
                                 data-bs-toggle={isAuthenticated ? undefined : "offcanvas"} 
                                 data-bs-target={isAuthenticated ? undefined : "#AuthenticationModal"} 
                                 fill={isInWishlist ? 'currentColor' : 'none'}
-                            />
+                            />}
 
-                            <Heart 
+                            {!isOutOfStock && <Heart 
                                 className={`wishlist ${isInWishlist ? 'filled' : ''} ${isAuthenticated ? '' : 'd-none'}`}
                                 onClick={handleWishlist}
                                 fill={isInWishlist ? 'currentColor' : 'none'}
-                            />
+                            />}
                         </>
                         
                     )}
