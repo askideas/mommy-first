@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import './ProductDetails.css'
 import { ChevronDown, ChevronRight, Eye, Heart, Minus, Plus, Loader2 } from 'lucide-react'
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
@@ -160,6 +160,11 @@ const ProductDetails = () => {
     const usageDescription = parseShopifyRichText(product?.metafields?.find(m => m.key === 'usage')?.value) || null;
     const compositionDescription = parseShopifyRichText(product?.metafields?.find(m => m.key === 'composition')?.value) || null;
     const careUseInfo = parseShopifyRichText(product?.metafields?.find(m => m.key === 'care_use_information')?.value) || null;
+    const viewCount = useMemo(() => {
+        const minViewCount = parseInt(product?.metafields?.find(m => m.key === 'minimum_view_count')?.value) || 800;
+        const maxViewCount = parseInt(product?.metafields?.find(m => m.key === 'maximum_view_count')?.value) || 1200;
+        return Math.floor(Math.random() * (maxViewCount - minViewCount + 1)) + minViewCount;
+    }, [product?.id]);
 
     const handleVariantSelect = (variant) => {
         setSelectedVariant(variant);
@@ -463,7 +468,7 @@ const ProductDetails = () => {
                                 <p className={`stock-details ${selectedVariant && !selectedVariant.availableForSale ? 'out-of-stock' : ''}`}>
                                     {selectedVariant && !selectedVariant.availableForSale ? 'Out of Stock' : 'In Stock'}
                                 </p>
-                                <p className="views-text"><Eye/> 79 People are viewing this right now</p>
+                                <p className="views-text"><Eye/> {viewCount} People are viewing this right now</p>
                                 <button className="share" onClick={handleShare}>
                                     Share
                                     <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
