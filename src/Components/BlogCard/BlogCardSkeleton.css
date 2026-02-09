@@ -11,7 +11,7 @@
 .skeleton-blog-image {
   width: 100%;
   height: 280px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -26,7 +26,7 @@
 .skeleton-blog-title {
   height: 20px;
   width: 85%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
@@ -35,7 +35,7 @@
 .skeleton-blog-title-short {
   height: 20px;
   width: 60%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
@@ -44,7 +44,7 @@
 .skeleton-blog-excerpt {
   height: 14px;
   width: 100%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
@@ -53,7 +53,7 @@
 .skeleton-blog-excerpt-short {
   height: 14px;
   width: 80%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
@@ -69,7 +69,7 @@
 .skeleton-blog-author {
   height: 12px;
   width: 30%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
@@ -78,7 +78,7 @@
 .skeleton-blog-button {
   height: 36px;
   width: 100px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 8px;
   animation: shimmer 1.5s infinite;

@@ -10,7 +10,7 @@
   width: 80px;
   height: 80px;
   border-radius: 8px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   flex-shrink: 0;
@@ -27,7 +27,7 @@
 .skeleton-search-name {
   height: 16px;
   width: 70%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
@@ -36,7 +36,7 @@
 .skeleton-search-price {
   height: 14px;
   width: 40%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: shimmer 1.5s infinite;

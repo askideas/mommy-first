@@ -1,6 +1,6 @@
 /* Base shimmer animation */
 .skeleton-shimmer {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
 }

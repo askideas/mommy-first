@@ -517,7 +517,7 @@ const Shop = () => {
                             onClick={() => handleQuickFilterClick('ALL')}
                             disabled={loadingCollections}
                         >
-                            Featured
+                            FEATURED
                         </button>
                         {loadingCollections ? (
                             [...Array(4)].map((_, index) => (
@@ -527,7 +527,7 @@ const Shop = () => {
                                     style={{
                                         width: '120px',
                                         height: '40px',
-                                        background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+                                        background: 'linear-gradient(90deg, var(--shade-loader) 25%, var(--shade-loader-dark) 50%, var(--shade-loader) 75%)',
                                         backgroundSize: '200% 100%',
                                         animation: 'shimmer 1.5s infinite',
                                         borderRadius: '8px',
