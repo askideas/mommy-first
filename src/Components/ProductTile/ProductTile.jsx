@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './ProductTile.css'
 import { Heart, Loader2, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import DefaultImg from '../../assets/default.png'
+import DefaultImg from '../../assets/default-images/product.png'
 import { useCart } from '../../contexts/CartContext'
 import { useAuth } from '../../contexts/AuthContext'
 import { addToWishlist, removeFromWishlist } from '../../services/userService'
@@ -162,7 +162,7 @@ const ProductTile = (props) => {
             </div>
             <div className="product-details-con">
                 <p className="prd-name">{product.name || product.title}</p>
-                <p className="prd-price">${product.price}USD</p>
+                {!isOutOfStock && <p className="prd-price">${product.price}USD</p>}
                 <div className='btn-section-con'>
                     <button 
                         className={`addtobag ${isAdded ? 'added' : ''} ${error ? 'error' : ''} ${isOutOfStock ? 'out-of-stock-btn' : ''}`}

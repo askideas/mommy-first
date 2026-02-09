@@ -563,7 +563,7 @@
     box-shadow: -16px 0px 16px 0px #3720354D;
     background: var(--white);
     border-radius: 24px 0 0 24px;
-    padding: 32px;
+    padding: 48px;
     display: flex;
     flex-direction: column;
 
@@ -738,6 +738,7 @@
         display: flex;
         gap: 16px;
         align-items: flex-end;
+        margin-top: -12px;
     }
 
     .price-input-group {
