@@ -65,12 +65,12 @@ const Footer = () => {
 
                     <div className="menu-item-section">
                         <p className='menu-heading'>Work With Us</p>
-                        <NavLink>Wholesale</NavLink>
-                        <NavLink>Retail Partners</NavLink>
                         <NavLink to="/af-marketing">Affiliates</NavLink>
-                        <NavLink>Healthcare Providers</NavLink>
+                        <NavLink className="button-pink" to="/enquiries">Retail Partners</NavLink>
+                        
+                        {/* <NavLink>Healthcare Providers</NavLink>
                         <NavLink to="tel:+97450330029">Call: +974 50330029</NavLink>
-                        <button className='button-pink'>Send an Email <Mail className='icon'/></button>
+                        <button className='button-pink'>Send an Email <Mail className='icon'/></button> */}
                     </div>
                 </div>
 
