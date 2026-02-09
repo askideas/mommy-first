@@ -27,6 +27,55 @@ import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider
 import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
 import SomeWentWrong from '../../assets/something-went-wrong.svg'
 
+// Helper to convert Shopify rich text JSON to HTML
+const parseShopifyRichText = (richText) => {
+    if (!richText) return '';
+    
+    let data = richText;
+    if (typeof richText === 'string') {
+        try {
+            data = JSON.parse(richText);
+        } catch (e) {
+            return richText; // Return as-is if not valid JSON
+        }
+    }
+    
+    const renderNode = (node) => {
+        if (!node) return '';
+        
+        if (node.type === 'text') {
+            let text = node.value || '';
+            if (node.bold) text = `<strong>${text}</strong>`;
+            if (node.italic) text = `<em>${text}</em>`;
+            if (node.underline) text = `<u>${text}</u>`;
+            return text;
+        }
+        
+        const children = node.children?.map(renderNode).join('') || '';
+        
+        switch (node.type) {
+            case 'root':
+                return children;
+            case 'paragraph':
+                return `<p>${children}</p>`;
+            case 'heading':
+                const level = node.level || 1;
+                return `<h${level}>${children}</h${level}>`;
+            case 'list':
+                const tag = node.listType === 'ordered' ? 'ol' : 'ul';
+                return `<${tag}>${children}</${tag}>`;
+            case 'list-item':
+                return `<li>${children}</li>`;
+            case 'link':
+                return `<a href="${node.url || '#'}" target="${node.target || '_self'}">${children}</a>`;
+            default:
+                return children;
+        }
+    };
+    
+    return renderNode(data);
+};
+
 const ProductDetails = () => {
     const { productHandle } = useParams();
     const navigate = useNavigate();
@@ -104,6 +153,11 @@ const ProductDetails = () => {
     }, [customer, product, wishlistHandles]);
 
     const productImages = product?.images?.map(img => img.url) || [pdp1, pdp2, pdp3, pdp4];
+    const shortDescriptionMetafield = product?.metafields?.find(m => m.key === 'short_description');
+    const shortDescriptionHtml = parseShopifyRichText(shortDescriptionMetafield?.value) || null;
+    const usageDescription = parseShopifyRichText(product?.metafields?.find(m => m.key === 'usage')?.value) || null;
+    const compositionDescription = parseShopifyRichText(product?.metafields?.find(m => m.key === 'composition')?.value) || null;
+    const careUseInfo = parseShopifyRichText(product?.metafields?.find(m => m.key === 'care_use_information')?.value) || null;
 
     const handleVariantSelect = (variant) => {
         setSelectedVariant(variant);
@@ -402,14 +456,9 @@ const ProductDetails = () => {
                         </div>
                         
                         <div className="details-body-section">
-                            <div className="product-short-description">
-                                <p>{product.description}</p>
-                            </div>
-
-                            {/* <div className="product-price-section">
-                                <p className="list-price">$29.99 USD</p>
-                                <p className="sale-price">$19.99 USD <span className='offer' >SAVE 55%</span></p>
-                            </div> */}
+                            {shortDescriptionHtml && <div className="product-short-description">
+                                <div dangerouslySetInnerHTML={{ __html: shortDescriptionHtml }} />
+                            </div>}
 
                             {/* Variants rendering */}
                             {product.variants?.length > 0 && (
@@ -452,7 +501,7 @@ const ProductDetails = () => {
                             
                             {/* Example: You can parse product.description for sections, or use metafields if available for accordion content. Keeping static for now. */}
                             <div className="accordion accordion-flush" id="productDetailsAccordian">
-                                <div className="accordion-item">
+                                {product.descriptionHtml && <div className="accordion-item">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                             Description
@@ -460,40 +509,50 @@ const ProductDetails = () => {
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
-                                    <div className="accordion-body">{product.description}</div>
+                                        <div className="accordion-body" dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
                                     </div>
-                                </div>
-                                {/* Add more sections as needed, e.g. Usage, Composition, etc. */}
+                                </div>}
+
+                                {usageDescription && <div className="accordion-item">
+                                    <h2 className="accordion-header">
+                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Usage
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                        <div className="accordion-body" dangerouslySetInnerHTML={{ __html: usageDescription }}></div>
+                                    </div>
+                                </div>}
+
+                                {compositionDescription && <div className="accordion-item">
+                                    <h2 className="accordion-header">
+                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Composition
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                        <div className="accordion-body" dangerouslySetInnerHTML={{ __html: compositionDescription }}></div>
+                                    </div>
+                                </div>}
+
+                                {careUseInfo && <div className="accordion-item">
+                                    <h2 className="accordion-header">
+                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Care & Use Information
+                                            <Plus />
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                        <div className="accordion-body" dangerouslySetInnerHTML={{ __html: careUseInfo }}></div>
+                                    </div>
+                                </div>}
+                                
                             </div>
                         </div>
                         
                         <div className="details-footer-section">
-                            {/* <div className="mf-features-section">
-                                <div className="feature">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10.0003 18.3333C14.6027 18.3333 18.3337 14.6023 18.3337 9.99996C18.3337 5.39759 14.6027 1.66663 10.0003 1.66663C5.39795 1.66663 1.66699 5.39759 1.66699 9.99996C1.66699 14.6023 5.39795 18.3333 10.0003 18.3333Z" fill="#5ED34B"/>
-                                        <path d="M5.9082 10L8.4082 12.5L13.4082 7.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <span>FREE Shipping</span>
-                                </div>
-
-                                <div className="feature">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10.0003 18.3333C14.6027 18.3333 18.3337 14.6023 18.3337 9.99996C18.3337 5.39759 14.6027 1.66663 10.0003 1.66663C5.39795 1.66663 1.66699 5.39759 1.66699 9.99996C1.66699 14.6023 5.39795 18.3333 10.0003 18.3333Z" fill="#5ED34B"/>
-                                        <path d="M5.9082 10L8.4082 12.5L13.4082 7.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <span>Hassle FREE Returns</span>
-                                </div>
-
-                                <div className="feature">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10.0003 18.3333C14.6027 18.3333 18.3337 14.6023 18.3337 9.99996C18.3337 5.39759 14.6027 1.66663 10.0003 1.66663C5.39795 1.66663 1.66699 5.39759 1.66699 9.99996C1.66699 14.6023 5.39795 18.3333 10.0003 18.3333Z" fill="#5ED34B"/>
-                                        <path d="M5.9082 10L8.4082 12.5L13.4082 7.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <span>Secure Payments</span>
-                                </div>
-                            </div> */}
-
                             <div className="add-to-cart-func-container">
                                 <button 
                                     className={`button-pink-center add-to-cart ${selectedVariant && !selectedVariant.availableForSale ? 'disabled' : ''}`}
