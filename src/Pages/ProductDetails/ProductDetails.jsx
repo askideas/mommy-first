@@ -26,6 +26,7 @@ import 'swiper/css/navigation'
 import AllBundlesSlider from '../../Components/AllBundlesSlider/AllBundlesSlider'
 import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
 import SomeWentWrong from '../../assets/something-went-wrong.svg'
+import { Offcanvas } from 'bootstrap'
 
 // Helper to convert Shopify rich text JSON to HTML
 const parseShopifyRichText = (richText) => {
@@ -318,10 +319,11 @@ const ProductDetails = () => {
     const handleWishlist = async () => {
         // Check if user is logged in
         if (!user || !customer) {
-            // Open login modal
-            const loginButton = document.querySelector('[data-bs-target="#AuthenticationModal"]');
-            if (loginButton) {
-                loginButton.click();
+            // Open login modal using Bootstrap Offcanvas API
+            const modalElement = document.getElementById('AuthenticationModal');
+            if (modalElement) {
+                const offcanvas = Offcanvas.getOrCreateInstance(modalElement);
+                offcanvas.show();
             }
             return;
         }
@@ -483,8 +485,6 @@ const ProductDetails = () => {
                                     <button 
                                         className={`wishlist ${isInWishlist ? 'active' : ''}`}
                                         onClick={handleWishlist}
-                                        data-bs-toggle={isAuthenticated ? undefined : "offcanvas"}
-                                        data-bs-target={isAuthenticated ? undefined : "#AuthenticationModal"}
                                     >
                                         <Heart fill={isInWishlist ? 'currentColor' : 'none'} />
                                     </button>
