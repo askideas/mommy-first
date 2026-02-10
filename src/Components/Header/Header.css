@@ -472,4 +472,8 @@
     .header .menu-action-icons-container { 
         margin-left: auto;
     }
+
+    .cart-notification-popup {
+        width: 300px !important;
+    }
 }
