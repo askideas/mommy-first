@@ -1,15 +1,75 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './BoughtTogether.css'
 import ItemImg from '../../assets/BundleRecom/item-img.png'
 import BoxImg from '../../assets/BundleRecom/box-img.png'
-import { Check, Plus } from 'lucide-react'
+import { Check, Plus, Loader2 } from 'lucide-react'
+import { useCart } from '../../contexts/CartContext'
+import { toast } from 'react-toastify'
 
 const BoughtTogether = (props) => {
     const data = props.data;
-    console.log("Bought Together" + data);
+    const { addToCart } = useCart();
+    const [isAdding, setIsAdding] = useState(false);
+    
     const tags = data && data.boughtTogetherProduct && data.boughtTogetherProduct.metafields ? data.boughtTogetherProduct.metafields.find(m => m.key === 'tags') : [];
     
     if (!data) return null;
+
+    const handleAddBothToCart = async () => {
+        if (isAdding) return;
+        
+        setIsAdding(true);
+        
+        try {
+            // Get variant IDs for both products (must be ProductVariant IDs, not Product IDs)
+            const currentVariantId = data.currentProduct.variantId;
+            const boughtTogetherVariantId = data.boughtTogetherProduct.variantId;
+            
+            if (!currentVariantId || !boughtTogetherVariantId) {
+                toast.error('Product variant not available', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+                setIsAdding(false);
+                return;
+            }
+            
+            // Add first product
+            const response1 = await addToCart([{ variantId: currentVariantId, quantity: 1 }]);
+            
+            if (!response1.success) {
+                toast.error(response1.message || 'Failed to add first product', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+                setIsAdding(false);
+                return;
+            }
+            
+            // Add second product
+            const response2 = await addToCart([{ variantId: boughtTogetherVariantId, quantity: 1 }]);
+            
+            if (response2.success) {
+                toast.success('Both products added to cart!', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(response2.message || 'Failed to add second product', {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                });
+            }
+        } catch (err) {
+            console.error('Add to cart error:', err);
+            toast.error('Something went wrong', {
+                autoClose: 1500,
+                hideProgressBar: true
+            });
+        } finally {
+            setIsAdding(false);
+        }
+    };
     
   return (
     <div className="container boughtTogetherCon" style={{marginBottom: '154px'}}>
@@ -47,7 +107,20 @@ const BoughtTogether = (props) => {
                 <div className="price-details-con">
                     <p>Total Price</p>
                     <p className="price">${Number(data.currentProduct.price.amount) + Number(data.boughtTogetherProduct.price.amount)}</p>
-                    <button className="button-pink-border">Add both to Bag +</button>
+                    <button 
+                        className="button-pink-border" 
+                        onClick={handleAddBothToCart}
+                        disabled={isAdding}
+                    >
+                        {isAdding ? (
+                            <>
+                                <Loader2 className="spinner" style={{ width: '16px', height: '16px', animation: 'spin 1s linear infinite' }} />
+                                Adding...
+                            </>
+                        ) : (
+                            'Add both to Bag +'
+                        )}
+                    </button>
                 </div>
             </div>
         </div>

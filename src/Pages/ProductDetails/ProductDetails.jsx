@@ -165,14 +165,19 @@ const ProductDetails = () => {
     const boughtTogetherMetafield = product?.metafields?.find(m => m.key === 'bought_together');
     const boughtTogetherData = useMemo(() => {
         if (!boughtTogetherMetafield?.productDetails) return null;
+        const boughtTogetherProduct = boughtTogetherMetafield.productDetails;
         return {
             currentProduct: {
                 id: product?.id,
+                variantId: selectedVariant?.id,
                 title: product?.title,
                 image: product?.images?.[0]?.url,
                 price: selectedVariant?.price
             },
-            boughtTogetherProduct: boughtTogetherMetafield.productDetails
+            boughtTogetherProduct: {
+                ...boughtTogetherProduct,
+                variantId: boughtTogetherProduct.variantId
+            }
         };
     }, [product, selectedVariant, boughtTogetherMetafield]);
     const shortDescriptionMetafield = product?.metafields?.find(m => m.key === 'short_description');
