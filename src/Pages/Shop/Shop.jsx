@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import './Shop.css'
 import HeroImageLabel from '../../Components/HeroImageLabel/HeroImageLabel'
 import HeroImage from '../../assets/hero-label.png'
@@ -9,13 +10,10 @@ import MomsReviewsSlider from '../../Components/MomsReviewsSlider/MomsReviewsSli
 import MomsMomentsSlider from '../../Components/MomsMomentsSlider/MomsMomentsSlider'
 import FaqSlider from '../../Components/FaqSlider/FaqSlider'
 import ProductsLoader from '../../Components/ProductsLoader/ProductsLoader'
-import EsImage1 from '../../assets/Hero/slider-img.png'
-import EsImage2 from '../../assets/Hero/hero1.png'
-import EsImage3 from '../../assets/Hero/hero2.png'
-import MF1 from '../../assets/MF1.png'
-import MF2 from '../../assets/MF2.png'
 import ErrorComponent from '../../Components/ErrorComponent/ErrorComponent'
 import SomeWentWrong from '../../assets/something-went-wrong.svg'
+import { db } from '../../firebase/config'
+import { doc, getDoc } from 'firebase/firestore'
 
 const Shop = () => {
     // ============ STATE MANAGEMENT ============
@@ -48,6 +46,10 @@ const Shop = () => {
     const [availabilityFilter, setAvailabilityFilter] = useState([]);
     const sortDropdownRef = useRef(null);
 
+    // Espots State
+    const [espots, setEspots] = useState([]);
+    const [shopHeroImage, setShopHeroImage] = useState([]);
+
     // ============ CLICK OUTSIDE HANDLER FOR SORT DROPDOWN ============
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -65,9 +67,44 @@ const Shop = () => {
         };
     }, [showSortDropdown]);
 
-    // ============ CONSTANTS ============
-    const espotsIndex = [3, 5, 14];
-    const espotImages = [MF1, MF2, EsImage1];
+    // ============ FETCH ESPOTS FROM FIREBASE ============
+    const fetchEspots = async () => {
+        try {
+            const espotsDocRef = doc(db, 'shoppage', 'espots');
+            const espotsDocSnap = await getDoc(espotsDocRef);
+            
+            if (espotsDocSnap.exists()) {
+                const data = espotsDocSnap.data();
+                // Sort espots by index
+                const sortedEspots = (data.espots || []).sort((a, b) => 
+                    parseInt(a.index) - parseInt(b.index)
+                );
+                setEspots(sortedEspots);
+                console.log('Espots fetched:', sortedEspots);
+            } else {
+                console.log('No espots document found');
+            }
+        } catch (error) {
+            console.error('Error fetching espots:', error);
+        }
+    };
+
+    const fetchShopHero = async () => {
+        try {
+            const espotsDocRef = doc(db, 'shoppage', 'herosection');
+            const espotsDocSnap = await getDoc(espotsDocRef);
+            
+            if (espotsDocSnap.exists()) {
+                const data = espotsDocSnap.data();
+                setShopHeroImage(data);
+                console.log('Shop Hero Data fetched:', data);
+            } else {
+                console.log('No espots document found');
+            }
+        } catch (error) {
+            console.error('Error fetching espots:', error);
+        }
+    };
 
     const sortOptions = [
         { id: 'FEATURED', label: 'Featured' },
@@ -454,6 +491,10 @@ const Shop = () => {
     // ============ INITIALIZE ON MOUNT ============
     useEffect(() => {
         const initializeProducts = async () => {
+            // Fetch espots from Firebase
+            await fetchEspots();
+            await fetchShopHero();
+            
             const token = await fetchAuthToken();
             if (token) {
                 await fetchCollections(token);
@@ -475,18 +516,30 @@ const Shop = () => {
             );
             
             const productPosition = index + 1;
-            const espotIndexPosition = espotsIndex.indexOf(productPosition);
+            // Find espot that should appear after this product position
+            const espot = espots.find(e => parseInt(e.index) === productPosition);
             
-            if (espotIndexPosition !== -1 && productPosition <= displayedProducts.length) {
-                items.push(
-                    <div className="espot-container" key={`espot-${productPosition}`}>
+            if (espot && productPosition <= displayedProducts.length) {
+                const espotContent = (
+                    <div className="espot-container" key={`espot-${espot.id}`}>
                         <img 
-                            src={espotImages[espotIndexPosition % espotImages.length]} 
-                            alt={`Espot ${espotIndexPosition + 1}`}
+                            src={espot.image} 
+                            alt={`Espot ${productPosition}`}
                             className="espot-image"
                         />
                     </div>
                 );
+                
+                // Wrap with Link if link is provided
+                if (espot.link) {
+                    items.push(
+                        <Link to={espot.link} key={`espot-link-${espot.id}`} className="espot-link">
+                            {espotContent}
+                        </Link>
+                    );
+                } else {
+                    items.push(espotContent);
+                }
             }
         });
         return items;
@@ -498,8 +551,8 @@ const Shop = () => {
 
     // ============ HERO LABEL ============
     const HeroLabel = {
-        image: HeroImage,
-        text: 'Designed to Maximize Comfort for Expecting Moms',
+        image: shopHeroImage && shopHeroImage.heroData ? shopHeroImage.heroData.image : '',
+        text: shopHeroImage && shopHeroImage.heroData ? shopHeroImage.heroData.heading : '',
         height: 280,
         pwidth: 487,
     };

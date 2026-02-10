@@ -19,7 +19,7 @@ const FreeGuide = (props) => {
     <div className="container">
         <div className="free-guide-container" onClick={()=>navigate(data && data.guideData && data.guideData.url)}>
             <div className="content-container-sec">
-                <img src={Image} alt="" className='section-image'/>
+                <img src={data && data.guideData && data.guideData.backgroundImage ? data.guideData.backgroundImage :''} alt="" className='section-image'/>
                 <div className="contents-sec">
                     <img src={FreeTag} alt="" />
                     <div className="heading-sec">
