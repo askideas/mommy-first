@@ -192,8 +192,9 @@
                 gap: 12px;
                 box-shadow: 0px 4px 0px 0px #FD8CBB;
                 backdrop-filter: blur(10px);
-                animation: slideInNotification 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                animation: flyoutPopup 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
                 z-index: 100;
+                transform-origin: top right;
 
                 &::before {
                     content: '';
@@ -269,28 +270,6 @@
             }
         }
 
-        @keyframes slideInNotification {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes imagePopIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
         .wishlist-icon-wrapper {
             position: relative;
             display: flex;
@@ -326,6 +305,45 @@
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@keyframes flyoutPopup {
+    0% {
+        opacity: 0;
+        transform: translateX(100%) translateY(-10px) scale(0.3) rotate(5deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-10px) translateY(0) scale(1.05) rotate(-1deg);
+    }
+    70% {
+        transform: translateX(5px) translateY(0) scale(0.98) rotate(0.5deg);
+    }
+    85% {
+        transform: translateX(-2px) translateY(0) scale(1.01) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes imagePopIn {
+    0% {
+        transform: scale(0) rotate(-10deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.15) rotate(3deg);
+        opacity: 1;
+    }
+    80% {
+        transform: scale(0.95) rotate(-1deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
     }
 }
 

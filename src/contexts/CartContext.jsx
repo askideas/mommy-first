@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
 
     // Show cart notification with product details
     const showCartNotification = (productName, productImage = null) => {
-        setCartNotification({ name: productName, image: productImage })
+        setCartNotification({ name: productName, image: productImage, timestamp: Date.now() })
         setTimeout(() => {
             setCartNotification(null)
         }, 4000)

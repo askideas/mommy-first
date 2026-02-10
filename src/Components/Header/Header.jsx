@@ -83,7 +83,7 @@ const Header = () => {
                             <span className="cart-count-badge">{totalQuantity > 99 ? '99+' : totalQuantity}</span>
                         )}
                         {cartNotification && (
-                            <div className="cart-notification-popup">
+                            <div className="cart-notification-popup" key={cartNotification.timestamp || Date.now()}>
                                 {cartNotification.image && (
                                     <div className="cart-notification-image">
                                         <img src={cartNotification.image} alt="" />
