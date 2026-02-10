@@ -95,6 +95,11 @@ const ProductDetails = () => {
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [showShareModal, setShowShareModal] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [openAccordion, setOpenAccordion] = useState(null);
+
+    const toggleAccordion = (id) => {
+        setOpenAccordion(openAccordion === id ? null : id);
+    };
 
     useEffect(() => {
         const fetchAuthToken = async () => {
@@ -156,6 +161,20 @@ const ProductDetails = () => {
     }, [customer, product, wishlistHandles]);
 
     const productImages = product?.images?.map(img => img.url) || [pdp1, pdp2, pdp3, pdp4];
+    const boughtInPast = product?.metafields?.find(m => m.key === 'bought_in_past');
+    const boughtTogetherMetafield = product?.metafields?.find(m => m.key === 'bought_together');
+    const boughtTogetherData = useMemo(() => {
+        if (!boughtTogetherMetafield?.productDetails) return null;
+        return {
+            currentProduct: {
+                id: product?.id,
+                title: product?.title,
+                image: product?.images?.[0]?.url,
+                price: selectedVariant?.price
+            },
+            boughtTogetherProduct: boughtTogetherMetafield.productDetails
+        };
+    }, [product, selectedVariant, boughtTogetherMetafield]);
     const shortDescriptionMetafield = product?.metafields?.find(m => m.key === 'short_description');
     const shortDescriptionHtml = parseShopifyRichText(shortDescriptionMetafield?.value) || null;
     const usageDescription = parseShopifyRichText(product?.metafields?.find(m => m.key === 'usage')?.value) || null;
@@ -511,6 +530,17 @@ const ProductDetails = () => {
                                 <div dangerouslySetInnerHTML={{ __html: shortDescriptionHtml }} />
                             </div>}
 
+                            <p className="stock-left-and-bough-in-past">
+                                {selectedVariant?.availableForSale && 
+                                 selectedVariant?.availableQuantity >= 1 && 
+                                 selectedVariant?.availableQuantity <= 10 && (
+                                    <span className="stockleft">Only {selectedVariant.availableQuantity} left</span>
+                                )}
+                                {boughtInPast?.value && (
+                                    <span className="bought-in-past">{boughtInPast.value} bought in past month</span>
+                                )}
+                            </p>
+
                             {/* Variants rendering */}
                             {product.variants?.length > 0 && (
                                 <div className="product-variations-container">
@@ -554,48 +584,72 @@ const ProductDetails = () => {
                             <div className="accordion accordion-flush" id="productDetailsAccordian">
                                 {product.descriptionHtml && <div className="accordion-item">
                                     <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <button 
+                                            className={`accordion-button ${openAccordion !== 'description' ? 'collapsed' : ''}`} 
+                                            type="button" 
+                                            onClick={() => toggleAccordion('description')}
+                                            aria-expanded={openAccordion === 'description'}
+                                            aria-controls="flush-collapseOne"
+                                        >
                                             Description
-                                            <Plus />
+                                            {openAccordion === 'description' ? <Minus /> : <Plus />}
                                         </button>
                                     </h2>
-                                    <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div id="flush-collapseOne" className={`accordion-collapse collapse ${openAccordion === 'description' ? 'show' : ''}`}>
                                         <div className="accordion-body" dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
                                     </div>
                                 </div>}
 
                                 {usageDescription && <div className="accordion-item">
                                     <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        <button 
+                                            className={`accordion-button ${openAccordion !== 'usage' ? 'collapsed' : ''}`} 
+                                            type="button" 
+                                            onClick={() => toggleAccordion('usage')}
+                                            aria-expanded={openAccordion === 'usage'}
+                                            aria-controls="flush-collapseTwo"
+                                        >
                                             Usage
-                                            <Plus />
+                                            {openAccordion === 'usage' ? <Minus /> : <Plus />}
                                         </button>
                                     </h2>
-                                    <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div id="flush-collapseTwo" className={`accordion-collapse collapse ${openAccordion === 'usage' ? 'show' : ''}`}>
                                         <div className="accordion-body" dangerouslySetInnerHTML={{ __html: usageDescription }}></div>
                                     </div>
                                 </div>}
 
                                 {compositionDescription && <div className="accordion-item">
                                     <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                        <button 
+                                            className={`accordion-button ${openAccordion !== 'composition' ? 'collapsed' : ''}`} 
+                                            type="button" 
+                                            onClick={() => toggleAccordion('composition')}
+                                            aria-expanded={openAccordion === 'composition'}
+                                            aria-controls="flush-collapseThree"
+                                        >
                                             Composition
-                                            <Plus />
+                                            {openAccordion === 'composition' ? <Minus /> : <Plus />}
                                         </button>
                                     </h2>
-                                    <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div id="flush-collapseThree" className={`accordion-collapse collapse ${openAccordion === 'composition' ? 'show' : ''}`}>
                                         <div className="accordion-body" dangerouslySetInnerHTML={{ __html: compositionDescription }}></div>
                                     </div>
                                 </div>}
 
                                 {careUseInfo && <div className="accordion-item">
                                     <h2 className="accordion-header">
-                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                        <button 
+                                            className={`accordion-button ${openAccordion !== 'careUse' ? 'collapsed' : ''}`} 
+                                            type="button" 
+                                            onClick={() => toggleAccordion('careUse')}
+                                            aria-expanded={openAccordion === 'careUse'}
+                                            aria-controls="flush-collapseFour"
+                                        >
                                             Care & Use Information
-                                            <Plus />
+                                            {openAccordion === 'careUse' ? <Minus /> : <Plus />}
                                         </button>
                                     </h2>
-                                    <div id="flush-collapseFour" className="accordion-collapse collapse" data-bs-parent="#productDetailsAccordian">
+                                    <div id="flush-collapseFour" className={`accordion-collapse collapse ${openAccordion === 'careUse' ? 'show' : ''}`}>
                                         <div className="accordion-body" dangerouslySetInnerHTML={{ __html: careUseInfo }}></div>
                                     </div>
                                 </div>}
@@ -649,7 +703,7 @@ const ProductDetails = () => {
             </div>
         </div>
 
-        {/* <BoughtTogether /> */}
+        {boughtTogetherData && <BoughtTogether data={boughtTogetherData} />}
 
         <div className="container">
             <div className="product-all-images-container">

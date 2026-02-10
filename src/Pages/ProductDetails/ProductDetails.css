@@ -982,3 +982,28 @@
         height: 45px;
     }
 }
+
+.stock-left-and-bough-in-past {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid var(--pink-border);
+    column-gap: 18px;
+
+    .stockleft {
+        width: fit-content;
+        height: fit-content;
+        background: var(--orange-shade);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font: 400 10px var(--font);
+        color: var(--white);
+    }
+
+    .bought-in-past {
+        font: 600 10px var(--font);
+        color: var(--primary-pink);
+    }
+}
