@@ -191,23 +191,23 @@ const Enquiries = () => {
                     <p className="desc-txt">{partnershipPitch?.partnershipData.description || 'We are the only postpartum brand backed by the global logistics and medical expertise of NeoMed USA. With distribution hubs in New York (Global HQ), Bucharest (EU), Qatar (GCC), and Mumbai (India), we offer unshakeable supply chain reliability for major retailers and hospital networks.'}</p>
                 </div>
 
-                <div class="accordion" id="enquiresAccordian">
+                <div className="accordion" id="enquiresAccordian">
                     {
                         accordionItems.map((item,index)=> {
                             return (
-                                <div class="accordion-item" key={index}>
-                                    <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#panelsStayOpen-collapse${item.id}`} aria-expanded="true" aria-controls={`panelsStayOpen-collapse${item.id}`}>
+                                <div className="accordion-item" key={index}>
+                                    <h2 className="accordion-header">
+                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#panelsStayOpen-collapse${item.id}`} aria-expanded="true" aria-controls={`panelsStayOpen-collapse${item.id}`}>
                                         <p className='heading-txt'><img src={item.questionIcon} alt="" /> {item.question}</p> <button className="icon-con"><ChevronDown className='' /></button>
                                     </button>
                                     </h2>
-                                    <div id={`panelsStayOpen-collapse${item.id}`} class="accordion-collapse collapse show">
-                                        <div class="accordion-body" dangerouslySetInnerHTML={{ __html: item.answer }}></div>
+                                    <div id={`panelsStayOpen-collapse${item.id}`} className="accordion-collapse collapse show">
+                                        <div className="accordion-body" dangerouslySetInnerHTML={{ __html: item.answer }}></div>
                                         <div className="active-items-section">
                                             {
-                                                item.activeItems.map((label, index)=> {
+                                                item.activeItems.map((label, idx)=> {
                                                     return (
-                                                        <div className={`active-item ${item.activeItems.length > 1 ? 'multiple' : 'single'} `}>
+                                                        <div key={idx} className={`active-item ${item.activeItems.length > 1 ? 'multiple' : 'single'} `}>
                                                             <p className="label">{label.label}</p>
                                                             <div className="active-value">
                                                                 <span>{label.value}</span>

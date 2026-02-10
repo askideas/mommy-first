@@ -255,3 +255,358 @@
         height: 40px;
     }
 }
+
+/* ============ TABLET RESPONSIVE (768px - 1024px) ============ */
+@media screen and (max-width: 1024px) {
+    .enquiry-section-con {
+        width: 100%;
+        max-width: 700px;
+        padding: 32px;
+        margin: 40px auto;
+
+        .heading-sec {
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 12px;
+            margin-bottom: 24px;
+
+            .head {
+                span {
+                    font-size: 22px;
+                }
+            }
+        }
+
+        .head-txt {
+            font-size: 20px;
+        }
+
+        .desc-txt {
+            font-size: 15px;
+        }
+    }
+
+    #enquiresAccordian {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto 40px auto;
+
+        .accordion-item {
+            padding: 32px;
+        }
+
+        .accordion-header {
+            .accordion-button {
+                font-size: 22px;
+
+                .heading-txt {
+                    img {
+                        width: 28px;
+                        height: 28px;
+                    }
+                }
+
+                .icon-con {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+        }
+
+        .accordion-body {
+            font-size: 15px;
+        }
+
+        .active-items-section {
+            flex-direction: column;
+            row-gap: 16px;
+
+            .active-item {
+                &.multiple {
+                    &:first-child {
+                        width: 100%;
+                        border-right: none;
+                        border-bottom: 1.5px solid var(--pink-border);
+                        padding-right: 0;
+                        padding-bottom: 16px;
+                    }
+
+                    &:last-child {
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .enquiries-contact-section {
+        width: 100%;
+        max-width: 700px;
+        padding: 32px;
+        margin: 0 auto 100px auto;
+
+        p {
+            font-size: 22px;
+            text-align: center;
+        }
+    }
+}
+
+/* ============ MOBILE RESPONSIVE (below 768px) ============ */
+@media screen and (max-width: 768px) {
+    .enquiry-section-con {
+        width: calc(100% - 32px);
+        max-width: 100%;
+        padding: 24px;
+        margin: 30px 16px;
+        border-radius: 16px;
+
+        .heading-sec {
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+
+            .head {
+                img {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                span {
+                    font-size: 18px;
+                }
+            }
+
+            .subhead {
+                span {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .head-txt {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .desc-txt {
+            font-size: 14px;
+            line-height: 22px;
+        }
+    }
+
+    #enquiresAccordian {
+        width: calc(100% - 32px);
+        max-width: 100%;
+        margin: 0 16px 30px 16px;
+        border-radius: 16px;
+
+        .accordion-item {
+            padding: 20px;
+
+            &:first-child {
+                border-radius: 16px 16px 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 16px 16px;
+            }
+        }
+
+        .accordion-header {
+            .accordion-button {
+                font-size: 16px;
+                gap: 12px;
+
+                .heading-txt {
+                    font-size: 16px;
+                    
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+
+                .icon-con {
+                    width: 32px;
+                    height: 32px;
+                    min-width: 32px;
+                    border-radius: 8px;
+                    padding: 6px;
+                }
+            }
+        }
+
+        .accordion-body {
+            font-size: 14px;
+            line-height: 22px;
+            padding: 14px 0;
+        }
+
+        .active-items-section {
+            flex-direction: column;
+            row-gap: 12px;
+            padding: 12px;
+
+            .active-item {
+                .label {
+                    font-size: 11px;
+                    margin-bottom: 4px;
+                }
+
+                .active-value {
+                    flex-wrap: wrap;
+                    gap: 8px;
+
+                    span {
+                        font-size: 14px;
+                        word-break: break-all;
+                    }
+
+                    button {
+                        padding: 4px 8px;
+
+                        span {
+                            font-size: 8px;
+                            height: auto;
+                        }
+                    }
+                }
+
+                &.multiple {
+                    &:first-child {
+                        width: 100%;
+                        border-right: none;
+                        border-bottom: 1.5px solid var(--pink-border);
+                        padding-right: 0;
+                        padding-bottom: 12px;
+                    }
+
+                    &:last-child {
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .enquiries-contact-section {
+        width: calc(100% - 32px);
+        max-width: 100%;
+        padding: 24px;
+        margin: 0 16px 80px 16px;
+        border-radius: 16px;
+
+        p {
+            font-size: 18px;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        button {
+            width: 100%;
+            max-width: 280px;
+        }
+    }
+}
+
+/* ============ SMALL MOBILE RESPONSIVE (below 480px) ============ */
+@media screen and (max-width: 480px) {
+    .enquiry-section-con {
+        padding: 20px;
+
+        .heading-sec {
+            .head {
+                img {
+                    width: 28px;
+                    height: 28px;
+                }
+
+                span {
+                    font-size: 16px;
+                }
+            }
+
+            .subhead {
+                svg {
+                    width: 14px;
+                    height: 14px;
+                    min-width: 14px;
+                    min-height: 14px;
+                }
+
+                span {
+                    font-size: 11px;
+                }
+            }
+        }
+
+        .head-txt {
+            font-size: 16px;
+        }
+
+        .desc-txt {
+            font-size: 13px;
+            line-height: 20px;
+        }
+    }
+
+    #enquiresAccordian {
+        .accordion-item {
+            padding: 16px;
+        }
+
+        .accordion-header {
+            .accordion-button {
+                font-size: 14px;
+
+                .heading-txt {
+                    font-size: 14px;
+
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .icon-con {
+                    width: 28px;
+                    height: 28px;
+                    min-width: 28px;
+                }
+            }
+        }
+
+        .accordion-body {
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        .active-items-section {
+            padding: 10px;
+
+            .active-item {
+                .active-value {
+                    span {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+
+    .enquiries-contact-section {
+        padding: 20px;
+
+        p {
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+}
