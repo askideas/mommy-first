@@ -4,7 +4,7 @@ import Heart from '../../assets/profile/heart.svg'
 import { Loader2, Heart as HeartIcon } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { getWishlist, removeFromWishlistNew } from '../../services/userService'
-import WishlistProductTile from '../WishlistProductTile/WishlistProductTile'
+import WishlistListItem from '../WishlistListItem/WishlistListItem'
 import { toast } from 'react-toastify'
 import WishlistImage from '../../assets/wishlist-heart-image.svg'
 import { useNavigate } from 'react-router-dom'
@@ -96,9 +96,9 @@ const WishlistSection = () => {
                         <button className='button-pink-center' onClick={()=>navigate('/shop')}>RETURN TO SHOP</button>
                     </div>
                 ) : (
-                    <div className="wishlist-products-grid">
+                    <div className="wishlist-products-list">
                         {wishlistItems.map((product) => (
-                            <WishlistProductTile 
+                            <WishlistListItem 
                                 key={product.id} 
                                 data={product}
                                 onRemove={handleRemoveFromWishlist}
