@@ -25,6 +25,8 @@ import Email from '../../assets/carehub/email.svg'
 import CareGuideImage from '../../assets/carehub/care-guide-img.png'
 import { getLiveSessions, getJournals } from '../../services/blogService'
 import { useFadeUpAnimation } from '../../hooks/useFadeUpAnimation'
+import { db } from '../../firebase/config'
+import { doc, getDoc } from 'firebase/firestore'
 
 const CareHub = () => {
   const navigate = useNavigate()
@@ -35,6 +37,12 @@ const CareHub = () => {
   const [journalsData, setJournalsData] = useState([])
   const [isLoadingSessions, setIsLoadingSessions] = useState(true)
   const [isLoadingJournals, setIsLoadingJournals] = useState(true)
+  const [heroLabelImages, setHeroLableImages] = useState([Calendar, Heart, File])
+
+  // CareHub page data from Firebase
+  const [heroSectionData, setHeroSectionData] = useState(null)
+  const [careGuidesData, setCareGuidesData] = useState(null)
+  const [isLoadingCareHub, setIsLoadingCareHub] = useState(true)
 
   // Animation refs
   const [heroRef, heroVisible] = useFadeUpAnimation(0.1, true)
@@ -47,7 +55,33 @@ const CareHub = () => {
   useEffect(() => {
     fetchLiveSessions()
     fetchJournals()
+    fetchCareHubPageData()
   }, [])
+
+  const fetchCareHubPageData = async () => {
+    setIsLoadingCareHub(true)
+    try {
+      // Fetch herosection document
+      const heroDocRef = doc(db, 'carehubpage', 'herosection')
+      const heroDocSnap = await getDoc(heroDocRef)
+      if (heroDocSnap.exists()) {
+        setHeroSectionData(heroDocSnap.data())
+        console.log('Hero Section Data:', heroDocSnap.data())
+      }
+
+      // Fetch careguides document
+      const careGuidesDocRef = doc(db, 'carehubpage', 'careguides')
+      const careGuidesDocSnap = await getDoc(careGuidesDocRef)
+      if (careGuidesDocSnap.exists()) {
+        setCareGuidesData(careGuidesDocSnap.data())
+        console.log('Care Guides Data:', careGuidesDocSnap.data())
+      }
+    } catch (error) {
+      console.error('Failed to fetch carehub page data:', error)
+    } finally {
+      setIsLoadingCareHub(false)
+    }
+  }
 
   // Scroll to care guides section if hash is #careguides
   useEffect(() => {
@@ -134,96 +168,57 @@ const CareHub = () => {
   return (
     <div className="container">
         <div ref={heroRef} className={`carehub-hero-section ${heroVisible ? 'animate-in' : ''}`}>
-            <h1 className="heading">CARE HUB</h1>
-            <h2 className="subheading">Support for every stage <br /> of motherhood.</h2>
+            <h1 className="heading">{heroSectionData && heroSectionData.heroContent.heading}</h1>
+            <h2 className="subheading" dangerouslySetInnerHTML={{ __html: heroSectionData && heroSectionData.heroContent.subheading }}></h2>
             <div className="hero-section-image-round">
                 <img src={Pinkround} alt="" className='pink-round' />
                 <img src={CenterShade} alt="" className="center-shade" />
-                <img src={MainImage} alt="" className="main-human-image" />
-                <div className="floating-div-con one">
-                    <img src={Img1} alt="" className='avatar-img' />
-                    <div className="text-con">
-                        <p className="text-desc">Ann, just downloaded <span>Ultimate Postpartum Recovery Guide</span> </p>
-                        <p className="text-details">
-                            <span className="name">Florida, USA</span>
-                            <span className="time">Just now</span>
-                        </p>
-                    </div>
-                </div>
-                <div className="floating-div-con two">
-                    <img src={Img2} alt="" className='avatar-img' />
-                    <div className="text-con">
-                        <p className="text-desc">Maria, downloaded <span>Hospital Bag Checklist</span> </p>
-                        <p className="text-details">
-                            <span className="name">Florida, USA</span>
-                            <span className="time">2m</span>
-                        </p>
-                    </div>
-                </div>
-                <div className="floating-div-con three">
-                    <img src={Img3} alt="" className='avatar-img' />
-                    <div className="text-con">
-                        <p className="text-desc">Jessica, downloaded <span>Postpartum Hygiene Checklist</span> </p>
-                        <p className="text-details">
-                            <span className="name">Florida, USA</span>
-                            <span className="time">2m</span>
-                        </p>
-                    </div>
-                </div>
-                <div className="floating-div-con four">
-                    <img src={Img4} alt="" className='avatar-img' />
-                    <div className="text-con">
-                        <p className="text-desc">Ann, just downloaded <span>Ultimate Postpartum Recovery Guide</span> </p>
-                        <p className="text-details">
-                            <span className="name">Florida, USA</span>
-                            <span className="time green">Just now</span>
-                        </p>
-                    </div>
-                </div>
-                <div className="floating-div-con five">
-                    <img src={Img5} alt="" className='avatar-img' />
-                    <div className="text-con">
-                        <p className="text-desc">Maria, downloaded <span>Hospital Bag Checklist</span> </p>
-                        <p className="text-details">
-                            <span className="name">Florida, USA</span>
-                            <span className="time">2m</span>
-                        </p>
-                    </div>
-                </div>
+                <img src={heroSectionData && heroSectionData.heroContent.image} alt="" className="main-human-image" />
+                {
+                    heroSectionData && heroSectionData.bubbles.map((bubble, index)=> {
+                        return (
+                            <div className={`floating-div-con ${index+1 == 1 && 'one'} ${index+1 == 2 && 'two'} ${index+1 == 3 && 'three'} ${index+1 == 4 && 'four'} ${index+1 == 5 && 'five'}`} key={index}>
+                                <img src={bubble.image} alt="" className='avatar-img' />
+                                <div className="text-con">
+                                    <p className="text-desc" dangerouslySetInnerHTML={{ __html: bubble.description }}></p>
+                                    <p className="text-details">
+                                        <span className="name">{bubble.location}</span>
+                                        <span className="time">{bubble.time}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        )
+                        
+                    })
+                }
             </div>
 
             <div ref={labelsRef} className={`labels-sec-con ${labelsVisible ? 'animate-in' : ''}`}>
-                <div className="label-item-sec">
-                    <img src={Calendar} alt="" className="image" />
-                    <p className="text-con-sec">
-                        <span className='active'>FREE</span>
-                        <span>with Sign-up</span>
-                    </p>
-                </div>
-
-                <div className="label-item-sec">
-                    <img src={Heart} alt="" className="image" />
-                    <p className="text-con-sec">
-                        <span>Rated 100%</span>
-                        <span>positive by moms</span>
-                    </p>
-                </div>
-
-                <div className="label-item-sec">
-                    <img src={File} alt="" className="image" />
-                    <p className="text-con-sec">
-                        <span>Downloaded by</span>
-                        <span>99% of moms</span>
-                    </p>
-                </div>
+                {
+                    heroSectionData && heroSectionData.labelItems.map((label, index)=> {
+                        return (
+                            <div className="label-item-sec">
+                                <img src={heroLabelImages[index]} alt="" className="image" />
+                                <p className="text-con-sec">
+                                    <span className={`${index==0 && 'active'}`}>{label.label1}</span>
+                                    <span>{label.label2}</span>
+                                </p>
+                            </div>
+                        )
+                    })
+                }
             </div>
 
-            <p className="care-hero-desc">Thoughtfully created care guides, expert-led education, and <br /> gentle movement—hosted by Mommy First.</p>
+            <p className="care-hero-desc" dangerouslySetInnerHTML={{ __html: heroSectionData && heroSectionData.heroContent.description }}></p>
 
             <div className="care-hub-hero-btn-sec">
-                <button className='button-pink-center care-btn' onClick={() => scrollToSection('.care-hub-section-container', '#careguides')}>Care Guides</button>
-                <button className='button-pink-border jour-btn' onClick={() => scrollToSection('.carehub-journal-section', '#journal')}>The Journal</button>
-                <button className='button-pink-center live-btn' onClick={() => scrollToSection('.carehub-live-section', '#live-sessions')}>LIVE Sessions</button>
+                {
+                    heroSectionData && heroSectionData.buttons.map((button, index)=> {
+                        return (
+                            <button className={`${index==0 || index==2 ? 'button-pink-center' : 'button-pink-border'} ${index==0 ? 'care-btn' : ''} ${index==1 ? 'jour-btn' : ''} ${index==2 ? 'live-btn' : ''}`} key={index} onClick={() => scrollToSection('.care-hub-section-container', `${button.link}`)}>{button.label}</button>
+                        )
+                    })
+                }
             </div>
         </div>
 
@@ -234,64 +229,46 @@ const CareHub = () => {
             <div className="care-guide-content-con">
                 <div className="left-section">
                     <p className="labels-section-in-con">
-                        <span className="active-green">FREE</span>
-                        <span className='active-green-shade'>10.2k Downloads</span>
-                        <span className="active-brown"><Star />Featured</span>
+                        <span className="active-green">{careGuidesData && careGuidesData.leftSection.label1}</span>
+                        <span className='active-green-shade'>{careGuidesData && careGuidesData.leftSection.label2}</span>
+                        <span className="active-brown"><Star />{careGuidesData && careGuidesData.leftSection.label3}</span>
                     </p>
 
                     <div className="details-section">
-                        <h1>Ultimate Postpartum Recovery Guide </h1>
-                        <h2>(0–6 Weeks)</h2>
-                        <p>Your calm, week-by-week recovery companion—comfort routines, hygiene basics, what’s normal, and when to check in. Built to support you through the first six weeks without overwhelm.</p>
+                        <h1>{careGuidesData && careGuidesData.leftSection.heading}</h1>
+                        <h2>{careGuidesData && careGuidesData.leftSection.subheading}</h2>
+                        <p>{careGuidesData && careGuidesData.leftSection.description}</p>
                     </div>
 
                     <div className="buttons-section">
-                        <p className="label">Free with Email · $19 Value ✨</p>
-                        <button className='button-pink-center' onClick={()=>navigate('/shop')}>Shop to Unlock</button>
+                        <p className="label">{careGuidesData && careGuidesData.leftSection.buttonLabel}</p>
+                        <button className='button-pink-center' onClick={()=>navigate(careGuidesData && careGuidesData.leftSection.buttonLink)}>{careGuidesData && careGuidesData.leftSection.buttonText}</button>
                     </div>
                 </div>
 
                 <div className="middle-section">
-                    <div className="item-sec-card">
-                        <p className="label-section">
-                            <span className="active-green">FREE</span>
-                            <span className="active-green-shade">400 Downloads</span>
-                        </p>
-                        <div className="heading-section">
-                            <p className="heading">
-                                Hospital Bag Checklist <span>Mom, Baby & Partner essentials.</span>
-                            </p>
-                            <button className="button-pink-center"><Download /></button>
-                        </div>
-                    </div>
-                    <div className="item-sec-card">
-                        <p className="label-section">
-                            <span className="active-green">FREE</span>
-                            <span className="active-green-shade">165 Downloads</span>
-                        </p>
-                        <div className="heading-section">
-                            <p className="heading">
-                                Postpartum Hygiene Checklist <span>Simple daily routines for healing.</span>
-                            </p>
-                            <button className="button-pink-center"><Download /></button>
-                        </div>
-                    </div>
-                    <div className="item-sec-card">
-                        <p className="label-section">
-                            <span className="active-green">FREE</span>
-                            <span className="active-green-shade">28 Downloads</span>
-                        </p>
-                        <div className="heading-section">
-                            <p className="heading">
-                                Pregnancy Discomforts <span>What’s Normal & How to Find Relief.</span>
-                            </p>
-                            <button className="button-pink-center"><Download /></button>
-                        </div>
-                    </div>
+                    {
+                        careGuidesData && careGuidesData.middleSection.map((item, index)=> {
+                            return (
+                                <div className="item-sec-card" key={index}>
+                                    <p className="label-section">
+                                        <span className="active-green">{item.label1}</span>
+                                        <span className="active-green-shade">{item.label2}</span>
+                                    </p>
+                                    <div className="heading-section">
+                                        <p className="heading">
+                                            {item.heading} <span>{item.description}</span>
+                                        </p>
+                                        <button className="button-pink-center"><Download /></button>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
 
                 <div className="right-section">
-                    <img src={CareGuideImage} alt="" />
+                    <img src={careGuidesData && careGuidesData.rightSection.image} alt="" />
                 </div>
             </div>
             <div className="care-guide-btns-con">
