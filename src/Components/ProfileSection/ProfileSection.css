@@ -390,3 +390,309 @@
         }
     }
 }
+
+/* ==================== TABLET RESPONSIVE (768px - 1024px) ==================== */
+@media (max-width: 1024px) {
+    .profile-section-container {
+        .profile-section-header {
+            height: auto;
+            padding: 24px;
+
+            .heading {
+                column-gap: 10px;
+
+                img {
+                    width: 18px;
+                    height: 18px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+
+            .profile-completion {
+                font-size: 12px;
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .profile-section-body {
+            padding: 24px;
+
+            .profile-edit-section,
+            .profile-detaisl-view-section {
+                .personal-info {
+                    padding-bottom: 20px;
+                    margin-bottom: 32px;
+                }
+
+                .heading {
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                }
+
+                .profile-input-group {
+                    margin-bottom: 20px;
+
+                    label {
+                        font-size: 11px;
+                    }
+
+                    input,
+                    .profile-value {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        .profile-section-footer {
+            padding: 20px 24px;
+
+            button {
+                height: 38px;
+                font-size: 13px;
+            }
+
+            .button-outline {
+                height: 38px;
+                padding: 0 20px;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+/* ==================== MOBILE RESPONSIVE (max-width: 768px) ==================== */
+@media (max-width: 768px) {
+    .profile-section-container {
+        .profile-section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 10px;
+            padding: 20px;
+            height: auto;
+
+            .heading {
+                column-gap: 8px;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                span {
+                    font-size: 13px;
+                }
+            }
+
+            .profile-completion {
+                font-size: 11px;
+
+                span {
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .profile-section-body {
+            padding: 20px;
+
+            .profile-edit-section,
+            .profile-detaisl-view-section {
+                .personal-info {
+                    padding-bottom: 16px;
+                    margin-bottom: 24px;
+                }
+
+                .heading {
+                    font-size: 13px;
+                    margin-bottom: 16px;
+                    column-gap: 8px;
+
+                    span {
+                        font-size: 6px;
+                        padding: 2px 3px;
+                    }
+                }
+
+                .profile-input-group {
+                    margin-bottom: 16px;
+
+                    label {
+                        font-size: 10px;
+                        margin-bottom: 4px;
+                    }
+
+                    input {
+                        height: 36px;
+                        font-size: 12px;
+                        padding: 6px 10px;
+
+                        &::placeholder {
+                            font-size: 12px;
+                        }
+                    }
+
+                    .profile-value {
+                        font-size: 13px;
+                    }
+                }
+
+                .profile-drop-down {
+                    margin-bottom: 16px;
+
+                    label {
+                        font-size: 10px;
+                        margin-bottom: 4px;
+                    }
+
+                    .dropdown {
+                        height: 36px;
+
+                        .dropdown-toggle {
+                            font-size: 12px;
+                        }
+                    }
+
+                    .profile-value {
+                        font-size: 13px;
+                    }
+                }
+
+                .account-info {
+                    padding-top: 16px;
+                }
+            }
+        }
+
+        .profile-section-footer {
+            padding: 16px 20px;
+            flex-direction: column;
+            row-gap: 12px;
+            align-items: stretch;
+            margin-bottom: 20px;
+
+            .notification-message {
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .footer-buttons {
+                justify-content: center;
+            }
+
+            button {
+                height: 40px;
+                flex: 1;
+            }
+
+            .button-outline {
+                height: 40px;
+                padding: 0 16px;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+/* ==================== SMALL MOBILE (max-width: 480px) ==================== */
+@media (max-width: 480px) {
+    .profile-section-container {
+        .profile-section-header {
+            padding: 16px;
+            row-gap: 8px;
+
+            .heading {
+                column-gap: 6px;
+
+                img {
+                    width: 14px;
+                    height: 14px;
+                }
+
+                span {
+                    font-size: 12px;
+                }
+            }
+
+            .profile-completion {
+                font-size: 10px;
+
+                span {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .profile-section-body {
+            padding: 16px;
+
+            .profile-edit-section,
+            .profile-detaisl-view-section {
+                .personal-info {
+                    padding-bottom: 14px;
+                    margin-bottom: 20px;
+                }
+
+                .heading {
+                    font-size: 12px;
+                    margin-bottom: 14px;
+                }
+
+                .profile-input-group {
+                    margin-bottom: 14px;
+
+                    label {
+                        font-size: 9px;
+                    }
+
+                    input {
+                        height: 34px;
+                        font-size: 11px;
+                        border-radius: 6px;
+                    }
+
+                    .profile-value {
+                        font-size: 12px;
+                    }
+                }
+
+                .profile-drop-down {
+                    margin-bottom: 14px;
+
+                    .dropdown {
+                        height: 34px;
+
+                        .dropdown-toggle {
+                            font-size: 11px;
+                            border-radius: 6px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .profile-section-footer {
+            padding: 14px 16px;
+            row-gap: 10px;
+            margin-bottom: 16px;
+
+            .footer-buttons {
+                width: 100%;
+                gap: 10px;
+            }
+
+            button,
+            .button-outline {
+                height: 38px;
+                font-size: 11px;
+                border-radius: 20px;
+            }
+        }
+    }
+}

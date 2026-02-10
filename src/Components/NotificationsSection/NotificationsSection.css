@@ -172,12 +172,92 @@
     }
 }
 
-/* Responsive Design */
+/* ==================== TABLET RESPONSIVE (768px - 1024px) ==================== */
+@media (max-width: 1024px) {
+    .notifications-section-container {
+        .notifications-section-header {
+            padding: 24px;
+            height: 70px;
+
+            .notifications-heading {
+                column-gap: 12px;
+
+                img {
+                    width: 18px;
+                    height: 18px;
+                }
+
+                span {
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .notifications-section-body {
+            padding: 24px;
+            gap: 20px;
+
+            .notifications-list {
+                gap: 10px;
+
+                .notification-item {
+                    padding: 14px 18px;
+
+                    .notification-content {
+                        gap: 14px;
+
+                        .notification-icon-box {
+                            width: 38px;
+                            height: 38px;
+                        }
+
+                        .notification-text {
+                            .notification-label {
+                                font-size: 13px;
+                            }
+
+                            .notification-description {
+                                font-size: 11px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .notifications-info-box {
+                padding-top: 16px;
+
+                .info-text {
+                    padding: 14px 18px;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+/* ==================== MOBILE RESPONSIVE (max-width: 768px) ==================== */
 @media (max-width: 768px) {
     .notifications-section-container {
         .notifications-section-header {
             padding: 20px;
             height: auto;
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 8px;
+
+            .notifications-heading {
+                column-gap: 10px;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
         }
 
         .notifications-section-body {
@@ -189,6 +269,7 @@
 
                 .notification-item {
                     padding: 12px 16px;
+                    border-radius: 10px;
 
                     .notification-content {
                         gap: 12px;
@@ -196,100 +277,133 @@
                         .notification-icon-box {
                             width: 36px;
                             height: 36px;
-                        }
-
-                        .notification-text {
-                            .notification-label {
-                                font: 400 13px var(--font);
-                            }
-                        }
-                    }
-                }
-            }
-
-            .notifications-info-box {
-                padding: 12px 16px;
-
-                .info-text {
-                    font: 400 11px var(--font);
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 480px) {
-    .notifications-section-container {
-        .notifications-section-header {
-            padding: 16px 20px;
-            height: auto;
-
-            .notifications-heading {
-                span {
-                    font: 400 14px var(--font);
-                }
-            }
-        }
-
-        .notifications-section-body {
-            padding: 16px 20px;
-            gap: 12px;
-
-            .notifications-list {
-                gap: 8px;
-
-                .notification-item {
-                    padding: 12px 12px;
-                    border-radius: 10px;
-
-                    .notification-content {
-                        gap: 12px;
-
-                        .notification-icon-box {
-                            width: 32px;
-                            height: 32px;
                             border-radius: 6px;
                         }
 
                         .notification-text {
                             .notification-label {
-                                font: 400 12px var(--font);
+                                font-size: 13px;
                             }
 
                             .notification-description {
-                                font: 400 10px var(--font);
+                                font-size: 11px;
                             }
                         }
                     }
 
                     .notification-toggle-wrapper {
                         width: 44px;
-                        height: 24px;
+                        height: 26px;
 
                         .toggle-slider {
                             &::after {
-                                height: 18px;
-                                width: 18px;
+                                height: 20px;
+                                width: 20px;
                             }
                         }
 
-                        .notification-toggle {
-                            &:checked + .toggle-slider {
-                                &::after {
-                                    transform: translateX(18px);
-                                }
-                            }
+                        .notification-toggle:checked + .toggle-slider::after {
+                            transform: translateX(18px);
                         }
                     }
                 }
             }
 
             .notifications-info-box {
-                padding: 12px 12px;
-                border-radius: 6px;
+                padding-top: 14px;
 
                 .info-text {
-                    font: 400 10px var(--font);
+                    padding: 12px 16px;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+/* ==================== SMALL MOBILE (max-width: 480px) ==================== */
+@media (max-width: 480px) {
+    .notifications-section-container {
+        .notifications-section-header {
+            padding: 16px;
+
+            .notifications-heading {
+                column-gap: 8px;
+
+                img {
+                    width: 14px;
+                    height: 14px;
+                }
+
+                span {
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .notifications-section-body {
+            padding: 16px;
+            gap: 12px;
+
+            .notifications-list {
+                gap: 8px;
+
+                .notification-item {
+                    padding: 10px 12px;
+                    border-radius: 8px;
+
+                    .notification-content {
+                        gap: 10px;
+
+                        .notification-icon-box {
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 6px;
+
+                            svg {
+                                width: 16px;
+                                height: 16px;
+                            }
+                        }
+
+                        .notification-text {
+                            gap: 2px;
+
+                            .notification-label {
+                                font-size: 12px;
+                            }
+
+                            .notification-description {
+                                font-size: 10px;
+                            }
+                        }
+                    }
+
+                    .notification-toggle-wrapper {
+                        width: 40px;
+                        height: 22px;
+
+                        .toggle-slider {
+                            &::after {
+                                height: 16px;
+                                width: 16px;
+                            }
+                        }
+
+                        .notification-toggle:checked + .toggle-slider::after {
+                            transform: translateX(16px);
+                        }
+                    }
+                }
+            }
+
+            .notifications-info-box {
+                padding-top: 12px;
+
+                .info-text {
+                    padding: 10px 12px;
+                    font-size: 10px;
+                    border-radius: 6px;
                 }
             }
         }

@@ -632,3 +632,566 @@
         }
     }
 }
+
+/* ==================== TABLET RESPONSIVE (768px - 1024px) ==================== */
+@media (max-width: 1024px) {
+    .my-address-section-container {
+        .address-section-header {
+            height: auto;
+            padding: 24px;
+
+            .heading {
+                column-gap: 10px;
+
+                img {
+                    width: 18px;
+                    height: 18px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .address-section-body {
+            padding: 24px;
+
+            #addressListAccordian .accordion-item {
+                .accordion-header {
+                    height: 72px;
+
+                    .accordion-button {
+                        .address-type {
+                            font-size: 16px;
+                        }
+
+                        .make-default-section {
+                            margin-right: 30px;
+
+                            label {
+                                font-size: 12px;
+                            }
+                        }
+
+                        .accordian-icon {
+                            width: 36px;
+                            height: 36px;
+                        }
+                    }
+                }
+
+                .accordion-body {
+                    padding: 24px;
+                    padding-top: 0;
+
+                    .address-in-detail-section {
+                        .address-detail-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 14px;
+
+                            .address-detail-item {
+                                .label {
+                                    font-size: 11px;
+                                }
+
+                                .value {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .add-address-section {
+            padding: 24px;
+
+            #addAddressAccordian .accordion-item .accordion-header .accordion-button {
+                font-size: 18px;
+
+                .accordian-icon {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+
+            #addAddressAccordian .add-address-inputs-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+
+        .address-edit-form .edit-form-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+    }
+}
+
+/* ==================== MOBILE RESPONSIVE (max-width: 768px) ==================== */
+@media (max-width: 768px) {
+    .my-address-section-container {
+        .address-section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 8px;
+            padding: 20px;
+            height: auto;
+
+            .heading {
+                column-gap: 8px;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                span {
+                    font-size: 13px;
+                }
+            }
+
+            .profile-completion {
+                font-size: 11px;
+
+                span {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .address-section-body {
+            padding: 20px;
+
+            #addressListAccordian .accordion-item {
+                border-radius: 12px;
+                margin-bottom: 12px;
+
+                .accordion-header {
+                    height: auto;
+
+                    .accordion-button {
+                        flex-wrap: wrap;
+                        gap: 10px;
+                        padding: 16px;
+
+                        .address-type {
+                            font-size: 14px;
+                            flex: 1;
+                        }
+
+                        .make-default-section {
+                            order: 3;
+                            width: 100%;
+                            margin-left: 0;
+                            margin-right: 0;
+                            margin-top: 4px;
+
+                            button {
+                                width: 14px;
+                                height: 14px;
+                            }
+
+                            label {
+                                font-size: 11px;
+                            }
+                        }
+
+                        .accordian-icon {
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 8px;
+                        }
+
+                        .default-badge {
+                            font-size: 8px;
+                            padding: 3px 6px;
+                            margin-left: 8px;
+                        }
+                    }
+                }
+
+                .accordion-body {
+                    padding: 16px;
+                    padding-top: 0;
+
+                    .address-in-detail-section {
+                        gap: 12px;
+                        padding: 16px 0;
+
+                        .address-detail-full {
+                            row-gap: 4px;
+
+                            .label {
+                                font-size: 10px;
+                            }
+
+                            .value {
+                                font-size: 13px;
+                            }
+                        }
+
+                        .address-detail-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 12px;
+
+                            .address-detail-item {
+                                row-gap: 4px;
+
+                                .label {
+                                    font-size: 10px;
+                                }
+
+                                .value {
+                                    font-size: 13px;
+                                }
+                            }
+                        }
+                    }
+
+                    .action-btns {
+                        padding-top: 16px;
+                        flex-direction: column;
+                        row-gap: 10px;
+
+                        button {
+                            width: 100%;
+                            height: 38px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .add-address-section {
+            padding: 20px;
+
+            #addAddressAccordian .accordion-item {
+                border-radius: 12px;
+
+                .accordion-header .accordion-button {
+                    font-size: 16px;
+                    padding: 16px;
+
+                    .accordian-icon {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 6px;
+                    }
+                }
+            }
+
+            #addAddressAccordian .add-address-inputs-container {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 16px;
+
+                .input-group-con {
+                    row-gap: 4px;
+
+                    .label {
+                        font-size: 11px;
+                    }
+
+                    input {
+                        height: 38px;
+                        font-size: 13px;
+                        border-radius: 6px;
+                    }
+
+                    .dropdown {
+                        height: 38px;
+
+                        .dropdown-toggle {
+                            font-size: 13px;
+                            border-radius: 6px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .address-section-footer {
+            padding: 20px;
+            height: auto;
+            flex-direction: column;
+            row-gap: 12px;
+            margin-bottom: 20px;
+
+            .notification-message {
+                text-align: center;
+                font-size: 12px;
+            }
+
+            button {
+                width: 100%;
+                height: 40px;
+            }
+        }
+
+        .address-edit-form {
+            padding-top: 16px;
+
+            .edit-form-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 16px;
+
+                .input-group-con {
+                    row-gap: 4px;
+
+                    .label {
+                        font-size: 11px;
+                    }
+
+                    input {
+                        height: 38px;
+                        font-size: 13px;
+                    }
+
+                    .dropdown {
+                        height: 38px;
+
+                        .dropdown-toggle {
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+
+            .action-btns {
+                padding-top: 16px;
+                flex-direction: column;
+                row-gap: 10px;
+
+                button {
+                    width: 100%;
+                    height: 40px;
+                }
+            }
+        }
+
+        .add-form-actions {
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+
+            button {
+                width: 100%;
+                height: 40px;
+            }
+        }
+
+        .no-addresses {
+            padding: 24px;
+
+            p.noaddress-heading {
+                font-size: 18px;
+            }
+
+            p.no-address-sub-heading {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+/* ==================== SMALL MOBILE (max-width: 480px) ==================== */
+@media (max-width: 480px) {
+    .my-address-section-container {
+        .address-section-header {
+            padding: 16px;
+
+            .heading {
+                column-gap: 6px;
+
+                img {
+                    width: 14px;
+                    height: 14px;
+                }
+
+                span {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .address-section-body {
+            padding: 16px;
+
+            #addressListAccordian .accordion-item {
+                border-radius: 10px;
+
+                .accordion-header .accordion-button {
+                    padding: 14px;
+
+                    .address-type {
+                        font-size: 13px;
+                    }
+
+                    .make-default-section {
+                        column-gap: 6px;
+
+                        button {
+                            width: 12px;
+                            height: 12px;
+
+                            &.active::after {
+                                width: 5px;
+                                height: 5px;
+                            }
+                        }
+
+                        label {
+                            font-size: 10px;
+                        }
+                    }
+
+                    .accordian-icon {
+                        width: 28px;
+                        height: 28px;
+                    }
+
+                    .default-badge {
+                        font-size: 7px;
+                        padding: 2px 5px;
+                    }
+                }
+
+                .accordion-body {
+                    padding: 14px;
+                    padding-top: 0;
+
+                    .address-in-detail-section {
+                        gap: 10px;
+                        padding: 14px 0;
+
+                        .address-detail-full {
+                            .label {
+                                font-size: 9px;
+                            }
+
+                            .value {
+                                font-size: 12px;
+                            }
+                        }
+
+                        .address-detail-grid {
+                            grid-template-columns: 1fr 1fr;
+                            gap: 10px;
+
+                            .address-detail-item {
+                                .label {
+                                    font-size: 9px;
+                                }
+
+                                .value {
+                                    font-size: 12px;
+                                }
+                            }
+                        }
+                    }
+
+                    .action-btns button {
+                        height: 36px;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        .add-address-section {
+            padding: 16px;
+
+            #addAddressAccordian .accordion-item .accordion-header .accordion-button {
+                font-size: 14px;
+                padding: 14px;
+
+                .accordian-icon {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+
+            #addAddressAccordian .add-address-inputs-container {
+                gap: 12px;
+                padding: 14px;
+
+                .input-group-con {
+                    .label {
+                        font-size: 10px;
+                    }
+
+                    input {
+                        height: 36px;
+                        font-size: 12px;
+                    }
+
+                    .dropdown {
+                        height: 36px;
+
+                        .dropdown-toggle {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .address-section-footer {
+            padding: 16px;
+            margin-bottom: 16px;
+
+            button {
+                height: 38px;
+                font-size: 13px;
+            }
+        }
+
+        .address-edit-form {
+            .edit-form-grid .input-group-con {
+                .label {
+                    font-size: 10px;
+                }
+
+                input {
+                    height: 36px;
+                    font-size: 12px;
+                }
+
+                .dropdown {
+                    height: 36px;
+
+                    .dropdown-toggle {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .action-btns button {
+                height: 38px;
+                font-size: 12px;
+            }
+        }
+
+        .add-form-actions button {
+            height: 38px;
+            font-size: 12px;
+        }
+
+        .no-addresses {
+            padding: 20px;
+
+            p.noaddress-heading {
+                font-size: 16px;
+            }
+
+            p.no-address-sub-heading {
+                font-size: 11px;
+            }
+        }
+    }
+}

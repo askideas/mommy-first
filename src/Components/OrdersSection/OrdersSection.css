@@ -944,3 +944,744 @@
         }
     }
 }
+
+/* ==================== TABLET RESPONSIVE (768px - 1024px) ==================== */
+@media (max-width: 1024px) {
+    .orders-section-header {
+        height: auto;
+        padding: 24px;
+
+        .heading {
+            column-gap: 10px;
+
+            img {
+                width: 18px;
+                height: 18px;
+            }
+
+            span {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .list-of-orders-container {
+        padding: 24px;
+
+        .order-details-card-section {
+            border-radius: 12px;
+            margin-bottom: 20px;
+
+            .heading-section {
+                padding: 14px;
+                border-radius: 12px 12px 0 0;
+
+                .delivery-date,
+                .view-order-details {
+                    font-size: 13px;
+                }
+            }
+
+            .line-items-container .order-line-item {
+                padding: 14px;
+                column-gap: 14px;
+
+                .line-item-details {
+                    column-gap: 12px;
+
+                    img {
+                        width: 56px;
+                        height: 56px;
+                    }
+
+                    .name {
+                        font-size: 13px;
+                    }
+                }
+
+                .button-section button {
+                    height: 36px;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .order-details-section-container {
+        padding: 24px;
+
+        .order-summary-section {
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+
+            .shipping-section,
+            .payment-method {
+                width: 45%;
+            }
+
+            .summary-details {
+                width: 100%;
+                min-width: unset;
+            }
+        }
+    }
+
+    .tracking-section-container {
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .return-section-container {
+        padding: 24px;
+        gap: 20px;
+    }
+
+    .refund-status-container {
+        padding: 32px 24px;
+        gap: 32px;
+    }
+
+    .no-orders-section {
+        padding: 40px 24px;
+    }
+}
+
+/* ==================== MOBILE RESPONSIVE (max-width: 768px) ==================== */
+@media (max-width: 768px) {
+    .orders-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 8px;
+        padding: 20px;
+        height: auto;
+
+        .heading {
+            column-gap: 8px;
+
+            img {
+                width: 16px;
+                height: 16px;
+            }
+
+            span {
+                font-size: 13px;
+            }
+        }
+
+        .profile-completion {
+            font-size: 11px;
+
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .list-of-orders-container {
+        padding: 20px;
+
+        .order-details-card-section {
+            border-radius: 10px;
+            margin-bottom: 16px;
+
+            .heading-section {
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 8px;
+                padding: 12px;
+                border-radius: 10px 10px 0 0;
+
+                .delivery-date,
+                .view-order-details {
+                    font-size: 12px;
+                }
+            }
+
+            .line-items-container .order-line-item {
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 12px;
+                padding: 12px;
+
+                .line-item-details {
+                    width: 100%;
+                    column-gap: 10px;
+
+                    img {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 8px;
+                    }
+
+                    .name {
+                        font-size: 12px;
+                    }
+                }
+
+                .button-section {
+                    width: 100%;
+                    height: auto;
+
+                    button {
+                        width: 100%;
+                        height: 38px;
+                    }
+                }
+            }
+        }
+    }
+
+    .order-details-section-container {
+        padding: 20px;
+
+        .heading-section {
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 8px;
+
+            .delivery-date,
+            .view-order-details {
+                font-size: 12px;
+            }
+        }
+
+        .order-summary-section {
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+
+            .shipping-section,
+            .payment-method,
+            .summary-details {
+                width: 100%;
+            }
+
+            .shipping-section,
+            .payment-method {
+                .label {
+                    font-size: 11px;
+                }
+
+                .item {
+                    font-size: 12px;
+                }
+            }
+
+            .summary-details {
+                padding: 10px;
+                border-radius: 16px;
+
+                .label {
+                    font-size: 11px;
+                }
+
+                .item {
+                    font-size: 11px;
+
+                    &.grand-total {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        .line-items-container {
+            margin-top: 16px;
+
+            .order-line-item {
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 12px;
+                padding: 12px;
+
+                .line-item-details {
+                    width: 100%;
+
+                    img {
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    .name {
+                        font-size: 12px;
+                    }
+                }
+
+                .button-section {
+                    width: 100%;
+
+                    button {
+                        width: 100%;
+                        height: 38px;
+                    }
+                }
+            }
+        }
+    }
+
+    .tracking-section-container {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .tracking-progress-section {
+        .progress-steps {
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step {
+            flex-direction: row;
+            gap: 12px;
+
+            .step-circle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .step-label {
+                text-align: left;
+                font-size: 11px;
+            }
+        }
+
+        .step-line {
+            display: none;
+        }
+    }
+
+    .delivery-status-box {
+        padding: 16px;
+        border-radius: 10px;
+
+        .status-message {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .tracking-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+
+            img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .item-details .item-title {
+                font-size: 13px;
+            }
+
+            .button-pink-border {
+                width: 100%;
+                height: 38px;
+            }
+        }
+    }
+
+    .tracking-order-info {
+        gap: 16px;
+
+        .order-date-section p {
+            font-size: 12px;
+        }
+
+        .order-details-grid {
+            gap: 16px;
+
+            .label {
+                font-size: 13px;
+            }
+
+            .item {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .return-section-container {
+        padding: 20px;
+        gap: 16px;
+
+        .order-info-section {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+
+            p {
+                font-size: 12px;
+            }
+        }
+
+        .return-items-section .return-item-row {
+            padding: 12px 14px;
+            gap: 12px;
+
+            .checkbox-wrapper input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+            }
+
+            img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .item-name {
+                font-size: 12px;
+            }
+        }
+
+        .return-reason-section {
+            gap: 10px;
+
+            .reason-header {
+                .reason-label {
+                    font-size: 13px;
+                }
+
+                .optional-badge {
+                    font-size: 10px;
+                    padding: 3px 8px;
+                }
+            }
+
+            .reason-textarea {
+                min-height: 60px;
+                font-size: 13px;
+            }
+        }
+
+        .return-warning-box {
+            padding: 12px 14px;
+
+            .warning-text {
+                font-size: 12px;
+            }
+        }
+
+        .return-action-section {
+            padding-top: 16px;
+
+            .button-request-return {
+                width: 100%;
+                padding: 12px 24px;
+                font-size: 13px;
+            }
+        }
+    }
+
+    .refund-status-container {
+        padding: 32px 20px;
+        gap: 32px;
+
+        .refund-success-message {
+            .success-title {
+                font-size: 22px;
+            }
+
+            .success-subtitle {
+                font-size: 13px;
+            }
+        }
+
+        .refund-timeline {
+            .timeline-steps {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .timeline-step-wrapper {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .timeline-step {
+                flex-direction: row;
+                gap: 12px;
+                align-items: center;
+
+                .step-circle {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                .step-title {
+                    font-size: 12px;
+                    text-align: left;
+                }
+
+                .step-date {
+                    font-size: 11px;
+                    text-align: left;
+                }
+            }
+
+            .timeline-connector {
+                display: none;
+            }
+        }
+
+        .refund-summary-section {
+            padding: 20px;
+
+            .summary-title {
+                font-size: 13px;
+            }
+
+            .summary-item {
+                padding: 10px 0;
+
+                .summary-label,
+                .summary-value {
+                    font-size: 12px;
+                }
+
+                &.total {
+                    .summary-label,
+                    .summary-value {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+    .no-orders-section {
+        padding: 40px 20px;
+        min-height: 300px;
+    }
+
+    .no-orders-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 16px;
+    }
+
+    .no-orders-title {
+        font-size: 20px;
+    }
+
+    .no-orders-description {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+}
+
+/* ==================== SMALL MOBILE (max-width: 480px) ==================== */
+@media (max-width: 480px) {
+    .orders-section-header {
+        padding: 16px;
+
+        .heading {
+            column-gap: 6px;
+
+            img {
+                width: 14px;
+                height: 14px;
+            }
+
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .list-of-orders-container {
+        padding: 16px;
+
+        .order-details-card-section {
+            border-radius: 8px;
+
+            .heading-section {
+                padding: 10px;
+                border-radius: 8px 8px 0 0;
+
+                .delivery-date,
+                .view-order-details {
+                    font-size: 11px;
+                }
+            }
+
+            .line-items-container .order-line-item {
+                padding: 10px;
+                row-gap: 10px;
+
+                .line-item-details {
+                    column-gap: 8px;
+
+                    img {
+                        width: 44px;
+                        height: 44px;
+                    }
+
+                    .name {
+                        font-size: 11px;
+                    }
+                }
+
+                .button-section button {
+                    height: 36px;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+
+    .order-details-section-container {
+        padding: 16px;
+
+        .order-summary-section {
+            padding: 14px;
+
+            .shipping-section,
+            .payment-method {
+                .label {
+                    font-size: 10px;
+                }
+
+                .item {
+                    font-size: 11px;
+                }
+            }
+
+            .summary-details {
+                .label {
+                    font-size: 10px;
+                }
+
+                .item {
+                    font-size: 10px;
+
+                    &.grand-total {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+    .tracking-section-container {
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .delivery-status-box {
+        padding: 14px;
+
+        .status-message {
+            font-size: 13px;
+        }
+
+        .tracking-item {
+            padding: 10px;
+
+            img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .item-details .item-title {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .return-section-container {
+        padding: 16px;
+        gap: 14px;
+
+        .return-items-section .return-item-row {
+            padding: 10px 12px;
+
+            img {
+                width: 44px;
+                height: 44px;
+            }
+
+            .item-name {
+                font-size: 11px;
+            }
+        }
+
+        .return-reason-section .reason-textarea {
+            min-height: 50px;
+            font-size: 12px;
+        }
+
+        .return-warning-box {
+            padding: 10px 12px;
+
+            .warning-text {
+                font-size: 11px;
+            }
+        }
+
+        .return-action-section .button-request-return {
+            padding: 10px 20px;
+            font-size: 12px;
+        }
+    }
+
+    .refund-status-container {
+        padding: 24px 16px;
+        gap: 24px;
+
+        .refund-success-message {
+            .success-title {
+                font-size: 18px;
+            }
+
+            .success-subtitle {
+                font-size: 12px;
+            }
+        }
+
+        .refund-summary-section {
+            padding: 16px;
+
+            .summary-item {
+                .summary-label,
+                .summary-value {
+                    font-size: 11px;
+                }
+
+                &.total {
+                    .summary-label,
+                    .summary-value {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+
+    .no-orders-section {
+        padding: 30px 16px;
+        min-height: 250px;
+    }
+
+    .no-orders-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 14px;
+    }
+
+    .no-orders-title {
+        font-size: 18px;
+    }
+
+    .no-orders-description {
+        font-size: 12px;
+        margin-bottom: 16px;
+    }
+
+    .no-orders-section .button-pink-center {
+        padding: 10px 24px;
+        height: 38px;
+        font-size: 12px;
+    }
+}

@@ -280,23 +280,201 @@
     to { transform: rotate(360deg); }
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .sessions-section-container {
-        padding: 24px;
-    }
-
+/* ==================== TABLET RESPONSIVE (768px - 1024px) ==================== */
+@media (max-width: 1024px) {
     .sessions-section-header {
-        margin-bottom: 24px;
+        height: 70px;
+        padding: 24px;
+
+        .heading {
+            column-gap: 12px;
+
+            svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            span {
+                font-size: 15px;
+            }
+        }
     }
 
-    .section-title-con h1 {
-        font: 600 20px var(--font);
+    .section-title-con {
+        gap: 10px;
+
+        svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+    }
+
+    .sessions-loading {
+        padding: 50px 20px;
+        gap: 14px;
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+    }
+
+    .no-sessions {
+        padding: 50px 20px;
+        margin: 20px 24px;
+
+        svg {
+            width: 44px;
+            height: 44px;
+        }
+
+        h3 {
+            font-size: 17px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+    }
+
+    .sessions-list {
+        gap: 14px;
+        padding: 20px 24px;
     }
 
     .session-item {
-        padding: 16px;
+        gap: 14px;
+        padding: 18px;
+    }
+
+    .session-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    .session-details {
+        .session-name {
+            font-size: 15px;
+        }
+
+        .session-info {
+            font-size: 11px;
+        }
+    }
+
+    .session-meta {
+        gap: 10px;
+
+        .session-date {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        .session-status {
+            padding: 5px 14px;
+            font-size: 10px;
+        }
+    }
+}
+
+/* ==================== MOBILE RESPONSIVE (max-width: 768px) ==================== */
+@media (max-width: 768px) {
+    .sessions-section-header {
+        height: auto;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 8px;
+
+        .heading {
+            column-gap: 10px;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            span {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .section-title-con {
+        gap: 8px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+        }
+    }
+
+    .sessions-loading {
+        padding: 40px 16px;
         gap: 12px;
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .no-sessions {
+        padding: 40px 16px;
+        margin: 16px 20px;
+
+        svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 12px;
+            max-width: 300px;
+        }
+    }
+
+    .sessions-list {
+        gap: 12px;
+        padding: 16px 20px;
+    }
+
+    .session-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+
+        &:hover {
+            transform: none;
+        }
     }
 
     .session-icon {
@@ -305,48 +483,154 @@
         min-width: 40px;
 
         svg {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
         }
     }
 
-    .session-details .session-name {
-        font: 500 14px var(--font);
-    }
+    .session-details {
+        width: 100%;
 
-    .session-details .session-info {
-        font: 400 11px var(--font);
-    }
+        .session-name {
+            font-size: 14px;
+        }
 
-    .session-meta .session-date {
-        font: 400 11px var(--font);
-    }
-}
-
-@media (max-width: 480px) {
-    .sessions-section-container {
-        padding: 20px;
-    }
-
-    .session-item {
-        flex-wrap: wrap;
+        .session-info {
+            font-size: 11px;
+        }
     }
 
     .session-meta {
         width: 100%;
-        justify-content: flex-start;
+        flex-wrap: wrap;
         gap: 8px;
+
+        .session-date {
+            font-size: 11px;
+            min-width: auto;
+            padding: 5px 10px;
+        }
+
+        .session-status {
+            font-size: 10px;
+            padding: 5px 12px;
+        }
+
+        .cancel-session-btn {
+            flex: 1;
+            min-width: fit-content;
+        }
+    }
+}
+
+/* ==================== SMALL MOBILE (max-width: 480px) ==================== */
+@media (max-width: 480px) {
+    .sessions-section-header {
+        padding: 16px;
+
+        .heading {
+            column-gap: 8px;
+
+            svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            span {
+                font-size: 13px;
+            }
+        }
     }
 
-    .session-meta .session-date {
-        min-width: auto;
-        font: 400 11px var(--font);
-        padding: 5px 10px;
+    .section-title-con {
+        gap: 6px;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        h1 {
+            font-size: 18px;
+        }
     }
 
-    .session-meta .session-status,
-    .session-meta .cancel-session-btn {
-        font: 500 10px var(--font);
-        padding: 5px 12px;
+    .sessions-loading {
+        padding: 30px 12px;
+
+        .spinner {
+            width: 28px;
+            height: 28px;
+        }
+
+        p {
+            font-size: 11px;
+        }
+    }
+
+    .no-sessions {
+        padding: 30px 12px;
+        margin: 12px 16px;
+
+        svg {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 14px;
+        }
+
+        p {
+            font-size: 11px;
+            max-width: 260px;
+        }
+    }
+
+    .sessions-list {
+        gap: 10px;
+        padding: 12px 16px;
+    }
+
+    .session-item {
+        padding: 14px;
+        gap: 10px;
+        border-radius: 10px;
+    }
+
+    .session-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .session-details {
+        .session-name {
+            font-size: 13px;
+        }
+
+        .session-info {
+            font-size: 10px;
+        }
+    }
+
+    .session-meta {
+        gap: 6px;
+
+        .session-date {
+            font-size: 10px;
+            padding: 4px 8px;
+        }
+
+        .session-status {
+            font-size: 9px;
+            padding: 4px 10px;
+        }
     }
 }
