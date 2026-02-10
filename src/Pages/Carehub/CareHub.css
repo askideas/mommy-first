@@ -63,6 +63,7 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
+        line-height: 62px;
     }
 
     .hero-section-image-round {
@@ -71,6 +72,7 @@
         border-radius: 50%;
         position: relative;
         margin: 0 auto;
+        margin-top: -52px;
 
         .pink-round {
             width: 100%;
@@ -258,6 +260,7 @@
             width: fit-content;
             height: 40px;
             background: var(--red-1);
+            border: 0;
         }
     }
 }
@@ -413,7 +416,7 @@
 }
 
 .carehub-live-title {
-    font: 600 32px var(--font);
+    font: 500 32px var(--font);
     color: var(--primary-dark);
     text-align: center;
     margin-bottom: 16px;
@@ -827,7 +830,7 @@
             }
 
             .buttons-section {
-                margin-top: 40px;
+                margin-top: 28px;
                 p {
                     font: 400 12px var(--font);
                     color: var(--primary-dark);

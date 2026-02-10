@@ -4,6 +4,8 @@ import Flower from '../../assets/About/flower.svg'
 import FlowerShade from '../../assets/About/flower-shade.svg'
 import Us from '../../assets/About/us.png'
 import PfImg from '../../assets/About/pf-img.png'
+import Strike2 from '../../assets/About/strike2.svg'
+import Strike4 from '../../assets/About/strike4.svg'
 import RightImg from '../../assets/About/right-img.png'
 import Certificate from '../../assets/About/certificate.svg'
 import Shield from '../../assets/About/shield.svg'
@@ -30,8 +32,8 @@ const About = () => {
                 <p className="description">Born in New York from the partnership of a Clinical Pharmacist who saw the <br /> medical gap, and a Clinical Quality Specialist who lived through it.</p>
                 
                 <p className='about-desc'><span className='bold'>Mommy First™</span> was founded in <img src={Us} alt="" className='flag' /><span className='bold'>New York</span> by  <br />
-                <span className='active' >Dr. Jewelline</span> (Clinical Pharmacist) and <br />
-                <span className='active' >Dr. Varsha</span> (Medical Graduate & Clinical Quality Specialist) <br /> 
+                <span className='active' > <img src={Strike2} alt="" />Dr. Jewelline</span> (Clinical Pharmacist) and <br />
+                <span className='active' ><img src={Strike4} alt="" />Dr. Varsha</span> (Medical Graduate & Clinical Quality Specialist) <br /> 
                 to solve the disconnect between hospital discharge <br /> and recovery at home.
                 </p>
             </div>

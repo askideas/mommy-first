@@ -293,13 +293,13 @@ const CareHub = () => {
                 )}
             </div>
 
-            <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+            {displayedBlogs.length > 4 && <div className="d-flex flex-column justify-content-center align-items-center mt-5">
                 <p className='progress-bar-text'>You've seen {displayedBlogs.length} out of {journalsData.length} articles</p>
                 <div className="progress-bar-con">
                     <span></span>
                 </div>
                 <button className='button-label' onClick={()=> navigate('/blogs')}>View all</button>
-            </div>
+            </div>}
         </div>
 
         {/* LIVE Sessions Section */}
@@ -352,13 +352,13 @@ const CareHub = () => {
                 )}
             </div>
 
-            <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+            {displayedEvents.length > 4 && <div className="d-flex flex-column justify-content-center align-items-center mt-5">
                 <p className='progress-bar-text'>You've seen {displayedEvents.length} out of {liveSessionsData.length} activities</p>
                 <div className="progress-bar-con">
                     <span></span>
                 </div>
                 <button className='button-label' onClick={()=> navigate('/live-sessions')}>View all</button>
-            </div>
+            </div>}
         </div>
 
         {/* Newsletter Section */}
