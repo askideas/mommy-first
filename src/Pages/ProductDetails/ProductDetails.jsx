@@ -622,7 +622,7 @@ const ProductDetails = () => {
                                     )}
                                 </button>
                                 <button 
-                                    className={`button-pink-border buy-now-btn ${selectedVariant && !selectedVariant.availableForSale ? 'disabled' : ''}`}
+                                    className={`button-pink-border buy-now-btn ${selectedVariant && !selectedVariant.availableForSale ? 'd-none' : ''}`}
                                     onClick={handleBuyNow} 
                                     disabled={isAdding || (selectedVariant && !selectedVariant.availableForSale)}
                                 >
@@ -643,11 +643,6 @@ const ProductDetails = () => {
                                     )}
                                 </button>
                             </div>
-
-                            {/* <div className="ways-to-pay">
-                                <p className="way-heading">Ways to pay</p>
-                                <img src={WayToPay} alt="" />
-                            </div> */}
                         </div>
                     </div>
                 </div>
