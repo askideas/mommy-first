@@ -1,14 +1,68 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Donation.css'
 import Heading from '../../Components/Heading/Heading'
 import HeroImg from '../../assets/Donation/heroimg.png'
 import Postpartum from '../../assets/Donation/postpartum.png'
 import Discussion from '../../assets/Donation/discussion.png'
+import { db } from '../../firebase/config'
+import { doc, getDoc } from 'firebase/firestore'
 
 const Donation = () => {
+    // Firebase data state
+    const [heroSectionData, setHeroSectionData] = useState(null)
+    const [meaningfulImpactData, setMeaningfulImpactData] = useState(null)
+    const [momsActData, setMomsActData] = useState(null)
+    const [postpartumSupportData, setPostpartumSupportData] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        fetchDonationPageData()
+    }, [])
+
+    const fetchDonationPageData = async () => {
+        setIsLoading(true)
+        try {
+            // Fetch herosection document
+            const heroDocRef = doc(db, 'donationpage', 'herosection')
+            const heroDocSnap = await getDoc(heroDocRef)
+            if (heroDocSnap.exists()) {
+                setHeroSectionData(heroDocSnap.data())
+                console.log('Hero Section Data:', heroDocSnap.data())
+            }
+
+            // Fetch meaningfulimpact document
+            const meaningfulDocRef = doc(db, 'donationpage', 'meaningfulimpact')
+            const meaningfulDocSnap = await getDoc(meaningfulDocRef)
+            if (meaningfulDocSnap.exists()) {
+                setMeaningfulImpactData(meaningfulDocSnap.data())
+                console.log('Meaningful Impact Data:', meaningfulDocSnap.data())
+            }
+
+            // Fetch momsact document
+            const momsActDocRef = doc(db, 'donationpage', 'momsact')
+            const momsActDocSnap = await getDoc(momsActDocRef)
+            if (momsActDocSnap.exists()) {
+                setMomsActData(momsActDocSnap.data())
+                console.log('Moms Act Data:', momsActDocSnap.data())
+            }
+
+            // Fetch postpartumsupport document
+            const postpartumDocRef = doc(db, 'donationpage', 'postpartumsupport')
+            const postpartumDocSnap = await getDoc(postpartumDocRef)
+            if (postpartumDocSnap.exists()) {
+                setPostpartumSupportData(postpartumDocSnap.data())
+                console.log('Postpartum Support Data:', postpartumDocSnap.data())
+            }
+        } catch (error) {
+            console.error('Failed to fetch donation page data:', error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     const headingData = {
-        'title': "DONATION",
-        'subtitle': "Giving Back to Mothers",
+        'title': heroSectionData && heroSectionData.heroData.heading,
+        'subtitle': heroSectionData && heroSectionData.heroData.subheading,
         'description': false
     }
   return (
@@ -17,68 +71,40 @@ const Donation = () => {
         <div className="container">
             <div className="donation-hero-section">
                 <h1>Caring for Mothers, Together</h1>
-                <img src={HeroImg} alt="" />
-                <p>As Mommy First grows, so does our responsibility to support mothers everywhere. We believe postpartum care should be accessible to all women, especially those who need it most. Giving back is an essential part of our mission, and we are proud to support charitable and nonprofit organizations dedicated to maternal health, education, and postpartum well-being.</p>
+                <img src={heroSectionData && heroSectionData.heroData.mainImage} alt="" />
+                <p dangerouslySetInnerHTML={{ __html: heroSectionData && heroSectionData.heroData.description }}></p>
             </div>
 
             <div className="donation-content-container">
-                <h1>Supporting Our Moms and Their Precious Families</h1>
-                <p>Motherhood is powerful, but it can also be overwhelming. We stand beside mothers and their families by supporting organizations that uplift and protect maternal mental health during pregnancy, postpartum, and beyond.</p>
-                <p>For every Mommy First <strong>Witch Hazel Combo</strong> purchased, <strong>$1.00 is donated to support maternal mental health initiatives through Postpartum Support International</strong>  helping fund education, advocacy, and access to emotional support resources for families worldwide.</p>
-                <p>Every purchase truly makes a difference.</p>
+                <h1>{momsActData && momsActData.sectionData.heading}</h1>
+                <div dangerouslySetInnerHTML={{ __html: momsActData && momsActData.sectionData.description }}></div>
                 <hr />
                 
-                <h1>Supporting Postpartum Support International</h1>
-                <img src={Postpartum} className='postpartum-img' alt="" />
-                <p>Postpartum Support International (PSI) is a global nonprofit dedicated to helping families affected by perinatal mood and anxiety disorders.</p>
+                <h1>{postpartumSupportData && postpartumSupportData.supportData.heading}</h1>
+                <img src={postpartumSupportData && postpartumSupportData.supportData.logo} className='postpartum-img' alt="" />
+                <p>{postpartumSupportData && postpartumSupportData.supportData.description}</p>
                 <ul>
                     <label>PSI provides:</label>
-                    <li>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0078 21.9998C17.5307 21.9998 22.0078 17.5226 22.0078 11.9998C22.0078 6.47691 17.5307 1.99976 12.0078 1.99976C6.48497 1.99976 2.00781 6.47691 2.00781 11.9998C2.00781 17.5226 6.48497 21.9998 12.0078 21.9998Z" fill="#5ED34B"/>
-                            <path d="M7.08594 12L10.0859 15L16.0859 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Education and advocacy for maternal mental health</span>
-                    </li>
-                    <li>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0078 21.9998C17.5307 21.9998 22.0078 17.5226 22.0078 11.9998C22.0078 6.47691 17.5307 1.99976 12.0078 1.99976C6.48497 1.99976 2.00781 6.47691 2.00781 11.9998C2.00781 17.5226 6.48497 21.9998 12.0078 21.9998Z" fill="#5ED34B"/>
-                            <path d="M7.08594 12L10.0859 15L16.0859 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Professional training for healthcare providers</span>
-                    </li>
-                    <li>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0078 21.9998C17.5307 21.9998 22.0078 17.5226 22.0078 11.9998C22.0078 6.47691 17.5307 1.99976 12.0078 1.99976C6.48497 1.99976 2.00781 6.47691 2.00781 11.9998C2.00781 17.5226 6.48497 21.9998 12.0078 21.9998Z" fill="#5ED34B"/>
-                            <path d="M7.08594 12L10.0859 15L16.0859 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Connections to local and global support resources</span>
-                    </li>
-                    <li>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0078 21.9998C17.5307 21.9998 22.0078 17.5226 22.0078 11.9998C22.0078 6.47691 17.5307 1.99976 12.0078 1.99976C6.48497 1.99976 2.00781 6.47691 2.00781 11.9998C2.00781 17.5226 6.48497 21.9998 12.0078 21.9998Z" fill="#5ED34B"/>
-                            <path d="M7.08594 12L10.0859 15L16.0859 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Compassionate support for families navigating anxiety, depression, and emotional challenges related to pregnancy, childbirth, and early parenting</span>
-                    </li>
-                    <li>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0078 21.9998C17.5307 21.9998 22.0078 17.5226 22.0078 11.9998C22.0078 6.47691 17.5307 1.99976 12.0078 1.99976C6.48497 1.99976 2.00781 6.47691 2.00781 11.9998C2.00781 17.5226 6.48497 21.9998 12.0078 21.9998Z" fill="#5ED34B"/>
-                            <path d="M7.08594 12L10.0859 15L16.0859 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Education and advocacy for maternal mental health</span>
-                    </li>
+                    {
+                        postpartumSupportData && postpartumSupportData.supportData.checkpoints.map((item, index)=> {
+                            return (<li key={index}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.0078 21.9998C17.5307 21.9998 22.0078 17.5226 22.0078 11.9998C22.0078 6.47691 17.5307 1.99976 12.0078 1.99976C6.48497 1.99976 2.00781 6.47691 2.00781 11.9998C2.00781 17.5226 6.48497 21.9998 12.0078 21.9998Z" fill="#5ED34B"/>
+                                    <path d="M7.08594 12L10.0859 15L16.0859 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>{item.text}</span>
+                            </li>)
+                        })
+                    }
                 </ul>
                 <p>Through our ongoing support of PSI, Mommy First helps extend vital resources to families during one of the most vulnerable and important seasons of life.</p>
                 <hr />
 
                 <div className="discussion-container">
-                    <img src={Discussion} alt="" />
+                    <img src={meaningfulImpactData && meaningfulImpactData.impactData.images[0].url} alt="" />
                     <div className="contents">
-                        <h1>Small Actions. Meaningful Impact.</h1>
-                        <p>Every product purchased and every act of care helps move us closer to a world where no mother feels alone during her postpartum journey.</p>
-                        <p>Together, we are creating access, awareness, and <br /> support - one mama at a time.</p>
-                        <p>Mommy First is an independent supporter of Postpartum <br /> Support International. Donations are made directly <br /> through PSI’s official donation channels.</p>
+                        <h1>{meaningfulImpactData && meaningfulImpactData.impactData.role}</h1>
+                        <div dangerouslySetInnerHTML={{ __html: meaningfulImpactData && meaningfulImpactData.impactData.description }}></div>
                     </div>
                 </div>
             </div>
