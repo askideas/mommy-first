@@ -6,7 +6,7 @@ import Search from '../../assets/search.svg'
 import Profile from '../../assets/profile.svg'
 import CartIcon from '../../assets/cart.svg'
 import Hamburger from '../../assets/hamburger.svg'
-import { Heart, Home, Search as SearchIcon, User, Gift } from 'lucide-react'
+import { Heart, Home, Search as SearchIcon, User, Gift, X } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useCart } from '../../contexts/CartContext'
 
@@ -14,7 +14,7 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { isAuthenticated, wishlistHandles } = useAuth();
-    const { totalQuantity } = useCart();
+    const { totalQuantity, cartNotification, hideCartNotification } = useCart();
 
     // Add scroll event to toggle 'active' class
     useEffect(() => {
@@ -81,6 +81,22 @@ const Header = () => {
                         <img src={CartIcon} alt="" />
                         {totalQuantity > 0 && (
                             <span className="cart-count-badge">{totalQuantity > 99 ? '99+' : totalQuantity}</span>
+                        )}
+                        {cartNotification && (
+                            <div className="cart-notification-popup">
+                                {cartNotification.image && (
+                                    <div className="cart-notification-image">
+                                        <img src={cartNotification.image} alt="" />
+                                    </div>
+                                )}
+                                <div className="cart-notification-content">
+                                    <span className="cart-notification-title">Added to cart</span>
+                                    <span className="cart-notification-product">{cartNotification.name}</span>
+                                </div>
+                                <button className="cart-notification-close" onClick={(e) => { e.stopPropagation(); hideCartNotification(); }}>
+                                    <X size={14} />
+                                </button>
+                            </div>
                         )}
                     </div>
                     <img src={Hamburger} alt="" data-bs-toggle="offcanvas" data-bs-target="#MegaMenuModal" style={{cursor: 'pointer'}} />

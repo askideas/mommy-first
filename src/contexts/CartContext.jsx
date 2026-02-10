@@ -25,6 +25,20 @@ export const CartProvider = ({ children }) => {
     const [totalQuantity, setTotalQuantity] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
+    const [cartNotification, setCartNotification] = useState(null)
+
+    // Show cart notification with product details
+    const showCartNotification = (productName, productImage = null) => {
+        setCartNotification({ name: productName, image: productImage })
+        setTimeout(() => {
+            setCartNotification(null)
+        }, 4000)
+    }
+
+    // Hide cart notification
+    const hideCartNotification = () => {
+        setCartNotification(null)
+    }
 
     // Fetch cart on mount and when auth changes
     useEffect(() => {
@@ -140,6 +154,9 @@ export const CartProvider = ({ children }) => {
         totalQuantity,
         isLoading,
         isUpdating,
+        cartNotification,
+        showCartNotification,
+        hideCartNotification,
         fetchCart,
         addToCart,
         updateCartItems,

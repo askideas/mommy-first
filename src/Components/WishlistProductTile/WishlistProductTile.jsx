@@ -11,7 +11,7 @@ import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 const WishlistProductTile = ({ data, onRemove }) => {
     const product = data
     const navigate = useNavigate()
-    const { addToCart } = useCart()
+    const { addToCart, showCartNotification } = useCart()
     const [isRemoving, setIsRemoving] = useState(false)
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
@@ -59,7 +59,7 @@ const WishlistProductTile = ({ data, onRemove }) => {
 
             if (response.success) {
                 setIsAdded(true)
-                toast.success('Added to cart!')
+                showCartNotification(product?.title || 'Product', product?.image)
                 
                 // Remove from wishlist after successful add to cart
                 if (onRemove) {

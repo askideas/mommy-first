@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 
 const BoughtTogether = (props) => {
     const data = props.data;
-    const { addToCart } = useCart();
+    const { addToCart, showCartNotification } = useCart();
     const [isAdding, setIsAdding] = useState(false);
     
     const tags = data && data.boughtTogetherProduct && data.boughtTogetherProduct.metafields ? data.boughtTogetherProduct.metafields.find(m => m.key === 'tags') : [];
@@ -50,10 +50,7 @@ const BoughtTogether = (props) => {
             const response2 = await addToCart([{ variantId: boughtTogetherVariantId, quantity: 1 }]);
             
             if (response2.success) {
-                toast.success('Both products added to cart!', {
-                    autoClose: 1500,
-                    hideProgressBar: true
-                });
+                showCartNotification(`${data.currentProduct.title} & ${data.boughtTogetherProduct.title}`, data.currentProduct.image);
             } else {
                 toast.error(response2.message || 'Failed to add second product', {
                     autoClose: 1500,

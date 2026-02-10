@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 const ProductTile = (props) => {
     const product = props.data;
     const navigate = useNavigate()
-    const { addToCart } = useCart()
+    const { addToCart, showCartNotification } = useCart()
     const { user, customer, addToWishlistHandles, removeFromWishlistHandles, wishlistHandles } = useAuth()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
@@ -61,10 +61,8 @@ const ProductTile = (props) => {
 
             if (response.success) {
                 setIsAdded(true)
-                toast.success('Product added to cart!', {
-                    autoClose: 1500,
-                    hideProgressBar: true
-                })
+                const productImage = product?.images?.nodes?.[0]?.url || product?.images?.[0]?.url || product?.featuredImage?.url || product?.image
+                showCartNotification(product?.title || 'Product', productImage)
                 // Reset after 2 seconds
                 setTimeout(() => {
                     setIsAdded(false)

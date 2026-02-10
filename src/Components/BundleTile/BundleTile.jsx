@@ -11,7 +11,7 @@ const BundleTile = (props) => {
     console.log(data);
     
     const product = data?.node || data || {};
-    const { addToCart } = useCart()
+    const { addToCart, showCartNotification } = useCart()
     const [isAdding, setIsAdding] = useState(false)
     const [isAdded, setIsAdded] = useState(false)
     const [error, setError] = useState('')
@@ -78,10 +78,8 @@ const BundleTile = (props) => {
 
             if (response.success) {
                 setIsAdded(true)
-                toast.success('Bundle added to cart!', {
-                    autoClose: 1500,
-                    hideProgressBar: true
-                })
+                const bundleImage = product.images?.nodes?.[0]?.url || product.images?.[0]?.url || BundleTileImg
+                showCartNotification(product?.title || 'Bundle', bundleImage)
                 // Reset after 2 seconds
                 setTimeout(() => {
                     setIsAdded(false)

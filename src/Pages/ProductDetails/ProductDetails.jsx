@@ -81,7 +81,7 @@ const ProductDetails = () => {
     const { productHandle } = useParams();
     const navigate = useNavigate();
     const { user, customer, addToWishlistHandles, removeFromWishlistHandles, wishlistHandles, isAuthenticated } = useAuth();
-    const { addToCart } = useCart();
+    const { addToCart, showCartNotification } = useCart();
     const [authToken, setAuthToken] = useState(null);
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
     const [isZooming, setIsZooming] = useState(false);
@@ -247,10 +247,7 @@ const ProductDetails = () => {
             console.log('Add to cart response:', response);
 
             if (response.success) {
-                toast.success('Added to cart successfully!', {
-                    autoClose: 1500,
-                    hideProgressBar: true
-                });
+                showCartNotification(product?.title || 'Product', product?.images?.[0]?.url);
                 return true;
             } else {
                 toast.error(response.message || 'Failed to add to cart', {
@@ -720,7 +717,7 @@ const ProductDetails = () => {
             </div>
         </div>
         
-        <AllBundlesSlider />
+        {/* <AllBundlesSlider /> */}
         <MomsReviewsSlider />
         <MomsMomentsSlider />
 
