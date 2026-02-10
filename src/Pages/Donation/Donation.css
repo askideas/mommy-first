@@ -125,3 +125,222 @@
         }
     }
 }
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+    .donation-hero-section {
+        width: 100%;
+        max-width: 570px;
+        padding: 0 20px;
+
+        img {
+            height: auto;
+            max-height: 348px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+    }
+
+    .donation-content-container {
+        width: 100%;
+        max-width: 856px;
+        margin: 0 auto 100px auto;
+        padding: 36px;
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .discussion-container {
+            height: auto;
+            min-height: 600px;
+
+            img {
+                height: 100%;
+                min-height: 600px;
+                object-fit: cover;
+                border-radius: 16px;
+            }
+
+            .contents {
+                width: 90%;
+                top: 20px;
+            }
+        }
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .donation-hero-section {
+        width: 100%;
+        padding: 0 16px;
+        margin-bottom: 40px;
+
+        h1 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        img {
+            height: auto;
+            max-height: 280px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    }
+
+    .donation-content-container {
+        width: calc(100% - 32px);
+        margin: 0 16px 80px 16px;
+        padding: 24px;
+        border-radius: 16px;
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        hr {
+            margin: 30px 0;
+        }
+
+        .postpartum-img {
+            height: 180px;
+            border-radius: 12px;
+        }
+
+        ul {
+            label {
+                font-size: 14px;
+            }
+
+            li {
+                margin-bottom: 12px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    min-width: 20px;
+                    min-height: 20px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .discussion-container {
+            height: auto;
+            min-height: auto;
+
+            img {
+                min-height: 500px;
+                border-radius: 12px;
+            }
+
+            .contents {
+                width: 92%;
+                top: 16px;
+
+                h1 {
+                    font-size: 20px;
+                    margin-bottom: 14px;
+                }
+
+                p {
+                    font-size: 13px;
+                    line-height: 1.5;
+                    margin-bottom: 12px;
+                }
+            }
+        }
+    }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+    .donation-hero-section {
+        h1 {
+            font-size: 16px;
+        }
+
+        img {
+            max-height: 220px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+
+    .donation-content-container {
+        padding: 20px;
+        border-radius: 12px;
+
+        h1 {
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+
+        .postpartum-img {
+            height: 150px;
+        }
+
+        ul {
+            li {
+                svg {
+                    width: 18px;
+                    height: 18px;
+                    min-width: 18px;
+                    min-height: 18px;
+                }
+
+                span {
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .discussion-container {
+            img {
+                min-height: 450px;
+            }
+
+            .contents {
+                width: 94%;
+                top: 12px;
+
+                h1 {
+                    font-size: 18px;
+                    margin-bottom: 12px;
+                }
+
+                p {
+                    font-size: 12px;
+                    line-height: 1.5;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
