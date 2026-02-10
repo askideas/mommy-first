@@ -142,20 +142,19 @@ const ProfileSkeletonLoader = ({ type = 'default' }) => {
   if (type === 'wishlist') {
     return (
       <div className="profile-skeleton-container">
-        <div className="profile-skeleton-header">
-          <div className="skeleton-icon"></div>
-          <div className="skeleton-heading"></div>
-        </div>
-        <div className="profile-skeleton-body">
-          <div className="wishlist-skeleton-grid">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <div className="wishlist-skeleton-card" key={index}>
-                <div className="skeleton-wishlist-image"></div>
+        <div className="wishlist-skeleton-list">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div className="wishlist-skeleton-row" key={index}>
+              <div className="skeleton-wishlist-image"></div>
+              <div className="skeleton-wishlist-info">
                 <div className="skeleton-wishlist-title"></div>
-                <div className="skeleton-wishlist-price"></div>
+                <div className="skeleton-wishlist-variant"></div>
+                <div className="skeleton-wishlist-remove"></div>
               </div>
-            ))}
-          </div>
+              <div className="skeleton-wishlist-price"></div>
+              <div className="skeleton-wishlist-button"></div>
+            </div>
+          ))}
         </div>
       </div>
     )
