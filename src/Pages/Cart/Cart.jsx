@@ -14,6 +14,8 @@ import { useAuth } from '../../contexts/AuthContext'
 import EmptyCartImg from '../../assets/empty-cart.svg'
 import ConfirmationModal from '../../Components/ConfirmationModal/ConfirmationModal'
 import CartItemSkeleton from '../Modals/MiniCartModal/CartItemSkeleton'
+import CartFav from '../../assets/Donation/fav-cart.svg'
+import PSICart from '../../assets/Donation/psi-cart.svg'
 
 const Cart = () => {
     const {
@@ -444,7 +446,7 @@ const Cart = () => {
                     <div className="summary-header">
                         <div className="summary-items">
                             <div className="summary-item">
-                                <span className='left'>Item(s) total ({cart?.totalQuantity || 0} items)</span>
+                                <span className='left'>Item(s) total</span>
                                 <span className='right'>
                                     {formatCurrency(
                                         cart?.cost?.subtotal?.amount,
@@ -476,13 +478,31 @@ const Cart = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className="add-notes-container">
+                        {/* <div className="add-notes-container">
                             <p>Order note (if any)</p>
                             <textarea
                                 placeholder='Write here'
                                 value={orderNote}
                                 onChange={(e) => setOrderNote(e.target.value)}
                             ></textarea>
+                        </div> */}
+                        <div className="donation-section-in-cart">
+                            <h1 className='donation-heading'>Donation <span>Optional</span></h1>
+                            <div className="image-section">
+                                <img src={PSICart} className='psi-cart' alt="" />
+                                <img src={CartFav} className='fav-cart' alt="" />
+                            </div>
+                            <p className="donation-desc">Your kindness means a lot! 100% of your donation will go to Postpartum Support International (PSI)</p>
+
+                            <div className="donation-amount-section">
+                                <p className="label">Choose a donation</p>
+                                <div className="amount-selection-con">
+                                    <button>$1</button>
+                                    <button>$5</button>
+                                    <button>$10</button>
+                                    <input type="text" placeholder='Enter amount' />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="summary-footer">

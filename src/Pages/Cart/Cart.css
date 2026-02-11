@@ -1128,3 +1128,101 @@ hr {
         }
     }
 }
+
+.donation-section-in-cart {
+    .donation-heading {
+        font: 500 16px var(--font);
+        color: var(--primary-dark);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 14px;
+
+        span {
+            width: fit-content;
+            height: fit-content;
+            padding: 2px 4px;
+            background: var(--primary-pink);
+            font: 400 7px var(--font);
+            color: var(--white);
+            border-radius: 4px;
+        }
+    }
+
+    .image-section {
+        width: 100%;
+        height: 58px;
+        background: linear-gradient(90deg, #F3F7FE 60.27%, #FFEAF4 100%);
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .psi-cart {
+            width: 112px;
+            height: 40px;
+        }
+
+        .fav-cart {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    .donation-desc {
+        font: 400 11px var(--font);
+        color: var(--blue);
+    }
+
+    .donation-amount-section {
+        margin-bottom: 120px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--pink-border);
+
+        p.label {
+            font: 400 11px var(--font);
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .amount-selection-con {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button {
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                border: 1.5px solid var(--pink-border1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font: 600 14px var(--font);
+                color: var(--primary-dark);
+                background: none;
+                outline: none;
+            }
+
+            input {
+                width: 129px;
+                height: 40px;
+                border: 1.5px solid var(--gray-dark);
+                border-radius: 8px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                outline: none;
+                font: 400 14px var(--font);
+                color: var(--primary-dark);
+                text-align: center;
+
+                &::placeholder {
+                    color: var(--gray-dark);
+                }
+            }
+        }
+    }
+}
